@@ -1,0 +1,30 @@
+Package: exdex
+Type: Package
+Title: Estimation of the Extremal Index
+Version: 0.0.0.9000
+Date: 2017-12-22
+Authors@R: c(
+    person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk", 
+      role = c("aut", "cre", "cph")),
+    person("Constantinos", "Christodoulides", role = c("aut", "cph"))
+    )
+Description: Performs frequentist inference for the extremal index using the 
+  methodologies described in Suveges and Davison (2010)  
+  <doi:10.1214/09-AOAS292> and in Northrop (2015) 
+  <doi:10.1007/s10687-015-0221-5>.
+Imports: boot,
+    graphics,
+    methods,
+    np,
+    stats,
+    zoo (>= 1.6.4)
+License: GPL (>= 2)
+Depends:
+    R (>= 3.3.0)
+Suggests: knitr,
+    rmarkdown,
+    testthat
+LazyData: true
+Encoding: UTF-8
+RoxygenNote: 6.1.0
+VignetteBuilder: knitr

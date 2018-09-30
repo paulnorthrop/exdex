@@ -53,7 +53,7 @@
 #' spm_mle(newlyn, 20, conf = 95)
 #' }
 #' @export
-spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
+cc_spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
                     R = 1000){
   #
   # Function whose returned value depends on for_boot

@@ -1,3 +1,8 @@
+# 1. Add BB version
+# 2. Add BB variance (and apply to mine: use my Z throughout or just apply to
+#    my estimate)
+# 3. Use data from BB paper?  ... as a check.
+
 #' Semiparametric maxima estimator of the extremal index
 #'
 #' Add description
@@ -37,7 +42,9 @@
 #'   is returned.
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
-#' @references Add reference to Northrop (2015).
+#' @references Northrop, P. J. (2015) \emph{An efficient semiparametric maxima
+#' estimator of the extremal index} Extremes, \strong{18}(4), 585-603.
+#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
 #' @examples
 #' spm_mle(newlyn, 20)
 #' spm_mle(newlyn, 20, sliding = FALSE)
@@ -48,7 +55,7 @@
 #' spm_mle(newlyn, 20, conf = 95)
 #' }
 #' @export
-me_spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
+spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
                     R = 1000){
   #
   # Function whose returned value depends on for_boot
@@ -105,4 +112,22 @@ me_spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
   boot_up <- ci_log_theta$basic[,5]
   conf_int <- c(pmin(exp(boot_low), 1), pmin(exp(boot_up), 1))
   return(list(theta_mle = theta_mle, theta_se = theta_se, theta_ci = conf_int))
+}
+
+#' BB
+#'
+#' Add description
+#'
+#' @param data A numeric vector of raw data.
+#' @details Add details
+#' @return Return
+#' @seealso \code{\link{spm_mle}}.
+#' @references Northrop, P. J. (2015) \emph{An efficient semiparametric maxima
+#' estimator of the extremal index} Extremes, \strong{18}(4), 585-603.
+#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' @examples
+#' spm_mle(newlyn, 20)
+#' @export
+bb_var <- function(data, b){
+  return()
 }

@@ -79,9 +79,9 @@ spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
     # numerator and denominator we remove Xs that are in the same block as Y
     # We use of m-b in the denominator rather than the m-b+1 in Northrop (2015)
     m <- length(x)
-    Fhaty <- (m * Fhaty - b) / (m - b)
+    Fhaty_ba <- (m * Fhaty - b) / (m - b)
     # Calculate the estimate of theta
-    log_v <- b * log(Fhaty)
+    log_v <- b * log(Fhaty_ba)
     theta_mle <- -1 / mean(log_v)
     # For the bootstrap return only the log of the (unconstrained) estimate
     if (for_boot) {
@@ -95,6 +95,8 @@ spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
   }
   # Find the point estimate of theta and the raw data that contribute to it
   theta_mle <- spm_estimates(data = data, for_boot = FALSE)
+  # Use Berghaus and Bucher (2018) to estimate the SEs
+
   # If conf is NULL don't do any boostrapping.  Only return the MLE.
   if (is.null(conf)) {
     return(list(theta_mle = theta_mle))

@@ -53,7 +53,7 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
   \strong{Details} section of \code{\link{kgaps_stats}}.
 }
 \examples{
-### Newlyn esea-surge data
+### Newlyn sea-surge data
 
 thresh <- quantile(newlyn, probs = 0.90)
 # MLE and SE only
@@ -83,4 +83,7 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 
 \code{\link{spm_mle}} for estimation of the extremal index
   \eqn{\theta} using a semiparametric maxima method.
+
+\code{\link[revdbayes]{kgaps_post}} for Bayesian inference
+  about \eqn{\theta} using the K-gaps model.
 }

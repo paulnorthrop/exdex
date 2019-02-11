@@ -30,7 +30,7 @@ The function \code{\link[zoo]{rollapply}} in the
   \code{max} so that blocks containing missing values produce a
   non-missing result.
 
-  \code{sliding_maxima} is used within \code{\link{spmax_mle}} to perform
+  \code{sliding_maxima} is used within \code{\link{spm_mle}} to perform
   semiparametric estimation of the extremal index based on block maxima.
 }
 \references{

@@ -1,34 +1,66 @@
-# 1. Add BB version
-# 2. Add BB variance (and apply to mine: use my Z throughout or just apply to
-#    my estimate)
-# 3. Use data from BB paper?  ... as a check.
-
 #' Semiparametric maxima estimator of the extremal index
 #'
-#' Add description
+#' Estimates the extremal index \eqn{\theta} using a semiparametric block
+#' maxima estimator of Northrop (2015) and a variant of this estimator
+#' studied by Berghaus and Bucher (2018).  Estimates of uncertainty are
+#' calculated using the asymptotic theory developed by Berghaus and
+#' Bucher (2018) and (optionally) a block bootstrap.
 #'
 #' @param data A numeric vector of raw data.
 #' @param b A numeric scalar.  The block size.
-#' @param sliding A logical scalar.
-#' @param constrain A logical scalar.
-#' @param conf  A numeric scalar.  If \code{conf} is supplied then the
-#'   the standard error and \code{conf}\% likelihood-based confidence interval
-#'   for \eqn{\theta}, and the standard error of the estimator of \eqn{\theta},
-#'   are estimated using block bootstrapping, implemented by
-#'   \code{\link[boot]{tsboot}}.  See Northrop (2015) and references therein
-#'   for more information.
-#' @param R An integer scalar.  The number of bootstrap resamples used to
-#'   estimate the standard error and confidence intervals.
-#'   See \code{\link[boot]{tsboot}}.
-#' @details The extremal index \eqn{\theta} is estimated using the semiparametric
-#' maxima estimator of Northrop (2015).  If \code{sliding = TRUE} then the
-#' function uses sliding block maxima, that is, the largest value observed in
-#' \emph{all} blocks of \code{b} observations, whereas if \code{sliding = FALSE}
-#' then disjoint block maxima, that is, the largest values in non-overlapping
-#' blocks of \code{b} observations, are used.  If \code{constrain = TRUE} then
-#' if the raw estimate of the extremal index is greater than one then a value of
-#' 1 is returned. Otherwise (\code{constrain = FALSE}) the raw estimate is
-#' returned, even if it is greater than 1.
+#' @param sliding A logical scalar.  If \code{sliding = TRUE} then the
+#'   estimates are based on sliding block maxima.  Otherwise, the estimates
+#'   are based on disjoint block maxima.
+#' @param bias_adjust A character scalar.  Is bias-adjustment of the
+#'   raw estimate of \eqn{\theta} performed using the bias-reduced
+#'   estimator (\code{bias_adjust = "BB3"}), derived in Section 5 of
+#'   Berghaus and Bucher (2018); or a simpler version of this, in which
+#'   the raw estimate is multiplied by \eqn{(k-1) / k}, where \eqn{k} is the
+#'   number of blocks (\code{bias_adjust = "BB1"}); or the bias-adjustment
+#'   of the empirical distribution function used to calculate the estimate,
+#'   as detailed in Section 2 of Northrop (2015).  When disjoint maxima are
+#'   used \code{bias_adjust = "BB1"} and \code{bias_adjust = "N"}
+#'   give identical estimates of the Berghaus and Bucher (2018) variant,
+#'   as explained at the end of Section 5 of Berghaus and Bucher (2018).
+#'   If \code{bias_adjust = "none"} then no bias-adjustment is performed.
+#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
+#'   any estimates or confidence limits that are greater than 1 are set to 1,
+#'   that is, they are constrained to lie in (0, 1].  This is carried out
+#'   \emph{after} any bias-adjustment.  Otherwise,
+#'   estimates and confidence limits that are greater than 1 may be obtained.
+#'   If \code{constrain = TRUE} then any lower confidence limits that are
+#'   less than 0 are set to 0.
+#' @param conf  A numeric scalar.  The confidence level required:
+#'   100\code{conf}\% confidence intervals are calculated.
+#' @param conf_scale A character scalar.   If \code{conf_scale = "theta"}
+#'   then confidence intervals are estimated for \eqn{\theta} directly.
+#'   If \code{conf_scale = "log_theta"} then confidence intervals are first
+#'   estimated for \eqn{log\theta} and then transformed back to the
+#'   \eqn{\theta}-scale.
+#' @details The extremal index \eqn{\theta} is estimated using the
+#'   semiparametric maxima estimator of Northrop (2015).
+#'   If \code{sliding = TRUE} then the function uses sliding block maxima,
+#'   that is, the largest value observed in \emph{all}
+#'   (\code{length(data) - b + 1}) blocks of \code{b} observations.
+#'   If \code{sliding = FALSE} then disjoint block maxima, that is, the
+#'   largest values in (\code{floor(n / b)}) disjoint blocks of \code{b}
+#'   observations, are used.
+#'
+#'   Estimation of the sampling variances of the estimators is based
+#'   on Proposition 4.1 of Berghaus and Bucher (2018).  A condition imposed
+#'   in this proposition means that that \code{b} must be no smaller than
+#'   \eqn{k^{1/2}} and no larger than \eqn{k^2}, where \eqn{k} is
+#'   \code{floor(length(data) / b)}, i.e. \eqn{k} is the number of complete
+#'   blocks.  If this is not the case then a warning will be given and
+#'     \itemize{
+#'       \item{estimates of uncertainty (estimated standard
+#'              errors and confidence intervals) will be missing from the
+#'              returned object,}
+#'       \item{if \code{bias_adjust == "BB3"} then this bias-adjustment
+#'             based on \code{bias_adjust == "BB1"} will be performed instead,
+#'             because the former relies on the estimated variances of the
+#'             estimators.}
+#'     }
 #' @return A list containing
 #'   \itemize{
 #'     \item {\code{theta_mle} : } {The maximum likelihood estimate (MLE) of
@@ -42,10 +74,15 @@
 #'   is returned.
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
-#' @references Northrop, P. J. (2015) \emph{An efficient semiparametric maxima
-#' estimator of the extremal index} Extremes, \strong{18}(4), 585-603.
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
 #' @examples
+#' spm_mle(-as.vector(sp500[2:6550]), 250)
+#'
 #' spm_mle(newlyn, 20)
 #' spm_mle(newlyn, 20, sliding = FALSE)
 #'
@@ -55,17 +92,69 @@
 #' spm_mle(newlyn, 20, conf = 95)
 #' }
 #' @export
-spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
-                    R = 1000){
-  #
-  # Function whose returned value depends on for_boot
-  #   FALSE: estimate of theta (constrained to (0, 1] if constrain = TRUE))
-  #   TRUE: estimate of log(theta) (not constrained to (0, 1])
-  spm_estimates <- function(data, for_boot = FALSE) {
-    # Calculate the required block maxima
+spm_mle <- function(data, b, sliding = TRUE,
+                    bias_adjust = c("BB3", "BB1", "N", "none"),
+                    constrain = TRUE, conf = 0.95,
+                    conf_scale = c("theta", "log_theta")){
+  Call <- match.call(expand.dots = TRUE)
+  # Check inputs
+  if (missing(data) || length(data) == 0L || mode(data) != "numeric") {
+    stop("'data' must be a non-empty numeric vector")
+  }
+  if (any(!is.finite(data))) {
+    stop("'data' contains missing or infinite values")
+  }
+  if (is.matrix(data)) {
+    stop("'data' must be a vector")
+  }
+  data <- as.vector(data)
+  if (!is.numeric(b) || length(b) != 1) {
+    stop("'b' must be a numeric scalar (specifically, a positive integer)")
+  }
+  if (b < 1) {
+    stop("'b' must be no smaller than 1")
+  }
+  if (!is.logical(sliding) || length(sliding) != 1) {
+    stop("'sliding' must be a logical scalar")
+  }
+  if (!is.logical(constrain) || length(constrain) != 1) {
+    stop("'sliding' must be a logical scalar")
+  }
+  if (!is.numeric(conf) || length(conf) != 1) {
+    stop("'conf' must be a numeric scalar (in (0,1))")
+  }
+  if (conf <= 0 || conf >= 1) {
+    stop("'conf' must be in (0,1)")
+  }
+  bias_adjust <- match.arg(bias_adjust)
+  conf_scale <- match.arg(conf_scale)
+  # Check that the value of b satisfies the inequality in Proposition 4.1
+  # of Berghaus and Bucher (2018)
+  k_n <- floor(length(data) / b)
+  if (b < sqrt(k_n)) {
+    b_ok <- FALSE
+    warn1 <- "b is too small"
+  } else if (b > k_n ^ 2) {
+    b_ok <- FALSE
+    warn1 <- "b is too large"
+  } else {
+    b_ok <- TRUE
+  }
+  if (!b_ok) {
+    warn2 <- "Estimates of uncertainty will be missing"
+    if (bias_adjust == "BB3") {
+      bias_adjust <- "BB1"
+      warn3 <- "'bias_adjust' has been changed to ''BB1''"
+    }
+    warning("\n", warn1, "\n", warn2, "\n", warn3)
+  }
+  # A function that returns N2015 and BB2018 estimates of theta
+  # (constrained to (0, 1] if constrain = TRUE))
+  spm_estimates <- function(data) {
+    # Calculate the block maxima
     if (sliding) {
       temp <- sliding_maxima(data, b)
-    } else {
+    } else{
       temp <- disjoint_maxima(data, b)
     }
     # Extract x ~ F (only xs contributing to y are included) and y ~ G
@@ -75,61 +164,199 @@ spm_mle <- function(data, b, sliding = TRUE, constrain = TRUE, conf = NULL,
     Fhat <- stats::ecdf(x)
     # Evaluate Fx at y
     Fhaty <- Fhat(y)
-    # `Bias-adjust' the empirical c.d.f. of based on the Xs: by subtracting b in
-    # numerator and denominator we remove Xs that are in the same block as Y
-    # We use of m-b in the denominator rather than the m-b+1 in Northrop (2015)
-    m <- length(x)
-    Fhaty_ba <- (m * Fhaty - b) / (m - b)
-    # Calculate the estimate of theta
-    log_v <- b * log(Fhaty_ba)
-    theta_mle <- -1 / mean(log_v)
-    # For the bootstrap return only the log of the (unconstrained) estimate
-    if (for_boot) {
-      return(log(theta_mle))
+    if (bias_adjust == "N") {
+      # `Bias-adjust' the empirical c.d.f. of Y based on the Xs: by subtracting
+      # b in numerator and denominator we remove Xs that are in the same block
+      # as Y. We use m-b in the denominator rather than the m-b+1 in
+      # Northrop (2015)
+      m <- length(x)
+      Fhaty <- (m * Fhaty - b) / (m - b)
+      # In the unlikely event that an element of Fhaty is equal to zero,
+      # i.e. a block maximum is less than all the data from outside that
+      # block, we force Fhaty to be positive
+      Fhaty <- ifelse(Fhaty == 0, 1 / (m - b + length(y)), Fhaty)
+    }
+    # Calculate the estimate of theta:
+    # theta_N: Northrop (2015) and theta_BB: Berghaus and Bucher (2018)
+    theta_N <- -1 / mean(b * log(Fhaty))
+    theta_BB <- 1 / (b * mean(1 - Fhaty))
+    # Estimate sigma2_dj based on Section 4 of Berghaus and Bucher (2018)
+    # We require the disjoint maxima to do this.  If sliding = TRUE then
+    # pass these to spm_sigmahat_dj using the dj_maxima argument
+    # Only do this is b_ok = TRUE
+    if (b_ok) {
+      if (sliding) {
+        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b,
+                                        dj_maxima = disjoint_maxima(data, b))
+      } else {
+        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b, dj_maxima = temp)
+      }
+      # If sliding = TRUE then estimate sigma2hat_sl
+      # Otherwise use sigma2hat_dj
+      if (sliding) {
+        sigma2hat_N <- sigma2hat_dj[2] - (3 - 4 * log(2)) / theta_N ^ 2
+        sigma2hat_BB <- sigma2hat_dj[1] - (3 - 4 * log(2)) / theta_BB ^ 2
+      } else {
+        sigma2hat_N <- sigma2hat_dj[2]
+        sigma2hat_BB <- sigma2hat_dj[1]
+      }
+    }
+    # Estimate the sampling variances of the estimators
+    theta <- c(theta_N, theta_BB)
+    if (b_ok) {
+      vars <- theta ^ 4 * c(sigma2hat_N, sigma2hat_BB) / k_n
+    } else {
+      vars <- c(NA, NA)
+    }
+    # Perform BB2018 bias-adjustment if required
+    if (bias_adjust == "BB3") {
+      theta_N <- theta_N * (1 - 1 / k_n) - theta_N ^ 3 * sigma2hat_N / k_n
+      theta_BB <- theta_BB * (1 - 1 / k_n) - theta_BB ^ 3 * sigma2hat_BB / k_n
+      theta <- c(theta_N, theta_BB)
+    } else if (bias_adjust == "BB1") {
+      theta_N <- theta_N * (1 - 1 / k_n)
+      theta_BB <- theta_BB * (1 - 1 / k_n)
+      theta <- c(theta_N, theta_BB)
     }
     # Constrain to (0, 1] if required
     if (constrain) {
-      theta_mle <- pmin(theta_mle, 1)
+      theta <- pmin(theta, 1)
     }
-    return(theta_mle)
+    se <- sqrt(vars)
+    return(list(theta = theta, se = se))
   }
+  # End of function spm_estimates() ----------
+  #
   # Find the point estimate of theta and the raw data that contribute to it
-  theta_mle <- spm_estimates(data = data, for_boot = FALSE)
-  # Use Berghaus and Bucher (2018) to estimate the SEs
-
-  # If conf is NULL don't do any boostrapping.  Only return the MLE.
-  if (is.null(conf)) {
-    return(list(theta_mle = theta_mle))
+  res <- spm_estimates(data = data)
+  # Calculate confidence intervals
+  z_val <- stats::qnorm(1 - (1 - conf) / 2)
+  if (conf_scale == "theta") {
+    lower <- res$theta - z_val * res$se
+    upper <- res$theta + z_val * res$se
+  } else {
+    lower <- exp(log(res$theta) - z_val * res$se / res$theta)
+    upper <- exp(log(res$theta) + z_val * res$se / res$theta)
   }
-  # Find the optimal value of the mean block length to use in boot::tsboot().
-  l_opt <- np::b.star(data)[1]
-  # Do the block bootstrap
-  theta_boot <- boot::tsboot(tseries = data, statistic = spm_estimates, R = R,
-                             l = l_opt, sim = "geom", for_boot = TRUE)
-  theta_se <- stats::sd(exp(theta_boot$t))
-  # Calculate bootstrap CIs for log(theta)
-  ci_log_theta <- boot::boot.ci(theta_boot, conf = conf / 100, type = "basic",
-                                index = 1)
-  boot_low <- ci_log_theta$basic[,4]
-  boot_up <- ci_log_theta$basic[,5]
-  conf_int <- c(pmin(exp(boot_low), 1), pmin(exp(boot_up), 1))
-  return(list(theta_mle = theta_mle, theta_se = theta_se, theta_ci = conf_int))
+  # Constrain to (0, 1] if required
+  if (constrain) {
+    lower <- pmin(lower, 1)
+    lower <- pmax(lower, 0)
+    upper <- pmin(upper, 1)
+  }
+  res$lower <- lower
+  res$upper <- upper
+  estimator_names <- c("N2015", "BB2018")
+  names(res$theta) <- estimator_names
+  names(res$se) <- estimator_names
+  names(res$lower) <- estimator_names
+  names(res$upper) <- estimator_names
+  res$call <- Call
+  return(res)
 }
 
-#' BB
+#' Estimates \eqn{\sigma_{dj}^2}
 #'
-#' Add description
+#' Estimates the value of \eqn{\sigma_{dj}^2}, a variance involved in
+#' Sections 3, 4 and 5 of Berghaus and Bucher (2018).
+#' These estimates are required in \code{\link{spm_mle}}, which estimates
+#' the extremal index using the methods described in Northrop (2015) and
+#' Berghaus and Bucher (2018), in order to perform bias-adjustment and
+#' estimation of uncertainty.
 #'
 #' @param data A numeric vector of raw data.
-#' @details Add details
-#' @return Return
-#' @seealso \code{\link{spm_mle}}.
-#' @references Northrop, P. J. (2015) \emph{An efficient semiparametric maxima
-#' estimator of the extremal index} Extremes, \strong{18}(4), 585-603.
+#' @param b A numeric scalar.  The block size.
+#' @param dj_maxima A list returned from a call
+#'   \code{disjoint_maxima(data, b)} to \code{\link{disjoint_maxima}}.
+#'   If this isn't supplied then this call is made inside
+#'   \code{spm_sigmahat_dj}.
+#' @param check A logical scalar.  Used only to check this function during
+#'   development.  If \code{check = TRUE} then a matrix with 5 columns is
+#'   returned, each columns containing the result of 5 different ways to
+#'   calculate the middle term of Bhatnj in the second line of the equation
+#'   displayed midpage on page 2319 of Berghaus and Bucher (2018).
+#' @details The computations follow page 2319 of Berghaus and Bucher (2018),
+#'   which relates to the estimator given in equation (1.4) on page 2309
+#'   of that paper. Also calculated is an analogous estimate based on the,
+#'   asymptotically equivalent, estimator proposed in Northrop (2015),
+#'   given in equation (1.3) on page 2309 of Berghaus and Bucher (2018).
+#' @return A vector of length two.  The first component is the estimate
+#'  given by the first part of the penultimate displayed equation on page
+#'  2319 of Berghaus and Bucher (2018). The second component is an analogous
+#'  estimate based on the estimator proposed in Northrop (2015).
+#' @seealso \code{\link{spm_mle}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the K-gaps model.
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
 #' @examples
-#' spm_mle(newlyn, 20)
+#' spm_sigma_hat(newlyn, 20)
 #' @export
-bb_var <- function(data, b){
-  return()
+spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
+  if (missing(dj_maxima)){
+    dj_maxima <- disjoint_maxima(data, b)
+  }
+  # y: disjoint block maxima, x: (only) the raw values that contribute to y
+  x <- dj_maxima$x
+  y <- dj_maxima$y
+  Fhat <- stats::ecdf(x)
+  # The ecdf of the data evaluated at the block maxima
+  Nhat <- Fhat(y)
+  # The number of blocks and the number of raw observationsthat contribute
+  k_n <- length(y)
+  m <- length(x)
+  # BB2018
+  Zhat <- b * (1 - Nhat)
+  That <- mean(Zhat)
+  # N2015
+  ZhatN <- -b * log(Nhat)
+  ThatN <- mean(ZhatN)
+  # Functions to return the
+  BB2018_fn <- function(x, y) {
+    return(mean(1 - stats::ecdf(x)(y)))
+  }
+  loobBB2018_fn <- function(x, block, xvec, y) {
+    xx <- xvec[block != x]
+    return(mean(1 - stats::ecdf(xx)(y)))
+  }
+  # In the unlikely event that an element of Fhaty is equal to zero,
+  # i.e. a block maximum is less than all the data from outside that
+  # block, we force Fhaty to be positive
+  my_log <- function(x, b) {
+    ifelse(x == 0, -log(m - b + k_n), log(x))
+  }
+  loobN2015_fn <- function(x, block, xvec, y) {
+    xx <- xvec[block != x]
+    return(mean(-my_log(stats::ecdf(xx)(y))))
+  }
+  # block indicator
+  block <- rep(1:k_n, each = b)
+  Usum <- b * tapply(x, block, BB2018_fn, y = y)
+  UsumN <- b * vapply(1:k_n, loobN2015_fn, 0, block = block, xvec = x, y = y)
+  UsumN <-  k_n * ThatN - (k_n - 1) * UsumN
+  if (check) {
+    # 4 other ways to calculate Usum
+    Uhats <- Fhat(x)
+    Usum1 <- colSums(vapply(Uhats, function(x) x > 1 - Zhat / b, rep(0, k_n)))
+    Usum2 <- colSums(vapply(Uhats, function(x) x > Nhat, rep(0, k_n)))
+    Usum3 <- colSums(vapply(x, function(x) x > y, rep(0, k_n)))
+    # Usum4 is the analogous calculation to UsumN
+    Usum4 <- b * vapply(1:k_n, loobBB2018_fn, 0, block = block, xvec = x, y = y)
+    Usum4 <-  k_n * That - (k_n - 1) * Usum4
+    # Aggregate the first 3
+    Usum1 <- tapply(Usum1, block, sum) / k_n
+    Usum2 <- tapply(Usum2, block, sum) / k_n
+    Usum3 <- tapply(Usum3, block, sum) / k_n
+    return(cbind(Usum, Usum1, Usum2, Usum3, Usum4))
+  }
+  Bhat <- Zhat + Usum - 2 * That
+  BhatN <- ZhatN + UsumN - 2 * ThatN
+  # Bhat is mean-centred, but BhatN isn't (quite)
+  BhatN <- BhatN - mean(BhatN)
+  sigmahat2_dj <- mean(Bhat ^ 2)
+  sigmahat2_djN <- mean(BhatN ^ 2)
+  return(c(sigmahat2_dj, sigmahat2_djN))
 }

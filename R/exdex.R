@@ -37,6 +37,17 @@ NULL
 #'   585-603.  \url{https://doi.org/10.1007/s10687-015-0221-5}
 "newlyn"
 
+#' Daily log returns of the Standard and Poor (S&P) 500 index
+#'
+#' Daily log returns of the S&P 500 index, that is, the log of the ratio of
+#' successive daily closing prices, from 3rd January 1990 to 9th October 2018.
+#'
+#' @format A vector of length 7250, created using \code{\link[zoo]{zoo}}
+#'   with an "index" attribute giving the date of the corresponding negated
+#'   log return.
+#' @source Yahoo finance \url{https://finance.yahoo.com/quote/^SPX/history/}
+"sp500"
+
 #' Worldwide Terrorism Incidents
 #'
 #' A database of information about terrorism incidents produced by the

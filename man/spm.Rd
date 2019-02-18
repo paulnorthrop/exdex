@@ -98,9 +98,6 @@ spm(-as.vector(sp500[2:6550]), 250)
 
 spm(newlyn, 20)
 spm(newlyn, 20, sliding = FALSE)
-
-spm(newlyn, 20, sliding = FALSE, conf = 95)
-spm(newlyn, 20, conf = 95)
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

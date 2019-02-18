@@ -85,9 +85,6 @@
 #'
 #' spm(newlyn, 20)
 #' spm(newlyn, 20, sliding = FALSE)
-#'
-#' spm(newlyn, 20, sliding = FALSE, conf = 95)
-#' spm(newlyn, 20, conf = 95)
 #' @export
 spm <- function(data, b, sliding = TRUE,
                     bias_adjust = c("BB3", "BB1", "N", "none"),

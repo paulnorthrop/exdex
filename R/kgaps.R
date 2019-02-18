@@ -46,7 +46,7 @@
 #'   }
 #' @seealso \code{\link{kgaps_stats}} for the calculation of sufficient
 #'   statistics for the K-gaps model.
-#' @seealso \code{\link{spm_mle}} for estimation of the extremal index
+#' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link[revdbayes]{kgaps_post}} for Bayesian inference
 #'   about \eqn{\theta} using the K-gaps model.

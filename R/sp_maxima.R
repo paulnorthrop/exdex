@@ -81,18 +81,18 @@
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
 #' @examples
-#' spm_mle(-as.vector(sp500[2:6550]), 250)
+#' spm(-as.vector(sp500[2:6550]), 250)
 #'
-#' spm_mle(newlyn, 20)
-#' spm_mle(newlyn, 20, sliding = FALSE)
+#' spm(newlyn, 20)
+#' spm(newlyn, 20, sliding = FALSE)
 #'
-#' spm_mle(newlyn, 20, sliding = FALSE, conf = 95)
+#' spm(newlyn, 20, sliding = FALSE, conf = 95)
 #' # When sliding = TRUE bootstrapping is slow
 #' \dontrun{
-#' spm_mle(newlyn, 20, conf = 95)
+#' spm(newlyn, 20, conf = 95)
 #' }
 #' @export
-spm_mle <- function(data, b, sliding = TRUE,
+spm <- function(data, b, sliding = TRUE,
                     bias_adjust = c("BB3", "BB1", "N", "none"),
                     constrain = TRUE, conf = 0.95,
                     conf_scale = c("theta", "log_theta")){
@@ -259,7 +259,7 @@ spm_mle <- function(data, b, sliding = TRUE,
 #'
 #' Estimates the value of \eqn{\sigma_{dj}^2}, a variance involved in
 #' Sections 3, 4 and 5 of Berghaus and Bucher (2018).
-#' These estimates are required in \code{\link{spm_mle}}, which estimates
+#' These estimates are required in \code{\link{spm}}, which estimates
 #' the extremal index using the methods described in Northrop (2015) and
 #' Berghaus and Bucher (2018), in order to perform bias-adjustment and
 #' estimation of uncertainty.
@@ -284,7 +284,7 @@ spm_mle <- function(data, b, sliding = TRUE,
 #'  given by the first part of the penultimate displayed equation on page
 #'  2319 of Berghaus and Bucher (2018). The second component is an analogous
 #'  estimate based on the estimator proposed in Northrop (2015).
-#' @seealso \code{\link{spm_mle}} for maximum likelihood estimation of the
+#' @seealso \code{\link{spm}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}

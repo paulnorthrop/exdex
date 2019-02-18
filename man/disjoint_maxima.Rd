@@ -29,11 +29,11 @@ If \code{length(x)} is not an integer multiple of \code{b} then
   \code{na.rm = TRUE} is passed to \code{max} so that blocks containing
   missing values produce a non-missing result.
 
-  \code{disjoint_maxima} is used within \code{\link{spm_mle}} to perform
+  \code{disjoint_maxima} is used within \code{\link{spm}} to perform
   semiparametric estimation of the extremal index based on block maxima.
 }
 \seealso{
-\code{\link{spm_mle}} for semiparametric estimation of the
+\code{\link{spm}} for semiparametric estimation of the
   extremal index based on block maxima.
 
 \code{\link{sliding_maxima}} for the calculation of the maxima

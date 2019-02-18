@@ -31,7 +31,7 @@ A vector of length two.  The first component is the estimate
 \description{
 Estimates the value of \eqn{\sigma_{dj}^2}, a variance involved in
 Sections 3, 4 and 5 of Berghaus and Bucher (2018).
-These estimates are required in \code{\link{spm_mle}}, which estimates
+These estimates are required in \code{\link{spm}}, which estimates
 the extremal index using the methods described in Northrop (2015) and
 Berghaus and Bucher (2018), in order to perform bias-adjustment and
 estimation of uncertainty.
@@ -56,6 +56,6 @@ estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
 }
 \seealso{
-\code{\link{spm_mle}} for maximum likelihood estimation of the
+\code{\link{spm}} for maximum likelihood estimation of the
   extremal index \eqn{\theta} using the K-gaps model.
 }

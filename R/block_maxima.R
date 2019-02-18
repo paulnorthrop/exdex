@@ -13,7 +13,7 @@
 #'   \code{max} so that blocks containing missing values produce a
 #'   non-missing result.
 #'
-#'   \code{sliding_maxima} is used within \code{\link{spm_mle}} to perform
+#'   \code{sliding_maxima} is used within \code{\link{spm}} to perform
 #'   semiparametric estimation of the extremal index based on block maxima.
 #' @return A list containing
 #'   \itemize{
@@ -21,7 +21,7 @@
 #'     \item {\code{x} : } {the input \code{x}, included for
 #'       consistency with the output from \code{\link{disjoint_maxima}}}.
 #'   }
-#' @seealso \code{\link{spm_mle}} for semiparametric estimation of the
+#' @seealso \code{\link{spm}} for semiparametric estimation of the
 #'   extremal index based on block maxima.
 #' @seealso \code{\link{disjoint_maxima}} for the calculation of the maxima
 #'   over disjoint blocks.
@@ -50,7 +50,7 @@ sliding_maxima <- function(x, b = 1){
 #'   \code{na.rm = TRUE} is passed to \code{max} so that blocks containing
 #'   missing values produce a non-missing result.
 #'
-#'   \code{disjoint_maxima} is used within \code{\link{spm_mle}} to perform
+#'   \code{disjoint_maxima} is used within \code{\link{spm}} to perform
 #'   semiparametric estimation of the extremal index based on block maxima.
 #' @return A list containing
 #'   \itemize{
@@ -58,7 +58,7 @@ sliding_maxima <- function(x, b = 1){
 #'     \item {\code{x} : } {the subset of the input \code{x} that contributes
 #'       to the values in \code{y}.}
 #'   }
-#' @seealso \code{\link{spm_mle}} for semiparametric estimation of the
+#' @seealso \code{\link{spm}} for semiparametric estimation of the
 #'   extremal index based on block maxima.
 #' @seealso \code{\link{sliding_maxima}} for the calculation of the maxima
 #'   over sliding blocks.

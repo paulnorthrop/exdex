@@ -81,7 +81,7 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 \code{\link{kgaps_stats}} for the calculation of sufficient
   statistics for the K-gaps model.
 
-\code{\link{spm_mle}} for estimation of the extremal index
+\code{\link{spm}} for estimation of the extremal index
   \eqn{\theta} using a semiparametric maxima method.
 
 \code{\link[revdbayes]{kgaps_post}} for Bayesian inference

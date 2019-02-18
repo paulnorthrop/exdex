@@ -65,7 +65,7 @@
 #'   extreme values. Ph.D. thesis, Lancaster University.
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
-#' @seealso \code{\link{spm_mle}} for estimation of the extremal index
+#' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.90)

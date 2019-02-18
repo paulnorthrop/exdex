@@ -287,7 +287,7 @@ spm <- function(data, b, sliding = TRUE,
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
 #' @examples
-#' spm_sigma_hat(newlyn, 20)
+#' spm_sigmahat_dj(newlyn, 20)
 #' @export
 spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
   if (missing(dj_maxima)){

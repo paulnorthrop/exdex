@@ -44,7 +44,7 @@ The computations follow page 2319 of Berghaus and Bucher (2018),
   given in equation (1.3) on page 2309 of Berghaus and Bucher (2018).
 }
 \examples{
-spm_sigma_hat(newlyn, 20)
+spm_sigmahat_dj(newlyn, 20)
 }
 \references{
 Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo

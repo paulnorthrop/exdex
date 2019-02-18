@@ -1,20 +1,29 @@
 #' exdex: Estimation of the Extremal Index
 #'
-#' Performs frequentist inference for the extremal index using the methodologies
-#' described in Suveges and Davison (2010)  \url{http://dx.doi.org/10.1214/09-AOAS292} and in
-#' Northrop (2015) \url{http://dx.doi.org/10.1007/s10687-015-0221-5}.
+#' Performs frequentist inference about the extremal index using the
+#' methodologies proposed in Northrop (2015), Suveges (2007) and
+#' Suveges and Davison (2010).
 #'
-#' @details Add details.
+#' @details
+#' Three
+#' \itemize{
+#'   \item{Semiparametric maxima estimator(Northrop, 2015)}
+#'   \item{Iterated weighted least squares estimator: (Suveges, 2007)}
+#'   \item{\eqn{K}-gaps estimator (Suveges and Davision, 2010)}
+#' }
 #'
 #'   See \code{vignette("exdex-vignette", package = "exdex")} for an
 #'   overview of the package.
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' @references Suveges, M. (2007) Likelihood estimation of the extremal
+#'   index. \emph{Extremes}, \strong{10}, 41-55.
+#'   \url{http://dx.doi.org/10.1007/s10687-007-0034-2}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{http://dx.doi.org/10.1214/09-AOAS292}
-#' @references Attalides, N. (2015) Threshold-based extreme value modelling,
-#'   PhD thesis, University College London.
-#'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @docType package
 #' @name exdex
 #' @import methods

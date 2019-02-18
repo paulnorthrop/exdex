@@ -7,7 +7,7 @@ pjn <- function (data, tmin, tmax, ...) {
                dimnames = list(NULL, c("Lower", "Upper")))
   for (i in 1:x) {
     p <- quant[i]/100
-    thresh <- quantile(data, probs = p)
+    thresh <- stats::quantile(data, probs = p)
     theta <- kgaps_mle(data, thresh, conf = 95)
     mplot[i, 2] <- p
     mplot[i, 1] <- theta$theta_mle

@@ -8,7 +8,7 @@
 #' @param k An integer scalar
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.99)
-#' x <- find_clusters(newlyn, thresh)
+#' #x <- find_clusters(newlyn, thresh)
 find_clusters <- function(data, thresh, k = 1) {
   if (any(is.na(data))) {
     stop("No missing values are allowed in ''data''")

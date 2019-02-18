@@ -229,7 +229,7 @@ kgaps_loglik <- function(theta, N0, N1, sum_qs){
 # ============================== kgaps_conf_int ===============================
 
 kgaps_conf_int <- function(theta_mle, ss, conf = 95) {
-  cutoff <- qchisq(conf / 100, df = 1)
+  cutoff <- stats::qchisq(conf / 100, df = 1)
   theta_list <- c(list(theta = theta_mle), ss)
   max_loglik <- do.call(kgaps_loglik, theta_list)
   ob_fn <- function(theta) {
@@ -240,10 +240,10 @@ kgaps_conf_int <- function(theta_mle, ss, conf = 95) {
   ci_low <- 0
   ci_up <- 1
   if (ss$N1 > 0) {
-    ci_low <- uniroot(ob_fn, c(0, theta_mle))$root
+    ci_low <- stats::uniroot(ob_fn, c(0, theta_mle))$root
   }
   if (ss$N0 > 0) {
-    ci_up <- uniroot(ob_fn, c(theta_mle, 1))$root
+    ci_up <- stats::uniroot(ob_fn, c(theta_mle, 1))$root
   }
   return(c(ci_low, ci_up))
 }

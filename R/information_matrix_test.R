@@ -70,7 +70,7 @@ kgaps_imt <- function(data, thresh, k = 1) {
     Vn <- colMeans((dc - temp) ^ 2)
     test_stats <- (n_u - 1) * Dn ^ 2 / Vn
 #    test_stats <- n_u * Dn ^ 2 / Vn # mev
-    pvals <- pchisq(test_stats, df = 1, lower.tail = FALSE)
+    pvals <- stats::pchisq(test_stats, df = 1, lower.tail = FALSE)
     theta <- rbind(theta, thetahat)
     T_mat <- rbind(T_mat, test_stats)
     p_mat <- rbind(p_mat, pvals)

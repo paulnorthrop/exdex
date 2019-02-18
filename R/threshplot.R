@@ -57,7 +57,7 @@ threshplot <- function (data, tmin, tmax, conf = 95, k = 1, ... ){
 
   p <- quant/100
 
-  thresh <- quantile( data, probs = p )
+  thresh <- stats::quantile( data, probs = p )
 
   mplot<- matrix ( 0 ,nrow = x, ncol = 2, byrow = TRUE, dimnames = list( NULL ,
                    c("Theta", "Quantile")))

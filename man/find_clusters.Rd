@@ -18,5 +18,5 @@ Describe
 }
 \examples{
 thresh <- quantile(newlyn, probs = 0.99)
-x <- find_clusters(newlyn, thresh)
+#x <- find_clusters(newlyn, thresh)
 }

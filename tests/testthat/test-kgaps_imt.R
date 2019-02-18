@@ -3,7 +3,7 @@ context("kgaps_imt")
 # Check that when calling kgaps_imt() with vector arguments thresh and k gives
 # the same results as calling kgaps_imt() repeatedly with scalar arguments
 
-thresh <- quantile(newlyn, probs = c(0.85, 0.90, 0.95))
+thresh <- stats::quantile(newlyn, probs = c(0.85, 0.90, 0.95))
 k_vals <- 1:4
 all_res <- kgaps_imt(newlyn, thresh, k_vals)
 all_IMT <- all_res$IMT

@@ -65,7 +65,7 @@ Estimates the extremal index \eqn{\theta} using a semiparametric block
 maxima estimator of Northrop (2015) and a variant of this estimator
 studied by Berghaus and Bucher (2018).  Estimates of uncertainty are
 calculated using the asymptotic theory developed by Berghaus and
-Bucher (2018) and (optionally) a block bootstrap.
+Bucher (2018).
 }
 \details{
 The extremal index \eqn{\theta} is estimated using the
@@ -100,10 +100,7 @@ spm(newlyn, 20)
 spm(newlyn, 20, sliding = FALSE)
 
 spm(newlyn, 20, sliding = FALSE, conf = 95)
-# When sliding = TRUE bootstrapping is slow
-\dontrun{
 spm(newlyn, 20, conf = 95)
-}
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

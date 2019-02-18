@@ -4,7 +4,7 @@
 #' maxima estimator of Northrop (2015) and a variant of this estimator
 #' studied by Berghaus and Bucher (2018).  Estimates of uncertainty are
 #' calculated using the asymptotic theory developed by Berghaus and
-#' Bucher (2018) and (optionally) a block bootstrap.
+#' Bucher (2018).
 #'
 #' @param data A numeric vector of raw data.
 #' @param b A numeric scalar.  The block size.
@@ -87,10 +87,7 @@
 #' spm(newlyn, 20, sliding = FALSE)
 #'
 #' spm(newlyn, 20, sliding = FALSE, conf = 95)
-#' # When sliding = TRUE bootstrapping is slow
-#' \dontrun{
 #' spm(newlyn, 20, conf = 95)
-#' }
 #' @export
 spm <- function(data, b, sliding = TRUE,
                     bias_adjust = c("BB3", "BB1", "N", "none"),

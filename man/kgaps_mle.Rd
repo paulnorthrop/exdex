@@ -60,12 +60,6 @@ thresh <- quantile(newlyn, probs = 0.90)
 kgaps_mle(newlyn, thresh)
 # MLE, SE and 95\% confidence interval
 kgaps_mle(newlyn, thresh, conf = 95)
-
-### RAND Database of Worldwide Terrorism Incidents
-fatalities <- terrorism[, "Fatalities"]
-x <- log(fatalities[fatalities > 0])
-u <- log(10)
-kgaps_mle(x, u)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

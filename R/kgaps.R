@@ -58,12 +58,6 @@
 #' kgaps_mle(newlyn, thresh)
 #' # MLE, SE and 95% confidence interval
 #' kgaps_mle(newlyn, thresh, conf = 95)
-#'
-#' ### RAND Database of Worldwide Terrorism Incidents
-#' fatalities <- terrorism[, "Fatalities"]
-#' x <- log(fatalities[fatalities > 0])
-#' u <- log(10)
-#' kgaps_mle(x, u)
 #' @export
 kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE, conf = NULL) {
   if (!is.numeric(thresh) || length(thresh) != 1) {

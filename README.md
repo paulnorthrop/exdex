@@ -3,6 +3,8 @@
 exdex
 =====
 
+[![Travis-CI Build Status](https://travis-ci.org/paulnorthrop/exdex.svg?branch=master)](https://travis-ci.org/paulnorthrop/exdex) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&svg=true)](https://ci.appveyor.com/project/paulnorthrop/exdex) [![Coverage Status](https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master)](https://codecov.io/github/paulnorthrop/exdex?branch=master)
+
 Estimation of the Extremal Index
 --------------------------------
 

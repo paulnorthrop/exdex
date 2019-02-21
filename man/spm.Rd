@@ -31,12 +31,10 @@ as explained at the end of Section 5 of Berghaus and Bucher (2018).
 If \code{bias_adjust = "none"} then no bias-adjustment is performed.}
 
 \item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
-any estimates or confidence limits that are greater than 1 are set to 1,
+any estimates that are greater than 1 are set to 1,
 that is, they are constrained to lie in (0, 1].  This is carried out
 \emph{after} any bias-adjustment.  Otherwise,
-estimates and confidence limits that are greater than 1 may be obtained.
-If \code{constrain = TRUE} then any lower confidence limits that are
-less than 0 are set to 0.}
+estimates that are greater than 1 may be obtained.}
 
 \item{conf}{A numeric scalar.  The confidence level required:
 100\code{conf}\% confidence intervals are calculated.}

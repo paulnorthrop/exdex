@@ -24,12 +24,10 @@
 #'   as explained at the end of Section 5 of Berghaus and Bucher (2018).
 #'   If \code{bias_adjust = "none"} then no bias-adjustment is performed.
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
-#'   any estimates or confidence limits that are greater than 1 are set to 1,
+#'   any estimates that are greater than 1 are set to 1,
 #'   that is, they are constrained to lie in (0, 1].  This is carried out
 #'   \emph{after} any bias-adjustment.  Otherwise,
-#'   estimates and confidence limits that are greater than 1 may be obtained.
-#'   If \code{constrain = TRUE} then any lower confidence limits that are
-#'   less than 0 are set to 0.
+#'   estimates that are greater than 1 may be obtained.
 #' @param conf  A numeric scalar.  The confidence level required:
 #'   100\code{conf}\% confidence intervals are calculated.
 #' @param conf_scale A character scalar.   If \code{conf_scale = "theta"}
@@ -212,40 +210,27 @@ spm <- function(data, b, sliding = TRUE,
       theta_BB <- theta_BB * (1 - 1 / k_n)
       theta <- c(theta_N, theta_BB)
     }
+    # Save the unconstrained estimates, so that they can be returned
+    unconstrained_theta <- theta
     # Constrain to (0, 1] if required
     if (constrain) {
       theta <- pmin(theta, 1)
     }
     se <- sqrt(vars)
-    return(list(theta = theta, se = se))
+    return(list(theta = theta, se = se,
+                unconstrained_theta = unconstrained_theta))
   }
   # End of function spm_estimates() ----------
   #
   # Find the point estimate of theta and the raw data that contribute to it
   res <- spm_estimates(data = data)
-  # Calculate confidence intervals
-  z_val <- stats::qnorm(1 - (1 - conf) / 2)
-  if (conf_scale == "theta") {
-    lower <- res$theta - z_val * res$se
-    upper <- res$theta + z_val * res$se
-  } else {
-    lower <- exp(log(res$theta) - z_val * res$se / res$theta)
-    upper <- exp(log(res$theta) + z_val * res$se / res$theta)
-  }
-  # Constrain to (0, 1] if required
-  if (constrain) {
-    lower <- pmin(lower, 1)
-    lower <- pmax(lower, 0)
-    upper <- pmin(upper, 1)
-  }
-  res$lower <- lower
-  res$upper <- upper
   estimator_names <- c("N2015", "BB2018")
   names(res$theta) <- estimator_names
   names(res$se) <- estimator_names
-  names(res$lower) <- estimator_names
-  names(res$upper) <- estimator_names
+  names(res$unconstrained_theta) <- estimator_names
+  res$b <- b
   res$call <- Call
+  class(res) <- "exdex"
   return(res)
 }
 

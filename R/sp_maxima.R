@@ -36,7 +36,20 @@
 #'   estimated for \eqn{log\theta} and then transformed back to the
 #'   \eqn{\theta}-scale.
 #' @details The extremal index \eqn{\theta} is estimated using the
-#'   semiparametric maxima estimator of Northrop (2015).
+#'   semiparametric maxima estimator of Northrop (2015) and variant
+#'   of this studied by Berghaus and Bucher (2018).  In each case a sample
+#'   of 'data' is derived from the input data \code{data}, based on the
+#'   empirical distribution function of these data evaluated at the
+#'   maximum values of  of blocks of \code{b} contiguous values in \code{data}.
+#'
+#'   The estimators are based on an assumption that these 'data' are sampled
+#'   approximately from an exponential distribution with mean \eqn{1/\theta}.
+#'   For details see page 2309 of Berghaus and Bucher (2018), where the
+#'   'data' for the Northrop (2015) estimator are denoted \eqn{Y} and
+#'   those for the Berghaus and Bucher (2018) are denoted \eqn{Z}.
+#'   For convenience, we will refer to these values as the
+#'   \eqn{Y}-data and the \eqn{Z}-data.
+#'
 #'   If \code{sliding = TRUE} then the function uses sliding block maxima,
 #'   that is, the largest value observed in \emph{all}
 #'   (\code{length(data) - b + 1}) blocks of \code{b} observations.
@@ -61,17 +74,29 @@
 #'     }
 #' @return A list containing
 #'   \itemize{
-#'     \item {\code{theta_mle} : } {The maximum likelihood estimate (MLE) of
-#'       \eqn{\theta}.}
-#'     \item {\code{theta_se} : } {The estimated standard error of the MLE.}
-#'     \item {\code{theta_ci} : } {(If \code{conf} is supplied) a numeric
-#'       vector of length two giving lower and upper confidence limits for
-#'       \eqn{\theta}.}
+#'     \item {\code{theta} : } {A vector containing the estimates \eqn{\theta}
+#'       resulting from the two variants of the semiparametric estimator,
+#'       labelled N2015 for Northrop (2015) and BB2018 for
+#'       Berghaus and Bucher (2018).}
+#'     \item {\code{se} : } {The respective estimated standard errors.}
+#'     \item {\code{uncontrained_theta} : } {The estimates of \eqn{\theta}
+#'       without the constraint that they lie in (0, 1])}
+#'     \item {\code{N2015_data} : } {The values of the \eqn{Y}-data.}
+#'     \item {\code{BB2018_data} : } {The values of the \eqn{Z}-data.}
+#'     \item {\code{bias_val} : } {The respective values of the
+#'       bias-adjustment applied to the raw estimates.  This is only relevant
+#'       if \code{bias_adjust} is "BB3" or "BB1".  Otherwise, \code{bias_val}
+#'       is \code{NA}.}
+#'     \item {\code{bias_adjust} : } {The input value of \code{bias_adjust}.}
+#'     \item {\code{b} : } {The input value of \code{b}.}
+#'     \item {\code{call} : } {The call to \code{spm}.}
 #'   }
 #'   If \code{conf} is not supplied then only the MLE \code{theta_mle}
 #'   is returned.
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
+#' @seealso \code{\link{confint.exdex}} to estimate confidence intervals
+#'   for \eqn{theta}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}

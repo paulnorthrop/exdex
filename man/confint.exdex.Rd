@@ -5,7 +5,9 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{exdex}(object, level = 0.95, constrain = TRUE,
-  conf_scale = c("theta", "log_theta"), ...)
+  conf_scale = c("theta", "log_theta"), bias_adjust = TRUE,
+  type = c("vertical", "cholesky", "spectral", "none"), plot = FALSE,
+  ...)
 }
 \arguments{
 \item{object}{An object of class \code{"exdex"}, returned by
@@ -20,30 +22,85 @@ limits that are greater than 1 may be obtained.
 If \code{constrain = TRUE} then any lower confidence limits that are
 less than 0 are set to 0.}
 
-\item{conf_scale}{A character scalar.   If \code{conf_scale = "theta"}
-then confidence intervals are estimated for \eqn{\theta} directly.
-If \code{conf_scale = "log_theta"} then confidence intervals are first
-estimated for \eqn{log\theta} and then transformed back to the
-\eqn{\theta}-scale.}
+\item{conf_scale}{A character scalar.  Determines the scale on which
+  we use approximate large-sample normality of the estimators to
+  estimate confidence intervals.  If \code{conf_scale = "theta"}
+  then confidence intervals are estimated for \eqn{\theta} directly.
+  If \code{conf_scale = "log_theta"} then confidence intervals are first
+  estimated for \eqn{log\theta} and then transformed back to the
+  \eqn{\theta}-scale.
 
-\item{...}{Further arguments.  None are used at present.}
+  Any bias-adjustment requested in the original call to \code{\link{spm}},
+  using it's \code{bias_adjust} argument, is automatically applied here.}
+
+\item{bias_adjust}{A logical scalar.  If \code{bias_adjust = TRUE} then,
+  if appropriate, bias-adjustment is also applied to the likelihood-based
+  confidence intervals after they have been estimated.  This is performed
+  only if in the original call to \code{\link{spm}} the user specified
+  \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"}, that is,
+  \code{object$bias_adjust = "BB3"} or \code{object$bias_adjust = "BB1"}.
+  In these cases the relevant component of \code{object$bias_val} is
+  subtracted from the interval.
+
+  If \code{bias_adjust = FALSE} or \code{object$bias_adjust = "none"}
+  or \code{object$bias_adjust = "N"} then no bias-adjustment of the intervals
+  is performed.  In the latter case this is because the bias-adjustment is
+  applied in the creation of the data in object$N2015_data and
+  object$BB2018_data, on which the naive likelihood is based.}
+
+\item{type}{A character scalar.  The argument \code{type} to be passed to
+\code{\link[chandwich]{conf_intervals}} in order to estimate the
+likelihood-based intervals.  See \strong{Details}.
+Using \code{type = "none"} is \emph{not} advised because then the
+intervals are based on naive estimated standard errors.  In particular,
+if (the default) \code{sliding = TRUE} was used in the call to
+\code{\link{spm}} then the likelihood-based confidence intervals provide
+\emph{vast} underestimates of uncertainty.}
+
+\item{plot}{A logical scalar.  If \code{plot = TRUE} then a plot of the
+adjust loglikelihood is produced, using
+\code{\link[chandwich]{plot.confint}}.}
+
+\item{...}{Further arguments to be passed to
+\code{\link[chandwich]{plot.confint}}, used only if
+\code{plot = TRUE}.}
 }
 \value{
-A matrix with columns giving lower and upper confidence limits for
-  each parameter. These will be labelled as (1 - level)/2 and
-  1 - (1 - level)/2 in \% (by default 2.5\% and 97.5\%).
-  The row names are the names of the model parameters,
-  if these are available.
+A matrix with columns giving lower and upper confidence limits.
+  These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
+  (by default 2.5\% and 97.5\%).
+  The row names are a concatentation of the variant of the estimator
+  (N2015 for Northrop (2015), BB2018 for Berghaus and Bucher (2018))
+  and the type of interval
+  (sym for symmetric and lik for likelihood-based).
 }
 \description{
 \code{confint} method for objects of class \code{"exdex"}.
-Computes confidence intervals for \eqn{theta} based on an object returned
-from \code{\link{spm}}.
+Computes confidence intervals for \eqn{\theta} based on an object returned
+from \code{\link{spm}}.  Two types of interval are returned:
+(a) intervals based on approximate large-sample normality of the estimators
+of \eqn{\theta}, which are symmetric about the respective point estimates,
+and (b) likelihood-based intervals based on an adjustment of a naive
+(pseudo-) loglikelihood, using the \code{\link[chandwich]{chandwich}}
+package.
 }
 \details{
-Add details.
+The likelihood-based intervals are estimated using the
+  \code{\link[chandwich]{adjust_loglik}} function in the
+  \code{\link[chandwich]{chandwich}} package, followed by a call to
+  \code{\link[chandwich]{conf_intervals}}.
 }
 \examples{
 res <- spm(newlyn, 20)
 confint(res)
+confint(res, plot = TRUE)
+}
+\references{
+Northrop, P. J. (2015) An efficient semiparametric maxima
+estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+\url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+
+Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+\strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
 }

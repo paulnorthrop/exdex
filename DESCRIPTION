@@ -14,7 +14,8 @@ Description: Performs frequentist inference for the extremal index using the
   Suveges (2007) <doi:10.1007/s10687-007-0034-2>
   and
   Suveges and Davison (2010)  <doi:10.1214/09-AOAS292>.
-Imports: graphics,
+Imports: chandwich,
+    graphics,
     methods,
     stats,
     zoo (>= 1.6.4)

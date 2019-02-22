@@ -1,8 +1,13 @@
 #' Confidence intervals for the extremal index \eqn{\theta}
 #'
 #' \code{confint} method for objects of class \code{"exdex"}.
-#' Computes confidence intervals for \eqn{theta} based on an object returned
-#' from \code{\link{spm}}.
+#' Computes confidence intervals for \eqn{\theta} based on an object returned
+#' from \code{\link{spm}}.  Two types of interval are returned:
+#' (a) intervals based on approximate large-sample normality of the estimators
+#' of \eqn{\theta}, which are symmetric about the respective point estimates,
+#' and (b) likelihood-based intervals based on an adjustment of a naive
+#' (pseudo-) loglikelihood, using the \code{\link[chandwich]{chandwich}}
+#' package.
 #'
 #' @param object An object of class \code{"exdex"}, returned by
 #'   \code{\link{spm}}.
@@ -13,40 +18,151 @@
 #'   limits that are greater than 1 may be obtained.
 #'   If \code{constrain = TRUE} then any lower confidence limits that are
 #'   less than 0 are set to 0.
-#' @param conf_scale A character scalar.   If \code{conf_scale = "theta"}
+#' @param conf_scale A character scalar.  Determines the scale on which
+#'   we use approximate large-sample normality of the estimators to
+#'   estimate confidence intervals.  If \code{conf_scale = "theta"}
 #'   then confidence intervals are estimated for \eqn{\theta} directly.
 #'   If \code{conf_scale = "log_theta"} then confidence intervals are first
 #'   estimated for \eqn{log\theta} and then transformed back to the
 #'   \eqn{\theta}-scale.
-#' @param ... Further arguments.  None are used at present.
-#' @details Add details.
-#' @return A matrix with columns giving lower and upper confidence limits for
-#'   each parameter. These will be labelled as (1 - level)/2 and
-#'   1 - (1 - level)/2 in \% (by default 2.5\% and 97.5\%).
-#'   The row names are the names of the model parameters,
-#'   if these are available.
+#'
+#'   Any bias-adjustment requested in the original call to \code{\link{spm}},
+#'   using it's \code{bias_adjust} argument, is automatically applied here.
+#' @param bias_adjust A logical scalar.  If \code{bias_adjust = TRUE} then,
+#'   if appropriate, bias-adjustment is also applied to the likelihood-based
+#'   confidence intervals after they have been estimated.  This is performed
+#'   only if in the original call to \code{\link{spm}} the user specified
+#'   \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"}, that is,
+#'   \code{object$bias_adjust = "BB3"} or \code{object$bias_adjust = "BB1"}.
+#'   In these cases the relevant component of \code{object$bias_val} is
+#'   subtracted from the interval.
+#'
+#'   If \code{bias_adjust = FALSE} or \code{object$bias_adjust = "none"}
+#'   or \code{object$bias_adjust = "N"} then no bias-adjustment of the intervals
+#'   is performed.  In the latter case this is because the bias-adjustment is
+#'   applied in the creation of the data in object$N2015_data and
+#'   object$BB2018_data, on which the naive likelihood is based.
+#' @param type A character scalar.  The argument \code{type} to be passed to
+#'   \code{\link[chandwich]{conf_intervals}} in order to estimate the
+#'   likelihood-based intervals.  See \strong{Details}.
+#'   Using \code{type = "none"} is \emph{not} advised because then the
+#'   intervals are based on naive estimated standard errors.  In particular,
+#'   if (the default) \code{sliding = TRUE} was used in the call to
+#'   \code{\link{spm}} then the likelihood-based confidence intervals provide
+#'   \emph{vast} underestimates of uncertainty.
+#' @param plot A logical scalar.  If \code{plot = TRUE} then a plot of the
+#'   adjust loglikelihood is produced, using
+#'   \code{\link[chandwich]{plot.confint}}.
+#' @param ... Further arguments to be passed to
+#'   \code{\link[chandwich]{plot.confint}}, used only if
+#'   \code{plot = TRUE}.
+#' @details The likelihood-based intervals are estimated using the
+#'   \code{\link[chandwich]{adjust_loglik}} function in the
+#'   \code{\link[chandwich]{chandwich}} package, followed by a call to
+#'   \code{\link[chandwich]{conf_intervals}}.
+#' @return A matrix with columns giving lower and upper confidence limits.
+#'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
+#'   (by default 2.5\% and 97.5\%).
+#'   The row names are a concatentation of the variant of the estimator
+#'   (N2015 for Northrop (2015), BB2018 for Berghaus and Bucher (2018))
+#'   and the type of interval
+#'   (sym for symmetric and lik for likelihood-based).
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
 #' @examples
 #' res <- spm(newlyn, 20)
 #' confint(res)
+#' confint(res, plot = TRUE)
 #' @export
 confint.exdex <- function (object, level = 0.95, constrain = TRUE,
-                           conf_scale = c("theta", "log_theta"), ...) {
+                           conf_scale = c("theta", "log_theta"),
+                           bias_adjust = TRUE,
+                           type = c("vertical", "cholesky", "spectral",
+                                    "none"),
+                           plot = FALSE, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
   conf_scale <- match.arg(conf_scale)
+  type <- match.arg(type)
   # Symmetric confidence intervals, based on large sample normal theory
   # The intervals are (initially) centred on the unconstrained estimate of
   # theta, which may be greater than 1
   z_val <- stats::qnorm(1 - (1 - level) / 2)
   if (conf_scale == "theta") {
-    lower <- res$unconstrained_theta - z_val * res$se
-    upper <- res$unconstrained_theta + z_val * res$se
+    lower <- object$unconstrained_theta - z_val * object$se
+    upper <- object$unconstrained_theta + z_val * object$se
   } else {
-    lower <- exp(log(res$unconstrained_theta) - z_val * res$se / res$theta)
-    upper <- exp(log(res$unconstrained_theta) + z_val * res$se / res$theta)
+    lower <- exp(log(object$unconstrained_theta) - z_val *
+                   object$se / res$theta)
+    upper <- exp(log(object$unconstrained_theta) + z_val *
+                   object$se / res$theta)
   }
-  # Constrain to (0, 1] if required
+  names(lower) <- paste0(names(lower), "sym")
+  names(upper) <- paste0(names(upper), "sym")
+  #
+  # Likelihood-based confidence intervals.  We use the chandwich package
+  # to adjust the independence loglikelihood so that it curvature at its
+  # maximum corresponds to the estimated standard errors that result from
+  # the theory in Berghaus and Bucher (2018). Note that:
+  #
+  # 1. we must use raw MLEs, not the bias-adjusted versions, because these
+  #    give the location of the maximum of the independence loglikelihood
+  #
+  # 2. we give the option, via the argument bias_adjust, to bias-adjust
+  #    the intervals based on the bias_adjust argument supplied in the
+  #    original call to spm(): if bias_adjust = "BB3" or "BB1" in that call
+  #    then the bias-adjustment is subtracted from the limits of the interval;
+  #    if bias_adjust = "N" in that call then no adjustment in performed
+  #    because this bias-adjustment is applied in the creation of the data
+  #    in object$N2015_data and object$BB2018_data.
+  #
+  exponential_loglik <- function(theta, data) {
+    return(log(theta) - theta * data)
+  }
+  # Northrop (2015)
+  n <- length(object$N2015_data)
+  mleN <- 1 / mean(object$N2015_data)
+  H <- as.matrix(-n / mleN ^ 2)
+  V <- as.matrix(H ^ 2 * object$se[1] ^ 2)
+  adjN <- chandwich::adjust_loglik(loglik = exponential_loglik,
+                                   data = object$N2015_data, p = 1,
+                                   par_names = "theta",
+                                   mle = mleN, H = H, V = V)
+  # Berghaus and Bucher (2018)
+  n <- length(object$BB2018_data)
+  mleBB <- 1 / mean(object$BB2018_data)
+  H <- as.matrix(-n / mleBB ^ 2)
+  V <- as.matrix(H ^ 2 * object$se[2] ^ 2)
+  adjBB <- chandwich::adjust_loglik(loglik = exponential_loglik,
+                                    data = object$BB2018_data, p = 1,
+                                    par_names = "theta",
+                                    mle = mleBB, H = H, V = V)
+  tempN <- chandwich::conf_intervals(adjN, conf = 100 * level, type = type)
+  tempBB <- chandwich::conf_intervals(adjBB, conf = 100 * level, type = type)
+  # Bias-adjust, if requested and if appropriate
+  if (bias_adjust && object$bias_adjust %in% c("BB3", "BB1")) {
+     tempN$prof_CI <- tempN$prof_CI - object$bias_val["N2015"]
+     tempBB$prof_CI <- tempBB$prof_CI - object$bias_val["BB2018"]
+     # If a plot is required then shoof the values of theta to account for
+     # the effect of bias-adjustment
+     if (plot) {
+       tempN$parameter_vals <- tempN$parameter_vals -
+         object$bias_val["N2015"]
+       tempBB$parameter_vals <- tempBB$parameter_vals -
+         object$bias_val["BB2018"]
+     }
+  }
+  # Add the likelihood-based intervals to the symmetric ones
+  lower <- c(lower, tempN$prof_CI[1], tempBB$prof_CI[1])
+  upper <- c(upper, tempN$prof_CI[2], tempBB$prof_CI[2])
+  names(lower)[3:4] <- c("N2015lik", "BB2018lik")
+  names(upper)[3:4] <- c("N2015lik", "BB2018lik")
+  # Constrain the intervals to (0, 1] if required
   if (constrain) {
     lower <- pmin(lower, 1)
     lower <- pmax(lower, 0)
@@ -57,5 +173,53 @@ confint.exdex <- function (object, level = 0.95, constrain = TRUE,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
+  # Produce a plot of the adjusted loglikelihood, if requested
+  # Owing to the different scales of the loglikelihoods for N2015 and BB2018 we
+  # shoof them to have a maximum of 0, so that we can display them on one plot
+  if (plot) {
+    shoofN <- max(tempN$prof_loglik_vals)
+    shoofBB <- max(tempBB$prof_loglik_vals)
+    tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
+    tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
+    tempN$max_loglik <- tempN$max_loglik - shoofN
+    tempBB$max_loglik <- tempBB$max_loglik - shoofBB
+    # Round confidence limits for inclusion in the legend
+    roundN <- sprintf("%.2f", round(temp["N2015lik", ], 2))
+    roundBB <- sprintf("%.2f", round(temp["BB2018lik", ], 2))
+    my_leg <- NULL
+    my_leg[1] <- paste("N2015:    (", roundN[1], ",", roundN[2], ")")
+    my_leg[2] <- paste("BB2018: (", roundBB[1], ",", roundBB[2], ")")
+    # A clunky way to avoid conflict between my choice of legend and
+    # (legend) title and those that the user might supply via ...
+    user_args <- list(...)
+    if (is.null(user_args$legend_pos)) {
+      if (is.null(user_args$legend) && is.null(user_args$title)) {
+        plot(x = tempN, y = tempBB, legend = my_leg,
+             title = "estimator", legend_pos = "bottom", ...)
+      } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
+        plot(x = tempN, y = tempBB, legend = my_leg, legend_pos = "bottom",
+             ...)
+      } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
+        plot(x = tempN, y = tempBB, title = "estimator", legend_pos = "bottom",
+             ...)
+      } else {
+        plot(x = tempN, y = tempBB, legend_pos = "bottom", ...)
+      }
+    } else {
+      # Make user_args$legend_pos NULL because otherwise
+      # is.null(user_args$legend) returns FALSE
+      user_args$legend_pos <- NULL
+      if (is.null(user_args$legend) && is.null(user_args$title)) {
+        plot(x = tempN, y = tempBB, legend = my_leg,
+             title = "estimator", ...)
+      } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
+        plot(x = tempN, y = tempBB, legend = my_leg, ...)
+      } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
+        plot(x = tempN, y = tempBB, title = "estimator", ...)
+      } else {
+        plot(x = tempN, y = tempBB, ...)
+      }
+    }
+  }
   return(temp)
 }

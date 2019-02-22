@@ -11,6 +11,10 @@
 #'
 #' @param object An object of class \code{"exdex"}, returned by
 #'   \code{\link{spm}}.
+#' @param parm A character scalar specifying whether to estimate confidence
+#'   intervals for both variants of the estimator (\code{"both"}),
+#'   for the Northrop (2015) variant only (\code{"N2015"}) or
+#'   for the Berhaus and Bucher (2018) variant only (\code{"BB2018"}).
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any confidence limits that are greater than 1 are set to 1,
@@ -75,10 +79,12 @@
 #' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
 #' @examples
 #' res <- spm(newlyn, 20)
-#' confint(res)
-#' confint(res, plot = TRUE)
+#' # I can't include these examples until new chandwich is on CRAN
+#' #confint(res)
+#' #confint(res, plot = TRUE)
 #' @export
-confint.exdex <- function (object, level = 0.95, constrain = TRUE,
+confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
+                           level = 0.95, constrain = TRUE,
                            conf_scale = c("theta", "log_theta"),
                            bias_adjust = TRUE,
                            type = c("vertical", "cholesky", "spectral",
@@ -87,6 +93,7 @@ confint.exdex <- function (object, level = 0.95, constrain = TRUE,
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
+  parm <- match.arg(parm)
   conf_scale <- match.arg(conf_scale)
   type <- match.arg(type)
   # Symmetric confidence intervals, based on large sample normal theory
@@ -98,9 +105,9 @@ confint.exdex <- function (object, level = 0.95, constrain = TRUE,
     upper <- object$unconstrained_theta + z_val * object$se
   } else {
     lower <- exp(log(object$unconstrained_theta) - z_val *
-                   object$se / res$theta)
+                   object$se / object$theta)
     upper <- exp(log(object$unconstrained_theta) + z_val *
-                   object$se / res$theta)
+                   object$se / object$theta)
   }
   names(lower) <- paste0(names(lower), "sym")
   names(upper) <- paste0(names(upper), "sym")

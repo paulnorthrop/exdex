@@ -201,12 +201,17 @@ spm <- function(data, b, sliding = TRUE,
       vars <- c(NA, NA)
     }
     # Perform BB2018 bias-adjustment if required
+    bias_N <- bias_BB <- NA
     if (bias_adjust == "BB3") {
+      bias_N <- theta_N / k_n + theta_N ^ 3 * sigma2hat_N / k_n
       theta_N <- theta_N * (1 - 1 / k_n) - theta_N ^ 3 * sigma2hat_N / k_n
+      bias_BB <- theta_BB / k_n + theta_BB ^ 3 * sigma2hat_BB / k_n
       theta_BB <- theta_BB * (1 - 1 / k_n) - theta_BB ^ 3 * sigma2hat_BB / k_n
       theta <- c(theta_N, theta_BB)
     } else if (bias_adjust == "BB1") {
+      bias_N <- theta_N / k_n
       theta_N <- theta_N * (1 - 1 / k_n)
+      bias_BB <- theta_BB / k_n
       theta_BB <- theta_BB * (1 - 1 / k_n)
       theta <- c(theta_N, theta_BB)
     }
@@ -218,7 +223,10 @@ spm <- function(data, b, sliding = TRUE,
     }
     se <- sqrt(vars)
     return(list(theta = theta, se = se,
-                unconstrained_theta = unconstrained_theta))
+                unconstrained_theta = unconstrained_theta,
+                N2015_data = -b * log(Fhaty),
+                BB2018_data = b * (1 - Fhaty),
+                bias_val = c(bias_N, bias_BB)))
   }
   # End of function spm_estimates() ----------
   #
@@ -228,9 +236,11 @@ spm <- function(data, b, sliding = TRUE,
   names(res$theta) <- estimator_names
   names(res$se) <- estimator_names
   names(res$unconstrained_theta) <- estimator_names
+  names(res$bias_val) <- estimator_names
+  res$bias_adjust <- bias_adjust
   res$b <- b
   res$call <- Call
-  class(res) <- "exdex"
+  class(res) <- c("exdex", "spm")
   return(res)
 }
 

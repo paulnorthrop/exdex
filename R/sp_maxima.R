@@ -351,28 +351,29 @@ spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
   Usum <- b * tapply(x, block, BB2018_fn, y = y)
   UsumN <- b * vapply(1:k_n, loobN2015_fn, 0, block = block, xvec = x, y = y)
   UsumN <-  k_n * ThatN - (k_n - 1) * UsumN
-  if (check) {
-    # 4 (effectively 3) other ways to calculate Usum
-    # (Usum1 is commented out because it incurs rounding error from
-    # Nhat -> Zhat -> Nhat that can be non-negligible)
-    Uhats <- Fhat(x)
-#    Usum1 <- colSums(vapply(Uhats, function(x) x > 1 - Zhat / b, rep(0, k_n)))
-    Usum2 <- colSums(vapply(Uhats, function(x) x > Nhat, rep(0, k_n)))
-    Usum3 <- colSums(vapply(x, function(x) x > y, rep(0, k_n)))
-    # Usum4 is the analogous calculation to UsumN
-    Usum4 <- b * vapply(1:k_n, loobBB2018_fn, 0, block = block, xvec = x, y = y)
-    Usum4 <-  k_n * That - (k_n - 1) * Usum4
-    # Aggregate the first 3
-#    Usum1 <- tapply(Usum1, block, sum) / k_n
-    Usum2 <- tapply(Usum2, block, sum) / k_n
-    Usum3 <- tapply(Usum3, block, sum) / k_n
-    return(cbind(Usum, Usum2, Usum3, Usum4))
-  }
+  #
   Bhat <- Zhat + Usum - 2 * That
   BhatN <- ZhatN + UsumN - 2 * ThatN
   # Bhat is mean-centred, but BhatN isn't (quite)
   BhatN <- BhatN - mean(BhatN)
   sigmahat2_dj <- mean(Bhat ^ 2)
   sigmahat2_djN <- mean(BhatN ^ 2)
-  return(c(sigmahat2_dj, sigmahat2_djN))
+  if (!check) {
+    return(c(sigmahat2_dj, sigmahat2_djN))
+  }
+  # 4 (effectively 3) other ways to calculate Usum
+  # (Usum1 is commented out because it incurs rounding error from
+  # Nhat -> Zhat -> Nhat that can be non-negligible)
+  Uhats <- Fhat(x)
+  #    Usum1 <- colSums(vapply(Uhats, function(x) x > 1 - Zhat / b, rep(0, k_n)))
+  Usum2 <- colSums(vapply(Uhats, function(x) x > Nhat, rep(0, k_n)))
+  Usum3 <- colSums(vapply(x, function(x) x > y, rep(0, k_n)))
+  # Usum4 is the analogous calculation to UsumN
+  Usum4 <- b * vapply(1:k_n, loobBB2018_fn, 0, block = block, xvec = x, y = y)
+  Usum4 <-  k_n * That - (k_n - 1) * Usum4
+  # Aggregate the first 3
+  #    Usum1 <- tapply(Usum1, block, sum) / k_n
+  Usum2 <- tapply(Usum2, block, sum) / k_n
+  Usum3 <- tapply(Usum3, block, sum) / k_n
+  return(cbind(Usum, Usum2, Usum3, Usum4))
 }

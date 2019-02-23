@@ -100,6 +100,12 @@ The likelihood-based intervals are estimated using the
   \code{\link[chandwich]{adjust_loglik}} function in the
   \code{\link[chandwich]{chandwich}} package, followed by a call to
   \code{\link[chandwich]{conf_intervals}}.
+
+  If \code{object$se} contains \code{NA}s, because the block size \code{b}
+  was too small or too large in the call to \code{\link{spm}} then
+  confidence intervals cannot be estimated and an error will be thrown.
+  See the \strong{Details} section of the \code{\link{spm}} documentation
+  for more information.
 }
 \examples{
 res <- spm(newlyn, 20)

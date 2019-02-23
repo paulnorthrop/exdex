@@ -69,6 +69,12 @@
 #'   \code{\link[chandwich]{adjust_loglik}} function in the
 #'   \code{\link[chandwich]{chandwich}} package, followed by a call to
 #'   \code{\link[chandwich]{conf_intervals}}.
+#'
+#'   If \code{object$se} contains \code{NA}s, because the block size \code{b}
+#'   was too small or too large in the call to \code{\link{spm}} then
+#'   confidence intervals cannot be estimated and an error will be thrown.
+#'   See the \strong{Details} section of the \code{\link{spm}} documentation
+#'   for more information.
 #' @return A matrix with columns giving lower and upper confidence limits.
 #'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
 #'   (by default 2.5\% and 97.5\%).
@@ -97,6 +103,9 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
                            plot = FALSE, ndec = 2, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
+  }
+  if (is.na(object$se[1])) {
+    stop("CIs cannot be estimated because ''object'' has no estimated SEs")
   }
   if (object$sliding && type == "none") {
     warning("The likelihood-based CIs are vast underestimates of uncertainty!")

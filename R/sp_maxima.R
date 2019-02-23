@@ -126,14 +126,7 @@ spm <- function(data, b, sliding = TRUE,
   if (!is.logical(constrain) || length(constrain) != 1) {
     stop("'sliding' must be a logical scalar")
   }
-  if (!is.numeric(conf) || length(conf) != 1) {
-    stop("'conf' must be a numeric scalar (in (0,1))")
-  }
-  if (conf <= 0 || conf >= 1) {
-    stop("'conf' must be in (0,1)")
-  }
   bias_adjust <- match.arg(bias_adjust)
-  conf_scale <- match.arg(conf_scale)
   # Check that the value of b satisfies the inequality in Proposition 4.1
   # of Berghaus and Bucher (2018)
   k_n <- floor(length(data) / b)

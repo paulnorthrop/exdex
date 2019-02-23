@@ -7,7 +7,7 @@
 \method{confint}{exdex}(object, parm = c("both", "N2015", "BB2018"),
   level = 0.95, constrain = TRUE, conf_scale = c("theta",
   "log_theta"), bias_adjust = TRUE, type = c("vertical", "cholesky",
-  "spectral", "none"), plot = FALSE, ...)
+  "spectral", "none"), plot = FALSE, ndec = 2, ...)
 }
 \arguments{
 \item{object}{An object of class \code{"exdex"}, returned by
@@ -39,19 +39,22 @@ less than 0 are set to 0.}
   using it's \code{bias_adjust} argument, is automatically applied here.}
 
 \item{bias_adjust}{A logical scalar.  If \code{bias_adjust = TRUE} then,
-  if appropriate, bias-adjustment is also applied to the likelihood-based
-  confidence intervals after they have been estimated.  This is performed
-  only if in the original call to \code{\link{spm}} the user specified
-  \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"}, that is,
-  \code{object$bias_adjust = "BB3"} or \code{object$bias_adjust = "BB1"}.
-  In these cases the relevant component of \code{object$bias_val} is
-  subtracted from the interval.
+  if appropriate, bias-adjustment is also applied to the loglikelihood
+  before it is adjusted by using \code{\link[chandwich]{adjust_loglik}}.
+  This is performed only if in the original call to \code{\link{spm}} the
+  user specified \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"},
+  that is, \code{object$bias_adjust = "BB3"} or
+  \code{object$bias_adjust = "BB1"}.  In these cases the relevant component
+  of \code{object$bias_val} is used to scale \eqn{\theta} so that the
+  location of the maximum of the loglikelihood lies at the bias-adjusted
+  estimate of \eqn{\theta}.
 
   If \code{bias_adjust = FALSE} or \code{object$bias_adjust = "none"}
-  or \code{object$bias_adjust = "N"} then no bias-adjustment of the intervals
-  is performed.  In the latter case this is because the bias-adjustment is
-  applied in the creation of the data in object$N2015_data and
-  object$BB2018_data, on which the naive likelihood is based.}
+  or \code{object$bias_adjust = "N"} then no bias-adjustment of the
+  intervals is performed.  In the latter case this is because the
+  bias-adjustment is applied in the creation of the data in
+  object$N2015_data and object$BB2018_data, on which the naive likelihood
+  is based.}
 
 \item{type}{A character scalar.  The argument \code{type} to be passed to
 \code{\link[chandwich]{conf_intervals}} in order to estimate the
@@ -65,6 +68,9 @@ if (the default) \code{sliding = TRUE} was used in the call to
 \item{plot}{A logical scalar.  If \code{plot = TRUE} then a plot of the
 adjust loglikelihood is produced, using
 \code{\link[chandwich]{plot.confint}}.}
+
+\item{ndec}{An integer scalar.  The legend (if included on the plot)
+contains the confidence limits rounded to \code{ndec} decimal places.}
 
 \item{...}{Further arguments to be passed to
 \code{\link[chandwich]{plot.confint}}, used only if
@@ -86,8 +92,8 @@ from \code{\link{spm}}.  Two types of interval are returned:
 (a) intervals based on approximate large-sample normality of the estimators
 of \eqn{\theta}, which are symmetric about the respective point estimates,
 and (b) likelihood-based intervals based on an adjustment of a naive
-(pseudo-) loglikelihood, using the \code{\link[chandwich]{chandwich}}
-package.
+(pseudo-) loglikelihood, using the \code{\link[chandwich]{adjust_loglik}}
+function in the \code{\link[chandwich]{chandwich}} package.
 }
 \details{
 The likelihood-based intervals are estimated using the

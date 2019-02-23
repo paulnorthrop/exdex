@@ -6,8 +6,8 @@
 #' (a) intervals based on approximate large-sample normality of the estimators
 #' of \eqn{\theta}, which are symmetric about the respective point estimates,
 #' and (b) likelihood-based intervals based on an adjustment of a naive
-#' (pseudo-) loglikelihood, using the \code{\link[chandwich]{chandwich}}
-#' package.
+#' (pseudo-) loglikelihood, using the \code{\link[chandwich]{adjust_loglik}}
+#' function in the \code{\link[chandwich]{chandwich}} package.
 #'
 #' @param object An object of class \code{"exdex"}, returned by
 #'   \code{\link{spm}}.
@@ -33,19 +33,22 @@
 #'   Any bias-adjustment requested in the original call to \code{\link{spm}},
 #'   using it's \code{bias_adjust} argument, is automatically applied here.
 #' @param bias_adjust A logical scalar.  If \code{bias_adjust = TRUE} then,
-#'   if appropriate, bias-adjustment is also applied to the likelihood-based
-#'   confidence intervals after they have been estimated.  This is performed
-#'   only if in the original call to \code{\link{spm}} the user specified
-#'   \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"}, that is,
-#'   \code{object$bias_adjust = "BB3"} or \code{object$bias_adjust = "BB1"}.
-#'   In these cases the relevant component of \code{object$bias_val} is
-#'   subtracted from the interval.
+#'   if appropriate, bias-adjustment is also applied to the loglikelihood
+#'   before it is adjusted by using \code{\link[chandwich]{adjust_loglik}}.
+#'   This is performed only if in the original call to \code{\link{spm}} the
+#'   user specified \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"},
+#'   that is, \code{object$bias_adjust = "BB3"} or
+#'   \code{object$bias_adjust = "BB1"}.  In these cases the relevant component
+#'   of \code{object$bias_val} is used to scale \eqn{\theta} so that the
+#'   location of the maximum of the loglikelihood lies at the bias-adjusted
+#'   estimate of \eqn{\theta}.
 #'
 #'   If \code{bias_adjust = FALSE} or \code{object$bias_adjust = "none"}
-#'   or \code{object$bias_adjust = "N"} then no bias-adjustment of the intervals
-#'   is performed.  In the latter case this is because the bias-adjustment is
-#'   applied in the creation of the data in object$N2015_data and
-#'   object$BB2018_data, on which the naive likelihood is based.
+#'   or \code{object$bias_adjust = "N"} then no bias-adjustment of the
+#'   intervals is performed.  In the latter case this is because the
+#'   bias-adjustment is applied in the creation of the data in
+#'   object$N2015_data and object$BB2018_data, on which the naive likelihood
+#'   is based.
 #' @param type A character scalar.  The argument \code{type} to be passed to
 #'   \code{\link[chandwich]{conf_intervals}} in order to estimate the
 #'   likelihood-based intervals.  See \strong{Details}.
@@ -57,6 +60,8 @@
 #' @param plot A logical scalar.  If \code{plot = TRUE} then a plot of the
 #'   adjust loglikelihood is produced, using
 #'   \code{\link[chandwich]{plot.confint}}.
+#' @param ndec An integer scalar.  The legend (if included on the plot)
+#'   contains the confidence limits rounded to \code{ndec} decimal places.
 #' @param ... Further arguments to be passed to
 #'   \code{\link[chandwich]{plot.confint}}, used only if
 #'   \code{plot = TRUE}.
@@ -89,9 +94,12 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
                            bias_adjust = TRUE,
                            type = c("vertical", "cholesky", "spectral",
                                     "none"),
-                           plot = FALSE, ...) {
+                           plot = FALSE, ndec = 2, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
+  }
+  if (object$sliding && type == "none") {
+    warning("The likelihood-based CIs are vast underestimates of uncertainty!")
   }
   parm <- match.arg(parm)
   conf_scale <- match.arg(conf_scale)
@@ -131,39 +139,40 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
   exponential_loglik <- function(theta, data) {
     return(log(theta) - theta * data)
   }
+  # Bias-adjust, if requested and if appropriate
+  # We can achieve this by scaling the data by the ratio of the naive MLE
+  # to the bias-adjusted MLE
+  mleN <- 1 / mean(object$N2015_data)
+  mleBB <- 1 / mean(object$BB2018_data)
+  if (bias_adjust && object$bias_adjust %in% c("BB3", "BB1")) {
+    scaleN <- mleN / (mleN - object$bias_val["N2015"])
+    scaleBB <- mleBB / (mleBB - object$bias_val["BB2018"])
+  } else {
+    scaleN <- 1
+    scaleBB <- 1
+  }
   # Northrop (2015)
   n <- length(object$N2015_data)
-  mleN <- 1 / mean(object$N2015_data)
   H <- as.matrix(-n / mleN ^ 2)
   V <- as.matrix(H ^ 2 * object$se[1] ^ 2)
+  # Note the multiplication of the data by scaleN and the division of the
+  # naive estimate by scaleN, to obtain the bias_adjusted estimate
   adjN <- chandwich::adjust_loglik(loglik = exponential_loglik,
-                                   data = object$N2015_data, p = 1,
-                                   par_names = "theta",
-                                   mle = mleN, H = H, V = V)
+                                   data = object$N2015_data * scaleN,
+                                   p = 1, par_names = "theta",
+                                   mle = mleN / scaleN, H = H, V = V)
   # Berghaus and Bucher (2018)
   n <- length(object$BB2018_data)
-  mleBB <- 1 / mean(object$BB2018_data)
   H <- as.matrix(-n / mleBB ^ 2)
   V <- as.matrix(H ^ 2 * object$se[2] ^ 2)
+  # Note the multiplication of the data by scaleBB and the division of the
+  # naive estimate by scaleBB, to obtain the bias_adjusted estimate
   adjBB <- chandwich::adjust_loglik(loglik = exponential_loglik,
-                                    data = object$BB2018_data, p = 1,
-                                    par_names = "theta",
-                                    mle = mleBB, H = H, V = V)
+                                    data = object$BB2018_data * scaleBB,
+                                    p = 1, par_names = "theta",
+                                    mle = mleBB / scaleBB, H = H, V = V)
   tempN <- chandwich::conf_intervals(adjN, conf = 100 * level, type = type)
   tempBB <- chandwich::conf_intervals(adjBB, conf = 100 * level, type = type)
-  # Bias-adjust, if requested and if appropriate
-  if (bias_adjust && object$bias_adjust %in% c("BB3", "BB1")) {
-     tempN$prof_CI <- tempN$prof_CI - object$bias_val["N2015"]
-     tempBB$prof_CI <- tempBB$prof_CI - object$bias_val["BB2018"]
-     # If a plot is required then shoof the values of theta to account for
-     # the effect of bias-adjustment
-     if (plot) {
-       tempN$parameter_vals <- tempN$parameter_vals -
-         object$bias_val["N2015"]
-       tempBB$parameter_vals <- tempBB$parameter_vals -
-         object$bias_val["BB2018"]
-     }
-  }
   # Add the likelihood-based intervals to the symmetric ones
   lower <- c(lower, tempN$prof_CI[1], tempBB$prof_CI[1])
   upper <- c(upper, tempN$prof_CI[2], tempBB$prof_CI[2])
@@ -191,8 +200,9 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
     tempN$max_loglik <- tempN$max_loglik - shoofN
     tempBB$max_loglik <- tempBB$max_loglik - shoofBB
     # Round confidence limits for inclusion in the legend
-    roundN <- sprintf("%.2f", round(temp["N2015lik", ], 2))
-    roundBB <- sprintf("%.2f", round(temp["BB2018lik", ], 2))
+    fmt <- paste0("%.", ndec, "f")
+    roundN <- sprintf(fmt, round(temp["N2015lik", ], ndec))
+    roundBB <- sprintf(fmt, round(temp["BB2018lik", ], ndec))
     my_leg <- NULL
     my_leg[1] <- paste("N2015:    (", roundN[1], ",", roundN[2], ")")
     my_leg[2] <- paste("BB2018: (", roundBB[1], ",", roundBB[2], ")")
@@ -227,6 +237,8 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
         plot(x = tempN, y = tempBB, ...)
       }
     }
+    abline(v = temp["N2015lik", ])
+    abline(v = temp["BB2018lik", ], lty = 2)
   }
   return(temp)
 }

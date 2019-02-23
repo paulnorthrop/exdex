@@ -28,6 +28,11 @@
 #'   that is, they are constrained to lie in (0, 1].  This is carried out
 #'   \emph{after} any bias-adjustment.  Otherwise,
 #'   estimates that are greater than 1 may be obtained.
+#' @param varN A logical scalar.  If \code{varN = TRUE} then the estimation
+#'   of the sampling variance of the Northrop (2015) estimator is tailored
+#'   to that estimator.  Otherwise, the sampling variance derived in
+#'   Berghaus and Bucher (2018) is used.
+#'   See \strong{Details} for further information.
 #' @details The extremal index \eqn{\theta} is estimated using the
 #'   semiparametric maxima estimator of Northrop (2015) and variant
 #'   of this studied by Berghaus and Bucher (2018).  In each case a sample
@@ -51,11 +56,18 @@
 #'   observations, are used.
 #'
 #'   Estimation of the sampling variances of the estimators is based
-#'   on Proposition 4.1 of Berghaus and Bucher (2018).  A condition imposed
-#'   in this proposition means that that \code{b} must be no smaller than
-#'   \eqn{k^{1/2}} and no larger than \eqn{k^2}, where \eqn{k} is
-#'   \code{floor(length(data) / b)}, i.e. \eqn{k} is the number of complete
-#'   blocks.  If this is not the case then a warning will be given and
+#'   on Proposition 4.1 of Berghaus and Bucher (2018).
+#'   For the Northrop (2015) variant the user has the choice either to
+#'   use the sampling variance based on the Berghaus and Bucher (2018)
+#'   estimator, i.e. the \eqn{Z}-data (\code{varN = FALSE}) or an analogous
+#'   version tailored to the Northrop (2015) estimator that uses the
+#'   \eqn{Z}-data (\code{varN = TRUE}).
+#'
+#'   A condition imposed in Proposition 4.1 of Berghaus and Bucher (2018)
+#'   means that \code{b} must be no smaller than \eqn{k^{1/2}} and no larger
+#'   than \eqn{k^2}, where \eqn{k} is \code{floor(length(data) / b)},
+#'   i.e. \eqn{k} is the number of complete blocks.  If this is not the case
+#'   then a warning will be given and
 #'     \itemize{
 #'       \item{estimated standard errors will be missing from the returned
 #'             object,}
@@ -101,7 +113,8 @@
 #' spm(newlyn, 20, sliding = FALSE)
 #' @export
 spm <- function(data, b, sliding = TRUE,
-                bias_adjust = c("BB3", "BB1", "N", "none"), constrain = TRUE) {
+                bias_adjust = c("BB3", "BB1", "N", "none"), constrain = TRUE,
+                varN = TRUE) {
   Call <- match.call(expand.dots = TRUE)
   # Check inputs
   if (missing(data) || length(data) == 0L || mode(data) != "numeric") {
@@ -192,11 +205,13 @@ spm <- function(data, b, sliding = TRUE,
       }
       # If sliding = TRUE then estimate sigma2hat_sl
       # Otherwise use sigma2hat_dj
+      indexN <- ifelse(varN, 2, 1)
+      print(sigma2hat_dj)
       if (sliding) {
-        sigma2hat_N <- sigma2hat_dj[2] - (3 - 4 * log(2)) / theta_N ^ 2
+        sigma2hat_N <- sigma2hat_dj[indexN] - (3 - 4 * log(2)) / theta_N ^ 2
         sigma2hat_BB <- sigma2hat_dj[1] - (3 - 4 * log(2)) / theta_BB ^ 2
       } else {
-        sigma2hat_N <- sigma2hat_dj[2]
+        sigma2hat_N <- sigma2hat_dj[indexN]
         sigma2hat_BB <- sigma2hat_dj[1]
       }
     }

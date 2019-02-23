@@ -5,7 +5,7 @@
 \title{Semiparametric maxima estimator of the extremal index}
 \usage{
 spm(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
-  "none"), constrain = TRUE)
+  "none"), constrain = TRUE, varN = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.}
@@ -34,6 +34,12 @@ any estimates that are greater than 1 are set to 1,
 that is, they are constrained to lie in (0, 1].  This is carried out
 \emph{after} any bias-adjustment.  Otherwise,
 estimates that are greater than 1 may be obtained.}
+
+\item{varN}{A logical scalar.  If \code{varN = TRUE} then the estimation
+of the sampling variance of the Northrop (2015) estimator is tailored
+to that estimator.  Otherwise, the sampling variance derived in
+Berghaus and Bucher (2018) is used.
+See \strong{Details} for further information.}
 }
 \value{
 A list containing
@@ -88,11 +94,18 @@ The extremal index \eqn{\theta} is estimated using the
   observations, are used.
 
   Estimation of the sampling variances of the estimators is based
-  on Proposition 4.1 of Berghaus and Bucher (2018).  A condition imposed
-  in this proposition means that that \code{b} must be no smaller than
-  \eqn{k^{1/2}} and no larger than \eqn{k^2}, where \eqn{k} is
-  \code{floor(length(data) / b)}, i.e. \eqn{k} is the number of complete
-  blocks.  If this is not the case then a warning will be given and
+  on Proposition 4.1 of Berghaus and Bucher (2018).
+  For the Northrop (2015) variant the user has the choice either to
+  use the sampling variance based on the Berghaus and Bucher (2018)
+  estimator, i.e. the \eqn{Z}-data (\code{varN = FALSE}) or an analogous
+  version tailored to the Northrop (2015) estimator that uses the
+  \eqn{Z}-data (\code{varN = TRUE}).
+
+  A condition imposed in Proposition 4.1 of Berghaus and Bucher (2018)
+  means that \code{b} must be no smaller than \eqn{k^{1/2}} and no larger
+  than \eqn{k^2}, where \eqn{k} is \code{floor(length(data) / b)},
+  i.e. \eqn{k} is the number of complete blocks.  If this is not the case
+  then a warning will be given and
     \itemize{
       \item{estimated standard errors will be missing from the returned
             object,}

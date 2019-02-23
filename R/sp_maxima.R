@@ -139,6 +139,9 @@ spm <- function(data, b, sliding = TRUE,
   if (!is.logical(constrain) || length(constrain) != 1) {
     stop("'sliding' must be a logical scalar")
   }
+  if (!is.logical(varN) || length(varN) != 1) {
+    stop("'varN' must be a logical scalar")
+  }
   bias_adjust <- match.arg(bias_adjust)
   # Check that the value of b satisfies the inequality in Proposition 4.1
   # of Berghaus and Bucher (2018)

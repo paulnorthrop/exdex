@@ -5,8 +5,7 @@
 \title{Semiparametric maxima estimator of the extremal index}
 \usage{
 spm(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
-  "none"), constrain = TRUE, conf = 0.95, conf_scale = c("theta",
-  "log_theta"))
+  "none"), constrain = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.}
@@ -35,15 +34,6 @@ any estimates that are greater than 1 are set to 1,
 that is, they are constrained to lie in (0, 1].  This is carried out
 \emph{after} any bias-adjustment.  Otherwise,
 estimates that are greater than 1 may be obtained.}
-
-\item{conf}{A numeric scalar.  The confidence level required:
-100\code{conf}\% confidence intervals are calculated.}
-
-\item{conf_scale}{A character scalar.   If \code{conf_scale = "theta"}
-then confidence intervals are estimated for \eqn{\theta} directly.
-If \code{conf_scale = "log_theta"} then confidence intervals are first
-estimated for \eqn{log\theta} and then transformed back to the
-\eqn{\theta}-scale.}
 }
 \value{
 A list containing
@@ -66,8 +56,6 @@ A list containing
     \item {\code{sliding} : } {The input value of \code{sliding}.}
     \item {\code{call} : } {The call to \code{spm}.}
   }
-  If \code{conf} is not supplied then only the MLE \code{theta_mle}
-  is returned.
 }
 \description{
 Estimates the extremal index \eqn{\theta} using a semiparametric block
@@ -106,9 +94,8 @@ The extremal index \eqn{\theta} is estimated using the
   \code{floor(length(data) / b)}, i.e. \eqn{k} is the number of complete
   blocks.  If this is not the case then a warning will be given and
     \itemize{
-      \item{estimates of uncertainty (estimated standard
-             errors and confidence intervals) will be missing from the
-             returned object,}
+      \item{estimated standard errors will be missing from the returned
+            object,}
       \item{if \code{bias_adjust == "BB3"} then this bias-adjustment
             based on \code{bias_adjust == "BB1"} will be performed instead,
             because the former relies on the estimated variances of the

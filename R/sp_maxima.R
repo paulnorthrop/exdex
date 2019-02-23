@@ -89,6 +89,7 @@
 #'       is \code{NA}.}
 #'     \item {\code{bias_adjust} : } {The input value of \code{bias_adjust}.}
 #'     \item {\code{b} : } {The input value of \code{b}.}
+#'     \item {\code{sliding} : } {The input value of \code{sliding}.}
 #'     \item {\code{call} : } {The call to \code{spm}.}
 #'   }
 #'   If \code{conf} is not supplied then only the MLE \code{theta_mle}
@@ -264,6 +265,7 @@ spm <- function(data, b, sliding = TRUE,
   names(res$bias_val) <- estimator_names
   res$bias_adjust <- bias_adjust
   res$b <- b
+  res$sliding <- sliding
   res$call <- Call
   class(res) <- c("exdex", "spm")
   return(res)

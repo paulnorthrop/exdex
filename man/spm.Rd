@@ -63,6 +63,7 @@ A list containing
       is \code{NA}.}
     \item {\code{bias_adjust} : } {The input value of \code{bias_adjust}.}
     \item {\code{b} : } {The input value of \code{b}.}
+    \item {\code{sliding} : } {The input value of \code{sliding}.}
     \item {\code{call} : } {The call to \code{spm}.}
   }
   If \code{conf} is not supplied then only the MLE \code{theta_mle}

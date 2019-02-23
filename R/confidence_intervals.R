@@ -246,8 +246,8 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
         plot(x = tempN, y = tempBB, ...)
       }
     }
-    abline(v = temp["N2015lik", ])
-    abline(v = temp["BB2018lik", ], lty = 2)
+#    abline(v = temp["N2015lik", ])
+#    abline(v = temp["BB2018lik", ], lty = 2)
   }
   return(temp)
 }

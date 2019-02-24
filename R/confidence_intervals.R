@@ -180,8 +180,11 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
                                     data = object$BB2018_data * scaleBB,
                                     p = 1, par_names = "theta",
                                     mle = mleBB / scaleBB, H = H, V = V)
-  tempN <- chandwich::conf_intervals(adjN, conf = 100 * level, type = type)
-  tempBB <- chandwich::conf_intervals(adjBB, conf = 100 * level, type = type)
+  # Avoid chandwich::conf_intervals()'s profiling messages
+  tempN <- suppressMessages(chandwich::conf_intervals(adjN, conf = 100
+                                                      * level, type = type))
+  tempBB <- suppressMessages(chandwich::conf_intervals(adjBB, conf = 100 *
+                                                         level, type = type))
   # Add the likelihood-based intervals to the symmetric ones
   lower <- c(lower, tempN$prof_CI[1], tempBB$prof_CI[1])
   upper <- c(upper, tempN$prof_CI[2], tempBB$prof_CI[2])

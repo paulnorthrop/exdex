@@ -19,12 +19,12 @@ are based on disjoint block maxima.}
 \item{bias_adjust}{A character scalar.  Is bias-adjustment of the
 raw estimate of \eqn{\theta} performed using the bias-reduced
 estimator (\code{bias_adjust = "BB3"}), derived in Section 5 of
-Berghaus and Bucher (2018); or a simpler version of this, in which
-the raw estimate is multiplied by \eqn{(k-1) / k}, where \eqn{k} is the
-number of blocks (\code{bias_adjust = "BB1"}); or the bias-adjustment
-of the empirical distribution function used to calculate the estimate,
-as detailed in Section 2 of Northrop (2015).  When disjoint maxima are
-used \code{bias_adjust = "BB1"} and \code{bias_adjust = "N"}
+Berghaus and Bucher (2018); or a simpler version of this
+(\code{bias_adjust = "BB1"}), in which the raw estimate is multiplied by
+\eqn{(k-1) / k}, where \eqn{k} is the number of blocks; or the
+bias-adjustment of the empirical distribution function used to calculate
+the estimate, as detailed in Section 2 of Northrop (2015).  When disjoint
+maxima are used \code{bias_adjust = "BB1"} and \code{bias_adjust = "N"}
 give identical estimates of the Berghaus and Bucher (2018) variant,
 as explained at the end of Section 5 of Berghaus and Bucher (2018).
 If \code{bias_adjust = "none"} then no bias-adjustment is performed.}

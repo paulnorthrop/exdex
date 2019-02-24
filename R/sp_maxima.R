@@ -14,12 +14,12 @@
 #' @param bias_adjust A character scalar.  Is bias-adjustment of the
 #'   raw estimate of \eqn{\theta} performed using the bias-reduced
 #'   estimator (\code{bias_adjust = "BB3"}), derived in Section 5 of
-#'   Berghaus and Bucher (2018); or a simpler version of this, in which
-#'   the raw estimate is multiplied by \eqn{(k-1) / k}, where \eqn{k} is the
-#'   number of blocks (\code{bias_adjust = "BB1"}); or the bias-adjustment
-#'   of the empirical distribution function used to calculate the estimate,
-#'   as detailed in Section 2 of Northrop (2015).  When disjoint maxima are
-#'   used \code{bias_adjust = "BB1"} and \code{bias_adjust = "N"}
+#'   Berghaus and Bucher (2018); or a simpler version of this
+#'   (\code{bias_adjust = "BB1"}), in which the raw estimate is multiplied by
+#'   \eqn{(k-1) / k}, where \eqn{k} is the number of blocks; or the
+#'   bias-adjustment of the empirical distribution function used to calculate
+#'   the estimate, as detailed in Section 2 of Northrop (2015).  When disjoint
+#'   maxima are used \code{bias_adjust = "BB1"} and \code{bias_adjust = "N"}
 #'   give identical estimates of the Berghaus and Bucher (2018) variant,
 #'   as explained at the end of Section 5 of Berghaus and Bucher (2018).
 #'   If \code{bias_adjust = "none"} then no bias-adjustment is performed.
@@ -136,13 +136,13 @@ spm <- function(data, b, sliding = TRUE,
   if (!is.logical(sliding) || length(sliding) != 1) {
     stop("'sliding' must be a logical scalar")
   }
+  bias_adjust <- match.arg(bias_adjust)
   if (!is.logical(constrain) || length(constrain) != 1) {
     stop("'sliding' must be a logical scalar")
   }
   if (!is.logical(varN) || length(varN) != 1) {
     stop("'varN' must be a logical scalar")
   }
-  bias_adjust <- match.arg(bias_adjust)
   # Check that the value of b satisfies the inequality in Proposition 4.1
   # of Berghaus and Bucher (2018)
   k_n <- floor(length(data) / b)
@@ -209,7 +209,6 @@ spm <- function(data, b, sliding = TRUE,
       # If sliding = TRUE then estimate sigma2hat_sl
       # Otherwise use sigma2hat_dj
       indexN <- ifelse(varN, 2, 1)
-      print(sigma2hat_dj)
       if (sliding) {
         sigma2hat_N <- sigma2hat_dj[indexN] - (3 - 4 * log(2)) / theta_N ^ 2
         sigma2hat_BB <- sigma2hat_dj[1] - (3 - 4 * log(2)) / theta_BB ^ 2

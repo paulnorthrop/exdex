@@ -17,7 +17,7 @@
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{http://dx.doi.org/10.1214/09-AOAS292"}
+#'   \url{https://doi.org/10.1214/09-AOAS292"}
 #' @return A list containing
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.

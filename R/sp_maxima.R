@@ -102,10 +102,10 @@
 #'   for \eqn{theta}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
 #' spm(-as.vector(sp500[2:6550]), 250)
 #'
@@ -302,10 +302,10 @@ spm <- function(data, b, sliding = TRUE,
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @examples
 #' spm_sigmahat_dj(newlyn, 20)
 #' @export

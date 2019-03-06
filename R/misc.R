@@ -23,4 +23,3 @@ ecdf2 <- function(x, y) {
 ecdf1 <- function(x, y, lenx) {
   return(vapply(y, function(y) sum(x <= y) / lenx, 0))
 }
-

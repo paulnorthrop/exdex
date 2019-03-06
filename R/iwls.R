@@ -60,7 +60,7 @@
 #'   }
 #' @references Suveges, M. (2007) Likelihood estimation of the extremal
 #'   index. \emph{Extremes}, \strong{10}, 41-55.
-#'   \url{http://dx.doi.org/10.1007/s10687-007-0034-2}
+#'   \url{https://doi.org/10.1007/s10687-007-0034-2}
 #' @references Ferro, C.A.T. (2003) Statistical methods for clusters of
 #'   extreme values. Ph.D. thesis, Lancaster University.
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the

@@ -26,7 +26,7 @@
 #' @references Zeileis, A. and Grothendieck, G. (2005). zoo: S3
 #'   Infrastructure for Regular and Irregular Time Series. \emph{Journal of
 #'   Statistical Software}, \strong{14}(6), 1-27.
-#'   \url{http://dx.doi.org/10.18637/jss.v014.i06}
+#'   \url{https://doi.org/10.18637/jss.v014.i06}
 sliding_maxima <- function(x, b = 1){
   y <- as.numeric(zoo::rollapply(data = zoo::zoo(x), width = b, FUN = max,
                                  na.rm = TRUE))

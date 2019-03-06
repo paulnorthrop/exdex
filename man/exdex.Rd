@@ -24,14 +24,14 @@ Three
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima
 estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-\url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+\url{https://doi.org/10.1007/s10687-015-0221-5}
 
 Suveges, M. (2007) Likelihood estimation of the extremal
   index. \emph{Extremes}, \strong{10}, 41-55.
-  \url{http://dx.doi.org/10.1007/s10687-007-0034-2}
+  \url{https://doi.org/10.1007/s10687-007-0034-2}
 
 Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, \emph{The Annals of
   Applied Statistics}, \strong{4}(1), 203-221.
-  \url{http://dx.doi.org/10.1214/09-AOAS292}
+  \url{https://doi.org/10.1214/09-AOAS292}
 }

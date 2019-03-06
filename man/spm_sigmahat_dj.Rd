@@ -49,11 +49,11 @@ spm_sigmahat_dj(newlyn, 20)
 \references{
 Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-\strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+\strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 
 Northrop, P. J. (2015) An efficient semiparametric maxima
 estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-\url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+\url{https://doi.org/10.1007/s10687-015-0221-5}
 }
 \seealso{
 \code{\link{spm}} for maximum likelihood estimation of the

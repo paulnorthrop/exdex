@@ -102,10 +102,10 @@
 #'   for \eqn{theta}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
 #' spm(-as.vector(sp500[2:6550]), 250)
 #'
@@ -189,7 +189,7 @@ spm <- function(data, b, sliding = TRUE,
       # In the unlikely event that an element of Fhaty is equal to zero,
       # i.e. a block maximum is less than all the data from outside that
       # block, we force Fhaty to be positive
-      Fhaty <- ifelse(Fhaty == 0, 1 / (m - b + length(y)), Fhaty)
+      Fhaty[Fhaty == 0] <- 1 / (m - b + length(y))
     }
     # Calculate the estimate of theta:
     # theta_N: Northrop (2015) and theta_BB: Berghaus and Bucher (2018)
@@ -302,77 +302,114 @@ spm <- function(data, b, sliding = TRUE,
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @examples
 #' spm_sigmahat_dj(newlyn, 20)
 #' @export
 spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
-  if (missing(dj_maxima)){
-    dj_maxima <- disjoint_maxima(data, b)
-  }
-  # y: disjoint block maxima, x: (only) the raw values that contribute to y
-  x <- dj_maxima$x
-  y <- dj_maxima$y
-  Fhat <- stats::ecdf(x)
-  # The ecdf of the data evaluated at the block maxima
-  Nhat <- Fhat(y)
-  # The number of blocks and the number of raw observationsthat contribute
-  k_n <- length(y)
-  m <- length(x)
-  # BB2018
-  Zhat <- b * (1 - Nhat)
-  That <- mean(Zhat)
-  # N2015
-  ZhatN <- -b * log(Nhat)
-  ThatN <- mean(ZhatN)
-  # Functions to return the
+#  if (missing(dj_maxima)){
+#    dj_maxima <- disjoint_maxima(data, b)
+#  }
+  all_dj_maxima <- all_disjoint_maxima(data, b)
+  # The number of blocks and the number of raw observations that contribute
+  k_n <- nrow(all_dj_maxima$y)
+  m <- nrow(all_dj_maxima$x)
+  lenxx <- m - b
+  const <- -log(m - b + k_n)
+  # block indicator
+  block <- rep(1:k_n, each = b)
+  # Set up some functions
+#  BB2018_fn <- function(x, y) {
+#    return(mean(1 - ecdf2(x, y)))
+#  }
   BB2018_fn <- function(x, y) {
-    return(mean(1 - stats::ecdf(x)(y)))
+    return(1 - sum(ecdf2(x, y)) / k_n)
   }
+  #  loobBB2018_fn <- function(x, block, xvec, y) {
+#    xx <- xvec[block != x]
+#    return(mean(1 - ecdf2(xx, y)))
+#  }
   loobBB2018_fn <- function(x, block, xvec, y) {
     xx <- xvec[block != x]
-    return(mean(1 - stats::ecdf(xx)(y)))
+    return(1 - sum(ecdf2(xx, y)) / k_n)
   }
   # In the unlikely event that an element of Fhaty is equal to zero,
   # i.e. a block maximum is less than all the data from outside that
   # block, we force Fhaty to be positive
-  my_log <- function(x, b) {
-    ifelse(x == 0, -log(m - b + k_n), log(x))
-  }
+#  loobN2015_fn <- function(x, block, xvec, y) {
+#    xx <- xvec[block != x]
+#    return(mean(-log0const(ecdf2(xx, y), const)))
+#  }
+#  loobN2015_fn <- function(x, block, xvec, y) {
+#    xx <- xvec[block != x]
+#    return(sum(-log0const(ecdf2(xx, y), const)) / k_n)
+#  }
   loobN2015_fn <- function(x, block, xvec, y) {
     xx <- xvec[block != x]
-    return(mean(-my_log(stats::ecdf(xx)(y))))
+#    return(sum(-log0const(ecdf1(xx, y, lenxx), const)) / k_n)
+#    return(sum(-log0const(ecdf2(xx, y), const))) # plus divide UsumN by k_n below
+    return(sum(-log0const(ecdf2(xx, y), const)) / k_n)
   }
-  # block indicator
-  block <- rep(1:k_n, each = b)
-  Usum <- b * tapply(x, block, BB2018_fn, y = y)
-  UsumN <- b * vapply(1:k_n, loobN2015_fn, 0, block = block, xvec = x, y = y)
-  UsumN <-  k_n * ThatN - (k_n - 1) * UsumN
-  #
-  Bhat <- Zhat + Usum - 2 * That
-  BhatN <- ZhatN + UsumN - 2 * ThatN
-  # Bhat is mean-centred, but BhatN isn't (quite)
-  BhatN <- BhatN - mean(BhatN)
-  sigmahat2_dj <- mean(Bhat ^ 2)
-  sigmahat2_djN <- mean(BhatN ^ 2)
-  if (!check) {
+  ests_fn <- function(i) {
+    # y: disjoint block maxima, x: (only) the raw values that contribute to y
+    x <- all_dj_maxima$x[, i]
+    y <- all_dj_maxima$y[, i]
+    # The ecdf of the data evaluated at the block maxima
+    Nhat <- ecdf2(x, y)
+    # BB2018
+    Zhat <- b * (1 - Nhat)
+    That <- mean(Zhat)
+    # N2015
+    ZhatN <- -b * log(Nhat)
+    ThatN <- mean(ZhatN)
+    Usum <- b * tapply(x, block, BB2018_fn, y = y)
+    UsumN <- b * vapply(1:k_n, loobN2015_fn, 0, block = block, xvec = x, y = y)
+#    print(UsumN)
+#    my_temp <- my_fun(newlyn, b)
+#    UsumN <- my_temp$UsumN
+#    print(UsumN)
+#    print(Usum)
+#    Usum <- my_temp$Usum
+#    print(k_n * That - (k_n - 1) * Usum)
+    UsumN <-  k_n * ThatN - (k_n - 1) * UsumN
+    #
+    Bhat <- Zhat + Usum - 2 * That
+    BhatN <- ZhatN + UsumN - 2 * ThatN
+    # Bhat is mean-centred, but BhatN isn't (quite)
+    BhatN <- BhatN - mean(BhatN)
+    sigmahat2_dj <- mean(Bhat ^ 2)
+    sigmahat2_djN <- mean(BhatN ^ 2)
     return(c(sigmahat2_dj, sigmahat2_djN))
+  }
+  if (!check) {
+    temp <- vapply(1:ncol(all_dj_maxima$y), ests_fn, c(0, 0))
+    ests <- rowMeans(temp)
+    return(ests)
   }
   # 4 (effectively 3) other ways to calculate Usum
   # (Usum1 is commented out because it incurs rounding error from
   # Nhat -> Zhat -> Nhat that can be non-negligible)
-  Uhats <- Fhat(x)
-  #    Usum1 <- colSums(vapply(Uhats, function(x) x > 1 - Zhat / b, rep(0, k_n)))
+  x <- all_dj_maxima$x[, 1]
+  y <- all_dj_maxima$y[, 1]
+#  Fhat <- stats::ecdf(x)
+#  Nhat <- Fhat(y)
+  Nhat <- ecdf2(x, y)
+  Zhat <- b * (1 - Nhat)
+  That <- mean(Zhat)
+  Usum <- b * tapply(x, block, BB2018_fn, y = y)
+#  Uhats <- Fhat(x)
+  Uhats <- ecdf2(x, x)
+  # Usum1 <- colSums(vapply(Uhats, function(x) x > 1 - Zhat / b, rep(0, k_n)))
   Usum2 <- colSums(vapply(Uhats, function(x) x > Nhat, rep(0, k_n)))
   Usum3 <- colSums(vapply(x, function(x) x > y, rep(0, k_n)))
   # Usum4 is the analogous calculation to UsumN
   Usum4 <- b * vapply(1:k_n, loobBB2018_fn, 0, block = block, xvec = x, y = y)
   Usum4 <-  k_n * That - (k_n - 1) * Usum4
   # Aggregate the first 3
-  #    Usum1 <- tapply(Usum1, block, sum) / k_n
+  # Usum1 <- tapply(Usum1, block, sum) / k_n
   Usum2 <- tapply(Usum2, block, sum) / k_n
   Usum3 <- tapply(Usum3, block, sum) / k_n
   return(cbind(Usum, Usum2, Usum3, Usum4))

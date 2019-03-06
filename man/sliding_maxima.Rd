@@ -15,13 +15,14 @@ sliding_maxima(x, b = 1)
 A list containing
   \itemize{
     \item {\code{y} : } {a numeric vector of the sliding block maxima.}
-    \item {\code{x} : } {the input \code{x}, included for
-      consistency with the output from \code{\link{disjoint_maxima}}}.
+    \item {\code{x} : } {the input \code{x}.}
   }
 }
 \description{
 Calculates the maxima of all blocks of \code{b} contiguous values in the
-vector \code{x}.
+vector \code{x}. In \code{\link{exdex}} this function is used within
+\code{\link{all_maxima}} to provide the first step of computations in
+\code{\link{spm}}.
 }
 \details{
 The function \code{\link[zoo]{rollapply}} in the
@@ -29,9 +30,6 @@ The function \code{\link[zoo]{rollapply}} in the
   sliding (rolling) maxima.  \code{na.rm = TRUE} is passed to
   \code{max} so that blocks containing missing values produce a
   non-missing result.
-
-  \code{sliding_maxima} is used within \code{\link{spm}} to perform
-  semiparametric estimation of the extremal index based on block maxima.
 }
 \references{
 Zeileis, A. and Grothendieck, G. (2005). zoo: S3
@@ -43,6 +41,6 @@ Zeileis, A. and Grothendieck, G. (2005). zoo: S3
 \code{\link{spm}} for semiparametric estimation of the
   extremal index based on block maxima.
 
-\code{\link{disjoint_maxima}} for the calculation of the maxima
-  over disjoint blocks.
+\code{\link{all_maxima}} for the calculation of both sliding and
+  disjoint maxima.
 }

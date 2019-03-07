@@ -1,6 +1,7 @@
 context("log0const")
 
-# Test that
+# Test that log0const(), a quick but less transparent version of
+# log0const_slow() gives the correct answers
 
 x <- c(runif(100), 0, 0, 0)
 const <- -log(10)

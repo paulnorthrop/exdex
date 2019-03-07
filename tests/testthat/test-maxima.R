@@ -85,6 +85,20 @@ test_that("x = 1:11, b = 3, all_disjoint_maxima", {
 test_that("x = 1:11, b = 3, all_disjoint_maxima input values", {
   testthat::expect_equal(temp$xd[, 1], temp2$x, tol = my_tol)
 })
+temp3 <- all_maxima(x, b = 3, which_dj = "first")
+temp4 <- all_maxima(x, b = 3, which_dj = "last")
+test_that("x = 1:11, b = 3, all_maxima, which_dj = first", {
+  testthat::expect_equal(temp$yd[, 1, drop = FALSE], temp3$yd, tol = my_tol)
+})
+test_that("x = 1:11, b = 3, all_maxima, which_dj = first, input values", {
+  testthat::expect_equal(temp$xd[, 1, drop = FALSE], temp3$xd, tol = my_tol)
+})
+test_that("x = 1:11, b = 3, all_maxima, which_dj = first", {
+  testthat::expect_equal(temp$yd[, 3, drop = FALSE], temp4$yd, tol = my_tol)
+})
+test_that("x = 1:11, b = 3, all_maxima, which_dj = first, input values", {
+  testthat::expect_equal(temp$xd[, 3, drop = FALSE], temp4$xd, tol = my_tol)
+})
 
 
 context("all_maxima, newlyn")
@@ -101,6 +115,8 @@ d_res <- all_disjoint_maxima(newlyn, 100)
 s_res <- sliding_maxima(newlyn, 100)
 # Disjoint maxima, starting only from the first observation
 d1_res <- disjoint_maxima(newlyn, 100)
+# Disjoint maxima, ending only from the lastst observation
+d2_res <- disjoint_maxima(newlyn, 100, which_dj = "last")
 
 test_that("newlyn: disjoint contributing values", {
   testthat::expect_identical(a_res$xd, d_res$x_mat)
@@ -119,4 +135,29 @@ test_that("newlyn: disjoint contributing values vs disjoint_maxima()", {
 })
 test_that("newlyn: disjoint maxima vs disjoint_maxima()", {
   testthat::expect_identical(a_res$yd[, 1], d1_res$y)
+})
+test_that("newlyn: disjoint contributing values vs disjoint_maxima(), last", {
+  testthat::expect_identical(a_res$xd[, ncol(a_res$xd)], d2_res$x)
+})
+test_that("newlyn: disjoint maxima vs disjoint_maxima(), last", {
+  testthat::expect_identical(a_res$yd[, ncol(a_res$yd)], d2_res$y)
+})
+
+# Sliding maxima and (first) disjoint maxima
+a_first_res <- all_maxima(newlyn, 100, which_dj = "first")
+test_that("newlyn: which_dj = first", {
+  testthat::expect_identical(a_res$xd[, 1, drop = FALSE], a_first_res$xd)
+})
+test_that("newlyn: which_dj = first, input values", {
+  testthat::expect_identical(a_res$yd[, 1, drop = FALSE], a_first_res$yd)
+})
+# Sliding maxima and (first) disjoint maxima
+a_last_res <- all_maxima(newlyn, 100, which_dj = "last")
+test_that("newlyn: which_dj = last", {
+  testthat::expect_identical(a_res$xd[, ncol(a_res$xd), drop = FALSE],
+                             a_last_res$xd)
+})
+test_that("newlyn: which_dj = last, input values", {
+  testthat::expect_identical(a_res$yd[, ncol(a_res$yd), drop = FALSE],
+                             a_last_res$yd)
 })

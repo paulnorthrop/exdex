@@ -4,12 +4,18 @@
 \alias{all_maxima}
 \title{Sliding and disjoint block maxima}
 \usage{
-all_maxima(x, b = 1)
+all_maxima(x, b = 1, which_dj = c("all", "first", "last"))
 }
 \arguments{
 \item{x}{A numeric vector of raw observations.}
 
 \item{b}{A numeric scalar.  The block size.}
+
+\item{which_dj}{A character scalar.  Determines Which sets of disjoint
+maxima are calculated: \code{"all"}, all sets; \code{"first"}, only the
+set whose first block starts on the first observation in \code{x};
+\code{"last"}, only the set whose last block end on the last observation
+in \code{x}.}
 }
 \value{
 A list containing
@@ -18,13 +24,16 @@ A list containing
       block maxima.}
     \item {\code{xs} : } {a numeric vector containing the values that
       contribute to \code{ys}, that is, the whole input vector \code{x}.}
-    \item {\code{yd} : } {a \code{floor(n / b)} by
-      \code{n - floor(n / b) * b + 1} numeric matrix.  Each column contains
-      a set of disjoint maxima.}
-    \item {\code{xd} : } {a \code{floor(n / b) * b} by
-      \code{n - floor(n / b) * b + 1} numeric matrix.  Each column contains
-      the values in \code{x} that contribute to the corresponding column
-      in \code{ys}.}
+    \item {\code{yd} : } {if \code{which_dj = "all"} a \code{floor(n / b)}
+      by \code{n - floor(n / b) * b + 1} numeric matrix.  Each column
+      contains a set of disjoint maxima.  Otherwise, a \code{floor(n / b)}
+      by 1 numeric matrix containing one set of block maxima.}
+    \item {\code{xd} : } {if \code{which_dj = "all"} a
+      \code{floor(n / b) * b} by \code{n - floor(n / b) * b + 1} numeric
+      matrix.  Each column contains the values in \code{x} that contribute
+      to the corresponding column in \code{yd}.  Otherwise, a
+      \code{floor(n / b)} by 1 numeric matrix containing one the one set of
+      the values in \code{x} that contribute to \code{yd}.}
   }
 }
 \description{
@@ -39,12 +48,13 @@ in the vector \code{x}.  This provides the first step of computations in
   sliding (rolling) maxima.
 
   \strong{Disjoint maxima.}  If \code{n = length(x)} is an integer
-  multiple of \code{b} then only one set of \code{n / b} disjoint
+  multiple of \code{b}, or if \code{which_dj = "first"} or
+  \code{which_dj = "last"} then only one set of \code{n / b} disjoint
   block maxima are returned.
   Otherwise, \code{n - floor(n / b) * b + 1} sets of \code{floor(n / b)}
   disjoint block maxima are returned.  Set \code{i} are the disjoint maxima
   of \code{x[i:(i + floor(n / b) * b - 1)]}.  That is, all possible sets
-  of contigous disjoint maxima achieving the maxima length of
+  of contiguous disjoint maxima achieving the maxima length of
   \code{floor(n / b)} are calculated.
 
   In both instances \code{na.rm = TRUE} is passed to \code{\link{max}} so
@@ -52,6 +62,12 @@ in the vector \code{x}.  This provides the first step of computations in
 
   Also returned are the values in \code{x} that contribute to each set
   of block maxima.
+}
+\examples{
+x <- 1:11
+all_maxima(x, 3)
+all_maxima(x, 3, which_dj = "first")
+all_maxima(x, 3, which_dj = "last")
 }
 \seealso{
 \code{\link{spm}} for semiparametric estimation of the

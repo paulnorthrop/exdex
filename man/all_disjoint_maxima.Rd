@@ -4,12 +4,18 @@
 \alias{all_disjoint_maxima}
 \title{All sets of disjoint block maxima}
 \usage{
-all_disjoint_maxima(x, b = 1)
+all_disjoint_maxima(x, b = 1, which_dj = c("all", "first", "last"))
 }
 \arguments{
 \item{x}{A numeric vector of raw observations.}
 
 \item{b}{A numeric scalar.  The block size.}
+
+\item{which_dj}{A character scalar.  Determines Which sets of disjoint
+maxima are calculated: \code{"all"}, all sets; \code{"first"}, only the
+set whose first block starts on the first observation in \code{x};
+\code{"last"}, only the set whose last block end on the last observation
+in \code{x}.}
 }
 \value{
 A list containing
@@ -29,6 +35,12 @@ If \code{length(x)} is not an integer multiple of \code{b} then
   only the first \code{b * floor(n / b)} observations in \code{x} are used.
   \code{na.rm = TRUE} is passed to \code{max} so that blocks containing
   missing values produce a non-missing result.
+}
+\examples{
+x <- 1:11
+all_disjoint_maxima(x, 3)
+all_disjoint_maxima(x, 3, which_dj = "first")
+all_disjoint_maxima(x, 3, which_dj = "last")
 }
 \seealso{
 \code{\link{spm}} for semiparametric estimation of the

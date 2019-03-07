@@ -31,6 +31,10 @@ The function \code{\link[zoo]{rollapply}} in the
   \code{max} so that blocks containing missing values produce a
   non-missing result.
 }
+\examples{
+x <- 1:11
+sliding_maxima(x, 3)
+}
 \references{
 Zeileis, A. and Grothendieck, G. (2005). zoo: S3
   Infrastructure for Regular and Irregular Time Series. \emph{Journal of

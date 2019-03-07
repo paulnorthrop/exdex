@@ -4,12 +4,17 @@
 \alias{disjoint_maxima}
 \title{Disjoint block maxima}
 \usage{
-disjoint_maxima(x, b = 1)
+disjoint_maxima(x, b = 1, which_dj = c("first", "last"))
 }
 \arguments{
 \item{x}{A numeric vector of raw observations.}
 
 \item{b}{A numeric scalar.  The block size.}
+
+\item{which_dj}{A character scalar.  Determines Which set of disjoint
+maxima are calculated: \code{"first"}, only the set whose first block
+starts on the first observation in \code{x}; \code{"last"}, only the
+set whose last block end on the last observation in \code{x}.}
 }
 \value{
 A list containing
@@ -36,4 +41,7 @@ If \code{length(x)} is not an integer multiple of \code{b} then
 
 \code{\link{sliding_maxima}} for the calculation of the maxima
   over sliding blocks.
+x <- 1:11
+disjoint_maxima(x, 3)
+disjoint_maxima(x, 3, which_dj = "last")
 }

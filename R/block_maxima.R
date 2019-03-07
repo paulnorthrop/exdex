@@ -102,7 +102,7 @@ all_disjoint_maxima <- function(x, b = 1){
   first_value <- 1:(n - n_max * b + 1)
   # block indicator: 1, ..., 1, ..., n_max, ..., n_max
   ind <- rep(1:n_max, each = b)
-  my_fn <- function(first) {
+  get_maxima <- function(first) {
     last <- first + n_max * b - 1
     # take only the first_value to n_max * b + first_value - 1 observations
     xx <- x[first:last]
@@ -110,7 +110,7 @@ all_disjoint_maxima <- function(x, b = 1){
     y <- as.numeric(tapply(xx, ind, max, na.rm = TRUE))
     return(c(y, xx))
   }
-  temp <- vapply(first_value, FUN = my_fn, numeric(n_max * (b + 1)))
+  temp <- vapply(first_value, FUN = get_maxima, numeric(n_max * (b + 1)))
   y_mat <- temp[1:n_max, , drop = FALSE]
   x_mat <- temp[-(1:n_max), , drop = FALSE]
   return(list(y_mat = y_mat, x_mat = x_mat))
@@ -172,13 +172,13 @@ all_maxima <- function(x, b = 1){
   n_max <- floor(n / b)
   # Find all the possible first indices
   first_value <- 1:(n - n_max * b + 1)
-  # A function to returns block maxima and contributing values starting from
+  # A function to return block maxima and contributing values starting from
   # the first value first
-  my_fn <- function(first) {
+  get_maxima <- function(first) {
     s_ind <- seq.int(from = first, by = b, length.out = n_max)
     return(c(s_max$y[s_ind], x[first:(first + n_max * b - 1)]))
   }
-  temp <- vapply(first_value, FUN = my_fn, numeric(n_max * (b + 1)))
+  temp <- vapply(first_value, FUN = get_maxima, numeric(n_max * (b + 1)))
   yd <- temp[1:n_max, , drop = FALSE]
   xd <- temp[-(1:n_max), , drop = FALSE]
   return(list(ys = s_max$y, xs = s_max$x, yd = yd, xd = xd))

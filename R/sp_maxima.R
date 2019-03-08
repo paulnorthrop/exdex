@@ -14,7 +14,7 @@
 #' @param bias_adjust A character scalar.  Is bias-adjustment of the
 #'   raw estimate of \eqn{\theta} performed using the bias-reduced
 #'   estimator (\code{bias_adjust = "BB3"}), derived in Section 5 of
-#'   Berghaus and Bucher (2018); or a simpler version of this
+#'   Berghaus and Bucher (2018); or a simpler version
 #'   (\code{bias_adjust = "BB1"}), in which the raw estimate is multiplied by
 #'   \eqn{(k-1) / k}, where \eqn{k} is the number of blocks; or the
 #'   bias-adjustment of the empirical distribution function used to calculate
@@ -71,16 +71,16 @@
 #'     \itemize{
 #'       \item{estimated standard errors will be missing from the returned
 #'             object,}
-#'       \item{if \code{bias_adjust == "BB3"} then this bias-adjustment
+#'       \item{if \code{bias_adjust == "BB3"} then bias-adjustment
 #'             based on \code{bias_adjust == "BB1"} will be performed instead,
 #'             because the former relies on the estimated variances of the
 #'             estimators.}
 #'     }
 #' @return A list containing
 #'   \itemize{
-#'     \item {\code{theta} : } {A vector containing the estimates \eqn{\theta}
-#'       resulting from the two variants of the semiparametric estimator,
-#'       labelled N2015 for Northrop (2015) and BB2018 for
+#'     \item {\code{theta} : } {A vector containing the estimates of
+#'       \eqn{\theta} resulting from the two variants of the semiparametric
+#'       estimator, labelled N2015 for Northrop (2015) and BB2018 for
 #'       Berghaus and Bucher (2018).}
 #'     \item {\code{se} : } {The respective estimated standard errors.}
 #'     \item {\code{uncontrained_theta} : } {The estimates of \eqn{\theta}
@@ -91,8 +91,8 @@
 #'       bias-adjustment applied to the raw estimates.  This is only relevant
 #'       if \code{bias_adjust} is "BB3" or "BB1".  Otherwise, \code{bias_val}
 #'       is \code{NA}.}
-#'     \item {\code{bias_adjust} : } {The input value of \code{bias_adjust}.}
 #'     \item {\code{b} : } {The input value of \code{b}.}
+#'     \item {\code{bias_adjust} : } {The input value of \code{bias_adjust}.}
 #'     \item {\code{sliding} : } {The input value of \code{sliding}.}
 #'     \item {\code{call} : } {The call to \code{spm}.}
 #'   }

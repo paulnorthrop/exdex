@@ -15,7 +15,7 @@ spm_new(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
 \item{bias_adjust}{A character scalar.  Is bias-adjustment of the
 raw estimate of \eqn{\theta} performed using the bias-reduced
 estimator (\code{bias_adjust = "BB3"}), derived in Section 5 of
-Berghaus and Bucher (2018); or a simpler version of this
+Berghaus and Bucher (2018); or a simpler version
 (\code{bias_adjust = "BB1"}), in which the raw estimate is multiplied by
 \eqn{(k-1) / k}, where \eqn{k} is the number of blocks; or the
 bias-adjustment of the empirical distribution function used to calculate
@@ -38,32 +38,45 @@ Berghaus and Bucher (2018) is used.
 See \strong{Details} for further information.}
 
 \item{which_dj}{A character scalar.  Determines which set of disjoint
-maxima are used to calculate an estimate of \eqn{theta}: \code{"first"},
+maxima are used to calculate an estimate of \eqn{\theta}: \code{"first"},
 only the set whose first block starts on the first observation in
 \code{x}; \code{"last"}, only the set whose last block end on the last
 observation in \code{x}.}
 }
 \value{
-A list containing
-  \itemize{
-    \item {\code{theta} : } {A vector containing the estimates \eqn{\theta}
-      resulting from the two variants of the semiparametric estimator,
-      labelled N2015 for Northrop (2015) and BB2018 for
-      Berghaus and Bucher (2018).}
-    \item {\code{se} : } {The respective estimated standard errors.}
-    \item {\code{uncontrained_theta} : } {The estimates of \eqn{\theta}
-      without the constraint that they lie in (0, 1])}
-    \item {\code{N2015_data} : } {The values of the \eqn{Y}-data.}
-    \item {\code{BB2018_data} : } {The values of the \eqn{Z}-data.}
-    \item {\code{bias_val} : } {The respective values of the
-      bias-adjustment applied to the raw estimates.  This is only relevant
-      if \code{bias_adjust} is "BB3" or "BB1".  Otherwise, \code{bias_val}
-      is \code{NA}.}
-    \item {\code{bias_adjust} : } {The input value of \code{bias_adjust}.}
-    \item {\code{b} : } {The input value of \code{b}.}
-    \item {\code{sliding} : } {The input value of \code{sliding}.}
-    \item {\code{call} : } {The call to \code{spm}.}
-  }
+A list of class \code{c("exdex", "spm")} containing the
+  components listed below.  The components that are vectors are
+  labelled to indicate the estimator to which the constituent values
+  relate: N2015 for Northrop (2015) and BB2018 for
+  Berghaus and Bucher (2018).
+  \item{theta_sl, theta_dj}{ Vectors containing the estimates of
+    \eqn{\theta} resulting from sliding maxima and disjoint maxima
+    respectively.}
+  \item{se_sl, se_dj}{The estimated standard errors associated
+    with the estimates in \code{theta_sl} and \code{theta_dj}.}
+  \item{bias_sl, bias_dj}{The respective values of the
+      bias-adjustment applied to the raw estimates.  This is only
+      relevant if \code{bias_adjust} is "BB3" or "BB1".  Otherwise,
+      \code{bias_val} is \code{NA}.}
+  \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
+    are the constraint that they lie in (0, 1] has been applied.}
+  \item{data_sl, data_dj}{Vectors of the values of the \eqn{Y}-data and
+    the \eqn{Z}-data.}
+  \item{sigma2dj, sigma2dj_for_sl}{Estimates of the variance
+   \eqn{\sigma_{{\rm dj}}^2}{\sigma^2_dj}
+   defined on pages 2314-2315 of Berghaus and Bucher (2018).
+   The form of the estimates is given on page 2319.
+   \code{sigma2dj} is used in estimating the standard error \code{se_dj},
+   \code{sigma2dj_for_sl} in estimating the standard error \code{se_sl}.}
+  \item{sigma2sl}{Estimates of the variance
+    \eqn{\sigma_{{\rm sl}}^2}{\sigma^2_sl}.
+    defined on pages 2314-2315 of Berghaus and Bucher (2018).
+    The form of the estimates is given on page 2319.
+    \code{sigma2dj_for_sl} is used to estimate
+    \eqn{\sigma_{{\rm dj}}^2}{\sigma^2_dj} for this purpose.}
+  \item{b}{The input value of \code{b}.}
+  \item{bias_adjust}{The input value of \code{bias_adjust}.}
+  \item{call}{The call to \code{spm}.}
 }
 \description{
 Estimates the extremal index \eqn{\theta} using a semiparametric block
@@ -101,7 +114,7 @@ The extremal index \eqn{\theta} is estimated using the
   use the sampling variance based on the Berghaus and Bucher (2018)
   estimator, i.e. the \eqn{Z}-data (\code{varN = FALSE}) or an analogous
   version tailored to the Northrop (2015) estimator that uses the
-  \eqn{Z}-data (\code{varN = TRUE}).
+  \eqn{Y}-data (\code{varN = TRUE}).
 
   A condition imposed in Proposition 4.1 of Berghaus and Bucher (2018)
   means that \code{b} must be no smaller than \eqn{k^{1/2}} and no larger
@@ -111,7 +124,7 @@ The extremal index \eqn{\theta} is estimated using the
     \itemize{
       \item{estimated standard errors will be missing from the returned
             object,}
-      \item{if \code{bias_adjust == "BB3"} then this bias-adjustment
+      \item{if \code{bias_adjust == "BB3"} then bias-adjustment
             based on \code{bias_adjust == "BB1"} will be performed instead,
             because the former relies on the estimated variances of the
             estimators.}

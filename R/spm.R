@@ -200,6 +200,7 @@ spm_new <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   }
   # Sliding maxima
   Fhaty <- ecdf2(all_max$xs, all_max$ys)
+  # Avoid over-writing the `disjoint' sample size k_n: it is needed later
   k_n_sl <- length(all_max$ys)
   m <- length(all_max$xs)
   const <- -log(m - b + k_n_sl)
@@ -209,6 +210,9 @@ spm_new <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   res$theta_sl <- c(-1 / mean(b * log0const(Fhaty, const)),
                     1 / (b * mean(1 - Fhaty)))
   names(res$theta_sl) <- c("N2015", "BB2018")
+  #
+  # Add the values of the Y-data and the Z-data to the output
+  res$data_sl <- cbind(-b * log(Fhaty), b * (1 - Fhaty))
   #
   # Estimate the sampling variances of the estimators
   #
@@ -229,10 +233,28 @@ spm_new <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   #
   # Perform BB2018 bias-adjustment if required
   #
+  bias_N <- bias_BB <- NA
+  if (bias_adjust == "BB3") {
+    res$bias_dj <- res$theta_dj / k_n + res$theta_dj ^ 3 * res$sigma2dj / k_n
+    res$bias_sl <- res$theta_sl / k_n + res$theta_sl ^ 3 * res$sigma2sl / k_n
+    res$theta_dj <- res$theta_dj - res$bias_dj
+    res$theta_sl <- res$theta_sl - res$bias_sl
+  } else if (bias_adjust == "BB1") {
+    res$bias_dj <- res$theta_dj / k_n
+    res$bias_sl <- res$theta_sl / k_n
+    res$theta_dj <- res$theta_dj - res$bias_dj
+    res$theta_sl <- res$theta_sl - res$bias_sl
+  }
   #
   # Save the unconstrained estimates, so that they can be returned
+  res$unconstrained_theta_dj <- res$theta_dj
+  res$unconstrained_theta_sl <- res$theta_sl
   #
   # Constrain to (0, 1] if required
+  if (constrain) {
+    res$theta_dj <- pmin(res$theta_dj, 1)
+    res$theta_sl <- pmin(res$theta_sl, 1)
+  }
   #
   res$bias_adjust <- bias_adjust
   res$b <- b
@@ -327,17 +349,18 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
   # Point estimates: disjoint maxima. Component i of ThatN (N) and That (BB)
   # contains (the reciprocal of) point estimates of theta based on set of
   # disjoint maxima i.  Use the mean of these estimates as an overall estimate.
-  # Perform the Northrop (2015) `bias-adjustment' of Fhat if requested and
-  # recalculate That and ThatN
+  # Perform the Northrop (2015) `bias-adjustment' of Fhaty (Nhat here) if
+  # requested and recalculate That and ThatN
   #
   if (bias_adjust == "N") {
-    Fhaty <- (m * Nhat - b) / (m - b)
-    That <- colMeans(b * (1 - Fhaty))
-    ThatN <- colMeans(-b * log0const(Fhaty, const))
+    Nhat <- (m * Nhat - b) / (m - b)
+    That <- colMeans(b * (1 - Nhat))
+    ThatN <- colMeans(-b * log0const(Nhat, const))
   }
   theta_dj <- 1 / c(ThatN[which_dj], That[which_dj])
   names(theta_dj) <- names(sigma2dj) <- names(sigma2dj_for_sl) <-
     c("N2015", "BB2018")
   return(list(sigma2dj = sigma2dj, sigma2dj_for_sl = sigma2dj_for_sl,
-              theta_dj = theta_dj))
+              theta_dj = theta_dj,
+              data_dj = cbind(-b * log(Nhat), b * (1 - Nhat))))
 }

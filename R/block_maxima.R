@@ -119,10 +119,12 @@ disjoint_maxima <- function(x, b = 1, which_dj = c("first", "last")){
 #' @seealso \code{\link{all_maxima}} for the calculation of both sliding and
 #'   disjoint maxima.
 #' @examples
+#' \dontrun{
 #' x <- 1:11
 #' all_disjoint_maxima(x, 3)
 #' all_disjoint_maxima(x, 3, which_dj = "first")
 #' all_disjoint_maxima(x, 3, which_dj = "last")
+#' }
 all_disjoint_maxima <- function(x, b = 1,
                                 which_dj = c("all", "first", "last")){
   which_dj <- match.arg(which_dj)

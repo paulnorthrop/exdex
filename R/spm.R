@@ -128,9 +128,9 @@
 #'
 #' temp <- spm(newlyn, 20)
 #' @export
-spm_new <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
-                    constrain = TRUE, varN = TRUE,
-                    which_dj = c("last", "first")) {
+spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
+                constrain = TRUE, varN = TRUE,
+                which_dj = c("last", "first")) {
   Call <- match.call(expand.dots = TRUE)
   #
   # Check inputs

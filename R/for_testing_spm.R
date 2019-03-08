@@ -6,6 +6,7 @@
 #' calculated using the asymptotic theory developed by Berghaus and
 #' Bucher (2018).
 #'
+#' @keywords internal
 #' @param data A numeric vector of raw data.
 #' @param b A numeric scalar.  The block size.
 #' @param sliding A logical scalar.  If \code{sliding = TRUE} then the
@@ -106,13 +107,7 @@
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
-#' @examples
-#' temp <- spm(-as.vector(sp500[2:6550]), 250)
-#'
-#' temp <- spm(newlyn, 20)
-#' temp <- spm(newlyn, 20, sliding = FALSE)
-#' @export
-spm <- function(data, b, sliding = TRUE,
+spm_check <- function(data, b, sliding = TRUE,
                 bias_adjust = c("BB3", "BB1", "N", "none"), constrain = TRUE,
                 varN = TRUE) {
   Call <- match.call(expand.dots = TRUE)

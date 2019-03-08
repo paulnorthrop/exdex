@@ -7,6 +7,7 @@
 #' \code{\link{all_maxima}} to provide the first step of computations in
 #' \code{\link{spm}}.
 #'
+#' @keywords internal
 #' @param x A numeric vector of raw observations.
 #' @param b A numeric scalar.  The block size.
 #' @details The function \code{\link[zoo]{rollapply}} in the
@@ -28,8 +29,10 @@
 #'   Statistical Software}, \strong{14}(6), 1-27.
 #'   \url{https://doi.org/10.18637/jss.v014.i06}
 #' @examples
+#' \dontrun{
 #' x <- 1:11
 #' sliding_maxima(x, 3)
+#' }
 sliding_maxima <- function(x, b = 1){
   y <- as.numeric(zoo::rollapply(data = zoo::zoo(x), width = b, FUN = max,
                                  na.rm = TRUE))
@@ -44,6 +47,7 @@ sliding_maxima <- function(x, b = 1){
 #' the vector \code{x}.  In \code{\link{exdex}} this function
 #' is used only for the purposes of checking \code{\link{all_maxima}}.
 #'
+#' @keywords internal
 #' @param x A numeric vector of raw observations.
 #' @param b A numeric scalar.  The block size.
 #' @param which_dj A character scalar.  Determines Which set of disjoint
@@ -64,9 +68,11 @@ sliding_maxima <- function(x, b = 1){
 #'   extremal index based on block maxima.
 #' @seealso \code{\link{sliding_maxima}} for the calculation of the maxima
 #'   over sliding blocks.
+#' \dontrun{
 #' x <- 1:11
 #' disjoint_maxima(x, 3)
 #' disjoint_maxima(x, 3, which_dj = "last")
+#' }
 disjoint_maxima <- function(x, b = 1, which_dj = c("first", "last")){
   which_dj <- match.arg(which_dj)
   if (which_dj == "last") {
@@ -161,6 +167,7 @@ all_disjoint_maxima <- function(x, b = 1,
 #' in the vector \code{x}.  This provides the first step of computations in
 #' \code{\link{spm}}.
 #'
+#' @keywords internal
 #' @param x A numeric vector of raw observations.
 #' @param b A numeric scalar.  The block size.
 #' @param which_dj A character scalar.  Determines Which sets of disjoint
@@ -209,10 +216,12 @@ all_disjoint_maxima <- function(x, b = 1,
 #' @seealso \code{\link{sliding_maxima}} for the calculation of the maxima
 #'   over sliding blocks.
 #' @examples
+#' \dontrun{
 #' x <- 1:11
 #' all_maxima(x, 3)
 #' all_maxima(x, 3, which_dj = "first")
 #' all_maxima(x, 3, which_dj = "last")
+#' }
 all_maxima <- function(x, b = 1, which_dj = c("all", "first", "last")){
   which_dj <- match.arg(which_dj)
   # First calculate the sliding block maxima.  All the disjoint maxima that

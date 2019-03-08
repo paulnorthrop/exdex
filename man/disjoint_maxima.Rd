@@ -41,7 +41,10 @@ If \code{length(x)} is not an integer multiple of \code{b} then
 
 \code{\link{sliding_maxima}} for the calculation of the maxima
   over sliding blocks.
+\dontrun{
 x <- 1:11
 disjoint_maxima(x, 3)
 disjoint_maxima(x, 3, which_dj = "last")
 }
+}
+\keyword{internal}

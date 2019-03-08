@@ -64,10 +64,12 @@ in the vector \code{x}.  This provides the first step of computations in
   of block maxima.
 }
 \examples{
+\dontrun{
 x <- 1:11
 all_maxima(x, 3)
 all_maxima(x, 3, which_dj = "first")
 all_maxima(x, 3, which_dj = "last")
+}
 }
 \seealso{
 \code{\link{spm}} for semiparametric estimation of the
@@ -76,3 +78,4 @@ all_maxima(x, 3, which_dj = "last")
 \code{\link{sliding_maxima}} for the calculation of the maxima
   over sliding blocks.
 }
+\keyword{internal}

@@ -32,8 +32,10 @@ The function \code{\link[zoo]{rollapply}} in the
   non-missing result.
 }
 \examples{
+\dontrun{
 x <- 1:11
 sliding_maxima(x, 3)
+}
 }
 \references{
 Zeileis, A. and Grothendieck, G. (2005). zoo: S3
@@ -48,3 +50,4 @@ Zeileis, A. and Grothendieck, G. (2005). zoo: S3
 \code{\link{all_maxima}} for the calculation of both sliding and
   disjoint maxima.
 }
+\keyword{internal}

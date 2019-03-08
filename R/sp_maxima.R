@@ -160,8 +160,10 @@ spm <- function(data, b, sliding = TRUE,
     if (bias_adjust == "BB3") {
       bias_adjust <- "BB1"
       warn3 <- "'bias_adjust' has been changed to ''BB1''"
+      warning("\n", warn1, "\n", warn2, "\n", warn3)
+    } else {
+      warning("\n", warn1, "\n", warn2)
     }
-    warning("\n", warn1, "\n", warn2, "\n", warn3)
   }
   # A function that returns N2015 and BB2018 estimates of theta
   # (constrained to (0, 1] if constrain = TRUE))
@@ -308,7 +310,6 @@ spm <- function(data, b, sliding = TRUE,
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @examples
 #' spm_sigmahat_dj(newlyn, 20)
-#' @export
 spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
 #  if (missing(dj_maxima)){
 #    dj_maxima <- disjoint_maxima(data, b)

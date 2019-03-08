@@ -107,10 +107,10 @@
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
-#' spm(-as.vector(sp500[2:6550]), 250)
+#' temp <- spm(-as.vector(sp500[2:6550]), 250)
 #'
-#' spm(newlyn, 20)
-#' spm(newlyn, 20, sliding = FALSE)
+#' temp <- spm(newlyn, 20)
+#' temp <- spm(newlyn, 20, sliding = FALSE)
 #' @export
 spm <- function(data, b, sliding = TRUE,
                 bias_adjust = c("BB3", "BB1", "N", "none"), constrain = TRUE,

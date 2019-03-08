@@ -35,16 +35,18 @@ If \code{length(x)} is not an integer multiple of \code{b} then
   \code{na.rm = TRUE} is passed to \code{max} so that blocks containing
   missing values produce a non-missing result.
 }
+\examples{
+\dontrun{
+x <- 1:11
+disjoint_maxima(x, 3)
+disjoint_maxima(x, 3, which_dj = "last")
+}
+}
 \seealso{
 \code{\link{spm}} for semiparametric estimation of the
   extremal index based on block maxima.
 
 \code{\link{sliding_maxima}} for the calculation of the maxima
   over sliding blocks.
-\dontrun{
-x <- 1:11
-disjoint_maxima(x, 3)
-disjoint_maxima(x, 3, which_dj = "last")
-}
 }
 \keyword{internal}

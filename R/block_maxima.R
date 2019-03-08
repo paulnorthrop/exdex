@@ -68,6 +68,7 @@ sliding_maxima <- function(x, b = 1){
 #'   extremal index based on block maxima.
 #' @seealso \code{\link{sliding_maxima}} for the calculation of the maxima
 #'   over sliding blocks.
+#' @examples
 #' \dontrun{
 #' x <- 1:11
 #' disjoint_maxima(x, 3)

@@ -118,9 +118,9 @@ The extremal index \eqn{\theta} is estimated using the
     }
 }
 \examples{
-spm(-as.vector(sp500[2:6550]), 250)
+temp <- spm(-as.vector(sp500[2:6550]), 250)
 
-spm(newlyn, 20)
+temp <- spm(newlyn, 20)
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

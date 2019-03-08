@@ -15,8 +15,8 @@
 #'   Suveges (2007) is used to estimate the value of the extremal index.
 #'   This approach uses the time \emph{gaps} between successive exceedances
 #'   in the data \code{data} of the threshold \code{thresh}.  The \eqn{i}th
-#'   gap is defined as \eqn{Ti - 1}, where \eqn{Ti} is the difference in the
-#'   occurrence time of exceedance \eqn{i} and exceedance \eqn{i+1}.
+#'   gap is defined as \eqn{T_i - 1}, where \eqn{T_i} is the difference in
+#'   the occurrence time of exceedance \eqn{i} and exceedance \eqn{i + 1}.
 #'   Therefore, threshold exceedances at adjacent time points produce a gap
 #'   of zero.
 #'
@@ -31,8 +31,9 @@
 #'   Ferro (2003) to an exponential quantile-quantile plot of all of the
 #'   scaled gaps.  Specifically, the broken stick is a horizontal line
 #'   and a line with gradient \eqn{1 / \theta} which intersect at
-#'   \eqn{(-log \theta, 0)}.  The algorithm on page 46 of Suveges (2007)
-#'   Uses a weighted least squares minimization applied to the exponential
+#'   \eqn{(-\log\theta, 0)}{(-log \theta, 0)}.  The algorithm on page 46 of
+#'   Suveges (2007) uses a weighted least squares minimization applied to
+#'   the exponential
 #'   part of this model to seek a compromise between the role of \eqn{\theta}
 #'   as the proportion of interexceedance times that are between-cluster
 #'   and the reciprocal of the mean of an exponential distribution for these
@@ -42,7 +43,7 @@
 #'   receive smaller weight than smaller order statistics.
 #'
 #'   Note that in step (1) of the algorithm on page 46 of Suveges there is a
-#'   typo: \eqn{Nc + 1} should be \eqn{N}, where \eqn{N} is the number of
+#'   typo: \eqn{N_c + 1} should be \eqn{N}, where \eqn{N} is the number of
 #'   threshold exceedances.  Also, the gaps are scaled as detailed above,
 #'   not by their mean.
 #' @return A list containing

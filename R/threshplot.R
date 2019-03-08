@@ -6,8 +6,6 @@
 #' based on the K-gaps model for threshold inter-exceedances times of
 #' Suveges and Davison (2010).
 #'
-#'
-#'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param tmin A numeric scalar.  Minimum quantile level of threshold applied
 #'   to data.
@@ -20,7 +18,7 @@
 #'   than \code{k} units are assigned to the same cluster, resulting in a
 #'   \eqn{K}-gap equal to zero.  Specifically, the \eqn{K}-gap \eqn{S}
 #'   corresponding to an inter-exceedance time of \eqn{T} is given by
-#'   \eqn{S = max(T - K, 0)}.
+#'   \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.
 #' @param ... Arguments to be passed to methods, such as
 #' @details The maximum likelihood estimate of the extremal index \eqn{\theta}
 #'   under the K-gaps model of Suveges and Davison (2010) is calculated.

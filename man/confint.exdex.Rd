@@ -29,32 +29,35 @@ less than 0 are set to 0.}
 
 \item{conf_scale}{A character scalar.  Determines the scale on which
   we use approximate large-sample normality of the estimators to
-  estimate confidence intervals.  If \code{conf_scale = "theta"}
+  estimate confidence intervals.
+
+  If \code{conf_scale = "theta"}
   then confidence intervals are estimated for \eqn{\theta} directly.
   If \code{conf_scale = "log_theta"} then confidence intervals are first
-  estimated for \eqn{log\theta} and then transformed back to the
-  \eqn{\theta}-scale.
+  estimated for \eqn{\log\theta}{log\theta} and then transformed back
+  to the \eqn{\theta}-scale.
 
   Any bias-adjustment requested in the original call to \code{\link{spm}},
   using it's \code{bias_adjust} argument, is automatically applied here.}
 
 \item{bias_adjust}{A logical scalar.  If \code{bias_adjust = TRUE} then,
   if appropriate, bias-adjustment is also applied to the loglikelihood
-  before it is adjusted by using \code{\link[chandwich]{adjust_loglik}}.
-  This is performed only if in the original call to \code{\link{spm}} the
-  user specified \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"},
-  that is, \code{object$bias_adjust = "BB3"} or
-  \code{object$bias_adjust = "BB1"}.  In these cases the relevant component
-  of \code{object$bias_val} is used to scale \eqn{\theta} so that the
-  location of the maximum of the loglikelihood lies at the bias-adjusted
-  estimate of \eqn{\theta}.
+  before it is adjusted using \code{\link[chandwich]{adjust_loglik}}.
+  This is performed only if, in the call to
+  \code{\link{spm}}, \code{bias_adjust = "BB3"} or
+  \code{"BB1"} was specified, that is, we have
+  \code{object$bias_adjust = "BB3"}
+  or \code{"BB1"}.  In these cases the relevant
+  component of \code{object$bias_val} is used to scale \eqn{\theta} so
+  that the location of the maximum of the loglikelihood lies at the
+  bias-adjusted estimate of \eqn{\theta}.
 
   If \code{bias_adjust = FALSE} or \code{object$bias_adjust = "none"}
-  or \code{object$bias_adjust = "N"} then no bias-adjustment of the
+  or \code{"N"} then no bias-adjustment of the
   intervals is performed.  In the latter case this is because the
   bias-adjustment is applied in the creation of the data in
-  object$N2015_data and object$BB2018_data, on which the naive likelihood
-  is based.}
+  \code{object$N2015_data} and \code{object$BB2018_data}, on which the
+  naive likelihood is based.}
 
 \item{type}{A character scalar.  The argument \code{type} to be passed to
 \code{\link[chandwich]{conf_intervals}} in order to estimate the
@@ -77,7 +80,7 @@ contains the confidence limits rounded to \code{ndec} decimal places.}
 \code{plot = TRUE}.}
 }
 \value{
-A matrix with columns giving lower and upper confidence limits.
+A matrix with columns giving the lower and upper confidence limits.
   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
   (by default 2.5\% and 97.5\%).
   The row names are a concatentation of the variant of the estimator

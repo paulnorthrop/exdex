@@ -24,31 +24,34 @@
 #'   less than 0 are set to 0.
 #' @param conf_scale A character scalar.  Determines the scale on which
 #'   we use approximate large-sample normality of the estimators to
-#'   estimate confidence intervals.  If \code{conf_scale = "theta"}
+#'   estimate confidence intervals.
+#'
+#'   If \code{conf_scale = "theta"}
 #'   then confidence intervals are estimated for \eqn{\theta} directly.
 #'   If \code{conf_scale = "log_theta"} then confidence intervals are first
-#'   estimated for \eqn{log\theta} and then transformed back to the
-#'   \eqn{\theta}-scale.
+#'   estimated for \eqn{\log\theta}{log\theta} and then transformed back
+#'   to the \eqn{\theta}-scale.
 #'
 #'   Any bias-adjustment requested in the original call to \code{\link{spm}},
 #'   using it's \code{bias_adjust} argument, is automatically applied here.
 #' @param bias_adjust A logical scalar.  If \code{bias_adjust = TRUE} then,
 #'   if appropriate, bias-adjustment is also applied to the loglikelihood
-#'   before it is adjusted by using \code{\link[chandwich]{adjust_loglik}}.
-#'   This is performed only if in the original call to \code{\link{spm}} the
-#'   user specified \code{bias_adjust = "BB3"} or \code{bias_adjust = "BB1"},
-#'   that is, \code{object$bias_adjust = "BB3"} or
-#'   \code{object$bias_adjust = "BB1"}.  In these cases the relevant component
-#'   of \code{object$bias_val} is used to scale \eqn{\theta} so that the
-#'   location of the maximum of the loglikelihood lies at the bias-adjusted
-#'   estimate of \eqn{\theta}.
+#'   before it is adjusted using \code{\link[chandwich]{adjust_loglik}}.
+#'   This is performed only if, in the call to
+#'   \code{\link{spm}}, \code{bias_adjust = "BB3"} or
+#'   \code{"BB1"} was specified, that is, we have
+#'   \code{object$bias_adjust = "BB3"}
+#'   or \code{"BB1"}.  In these cases the relevant
+#'   component of \code{object$bias_val} is used to scale \eqn{\theta} so
+#'   that the location of the maximum of the loglikelihood lies at the
+#'   bias-adjusted estimate of \eqn{\theta}.
 #'
 #'   If \code{bias_adjust = FALSE} or \code{object$bias_adjust = "none"}
-#'   or \code{object$bias_adjust = "N"} then no bias-adjustment of the
+#'   or \code{"N"} then no bias-adjustment of the
 #'   intervals is performed.  In the latter case this is because the
 #'   bias-adjustment is applied in the creation of the data in
-#'   object$N2015_data and object$BB2018_data, on which the naive likelihood
-#'   is based.
+#'   \code{object$N2015_data} and \code{object$BB2018_data}, on which the
+#'   naive likelihood is based.
 #' @param type A character scalar.  The argument \code{type} to be passed to
 #'   \code{\link[chandwich]{conf_intervals}} in order to estimate the
 #'   likelihood-based intervals.  See \strong{Details}.
@@ -75,7 +78,7 @@
 #'   confidence intervals cannot be estimated and an error will be thrown.
 #'   See the \strong{Details} section of the \code{\link{spm}} documentation
 #'   for more information.
-#' @return A matrix with columns giving lower and upper confidence limits.
+#' @return A matrix with columns giving the lower and upper confidence limits.
 #'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
 #'   (by default 2.5\% and 97.5\%).
 #'   The row names are a concatentation of the variant of the estimator
@@ -84,10 +87,10 @@
 #'   (sym for symmetric and lik for likelihood-based).
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{http://dx.doi.org/10.1007/s10687-015-0221-5}
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{http://dx.doi.org/10.1214/17-AOS1621}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
 #' res <- spm(newlyn, 20)
 #' # I can't include these examples until new chandwich is on CRAN
@@ -105,7 +108,13 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
     stop("use only with \"exdex\" objects")
   }
   if (is.na(object$se[1])) {
-    stop("CIs cannot be estimated because ''object'' has no estimated SEs")
+    temp <- matrix(NA, nrow = 4, ncol = 2)
+    a <- (1 - level) / 2
+    a <- c(a, 1 - a)
+    pct <- paste(round(100 * a, 1), "%")
+    colnames(temp) <- pct
+    rownames(temp) <- c("N2015sym", "BB2018sym", "N2015lik", "BB0218lik")
+    return(temp)
   }
   if (object$sliding && type == "none") {
     warning("The likelihood-based CIs are vast underestimates of uncertainty!")
@@ -146,6 +155,7 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
   #    in object$N2015_data and object$BB2018_data.
   #
   exponential_loglik <- function(theta, data) {
+    if (theta <= 0) return(-Inf)
     return(log(theta) - theta * data)
   }
   # Bias-adjust, if requested and if appropriate
@@ -182,9 +192,11 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
                                     mle = mleBB / scaleBB, H = H, V = V)
   # Avoid chandwich::conf_intervals()'s profiling messages
   tempN <- suppressMessages(chandwich::conf_intervals(adjN, conf = 100
-                                                      * level, type = type))
+                                                      * level, type = type,
+                                                      lower = 0))
   tempBB <- suppressMessages(chandwich::conf_intervals(adjBB, conf = 100 *
-                                                         level, type = type))
+                                                         level, type = type,
+                                                       lower = 0))
   # Add the likelihood-based intervals to the symmetric ones
   lower <- c(lower, tempN$prof_CI[1], tempBB$prof_CI[1])
   upper <- c(upper, tempN$prof_CI[2], tempBB$prof_CI[2])

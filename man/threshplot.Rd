@@ -23,7 +23,7 @@ Davison (2010).  Threshold inter-exceedances times that are not larger
 than \code{k} units are assigned to the same cluster, resulting in a
 \eqn{K}-gap equal to zero.  Specifically, the \eqn{K}-gap \eqn{S}
 corresponding to an inter-exceedance time of \eqn{T} is given by
-\eqn{S = max(T - K, 0)}.}
+\eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.}
 
 \item{...}{Arguments to be passed to methods, such as}
 }

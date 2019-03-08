@@ -280,6 +280,7 @@ spm <- function(data, b, sliding = TRUE,
 #' Berghaus and Bucher (2018), in order to perform bias-adjustment and
 #' estimation of uncertainty.
 #'
+#' @keywords internal
 #' @param data A numeric vector of raw data.
 #' @param b A numeric scalar.  The block size.
 #' @param dj_maxima A list returned from a call
@@ -309,7 +310,9 @@ spm <- function(data, b, sliding = TRUE,
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
 #' @examples
+#' \dontrun{
 #' spm_sigmahat_dj(newlyn, 20)
+#' }
 spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
 #  if (missing(dj_maxima)){
 #    dj_maxima <- disjoint_maxima(data, b)

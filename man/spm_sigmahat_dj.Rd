@@ -44,7 +44,9 @@ The computations follow page 2319 of Berghaus and Bucher (2018),
   given in equation (1.3) on page 2309 of Berghaus and Bucher (2018).
 }
 \examples{
+\dontrun{
 spm_sigmahat_dj(newlyn, 20)
+}
 }
 \references{
 Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
@@ -59,3 +61,4 @@ estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 \code{\link{spm}} for maximum likelihood estimation of the
   extremal index \eqn{\theta} using the K-gaps model.
 }
+\keyword{internal}

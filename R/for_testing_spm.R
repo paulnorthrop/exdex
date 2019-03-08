@@ -108,8 +108,8 @@
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 spm_check <- function(data, b, sliding = TRUE,
-                bias_adjust = c("BB3", "BB1", "N", "none"), constrain = TRUE,
-                varN = TRUE) {
+                      bias_adjust = c("BB3", "BB1", "N", "none"),
+                      constrain = TRUE, varN = TRUE) {
   Call <- match.call(expand.dots = TRUE)
   # Check inputs
   if (missing(data) || length(data) == 0L || mode(data) != "numeric") {

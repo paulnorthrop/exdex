@@ -96,6 +96,7 @@ disjoint_maxima <- function(x, b = 1, which_dj = c("first", "last")){
 #' values in the vector \code{x}.  In \code{\link{exdex}} this function
 #' is used only for the purposes of checking \code{\link{all_maxima}}.
 #'
+#' @keywords internal
 #' @param x A numeric vector of raw observations.
 #' @param b A numeric scalar.  The block size.
 #' @param which_dj A character scalar.  Determines Which sets of disjoint

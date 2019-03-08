@@ -49,3 +49,4 @@ all_disjoint_maxima(x, 3, which_dj = "last")
 \code{\link{all_maxima}} for the calculation of both sliding and
   disjoint maxima.
 }
+\keyword{internal}

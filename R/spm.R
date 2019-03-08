@@ -32,7 +32,11 @@
 #'   to that estimator.  Otherwise, the sampling variance derived in
 #'   Berghaus and Bucher (2018) is used.
 #'   See \strong{Details} for further information.
-#' @param which_vals Need to document.
+#' @param which_dj A character scalar.  Determines which set of disjoint
+#'   maxima are used to calculate an estimate of \eqn{theta}: \code{"first"},
+#'   only the set whose first block starts on the first observation in
+#'   \code{x}; \code{"last"}, only the set whose last block end on the last
+#'   observation in \code{x}.
 #' @details The extremal index \eqn{\theta} is estimated using the
 #'   semiparametric maxima estimator of Northrop (2015) and variant
 #'   of this studied by Berghaus and Bucher (2018).  In each case a sample
@@ -110,7 +114,6 @@
 #' spm(-as.vector(sp500[2:6550]), 250)
 #'
 #' spm(newlyn, 20)
-#' spm(newlyn, 20, sliding = FALSE)
 #' @export
 spm_new <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
                     constrain = TRUE, varN = TRUE,
@@ -174,59 +177,68 @@ spm_new <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   # pass these to spm_sigmahat_dj using the dj_maxima argument
   # Only do this is b_ok = TRUE.
   # Otherwise, just calculate point estimates of theta
+  # At this point these estimates have not been bias-adjusted, unless
+  # bias_adjust = "N".
   if (b_ok) {
     # Find all sets of maxima of disjoint blocks of length b
     all_max <- all_maxima(data, b)
     res <- ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
-    # Sliding maxima
-    res$theta_sl <- sl_theta_hat(all_max, b, bias_adjust)
   } else {
-    res <- list()
+    all_max <- all_maxima(data, b, which_dj)
     # Disjoint maxima
-    res$theta_dj <- dj_theta_hat(data, b, bias_adjust, which_dj)
-    # Sliding maxima
-    res$theta_sl <- sl_theta_hat(data, b, bias_adjust)
+    Fhaty <- ecdf2(all_max$xd, all_max$yd)
+    k_n <- length(all_max$yd)
+    m <- length(all_max$xd)
+    const <- -log(m - b + k_n)
+    if (bias_adjust == "N") {
+      Fhaty <- (m * Fhaty - b) / (m - b)
+    }
+    res <- list()
+    res$theta_dj <- c(-1 / mean(b * log0const(Fhaty, const)),
+                      1 / (b * mean(1 - Fhaty)))
+    names(res$theta_dj) <- c("N2015", "BB2018")
   }
-  return(res)
-}
-
-sl_theta_hat <- function(all_max, b,
-                         bias_adjust = c("BB3", "BB1", "N", "none")) {
-  bias_adjust <- match.arg(bias_adjust)
-  if (!is.list(all_max)) {
-    all_max <- all_maxima(all_max, b)
-  }
+  # Sliding maxima
   Fhaty <- ecdf2(all_max$xs, all_max$ys)
-  k_n <- length(all_max$ys)
+  k_n_sl <- length(all_max$ys)
   m <- length(all_max$xs)
-  const <- -log(m - b + k_n)
+  const <- -log(m - b + k_n_sl)
   if (bias_adjust == "N") {
     Fhaty <- (m * Fhaty - b) / (m - b)
   }
-  ests <- c(-1 / mean(b * log0const(Fhaty, const)), 1 / (b * mean(1 - Fhaty)))
-  names(ests) <- c("N2015", "BB2018")
-  return(ests)
-}
-
-dj_theta_hat <- function(all_max, b,
-                         bias_adjust = c("BB3", "BB1", "N", "none"),
-                         which_dj = c("last", "first")) {
-  bias_adjust <- match.arg(bias_adjust)
-  which_dj <- match.arg(which_dj)
-  if (!is.list(all_max)) {
-    all_max <- all_maxima(all_max, b)
+  res$theta_sl <- c(-1 / mean(b * log0const(Fhaty, const)),
+                    1 / (b * mean(1 - Fhaty)))
+  names(res$theta_sl) <- c("N2015", "BB2018")
+  #
+  # Estimate the sampling variances of the estimators
+  #
+  if (b_ok) {
+    res$sigma2sl <- res$sigma2dj_for_sl - (3 - 4 * log(2)) / res$theta_sl ^ 2
+    indexN <- ifelse(varN, 2, 1)
+    if (varN) {
+      index <- 1:2
+    } else {
+      index <- c(2, 2)
+    }
+    res$se_dj <- res$theta_dj ^ 2 * sqrt(res$sigma2dj[index] / k_n)
+    res$se_sl <- res$theta_sl ^ 2 * sqrt(res$sigma2sl[index] / k_n)
+  } else {
+    res$se_dj <- c(NA, NA)
+    res$se_sl <- c(NA, NA)
   }
-  which_dj <- switch(which_dj, first = 1, last = ncol(all_max$xd))
-  Fhaty <- ecdf2(all_max$xd[, which_dj], all_max$yd[, which_dj])
-  k_n <- length(all_max$yd[, which_dj])
-  m <- length(all_max$xd[, which_dj])
-  const <- -log(m - b + k_n)
-  if (bias_adjust == "N") {
-    Fhaty <- (m * Fhaty - b) / (m - b)
-  }
-  ests <- c(-1 / mean(b * log0const(Fhaty, const)), 1 / (b * mean(1 - Fhaty)))
-  names(ests) <- c("N2015", "BB2018")
-  return(ests)
+  #
+  # Perform BB2018 bias-adjustment if required
+  #
+  #
+  # Save the unconstrained estimates, so that they can be returned
+  #
+  # Constrain to (0, 1] if required
+  #
+  res$bias_adjust <- bias_adjust
+  res$b <- b
+  res$call <- Call
+  class(res) <- c("exdex", "spm")
+  return(res)
 }
 
 ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
@@ -326,6 +338,6 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
   theta_dj <- 1 / c(ThatN[which_dj], That[which_dj])
   names(theta_dj) <- names(sigma2dj) <- names(sigma2dj_for_sl) <-
     c("N2015", "BB2018")
-  return(list(theta_dj = theta_dj, sigma2dj = sigma2dj,
-              sigma2dj_for_sl = sigma2dj_for_sl))
+  return(list(sigma2dj = sigma2dj, sigma2dj_for_sl = sigma2dj_for_sl,
+              theta_dj = theta_dj))
 }

@@ -13,6 +13,9 @@ spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
 spm_sigmahat_dj(data, b, dj_maxima, check = FALSE, which_dj)
 }
 \description{
-These functions are not to be called by the user.
+Internal exdex functions
+}
+\details{
+These functions are not intended to be called by the user.
 }
 \keyword{internal}

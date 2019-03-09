@@ -1,6 +1,8 @@
 #' Internal exdex functions
 #'
-#' These functions are not to be called by the user.
+#' Internal exdex functions
+#' @details
+#' These functions are not intended to be called by the user.
 #' @name exdex-internal
 #' @keywords internal
 NULL

@@ -56,4 +56,3 @@ NULL
 #'   log return.
 #' @source Yahoo finance \url{https://finance.yahoo.com/quote/^SPX/history/}
 "sp500"
-

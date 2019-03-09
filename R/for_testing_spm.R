@@ -34,6 +34,11 @@
 #'   to that estimator.  Otherwise, the sampling variance derived in
 #'   Berghaus and Bucher (2018) is used.
 #'   See \strong{Details} for further information.
+#' @param which_dj A character scalar.  Determines which set of disjoint
+#'   maxima are used to calculate an estimate of \eqn{\theta}: \code{"first"},
+#'   only the set whose first block starts on the first observation in
+#'   \code{x}; \code{"last"}, only the set whose last block end on the last
+#'   observation in \code{x}.
 #' @details The extremal index \eqn{\theta} is estimated using the
 #'   semiparametric maxima estimator of Northrop (2015) and variant
 #'   of this studied by Berghaus and Bucher (2018).  In each case a sample
@@ -109,7 +114,8 @@
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 spm_check <- function(data, b, sliding = TRUE,
                       bias_adjust = c("BB3", "BB1", "N", "none"),
-                      constrain = TRUE, varN = TRUE) {
+                      constrain = TRUE, varN = TRUE,
+                      which_dj = c("last", "first")) {
   Call <- match.call(expand.dots = TRUE)
   # Check inputs
   if (missing(data) || length(data) == 0L || mode(data) != "numeric") {
@@ -138,6 +144,7 @@ spm_check <- function(data, b, sliding = TRUE,
   if (!is.logical(varN) || length(varN) != 1) {
     stop("'varN' must be a logical scalar")
   }
+  which_dj <- match.arg(which_dj)
   # Check that the value of b satisfies the inequality in Proposition 4.1
   # of Berghaus and Bucher (2018)
   k_n <- floor(length(data) / b)
@@ -159,6 +166,12 @@ spm_check <- function(data, b, sliding = TRUE,
     } else {
       warning("\n", warn1, "\n", warn2)
     }
+  }
+  # If we want the last set of disjoint maxima then reverse the data vector
+  if (which_dj == "last") {
+    pass_data <- rev(data)
+  } else {
+    pass_data <- data
   }
   # A function that returns N2015 and BB2018 estimates of theta
   # (constrained to (0, 1] if constrain = TRUE))
@@ -199,9 +212,11 @@ spm_check <- function(data, b, sliding = TRUE,
     if (b_ok) {
       if (sliding) {
         sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b,
-                                        dj_maxima = disjoint_maxima(data, b))
+                                        dj_maxima = disjoint_maxima(data, b),
+                                        which_dj = which_dj)
       } else {
-        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b, dj_maxima = temp)
+        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b, dj_maxima = temp,
+                                        which_dj = which_dj)
       }
       # If sliding = TRUE then estimate sigma2hat_sl
       # Otherwise use sigma2hat_dj
@@ -210,8 +225,8 @@ spm_check <- function(data, b, sliding = TRUE,
         sigma2hat_N <- sigma2hat_dj[indexN] - (3 - 4 * log(2)) / theta_N ^ 2
         sigma2hat_BB <- sigma2hat_dj[1] - (3 - 4 * log(2)) / theta_BB ^ 2
       } else {
-        sigma2hat_N <- sigma2hat_dj[indexN]
-        sigma2hat_BB <- sigma2hat_dj[1]
+        sigma2hat_N <- sigma2hat_dj[indexN + 2]
+        sigma2hat_BB <- sigma2hat_dj[1 + 2]
       }
     }
     # Estimate the sampling variances of the estimators
@@ -252,7 +267,7 @@ spm_check <- function(data, b, sliding = TRUE,
   # End of function spm_estimates() ----------
   #
   # Find the point estimate of theta and the raw data that contribute to it
-  res <- spm_estimates(data = data)
+  res <- spm_estimates(data = pass_data)
   estimator_names <- c("N2015", "BB2018")
   names(res$theta) <- estimator_names
   names(res$se) <- estimator_names
@@ -308,7 +323,7 @@ spm_check <- function(data, b, sliding = TRUE,
 #' \dontrun{
 #' spm_sigmahat_dj(newlyn, 20)
 #' }
-spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
+spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE, which_dj){
 #  if (missing(dj_maxima)){
 #    dj_maxima <- disjoint_maxima(data, b)
 #  }
@@ -386,6 +401,9 @@ spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE){
   if (!check) {
     temp <- vapply(1:ncol(all_dj_maxima$y), ests_fn, c(0, 0))
     ests <- rowMeans(temp)
+    # For dj maxima add the first values.  This is the case because, if
+    # which_dj = "last" we used rev(data) to reverse the data
+    ests <- c(ests, temp[, 1])
     return(ests)
   }
   # 4 (effectively 3) other ways to calculate Usum

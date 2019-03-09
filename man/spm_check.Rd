@@ -5,7 +5,8 @@
 \title{Semiparametric maxima estimator of the extremal index}
 \usage{
 spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
-  "none"), constrain = TRUE, varN = TRUE)
+  "none"), constrain = TRUE, varN = TRUE, which_dj = c("last",
+  "first"))
 }
 \arguments{
 \item{data}{A numeric vector of raw data.}
@@ -40,6 +41,12 @@ of the sampling variance of the Northrop (2015) estimator is tailored
 to that estimator.  Otherwise, the sampling variance derived in
 Berghaus and Bucher (2018) is used.
 See \strong{Details} for further information.}
+
+\item{which_dj}{A character scalar.  Determines which set of disjoint
+maxima are used to calculate an estimate of \eqn{\theta}: \code{"first"},
+only the set whose first block starts on the first observation in
+\code{x}; \code{"last"}, only the set whose last block end on the last
+observation in \code{x}.}
 }
 \value{
 A list containing

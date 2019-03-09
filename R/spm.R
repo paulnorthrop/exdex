@@ -376,5 +376,6 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
     c("N2015", "BB2018")
   return(list(sigma2dj = sigma2dj, sigma2dj_for_sl = sigma2dj_for_sl,
               theta_dj = theta_dj,
-              data_dj = cbind(-b * log(Nhat), b * (1 - Nhat))))
+              data_dj = cbind(-b * log(Nhat[, which_dj]),
+                              b * (1 - Nhat[, which_dj]))))
 }

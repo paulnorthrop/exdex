@@ -9,6 +9,9 @@ bias_adjust_vec <- c("BB3", "BB1", "N", "none")
 # which_dj in c("last", "first")
 which_dj_vec <- c("last", "first")
 # block size: pick a big one so that the tests aren't slow
+# The permitted range of b for these data is 15 - 196
+# We must respect this here because spm_check() doesn't check b
+# It also doesn't check the format of the data
 b <- 180
 # Tolerance
 my_tol <- 1e-5

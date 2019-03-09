@@ -1,3 +1,5 @@
+^threshplot\.R$
+^decluster\.R$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^create_datasets$

@@ -6,7 +6,7 @@ context("sigmahat_dj")
 
 # Calculate the contributions to the sum from each (disjoint) block
 # Each row corresponds to a different block
-# Each column corresponds to a differen way to calculate the summation
+# Each column corresponds to a different way to calculate the summation
 # The 1st column is used in estimation of the sampling variance of thetahat
 
 # The permitted range of b for these data is 15 - 196

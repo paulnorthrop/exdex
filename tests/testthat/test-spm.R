@@ -105,3 +105,22 @@ test_that(paste("b high, se_dj"), {
 test_that(paste("b high, se_sl"), {
   testthat::expect_identical(res1$se_sl, c(N2015 = NA, BB2018 = NA))
 })
+
+context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
+
+b <- 100
+resBB1 <- spm(newlyn, b = b, bias_adjust = "BB1")
+resN <- spm(newlyn, b = b, bias_adjust = "N")
+
+test_that(paste("BB1 vs N, b is OK"), {
+  testthat::expect_equal(resBB1$theta_dj["BB2018"],
+                             resN$theta_dj["BB2018"], tolerance = my_tol)
+})
+
+resBB1 <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "BB1"))
+resN <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "N"))
+
+test_that(paste("BB1 vs N, b is too low"), {
+  testthat::expect_equal(resBB1$theta_dj["BB2018"],
+                             resN$theta_dj["BB2018"], tolerance = my_tol)
+})

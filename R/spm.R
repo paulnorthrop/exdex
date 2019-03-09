@@ -240,8 +240,8 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
     res$se_dj <- res$theta_dj ^ 2 * sqrt(res$sigma2dj[index] / k_n)
     res$se_sl <- res$theta_sl ^ 2 * sqrt(res$sigma2sl[index] / k_n)
   } else {
-    res$se_dj <- c(NA, NA)
-    res$se_sl <- c(NA, NA)
+    res$se_dj <- c(N2015 = NA, BB2018 = NA)
+    res$se_sl <- c(N2015 = NA, BB2018 = NA)
   }
   #
   # Perform BB2018 bias-adjustment if required

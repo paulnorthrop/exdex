@@ -7,6 +7,8 @@
 #' @keywords internal
 NULL
 
+# =============================== To check spm() ============================ #
+
 #' @keywords internal
 #' @rdname exdex-internal
 spm_check <- function(data, b, sliding = TRUE,
@@ -243,4 +245,40 @@ spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE, which_dj){
   Usum2 <- tapply(Usum2, block, sum) / k_n
   Usum3 <- tapply(Usum3, block, sum) / k_n
   return(cbind(Usum, Usum2, Usum3, Usum4))
+}
+
+# ========================== Functions used in spm() ======================== #
+
+# log(x), but return a constant const for an x = 0
+
+#' @keywords internal
+#' @rdname exdex-internal
+log0const_slow <- function(x, const) {
+  ifelse(x == 0, const, log(x))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+log0const <- function(x, const) {
+  return(log(x + !x) + const * !x)
+}
+
+# =================== Empirical c.d.f. of x, evaluated at y ================= #
+
+#' @keywords internal
+#' @rdname exdex-internal
+ecdf3 <- function(x, y) {
+  return(vapply(y, function(y) mean(x <= y), 0))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+ecdf2 <- function(x, y) {
+  return(vapply(y, function(y) sum(x <= y) / length(x), 0))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+ecdf1 <- function(x, y, lenx) {
+  return(vapply(y, function(y) sum(x <= y) / lenx, 0))
 }

@@ -4,6 +4,11 @@
 \alias{exdex-internal}
 \alias{spm_check}
 \alias{spm_sigmahat_dj}
+\alias{log0const_slow}
+\alias{log0const}
+\alias{ecdf3}
+\alias{ecdf2}
+\alias{ecdf1}
 \title{Internal exdex functions}
 \usage{
 spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
@@ -11,6 +16,16 @@ spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
   "first"))
 
 spm_sigmahat_dj(data, b, dj_maxima, check = FALSE, which_dj)
+
+log0const_slow(x, const)
+
+log0const(x, const)
+
+ecdf3(x, y)
+
+ecdf2(x, y)
+
+ecdf1(x, y, lenx)
 }
 \description{
 Internal exdex functions

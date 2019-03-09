@@ -93,7 +93,7 @@
 #'   \item{bias_sl, bias_dj}{The respective values of the
 #'       bias-adjustment applied to the raw estimates.  This is only
 #'       relevant if \code{bias_adjust} is "BB3" or "BB1".  Otherwise,
-#'       \code{bias_val} is \code{NA}.}
+#'       \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
 #'   \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
 #'     are the constraint that they lie in (0, 1] has been applied.}
 #'   \item{data_sl, data_dj}{Vectors of the values of the \eqn{Y}-data and
@@ -246,7 +246,6 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   #
   # Perform BB2018 bias-adjustment if required
   #
-  bias_N <- bias_BB <- NA
   if (bias_adjust == "BB3") {
     res$bias_dj <- res$theta_dj / k_n + res$theta_dj ^ 3 * res$sigma2dj / k_n
     res$bias_sl <- res$theta_sl / k_n + res$theta_sl ^ 3 * res$sigma2sl / k_n
@@ -257,6 +256,8 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
     res$bias_sl <- res$theta_sl / k_n
     res$theta_dj <- res$theta_dj - res$bias_dj
     res$theta_sl <- res$theta_sl - res$bias_sl
+  } else {
+    res$bias_dj <- res$bias_sl <- c(N2015 = NA, BB2018 = NA)
   }
   #
   # Save the unconstrained estimates, so that they can be returned

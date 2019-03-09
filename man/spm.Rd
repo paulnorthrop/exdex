@@ -57,7 +57,7 @@ A list of class \code{c("exdex", "spm")} containing the
   \item{bias_sl, bias_dj}{The respective values of the
       bias-adjustment applied to the raw estimates.  This is only
       relevant if \code{bias_adjust} is "BB3" or "BB1".  Otherwise,
-      \code{bias_val} is \code{NA}.}
+      \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
   \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
     are the constraint that they lie in (0, 1] has been applied.}
   \item{data_sl, data_dj}{Vectors of the values of the \eqn{Y}-data and

@@ -4,7 +4,7 @@
 \alias{spm_sigmahat_dj}
 \title{Estimates \eqn{\sigma_{dj}^2}}
 \usage{
-spm_sigmahat_dj(data, b, dj_maxima, check = FALSE)
+spm_sigmahat_dj(data, b, dj_maxima, check = FALSE, which_dj)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.}

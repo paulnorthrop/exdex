@@ -55,11 +55,20 @@ test_that("b is too low gives NAs", {
 context("confint.kgaps")
 
 thresh <- quantile(newlyn, probs = 0.90)
-res1 <- kgaps_mle(newlyn, thresh)
-res1 <- confint(res1)
-res2 <- kgaps_mle(newlyn, thresh)
-res2 <- confint(res2, conf_scale = "log")
 
+res <- kgaps_mle(newlyn, thresh)
+res1 <- confint(res)
+res2 <- confint(res, conf_scale = "log")
 test_that("kgaps lik intervals don't depend on conf_scale", {
-  testthat::expect_identical(res2["lik", ], res2["lik", ])
+  testthat::expect_identical(res1["lik", ], res2["lik", ])
 })
+
+# Repeat for inc_cens = TRUE
+
+res <- kgaps_mle(newlyn, thresh, inc_cens = TRUE)
+res1 <- confint(res)
+res2 <- confint(res, conf_scale = "log")
+test_that("kgaps lik intervals don't depend on conf_scale", {
+  testthat::expect_identical(res1["lik", ], res2["lik", ])
+})
+

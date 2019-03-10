@@ -447,7 +447,7 @@ vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
   se <- switch(maxima,
                sliding = object$se_sl,
                disjoint = object$se_dj)
-  vcov <- as.matrix(se[estimator])
+  vcov <- as.matrix(se[estimator] ^ 2)
   dimnames(vcov) <- list("theta", "theta")
   return(vcov)
 }

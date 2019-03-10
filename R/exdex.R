@@ -27,6 +27,7 @@
 #' @docType package
 #' @name exdex
 #' @import methods
+#' @importFrom graphics plot
 NULL
 
 #' Newlyn sea surges

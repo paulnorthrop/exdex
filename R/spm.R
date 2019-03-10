@@ -95,7 +95,7 @@
 #'       relevant if \code{bias_adjust} is "BB3" or "BB1".  Otherwise,
 #'       \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
 #'   \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
-#'     are the constraint that they lie in (0, 1] has been applied.}
+#'     after the constraint that they lie in (0, 1] has been applied.}
 #'   \item{data_sl, data_dj}{Matrices containing the \eqn{Y}-data and
 #'     \eqn{Z}-data for the sliding an dijoint maxima respectively.
 #'     The first columns are the \eqn{Y}-data, the second columns the

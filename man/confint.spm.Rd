@@ -7,8 +7,7 @@
 \method{confint}{spm}(object, parm = "theta", level = 0.95,
   maxima = c("sliding", "disjoint"), constrain = TRUE,
   conf_scale = c("theta", "log"), bias_adjust = TRUE,
-  type = c("vertical", "cholesky", "spectral", "none"), plot = FALSE,
-  ndec = 2, ...)
+  type = c("vertical", "cholesky", "spectral", "none"), ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("spm", "exdex")}, returned by
@@ -70,16 +69,7 @@ if (the default) \code{sliding = TRUE} was used in the call to
 \code{\link{spm}} then the likelihood-based confidence intervals provide
 \emph{vast} underestimates of uncertainty.}
 
-\item{plot}{A logical scalar.  If \code{plot = TRUE} then a plot of the
-adjust loglikelihood is produced, using
-\code{\link[chandwich]{plot.confint}}.}
-
-\item{ndec}{An integer scalar.  The legend (if included on the plot)
-contains the confidence limits rounded to \code{ndec} decimal places.}
-
-\item{...}{Further arguments to be passed to
-\code{\link[chandwich]{plot.confint}}, used only if
-\code{plot = TRUE}.}
+\item{...}{Further arguments. None are used currently.}
 }
 \value{
 A matrix with columns giving the lower and upper confidence limits.
@@ -116,7 +106,6 @@ The likelihood-based intervals are estimated using the
 res <- spm(newlyn, 20)
 # I can't include these examples until new chandwich is on CRAN
 #confint(res)
-#confint(res, plot = TRUE)
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

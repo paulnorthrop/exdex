@@ -2,6 +2,7 @@
 
 S3method(confint,kgaps)
 S3method(confint,spm)
+S3method(plot,confint_spm)
 export(iwls)
 export(kgaps_imt)
 export(kgaps_mle)

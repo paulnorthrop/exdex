@@ -62,14 +62,7 @@
 #'   if (the default) \code{sliding = TRUE} was used in the call to
 #'   \code{\link{spm}} then the likelihood-based confidence intervals provide
 #'   \emph{vast} underestimates of uncertainty.
-#' @param plot A logical scalar.  If \code{plot = TRUE} then a plot of the
-#'   adjust loglikelihood is produced, using
-#'   \code{\link[chandwich]{plot.confint}}.
-#' @param ndec An integer scalar.  The legend (if included on the plot)
-#'   contains the confidence limits rounded to \code{ndec} decimal places.
-#' @param ... Further arguments to be passed to
-#'   \code{\link[chandwich]{plot.confint}}, used only if
-#'   \code{plot = TRUE}.
+#' @param ... Further arguments. None are used currently.
 #' @details The likelihood-based intervals are estimated using the
 #'   \code{\link[chandwich]{adjust_loglik}} function in the
 #'   \code{\link[chandwich]{chandwich}} package, followed by a call to
@@ -97,18 +90,17 @@
 #' res <- spm(newlyn, 20)
 #' # I can't include these examples until new chandwich is on CRAN
 #' #confint(res)
-#' #confint(res, plot = TRUE)
 #' @export
 confint.spm <- function (object, parm = "theta", level = 0.95,
                          maxima = c("sliding", "disjoint"), constrain = TRUE,
                          conf_scale = c("theta", "log"),
                          bias_adjust = TRUE,
                          type = c("vertical", "cholesky", "spectral",
-                                  "none"),
-                         plot = FALSE, ndec = 2, ...) {
+                                  "none"), ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
+  Call <- match.call(expand.dots = TRUE)
   if (is.na(object$se_sl[1])) {
     temp <- matrix(NA, nrow = 4, ncol = 2)
     a <- (1 - level) / 2
@@ -231,58 +223,99 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
+  temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, call = Call,
+               object = object, maxima = maxima)
+  class(temp) <- c("confint_spm", "exdex")
+  return(temp)
+}
+
+# ========================= Methods for confint_spm ========================= #
+
+#' Plot diagnostics for a confint_spm object
+#'
+#' \code{plot} method for an objects of class c("confint_spm", "exdex").
+#'
+#' @param x an object of class c("confint_spm", "exdex"), a result of a call
+#'   to \code{\link{confint.spm}}.
+#' @param y Not used.
+#' @param ndec An integer scalar.  The legend (if included on the plot)
+#'   contains the confidence limits rounded to \code{ndec} decimal places.
+#' @param legend A logical scalar or a character vector.  If this is
+#'   supplied then a legend is added to the plot.  If \code{legend} is a
+#'   character vector then it is used as the argument \code{legend}
+#'   to \code{\link[graphics]{legend}}.  Otherwise, i.e. if
+#'   \code{legend = TRUE} then the argument \code{type} is used.
+#' @param ... Further arguments to be passed to
+#'   \code{\link[chandwich]{plot.confint}}.
+#' @return Nothing is returned.
+#' @examples
+#' res <- spm(newlyn, 20)
+#' # I can't include these examples until new chandwich is on CRAN
+#' #cis <- confint(res)
+#' # plot(cis)
+#' @export
+plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  tempN <- x$ciN
+  tempBB <- x$ciBB
+  temp <- x$cis
   # Produce a plot of the adjusted loglikelihood, if requested
   # Owing to the different scales of the loglikelihoods for N2015 and BB2018 we
   # shoof them to have a maximum of 0, so that we can display them on one plot
-  if (plot) {
-    shoofN <- max(tempN$prof_loglik_vals)
-    shoofBB <- max(tempBB$prof_loglik_vals)
-    tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
-    tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
-    tempN$max_loglik <- tempN$max_loglik - shoofN
-    tempBB$max_loglik <- tempBB$max_loglik - shoofBB
-    # Round confidence limits for inclusion in the legend
-    fmt <- paste0("%.", ndec, "f")
-    roundN <- sprintf(fmt, round(temp["N2015lik", ], ndec))
-    roundBB <- sprintf(fmt, round(temp["BB2018lik", ], ndec))
-    my_leg <- NULL
-    my_leg[1] <- paste("N2015:    (", roundN[1], ",", roundN[2], ")")
-    my_leg[2] <- paste("BB2018: (", roundBB[1], ",", roundBB[2], ")")
-    # A clunky way to avoid conflict between my choice of legend and
-    # (legend) title and those that the user might supply via ...
-    user_args <- list(...)
-    if (is.null(user_args$legend_pos)) {
-      if (is.null(user_args$legend) && is.null(user_args$title)) {
-        plot(x = tempN, y = tempBB, legend = my_leg,
-             title = "estimator", legend_pos = "bottom", ...)
-      } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
-        plot(x = tempN, y = tempBB, legend = my_leg, legend_pos = "bottom",
-             ...)
-      } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
-        plot(x = tempN, y = tempBB, title = "estimator", legend_pos = "bottom",
-             ...)
-      } else {
-        plot(x = tempN, y = tempBB, legend_pos = "bottom", ...)
-      }
+  shoofN <- max(tempN$prof_loglik_vals)
+  shoofBB <- max(tempBB$prof_loglik_vals)
+  tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
+  tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
+  tempN$max_loglik <- tempN$max_loglik - shoofN
+  tempBB$max_loglik <- tempBB$max_loglik - shoofBB
+  # Round confidence limits for inclusion in the legend
+  fmt <- paste0("%.", ndec, "f")
+  roundN <- sprintf(fmt, round(temp["N2015lik", ], ndec))
+  roundBB <- sprintf(fmt, round(temp["BB2018lik", ], ndec))
+  my_leg <- NULL
+  my_leg[1] <- paste("N2015:    (", roundN[1], ",", roundN[2], ")")
+  my_leg[2] <- paste("BB2018: (", roundBB[1], ",", roundBB[2], ")")
+  # A clunky way to avoid conflict between my choice of legend and
+  # (legend) title and those that the user might supply via ...
+  user_args <- list(...)
+  if (is.null(user_args$legend_pos)) {
+    if (is.null(user_args$legend) && is.null(user_args$title)) {
+      plot(x = tempN, y = tempBB, legend = my_leg,
+           title = "estimator", legend_pos = "bottom", ...)
+    } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
+      plot(x = tempN, y = tempBB, legend = my_leg, legend_pos = "bottom",
+           ...)
+    } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
+      plot(x = tempN, y = tempBB, title = "estimator", legend_pos = "bottom",
+           ...)
     } else {
-      # Make user_args$legend_pos NULL because otherwise
-      # is.null(user_args$legend) returns FALSE
-      user_args$legend_pos <- NULL
-      if (is.null(user_args$legend) && is.null(user_args$title)) {
-        plot(x = tempN, y = tempBB, legend = my_leg,
-             title = "estimator", ...)
-      } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
-        plot(x = tempN, y = tempBB, legend = my_leg, ...)
-      } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
-        plot(x = tempN, y = tempBB, title = "estimator", ...)
-      } else {
-        plot(x = tempN, y = tempBB, ...)
-      }
+      plot(x = tempN, y = tempBB, legend_pos = "bottom", ...)
     }
-#    abline(v = temp["N2015lik", ])
-#    abline(v = temp["BB2018lik", ], lty = 2)
+  } else {
+    # Make user_args$legend_pos NULL because otherwise
+    # is.null(user_args$legend) returns FALSE
+    user_args$legend_pos <- NULL
+    if (is.null(user_args$legend) && is.null(user_args$title)) {
+      plot(x = tempN, y = tempBB, legend = my_leg,
+           title = "estimator", ...)
+    } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
+      plot(x = tempN, y = tempBB, legend = my_leg, ...)
+    } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
+      plot(x = tempN, y = tempBB, title = "estimator", ...)
+    } else {
+      plot(x = tempN, y = tempBB, ...)
+    }
   }
-  return(temp)
+#  abline(v = temp["N2015lik", ])
+#  abline(v = temp["BB2018lik", ], lty = 2)
+#  if (x$maxima == "sliding") {
+#    abline(v = x$object$theta_sl, lty = 1:2)
+#  } else {
+#    abline(v = x$object$theta_dj, lty = 1:2)
+#  }
+  return(invisible())
 }
 
 # ============================== confint.kgaps ============================== #

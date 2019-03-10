@@ -73,13 +73,26 @@
 #'   confidence intervals cannot be estimated and an error will be thrown.
 #'   See the \strong{Details} section of the \code{\link{spm}} documentation
 #'   for more information.
-#' @return A matrix with columns giving the lower and upper confidence limits.
-#'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
-#'   (by default 2.5\% and 97.5\%).
+#' @return A list of class c("confint_spm", "exdex") containing the
+#'   following components.
+#'   \item{cis}{A matrix with columns giving the lower and upper confidence
+#'   limits. These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in
+#'   \% (by default 2.5\% and 97.5\%).
 #'   The row names are a concatentation of the variant of the estimator
 #'   (\code{N2015} for Northrop (2015), \code{BB2018} for
 #'   Berghaus and Bucher (2018)) and the type of interval
-#'   (\code{sym} for symmetric and \code{lik} for likelihood-based).
+#'   (\code{sym} for symmetric and \code{lik} for likelihood-based).}
+#'   \item{ciN}{The object returned from
+#'     \code{\link[chandwich]{conf_intervals}} that contains information about
+#'     the adjusted loglikelihod for the Northrop (2015) variant of the
+#'     estimator.}
+#'   \item{ciBB}{The object returned from
+#'     \code{\link[chandwich]{conf_intervals}} that contains information about
+#'     the adjusted loglikelihod for the Berghaus and Bucher (2018) variant of
+#'     the estimator.}
+#'   \item{call}{The call to \code{spm}.}
+#'   \item{object}{The input \code{object}.}
+#'   \item{maxima}{The input \code{maxima}.}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}

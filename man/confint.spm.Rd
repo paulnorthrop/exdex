@@ -72,13 +72,26 @@ if (the default) \code{sliding = TRUE} was used in the call to
 \item{...}{Further arguments. None are used currently.}
 }
 \value{
-A matrix with columns giving the lower and upper confidence limits.
-  These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
-  (by default 2.5\% and 97.5\%).
+A list of class c("confint_spm", "exdex") containing the
+  following components.
+  \item{cis}{A matrix with columns giving the lower and upper confidence
+  limits. These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in
+  \% (by default 2.5\% and 97.5\%).
   The row names are a concatentation of the variant of the estimator
   (\code{N2015} for Northrop (2015), \code{BB2018} for
   Berghaus and Bucher (2018)) and the type of interval
-  (\code{sym} for symmetric and \code{lik} for likelihood-based).
+  (\code{sym} for symmetric and \code{lik} for likelihood-based).}
+  \item{ciN}{The object returned from
+    \code{\link[chandwich]{conf_intervals}} that contains information about
+    the adjusted loglikelihod for the Northrop (2015) variant of the
+    estimator.}
+  \item{ciBB}{The object returned from
+    \code{\link[chandwich]{conf_intervals}} that contains information about
+    the adjusted loglikelihod for the Berghaus and Bucher (2018) variant of
+    the estimator.}
+  \item{call}{The call to \code{spm}.}
+  \item{object}{The input \code{object}.}
+  \item{maxima}{The input \code{maxima}.}
 }
 \description{
 \code{confint} method for objects of class \code{c("spm", "exdex")}.

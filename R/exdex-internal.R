@@ -132,7 +132,7 @@ spm_check <- function(data, b, sliding = TRUE,
   res$b <- b
   res$sliding <- sliding
   res$call <- Call
-  class(res) <- c("exdex", "spm")
+  class(res) <- c("spm", "exdex")
   return(res)
 }
 

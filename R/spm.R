@@ -80,7 +80,7 @@
 #'             because the former relies on the estimated variances of the
 #'             estimators.}
 #'     }
-#' @return A list of class \code{c("exdex", "spm")} containing the
+#' @return A list of class \code{c("spm", "exdex")} containing the
 #'   components listed below.  The components that are vectors are
 #'   labelled to indicate the estimator to which the constituent values
 #'   relate: N2015 for Northrop (2015) and BB2018 for

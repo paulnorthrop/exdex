@@ -377,3 +377,98 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
               data_dj = cbind(N2015 = -b * log(Nhat[, which_dj]),
                               BB2018 = b * (1 - Nhat[, which_dj]))))
 }
+
+# ============================ coef.spm() =================================== #
+
+#' Extract Model Coefficients
+#'
+#' \code{coef} method for class \code{c("spm", "exdex")}.
+#'
+#' @param object and object of class \code{c("spm", "exdex")} returned from
+#'   \code{\link{spm}}.
+#' @param maxima A character scalar specifying whether to return the estimate
+#'   of the extremal index \eqn{\theta} based on sliding maxima or on disjoint
+#'   maxima.
+#' @param estimator A character scalar specifying which variant of the
+#'   semiparametic maxima estimator to use: Northrop (2015) or
+#'   Berghaus and Bucher (2018).
+#' @param ... Further arguments.  None are used.
+#' @return A numeric scalar: the required estimate of the extremal index
+#'   \eqn{\theta}.
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
+#' @export
+coef.spm <- function(object, maxima = c("sliding", "disjoint"),
+                     estimator = c("N2015", "BB2018"), ...) {
+  if (!inherits(object, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  maxima <- match.arg(maxima)
+  estimator <- match.arg(estimator)
+  ests <- switch(maxima,
+                 sliding = object$theta_sl,
+                 disjoint = object$theta_dj)
+  ests <- ests[estimator]
+  names(ests) <- "theta"
+  return(ests)
+}
+
+# ============================ vcov.spm() =================================== #
+
+#' Calculate Variance-Covariance Matrix for a Fitted Model Object
+#'
+#' \code{vcov} method for class \code{c("spm", "exdex")}.
+#'
+#' @param object and object of class \code{c("spm", "exdex")} returned from
+#'   \code{\link{spm}}.
+#' @param maxima A character scalar specifying whether to return the
+#'   estimated variance of the estimator of the extremal index \eqn{\theta}
+#'   based on sliding maxima or on disjoint maxima.
+#' @param estimator A character scalar specifying which variant of the
+#'   semiparametic maxima estimator to use: Northrop (2015) or
+#'   Berghaus and Bucher (2018).
+#' @param ... Further arguments.  None are used.
+#' @return A 1 by 1 numeric matrix: the estimated variance of the estimator.
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
+#' @export
+vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
+                     estimator = c("N2015", "BB2018"), ...) {
+  maxima <- match.arg(maxima)
+  estimator <- match.arg(estimator)
+  se <- switch(maxima,
+               sliding = object$se_sl,
+               disjoint = object$se_dj)
+  vcov <- as.matrix(se[estimator])
+  dimnames(vcov) <- list("theta", "theta")
+  return(vcov)
+}
+
+# ============================ nobs.spm() =================================== #
+
+#' Extract the Number of Observations from a Fit
+#'
+#' \code{nobs} method for class \code{c("spm", "exdex")}.
+#'
+#' @param object and object of class \code{c("spm", "exdex")} returned from
+#'   \code{\link{spm}}.
+#' @param maxima A character scalar specifying whether to return the
+#'   number of observed sliding maxima or disjoint maxima.
+#' @param ... Further arguments.  None are used.
+#' @return A numeric scalar: the number of observations used in the fit.
+#' @export
+nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
+  maxima <- match.arg(maxima)
+  n <- switch(maxima,
+              sliding = length(object$data_sl),
+              disjoint = length(object$data_dj))
+  return(n)
+}

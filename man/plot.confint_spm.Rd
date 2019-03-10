@@ -17,12 +17,6 @@ contains the confidence limits rounded to \code{ndec} decimal places.}
 
 \item{...}{Further arguments to be passed to
 \code{\link[chandwich]{plot.confint}}.}
-
-\item{legend}{A logical scalar or a character vector.  If this is
-supplied then a legend is added to the plot.  If \code{legend} is a
-character vector then it is used as the argument \code{legend}
-to \code{\link[graphics]{legend}}.  Otherwise, i.e. if
-\code{legend = TRUE} then the argument \code{type} is used.}
 }
 \value{
 Nothing is returned.

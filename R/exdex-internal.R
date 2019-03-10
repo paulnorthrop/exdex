@@ -139,9 +139,6 @@ spm_check <- function(data, b, sliding = TRUE,
 #' @keywords internal
 #' @rdname exdex-internal
 spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE, which_dj){
-  #  if (missing(dj_maxima)){
-  #    dj_maxima <- disjoint_maxima(data, b)
-  #  }
   all_dj_maxima <- all_disjoint_maxima(data, b)
   # The number of blocks and the number of raw observations that contribute
   k_n <- nrow(all_dj_maxima$y)
@@ -172,14 +169,8 @@ spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE, which_dj){
   #    xx <- xvec[block != x]
   #    return(mean(-log0const(ecdf2(xx, y), const)))
   #  }
-  #  loobN2015_fn <- function(x, block, xvec, y) {
-  #    xx <- xvec[block != x]
-  #    return(sum(-log0const(ecdf2(xx, y), const)) / k_n)
-  #  }
   loobN2015_fn <- function(x, block, xvec, y) {
     xx <- xvec[block != x]
-    #    return(sum(-log0const(ecdf1(xx, y, lenxx), const)) / k_n)
-    #    return(sum(-log0const(ecdf2(xx, y), const))) # plus divide UsumN by k_n below
     return(sum(-log0const(ecdf2(xx, y), const)) / k_n)
   }
   ests_fn <- function(i) {
@@ -196,13 +187,6 @@ spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE, which_dj){
     ThatN <- mean(ZhatN)
     Usum <- b * tapply(x, block, BB2018_fn, y = y)
     UsumN <- b * vapply(1:k_n, loobN2015_fn, 0, block = block, xvec = x, y = y)
-    #    print(UsumN)
-    #    my_temp <- my_fun(newlyn, b)
-    #    UsumN <- my_temp$UsumN
-    #    print(UsumN)
-    #    print(Usum)
-    #    Usum <- my_temp$Usum
-    #    print(k_n * That - (k_n - 1) * Usum)
     UsumN <-  k_n * ThatN - (k_n - 1) * UsumN
     #
     Bhat <- Zhat + Usum - 2 * That

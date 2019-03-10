@@ -135,12 +135,15 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   #
   # Check inputs
   #
-  if (missing(data) || length(data) == 0L || mode(data) != "numeric")
+  if (missing(data) || length(data) == 0L || mode(data) != "numeric") {
     stop("'data' must be a non-empty numeric vector")
+  }
   if (any(!is.finite(data))) {
     stop("'data' contains missing or infinite values")
   }
-  if (is.matrix(data)) stop("'data' must be a vector")
+  if (is.matrix(data)) {
+    stop("'data' must be a vector")
+  }
   data <- as.vector(data)
   if (!is.numeric(b) || length(b) != 1) {
     stop("'b' must be a numeric scalar (specifically, a positive integer)")

@@ -1,17 +1,32 @@
 context("confint.spm")
 
+my_tol <- 1e-5
+
 res <- spm(newlyn, 100)
 
 ci1 <- confint(res, type = "cholesky")
 ci2 <- confint(res, type = "spectral")
 test_that("sliding: cholesky and spectral are identical", {
-  testthat::expect_identical(ci1, ci2)
+  testthat::expect_identical(ci1$cis, ci2$cis)
+})
+
+# Check that the estimates of theta in res and returned from
+# chandwich::adjust_loglik()
+
+test_that("estimates of theta agree, sliding", {
+  testthat::expect_equal(res$theta_sl, ci1$theta, tolerance = my_tol)
 })
 
 ci1 <- confint(res, maxima = "disjoint", type = "cholesky")
 ci2 <- confint(res, maxima = "disjoint", type = "spectral")
 test_that("disjoint: cholesky and spectral are identical", {
-  testthat::expect_identical(ci1, ci2)
+  testthat::expect_identical(ci1$cis, ci2$cis)
+})
+
+# Check estimates of theta
+
+test_that("estimates of theta agree, disjoint", {
+  testthat::expect_equal(res$theta_dj, ci1$theta, tolerance = my_tol)
 })
 
 ci3 <- confint(res, maxima = "disjoint", type = "cholesky",
@@ -19,9 +34,10 @@ ci3 <- confint(res, maxima = "disjoint", type = "cholesky",
 
 which_rows <- c("N2015lik", "BB2018lik")
 test_that("spm lik intervals don't depend on conf_scale", {
-  testthat::expect_identical(ci1[which_rows, ], ci3[which_rows, ])
+  testthat::expect_identical(ci1$cis[which_rows, ], ci3$cis[which_rows, ])
 })
 
+# b too low
 
 res <- suppressWarnings(spm(newlyn, 14))
 ci_b_low <- confint(res)

@@ -70,9 +70,9 @@
 #'
 #'   If \code{object$se} contains \code{NA}s, because the block size \code{b}
 #'   was too small or too large in the call to \code{\link{spm}} then
-#'   confidence intervals cannot be estimated and an error will be thrown.
-#'   See the \strong{Details} section of the \code{\link{spm}} documentation
-#'   for more information.
+#'   confidence intervals cannot be estimated.  A matrix of \code{NA}s
+#'   will be returned.  See the \strong{Details} section of the
+#'   \code{\link{spm}} documentation for more information.
 #' @return A list of class c("confint_spm", "exdex") containing the
 #'   following components.
 #'   \item{cis}{A matrix with columns giving the lower and upper confidence
@@ -241,9 +241,10 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
+  theta <- c(attr(adjN, "MLE"), attr(adjBB, "MLE"))
+  names(theta) <- c("N2015", "BB2018")
   temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, call = Call,
-               object = object, maxima = maxima,
-               theta = c(attr(adjN, "MLE"), attr(adjBB, "MLE")))
+               object = object, maxima = maxima, theta = theta)
   class(temp) <- c("confint_spm", "exdex")
   return(temp)
 }

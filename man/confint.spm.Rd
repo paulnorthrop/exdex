@@ -116,9 +116,9 @@ The likelihood-based intervals are estimated using the
 
   If \code{object$se} contains \code{NA}s, because the block size \code{b}
   was too small or too large in the call to \code{\link{spm}} then
-  confidence intervals cannot be estimated and an error will be thrown.
-  See the \strong{Details} section of the \code{\link{spm}} documentation
-  for more information.
+  confidence intervals cannot be estimated.  A matrix of \code{NA}s
+  will be returned.  See the \strong{Details} section of the
+  \code{\link{spm}} documentation for more information.
 }
 \examples{
 res <- spm(newlyn, 20)

@@ -6,7 +6,7 @@
 \usage{
 choose_b(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
   "none"), constrain = TRUE, varN = TRUE, parm = c("both", "N2015",
-  "BB2018"), level = 0.95, conf_scale = c("theta", "log_theta"),
+  "BB2018"), level = 0.95, conf_scale = c("theta", "log"),
   interval_type = c("lik", "sym"), type = c("vertical", "cholesky",
   "spectral", "none"))
 }
@@ -14,6 +14,6 @@ choose_b(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
 Description
 }
 \examples{
-res <- choose_b(newlyn, 20:60)
-plot(res)
+#res <- choose_b(newlyn, 20:60)
+#plot(res)
 }

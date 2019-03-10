@@ -4,19 +4,23 @@
 \alias{confint.spm}
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
-\method{confint}{spm}(object, parm = c("sliding", "disjoint"),
-  level = 0.95, constrain = TRUE, conf_scale = c("theta",
-  "log_theta"), bias_adjust = TRUE, type = c("vertical", "cholesky",
-  "spectral", "none"), plot = FALSE, ndec = 2, ...)
+\method{confint}{spm}(object, parm = "theta", level = 0.95,
+  maxima = c("sliding", "disjoint"), constrain = TRUE,
+  conf_scale = c("theta", "log_theta"), bias_adjust = TRUE,
+  type = c("vertical", "cholesky", "spectral", "none"), plot = FALSE,
+  ndec = 2, ...)
 }
 \arguments{
-\item{object}{An object of class \code{"exdex"}, returned by
+\item{object}{An object of class \code{c("spm", "exdex")}, returned by
 \code{\link{spm}}.}
 
-\item{parm}{A character scalar specifying whether to estimate
-confidence intervals based on sliding maxima or disjoint maxima.}
+\item{parm}{Specifies which parameter is to be given a confidence interval.
+Here there is only one option: the extremal index \eqn{\theta}.}
 
 \item{level}{The confidence level required.  A numeric scalar in (0, 1).}
+
+\item{maxima}{A character scalar specifying whether to estimate
+confidence intervals based on sliding maxima or disjoint maxima.}
 
 \item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
 any confidence limits that are greater than 1 are set to 1,
@@ -82,9 +86,9 @@ A matrix with columns giving the lower and upper confidence limits.
   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
   (by default 2.5\% and 97.5\%).
   The row names are a concatentation of the variant of the estimator
-  (N2015 for Northrop (2015), BB2018 for Berghaus and Bucher (2018))
-  and the type of interval
-  (sym for symmetric and lik for likelihood-based).
+  (\code{N2015} for Northrop (2015), \code{BB2018} for
+  Berghaus and Bucher (2018)) and the type of interval
+  (\code{sym} for symmetric and \code{lik} for likelihood-based).
 }
 \description{
 \code{confint} method for objects of class \code{c("spm", "exdex")}.

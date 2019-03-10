@@ -1,3 +1,5 @@
+# =============================== confint.spm =============================== #
+
 #' Confidence intervals for the extremal index \eqn{\theta}
 #'
 #' \code{confint} method for objects of class \code{c("spm", "exdex")}.
@@ -9,11 +11,13 @@
 #' (pseudo-) loglikelihood, using the \code{\link[chandwich]{adjust_loglik}}
 #' function in the \code{\link[chandwich]{chandwich}} package.
 #'
-#' @param object An object of class \code{"exdex"}, returned by
+#' @param object An object of class \code{c("spm", "exdex")}, returned by
 #'   \code{\link{spm}}.
-#' @param parm A character scalar specifying whether to estimate
-#'   confidence intervals based on sliding maxima or disjoint maxima.
+#' @param parm Specifies which parameter is to be given a confidence interval.
+#'   Here there is only one option: the extremal index \eqn{\theta}.
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
+#' @param maxima A character scalar specifying whether to estimate
+#'   confidence intervals based on sliding maxima or disjoint maxima.
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any confidence limits that are greater than 1 are set to 1,
 #'   that is, they are constrained to lie in (0, 1].  Otherwise,
@@ -80,9 +84,9 @@
 #'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
 #'   (by default 2.5\% and 97.5\%).
 #'   The row names are a concatentation of the variant of the estimator
-#'   (N2015 for Northrop (2015), BB2018 for Berghaus and Bucher (2018))
-#'   and the type of interval
-#'   (sym for symmetric and lik for likelihood-based).
+#'   (\code{N2015} for Northrop (2015), \code{BB2018} for
+#'   Berghaus and Bucher (2018)) and the type of interval
+#'   (\code{sym} for symmetric and \code{lik} for likelihood-based).
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
@@ -95,8 +99,8 @@
 #' #confint(res)
 #' #confint(res, plot = TRUE)
 #' @export
-confint.spm <- function (object, parm = c("sliding", "disjoint"),
-                         level = 0.95, constrain = TRUE,
+confint.spm <- function (object, parm = "theta", level = 0.95,
+                         maxima = c("sliding", "disjoint"), constrain = TRUE,
                          conf_scale = c("theta", "log_theta"),
                          bias_adjust = TRUE,
                          type = c("vertical", "cholesky", "spectral",
@@ -115,13 +119,17 @@ confint.spm <- function (object, parm = c("sliding", "disjoint"),
     return(temp)
   }
   parm <- match.arg(parm)
-  if (parm == "sliding" && type == "none") {
+  if (level <= 0 || level >= 1) {
+    stop("''level'' must be in (0, 1)")
+  }
+  maxima <- match.arg(maxima)
+  if (maxima == "sliding" && type == "none") {
     warning("The likelihood-based CIs are vast underestimates of uncertainty!")
   }
   conf_scale <- match.arg(conf_scale)
   type <- match.arg(type)
   # Set the components that we need, based on argument maxima
-  if (parm == "sliding") {
+  if (maxima == "sliding") {
     uncon <- object$uncon_theta_sl
     se <- object$se_sl
     theta <- object$theta_sl
@@ -274,5 +282,95 @@ confint.spm <- function (object, parm = c("sliding", "disjoint"),
 #    abline(v = temp["N2015lik", ])
 #    abline(v = temp["BB2018lik", ], lty = 2)
   }
+  return(temp)
+}
+
+# ============================== confint.kgaps ============================== #
+
+#' Confidence intervals for the extremal index \eqn{\theta}
+#'
+#' \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
+#' Computes confidence intervals for \eqn{\theta} based on an object returned
+#' from \code{\link{kgaps_mle}}.  Two types of interval are returned:
+#' (a) intervals based on approximate large-sample normality of the estimator
+#' of \eqn{\theta}, which are symmetric about the point estimate,
+#' and (b) likelihood-based intervals.
+#'
+#' @param object An object of class \code{c("kgaps", "exdex")}, returned by
+#'   \code{\link{kgaps_mle}}.
+#' @param parm Specifies which parameter is to be given a confidence interval.
+#'   Here there is only one option: the extremal index \eqn{\theta}.
+#' @param level The confidence level required.  A numeric scalar in (0, 1).
+#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
+#'   any confidence limits that are greater than 1 are set to 1,
+#'   that is, they are constrained to lie in (0, 1].  Otherwise,
+#'   limits that are greater than 1 may be obtained.
+#'   If \code{constrain = TRUE} then any lower confidence limits that are
+#'   less than 0 are set to 0.
+#' @param conf_scale A character scalar.  Determines the scale on which
+#'   we use approximate large-sample normality of the estimators to
+#'   estimate confidence intervals.
+#'
+#'   If \code{conf_scale = "theta"}
+#'   then confidence intervals are estimated for \eqn{\theta} directly.
+#'   If \code{conf_scale = "log_theta"} then confidence intervals are first
+#'   estimated for \eqn{\log\theta}{log\theta} and then transformed back
+#'   to the \eqn{\theta}-scale.
+#' @param ... Further arguments. None are used currently.
+#' @details Add details
+#' @return A matrix with columns giving the lower and upper confidence limits.
+#'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
+#'   (by default 2.5\% and 97.5\%).
+#'   The row names indicate the type of interval:
+#'   \code{sym} for symmetric and \code{lik} for likelihood-based.
+#' @references Suveges, M. and Davison, A. C. (2010) Model
+#'   misspecification in peaks over threshold analysis, \emph{The Annals of
+#'   Applied Statistics}, \strong{4}(1), 203-221.
+#'   \url{https://doi.org/10.1214/09-AOAS292}
+#' @examples
+#' thresh <- quantile(newlyn, probs = 0.90)
+#' res <- kgaps_mle(newlyn, thresh)
+#' confint(res)
+#' @export
+confint.kgaps <- function (object, parm = "theta",
+                           level = 0.95, constrain = TRUE,
+                           conf_scale = c("theta", "log_theta"), ...) {
+  if (!inherits(object, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  parm <- match.arg(parm)
+  if (level <= 0 || level >= 1) {
+    stop("''level'' must be in (0, 1)")
+  }
+  conf_scale <- match.arg(conf_scale)
+  theta <- object$theta
+  se <- object$se
+  # Symmetric confidence intervals, based on large sample normal theory
+  # The intervals are (initially) centred on the unconstrained estimate of
+  # theta, which may be greater than 1
+  z_val <- stats::qnorm(1 - (1 - level) / 2)
+  if (conf_scale == "theta") {
+    lower <- theta - z_val * se
+    upper <- theta + z_val * se
+  } else {
+    lower <- exp(log(theta) - z_val * se / theta)
+    upper <- exp(log(theta) + z_val * se / theta)
+  }
+  # Likelihood-based confidence intervals.
+  temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss, conf = 100 * level)
+  lower <- c(lower, temp[1])
+  upper <- c(upper, temp[2])
+  # Constrain the intervals to (0, 1] if required
+  if (constrain) {
+    lower <- pmin(lower, 1)
+    lower <- pmax(lower, 0)
+    upper <- pmin(upper, 1)
+  }
+  temp <- cbind(lower, upper)
+  a <- (1 - level) / 2
+  a <- c(a, 1 - a)
+  pct <- paste(round(100 * a, 1), "%")
+  colnames(temp) <- pct
+  rownames(temp) <- c("sym", "lik")
   return(temp)
 }

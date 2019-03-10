@@ -17,9 +17,6 @@
 #' @param inc_cens A logical scalar indicating whether or not to include
 #'   contributions from censored inter-exceedance times relating to the
 #'   first and last observation.  See Attalides (2015) for details.
-#' @param conf  A numeric scalar.  If \code{conf} is supplied then a
-#'   \code{conf}\% likelihood-based confidence interval for \eqn{\theta} is
-#'   estimated.
 #' @details The maximum likelihood estimate of the extremal index \eqn{\theta}
 #'   under the K-gaps model of Suveges and Davison (2010) is calculated.
 #'   If \code{inc_cens = TRUE} then information from censored inter-exceedance
@@ -35,12 +32,9 @@
 #'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @return A list containing
 #'   \itemize{
-#'     \item {\code{theta_mle} : } {The maximum likelihood estimate (MLE) of
+#'     \item {\code{theta} : } {The maximum likelihood estimate (MLE) of
 #'       \eqn{\theta}.}
-#'     \item {\code{theta_se} : } {The estimated standard error of the MLE.}
-#'     \item {\code{theta_ci} : } {(If \code{conf} is supplied) a numeric
-#'       vector of length two giving lower and upper confidence limits for
-#'       \eqn{\theta}.}
+#'     \item {\code{se} : } {The estimated standard error of the MLE.}
 #'     \item {\code{ss} : } {The list of summary statistics returned from
 #'       \code{\link{kgaps_stats}}.}
 #'   }
@@ -59,7 +53,7 @@
 #' # MLE, SE and 95% confidence interval
 #' kgaps_mle(newlyn, thresh, conf = 95)
 #' @export
-kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE, conf = NULL) {
+kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE) {
   if (!is.numeric(thresh) || length(thresh) != 1) {
     stop("thresh must be a numeric scalar")
   }
@@ -94,12 +88,9 @@ kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE, conf = NULL) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
   theta_se <- sqrt(1 / obs_info)
-  if (is.null(conf)) {
-    return(list(theta_mle = theta_mle, theta_se = theta_se, ss = ss))
-  }
-  conf_int <- kgaps_conf_int(theta_mle, ss, conf = conf)
-  return(list(theta_mle = theta_mle, theta_se = theta_se, theta_ci = conf_int,
-              ss = ss))
+  res <- list(theta = theta_mle, se = theta_se, ss = ss)
+  class(res) <- c("kgaps", "exdex")
+  return(res)
 }
 
 # ================================ kgaps_stats ================================

@@ -115,7 +115,7 @@
 #'   \item{call}{The call to \code{spm}.}
 #' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
-#' @seealso \code{\link{confint.exdex}} to estimate confidence intervals
+#' @seealso \code{\link{confint.spm}} to estimate confidence intervals
 #'   for \eqn{theta}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.

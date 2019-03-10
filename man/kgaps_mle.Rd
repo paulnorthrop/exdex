@@ -4,7 +4,7 @@
 \alias{kgaps_mle}
 \title{Maximum likelihood estimation for the K-gaps model}
 \usage{
-kgaps_mle(data, thresh, k = 1, inc_cens = FALSE, conf = NULL)
+kgaps_mle(data, thresh, k = 1, inc_cens = FALSE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
@@ -21,20 +21,13 @@ corresponding to an inter-exceedance time of \eqn{T} is given by
 \item{inc_cens}{A logical scalar indicating whether or not to include
 contributions from censored inter-exceedance times relating to the
 first and last observation.  See Attalides (2015) for details.}
-
-\item{conf}{A numeric scalar.  If \code{conf} is supplied then a
-\code{conf}\% likelihood-based confidence interval for \eqn{\theta} is
-estimated.}
 }
 \value{
 A list containing
   \itemize{
-    \item {\code{theta_mle} : } {The maximum likelihood estimate (MLE) of
+    \item {\code{theta} : } {The maximum likelihood estimate (MLE) of
       \eqn{\theta}.}
-    \item {\code{theta_se} : } {The estimated standard error of the MLE.}
-    \item {\code{theta_ci} : } {(If \code{conf} is supplied) a numeric
-      vector of length two giving lower and upper confidence limits for
-      \eqn{\theta}.}
+    \item {\code{se} : } {The estimated standard error of the MLE.}
     \item {\code{ss} : } {The list of summary statistics returned from
       \code{\link{kgaps_stats}}.}
   }

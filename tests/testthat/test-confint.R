@@ -1,4 +1,4 @@
-context("confint.exdex")
+context("confint.spm")
 
 res <- spm(newlyn, 100)
 
@@ -8,8 +8,8 @@ test_that("sliding: cholesky and spectral are identical", {
   testthat::expect_identical(ci1, ci2)
 })
 
-ci1 <- confint(res, parm = "disjoint", type = "cholesky")
-ci2 <- confint(res, parm = "disjoint", type = "spectral")
+ci1 <- confint(res, maxima = "disjoint", type = "cholesky")
+ci2 <- confint(res, maxima = "disjoint", type = "spectral")
 test_that("disjoint: cholesky and spectral are identical", {
   testthat::expect_identical(ci1, ci2)
 })

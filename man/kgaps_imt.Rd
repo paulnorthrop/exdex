@@ -29,7 +29,7 @@ Add details
 }
 \examples{
 thresh <- quantile(newlyn, probs = 0.90)
-pjn <- kgaps_imt(newlyn, thresh)
+imt <- kgaps_imt(newlyn, thresh)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

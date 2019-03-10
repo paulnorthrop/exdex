@@ -23,7 +23,7 @@
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' pjn <- kgaps_imt(newlyn, thresh)
+#' imt <- kgaps_imt(newlyn, thresh)
 #' @export
 kgaps_imt <- function(data, thresh, k = 1) {
   # Function to return only the MLE of theta

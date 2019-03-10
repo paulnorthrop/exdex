@@ -225,7 +225,7 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   names(res$theta_sl) <- c("N2015", "BB2018")
   #
   # Add the values of the Y-data and the Z-data to the output
-  res$data_sl <- cbind(-b * log(Fhaty), b * (1 - Fhaty))
+  res$data_sl <- cbind(N2015 = -b * log(Fhaty), BB2018 = b * (1 - Fhaty))
   #
   # Estimate the sampling variances of the estimators
   #
@@ -376,6 +376,6 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
     c("N2015", "BB2018")
   return(list(sigma2dj = sigma2dj, sigma2dj_for_sl = sigma2dj_for_sl,
               theta_dj = theta_dj,
-              data_dj = cbind(-b * log(Nhat[, which_dj]),
-                              b * (1 - Nhat[, which_dj]))))
+              data_dj = cbind(N2015 = -b * log(Nhat[, which_dj]),
+                              BB2018 = b * (1 - Nhat[, which_dj]))))
 }

@@ -28,6 +28,7 @@
 #' @name exdex
 #' @import methods
 #' @importFrom graphics plot
+#' @importFrom stats coef confint nobs vcov
 NULL
 
 #' Newlyn sea surges

@@ -11,11 +11,7 @@
 #'
 #' @param object An object of class \code{"exdex"}, returned by
 #'   \code{\link{spm}}.
-#' @param parm A character scalar specifying whether to estimate confidence
-#'   intervals for both variants of the estimator (\code{"both"}),
-#'   for the Northrop (2015) variant only (\code{"N2015"}) or
-#'   for the Berhaus and Bucher (2018) variant only (\code{"BB2018"}).
-#' @param maxima A character scalar specifying whether to estimate
+#' @param parm A character scalar specifying whether to estimate
 #'   confidence intervals based on sliding maxima or disjoint maxima.
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
@@ -99,8 +95,7 @@
 #' #confint(res)
 #' #confint(res, plot = TRUE)
 #' @export
-confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
-                           maxima = c("sliding", "disjoint"),
+confint.exdex <- function (object, parm = c("sliding", "disjoint"),
                            level = 0.95, constrain = TRUE,
                            conf_scale = c("theta", "log_theta"),
                            bias_adjust = TRUE,
@@ -119,15 +114,14 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
     rownames(temp) <- c("N2015sym", "BB2018sym", "N2015lik", "BB0218lik")
     return(temp)
   }
-  if (maxima == "sliding" && type == "none") {
+  parm <- match.arg(parm)
+  if (parm == "sliding" && type == "none") {
     warning("The likelihood-based CIs are vast underestimates of uncertainty!")
   }
-  parm <- match.arg(parm)
-  maxima <- match.arg(maxima)
   conf_scale <- match.arg(conf_scale)
   type <- match.arg(type)
   # Set the components that we need, based on argument maxima
-  if (maxima == "sliding") {
+  if (parm == "sliding") {
     uncon <- object$uncon_theta_sl
     se <- object$se_sl
     theta <- object$theta_sl

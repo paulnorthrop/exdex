@@ -20,10 +20,9 @@ bootstrapping.}
 \value{
 A list containing
   \itemize{
-    \item {\code{theta_mle} : } {The maximum likelihood estimate (MLE) of
-      \eqn{\theta}.}
-    \item {\code{theta_se} : } {(If \code{conf} is supplied) the estimated
-      standard error of the MLE.}
+    \item {\code{theta} : } {The estimate of \eqn{\theta}.}
+    \item {\code{se} : } {(If \code{conf} is supplied) the estimated
+      standard error of the estimate.}
     \item {\code{theta_ci} : } {(If \code{conf} is supplied) a numeric
       vector of length two giving lower and upper confidence limits for
       \eqn{\theta}.}

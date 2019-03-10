@@ -28,7 +28,7 @@
 kgaps_imt <- function(data, thresh, k = 1) {
   # Function to return only the MLE of theta
   mle_only <- function(k, data, thresh) {
-    return(kgaps_mle(data, thresh, k, inc_cens = FALSE)$theta_mle)
+    return(kgaps_mle(data, thresh, k, inc_cens = FALSE)$theta)
   }
   theta <- T_mat <- p_mat <- NULL
   n_u <- length(thresh)

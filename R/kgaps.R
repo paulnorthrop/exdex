@@ -38,6 +38,8 @@
 #'     \item {\code{ss} : } {The list of summary statistics returned from
 #'       \code{\link{kgaps_stats}}.}
 #'   }
+#' @seealso \code{\link{confint.kgaps}} to estimate confidence intervals
+#'   for \eqn{theta}.
 #' @seealso \code{\link{kgaps_stats}} for the calculation of sufficient
 #'   statistics for the K-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
@@ -48,10 +50,7 @@
 #' ### Newlyn sea-surge data
 #'
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' # MLE and SE only
 #' kgaps_mle(newlyn, thresh)
-#' # MLE, SE and 95% confidence interval
-#' kgaps_mle(newlyn, thresh, conf = 95)
 #' @export
 kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE) {
   if (!is.numeric(thresh) || length(thresh) != 1) {

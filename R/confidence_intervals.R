@@ -15,6 +15,8 @@
 #'   intervals for both variants of the estimator (\code{"both"}),
 #'   for the Northrop (2015) variant only (\code{"N2015"}) or
 #'   for the Berhaus and Bucher (2018) variant only (\code{"BB2018"}).
+#' @param maxima A character scalar specifying whether to estimate
+#'   confidence intervals based on sliding maxima or disjoint maxima.
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any confidence limits that are greater than 1 are set to 1,
@@ -98,6 +100,7 @@
 #' #confint(res, plot = TRUE)
 #' @export
 confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
+                           maxima = c("sliding", "disjoint"),
                            level = 0.95, constrain = TRUE,
                            conf_scale = c("theta", "log_theta"),
                            bias_adjust = TRUE,
@@ -107,7 +110,7 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
-  if (is.na(object$se[1])) {
+  if (is.na(object$se_sl[1])) {
     temp <- matrix(NA, nrow = 4, ncol = 2)
     a <- (1 - level) / 2
     a <- c(a, 1 - a)
@@ -116,24 +119,37 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
     rownames(temp) <- c("N2015sym", "BB2018sym", "N2015lik", "BB0218lik")
     return(temp)
   }
-  if (object$sliding && type == "none") {
+  if (maxima == "sliding" && type == "none") {
     warning("The likelihood-based CIs are vast underestimates of uncertainty!")
   }
   parm <- match.arg(parm)
+  maxima <- match.arg(maxima)
   conf_scale <- match.arg(conf_scale)
   type <- match.arg(type)
+  # Set the components that we need, based on argument maxima
+  if (maxima == "sliding") {
+    uncon <- object$uncon_theta_sl
+    se <- object$se_sl
+    theta <- object$theta_sl
+    yz_data <- object$data_sl
+    bias_val <- object$bias_sl
+  } else {
+    uncon <- object$uncon_theta_dj
+    se <- object$se_dj
+    theta <- object$theta_dj
+    yz_data <- object$data_dj
+    bias_val <- object$bias_dj
+  }
   # Symmetric confidence intervals, based on large sample normal theory
   # The intervals are (initially) centred on the unconstrained estimate of
   # theta, which may be greater than 1
   z_val <- stats::qnorm(1 - (1 - level) / 2)
   if (conf_scale == "theta") {
-    lower <- object$unconstrained_theta - z_val * object$se
-    upper <- object$unconstrained_theta + z_val * object$se
+    lower <- uncon - z_val * se
+    upper <- uncon + z_val * se
   } else {
-    lower <- exp(log(object$unconstrained_theta) - z_val *
-                   object$se / object$theta)
-    upper <- exp(log(object$unconstrained_theta) + z_val *
-                   object$se / object$theta)
+    lower <- exp(log(uncon) - z_val * se / theta)
+    upper <- exp(log(uncon) + z_val * se / theta)
   }
   names(lower) <- paste0(names(lower), "sym")
   names(upper) <- paste0(names(upper), "sym")
@@ -161,33 +177,33 @@ confint.exdex <- function (object, parm = c("both", "N2015", "BB2018"),
   # Bias-adjust, if requested and if appropriate
   # We can achieve this by scaling the data by the ratio of the naive MLE
   # to the bias-adjusted MLE
-  mleN <- 1 / mean(object$N2015_data)
-  mleBB <- 1 / mean(object$BB2018_data)
+  mleN <- 1 / mean(yz_data[, "N2015"])
+  mleBB <- 1 / mean(yz_data[, "BB2018"])
   if (bias_adjust && object$bias_adjust %in% c("BB3", "BB1")) {
-    scaleN <- mleN / (mleN - object$bias_val["N2015"])
-    scaleBB <- mleBB / (mleBB - object$bias_val["BB2018"])
+    scaleN <- mleN / (mleN - bias_val["N2015"])
+    scaleBB <- mleBB / (mleBB - bias_val["BB2018"])
   } else {
     scaleN <- 1
     scaleBB <- 1
   }
   # Northrop (2015)
-  n <- length(object$N2015_data)
+  n <- length(yz_data[, "N2015"])
   H <- as.matrix(-n / mleN ^ 2)
-  V <- as.matrix(H ^ 2 * object$se[1] ^ 2)
+  V <- as.matrix(H ^ 2 * se["N2015"] ^ 2)
   # Note the multiplication of the data by scaleN and the division of the
   # naive estimate by scaleN, to obtain the bias_adjusted estimate
   adjN <- chandwich::adjust_loglik(loglik = exponential_loglik,
-                                   data = object$N2015_data * scaleN,
+                                   data = yz_data[, "N2015"] * scaleN,
                                    p = 1, par_names = "theta",
                                    mle = mleN / scaleN, H = H, V = V)
   # Berghaus and Bucher (2018)
-  n <- length(object$BB2018_data)
+  n <- length(yz_data[, "BB2018"])
   H <- as.matrix(-n / mleBB ^ 2)
-  V <- as.matrix(H ^ 2 * object$se[2] ^ 2)
+  V <- as.matrix(H ^ 2 * se["BB2018"] ^ 2)
   # Note the multiplication of the data by scaleBB and the division of the
   # naive estimate by scaleBB, to obtain the bias_adjusted estimate
   adjBB <- chandwich::adjust_loglik(loglik = exponential_loglik,
-                                    data = object$BB2018_data * scaleBB,
+                                    data = yz_data[, "BB2018"] * scaleBB,
                                     p = 1, par_names = "theta",
                                     mle = mleBB / scaleBB, H = H, V = V)
   # Avoid chandwich::conf_intervals()'s profiling messages

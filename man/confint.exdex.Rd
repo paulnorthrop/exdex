@@ -5,9 +5,10 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{exdex}(object, parm = c("both", "N2015", "BB2018"),
-  level = 0.95, constrain = TRUE, conf_scale = c("theta",
-  "log_theta"), bias_adjust = TRUE, type = c("vertical", "cholesky",
-  "spectral", "none"), plot = FALSE, ndec = 2, ...)
+  maxima = c("sliding", "disjoint"), level = 0.95, constrain = TRUE,
+  conf_scale = c("theta", "log_theta"), bias_adjust = TRUE,
+  type = c("vertical", "cholesky", "spectral", "none"), plot = FALSE,
+  ndec = 2, ...)
 }
 \arguments{
 \item{object}{An object of class \code{"exdex"}, returned by
@@ -17,6 +18,9 @@
 intervals for both variants of the estimator (\code{"both"}),
 for the Northrop (2015) variant only (\code{"N2015"}) or
 for the Berhaus and Bucher (2018) variant only (\code{"BB2018"}).}
+
+\item{maxima}{A character scalar specifying whether to estimate
+confidence intervals based on sliding maxima or disjoint maxima.}
 
 \item{level}{The confidence level required.  A numeric scalar in (0, 1).}
 

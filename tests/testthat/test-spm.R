@@ -48,14 +48,14 @@ for (i in 1:4){
     })
     test_that(paste(my_text, "sliding, data_sl"), {
       testthat::expect_equal(summary(res$data_sl),
-                             summary(cbind(res_sl$N2015_data,
-                                           res_sl$BB2018_data)),
+                             summary(cbind(N2015 = res_sl$N2015_data,
+                                           BB2018 = res_sl$BB2018_data)),
                              tolerance = my_tol)
     })
     test_that(paste(my_text, "sliding, data_dj"), {
       testthat::expect_equal(summary(res$data_dj),
-                             summary(cbind(res_dj$N2015_data,
-                                           res_dj$BB2018_data)),
+                             summary(cbind(N2015 = res_dj$N2015_data,
+                                           BB2018 = res_dj$BB2018_data)),
                              tolerance = my_tol)
     })
   }

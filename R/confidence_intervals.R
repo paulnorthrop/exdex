@@ -142,13 +142,14 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   type <- match.arg(type)
   # Set the components that we need, based on argument maxima
   theta <- coef(object, maxima = maxima, estimator = "both")
+  uncon <- coef(object, maxima = maxima, estimator = "both", constrain = TRUE)
   se <- sqrt(vcov(object, maxima = maxima, estimator = "both"))
   if (maxima == "sliding") {
-    uncon <- object$uncon_theta_sl
+#    uncon <- object$uncon_theta_sl
     yz_data <- object$data_sl
     bias_val <- object$bias_sl
   } else {
-    uncon <- object$uncon_theta_dj
+#    uncon <- object$uncon_theta_dj
     yz_data <- object$data_dj
     bias_val <- object$bias_dj
   }

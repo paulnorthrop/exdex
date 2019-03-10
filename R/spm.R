@@ -95,7 +95,7 @@
 #'       relevant if \code{bias_adjust} is "BB3" or "BB1".  Otherwise,
 #'       \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
 #'   \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
-#'     after the constraint that they lie in (0, 1] has been applied.}
+#'     before the constraint that they lie in (0, 1] has been applied.}
 #'   \item{data_sl, data_dj}{Matrices containing the \eqn{Y}-data and
 #'     \eqn{Z}-data for the sliding an dijoint maxima respectively.
 #'     The first columns are the \eqn{Y}-data, the second columns the
@@ -395,6 +395,10 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
 #'   semiparametic maxima estimator to use: Northrop (2015) or
 #'   Berghaus and Bucher (2018).  If \code{estimator = "both"} then
 #'   estimates for both variants are returned.
+#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
+#'   any estimates that are greater than 1 are set to 1,
+#'   that is, they are constrained to lie in (0, 1].  Otherwise,
+#'   estimates that are greater than 1 may be obtained.
 #' @param ... Further arguments.  None are used.
 #' @return A numeric scalar (or a vector of length 2 if
 #'   \code{estimator = "both"}): the required estimate(s) of the extremal index
@@ -414,9 +418,15 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
   }
   maxima <- match.arg(maxima)
   estimator <- match.arg(estimator)
-  ests <- switch(maxima,
-                 sliding = object$theta_sl,
-                 disjoint = object$theta_dj)
+  if (constrain) {
+    ests <- switch(maxima,
+                   sliding = object$uncon_theta_sl,
+                   disjoint = object$uncon_theta_dj)
+  } else{
+    ests <- switch(maxima,
+                   sliding = object$theta_sl,
+                   disjoint = object$theta_dj)
+  }
   if (estimator == "both") {
     estimator <- c("N2015", "BB2018")
     ests <- ests[estimator]

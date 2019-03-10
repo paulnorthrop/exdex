@@ -20,6 +20,11 @@ semiparametic maxima estimator to use: Northrop (2015) or
 Berghaus and Bucher (2018).  If \code{estimator = "both"} then
 estimates for both variants are returned.}
 
+\item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
+any estimates that are greater than 1 are set to 1,
+that is, they are constrained to lie in (0, 1].  Otherwise,
+estimates that are greater than 1 may be obtained.}
+
 \item{...}{Further arguments.  None are used.}
 }
 \value{

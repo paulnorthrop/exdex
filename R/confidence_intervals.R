@@ -1,6 +1,6 @@
 #' Confidence intervals for the extremal index \eqn{\theta}
 #'
-#' \code{confint} method for objects of class \code{"exdex"}.
+#' \code{confint} method for objects of class \code{c("spm", "exdex")}.
 #' Computes confidence intervals for \eqn{\theta} based on an object returned
 #' from \code{\link{spm}}.  Two types of interval are returned:
 #' (a) intervals based on approximate large-sample normality of the estimators
@@ -95,13 +95,13 @@
 #' #confint(res)
 #' #confint(res, plot = TRUE)
 #' @export
-confint.exdex <- function (object, parm = c("sliding", "disjoint"),
-                           level = 0.95, constrain = TRUE,
-                           conf_scale = c("theta", "log_theta"),
-                           bias_adjust = TRUE,
-                           type = c("vertical", "cholesky", "spectral",
-                                    "none"),
-                           plot = FALSE, ndec = 2, ...) {
+confint.spm <- function (object, parm = c("sliding", "disjoint"),
+                         level = 0.95, constrain = TRUE,
+                         conf_scale = c("theta", "log_theta"),
+                         bias_adjust = TRUE,
+                         type = c("vertical", "cholesky", "spectral",
+                                  "none"),
+                         plot = FALSE, ndec = 2, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }

@@ -273,7 +273,7 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   res$bias_adjust <- bias_adjust
   res$b <- b
   res$call <- Call
-  class(res) <- c("exdex", "spm")
+  class(res) <- c("spm", "exdex")
   return(res)
 }
 

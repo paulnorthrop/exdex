@@ -113,10 +113,10 @@
 #'   \item{b}{The input value of \code{b}.}
 #'   \item{bias_adjust}{The input value of \code{bias_adjust}.}
 #'   \item{call}{The call to \code{spm}.}
-#' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
 #' @seealso \code{\link{confint.spm}} to estimate confidence intervals
 #'   for \eqn{theta}.
+#' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the K-gaps model.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}

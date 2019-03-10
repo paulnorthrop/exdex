@@ -93,6 +93,11 @@
 #'   \item{call}{The call to \code{spm}.}
 #'   \item{object}{The input \code{object}.}
 #'   \item{maxima}{The input \code{maxima}.}
+#'   \item{theta}{The relevant estimates of \eqn{\theta} returned from
+#'     \code{\link[chandwich]{adjust_loglik}}.  These should be equal to
+#'     \code{object$theta_sl} if \code{maxima = "sliding"},
+#'     \code{object$theta_dj} if \code{maxima = "disjoint"},
+#'     which provides a check that the results are correct.}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
@@ -237,7 +242,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
   temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, call = Call,
-               object = object, maxima = maxima)
+               object = object, maxima = maxima,
+               theta = c(attr(adjN, "MLE"), attr(adjBB, "MLE")))
   class(temp) <- c("confint_spm", "exdex")
   return(temp)
 }

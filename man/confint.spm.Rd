@@ -92,6 +92,11 @@ A list of class c("confint_spm", "exdex") containing the
   \item{call}{The call to \code{spm}.}
   \item{object}{The input \code{object}.}
   \item{maxima}{The input \code{maxima}.}
+  \item{theta}{The relevant estimates of \eqn{\theta} returned from
+    \code{\link[chandwich]{adjust_loglik}}.  These should be equal to
+    \code{object$theta_sl} if \code{maxima = "sliding"},
+    \code{object$theta_dj} if \code{maxima = "disjoint"},
+    which provides a check that the results are correct.}
 }
 \description{
 \code{confint} method for objects of class \code{c("spm", "exdex")}.

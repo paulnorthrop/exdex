@@ -320,10 +320,8 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
     # of the block maxima in y
     # Row i contains the number of values that are outside block 1, ..., k_n
     # and <= block maximum i in y
-    pjn <- vapply(1:k_n, fun, numeric(k_n), x = nums_mat)
-    #  print(pjn)
     # The proportions are Fhat_{-j}(M_{ni}), i, j = 1, ..., k_n
-    FhatjMni <- pjn / (m - b)
+    FhatjMni <- vapply(1:k_n, fun, numeric(k_n), x = nums_mat) / (m - b)
     # Column j enables us to calculate Yhatni(j) and/or Zhatni(j)
     UsumN <- -b * colMeans(log0const(FhatjMni, const))
     Usum <- b * (1 - colMeans(FhatjMni))
@@ -332,18 +330,18 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
   fun_value <- list(numeric(k_n), numeric(k_n), numeric(k_n))
   # Use all sets of disjoint maxima to estimate sigmahat2_dj for sliding maxima
   which_vals <- 1:ncol(all_max$yd)
-  pjn <- vapply(which_vals, UsumN_fn, fun_value)
-  Nhat <- do.call(cbind, pjn[1, ])
+  temp <- vapply(which_vals, UsumN_fn, fun_value)
+  Nhat <- do.call(cbind, temp[1, ])
   # BB2018
   Zhat <- b * (1 - Nhat)
   That <- colMeans(Zhat)
-  Usum <- do.call(cbind, pjn[3, ])
+  Usum <- do.call(cbind, temp[3, ])
   Usum <-  t(k_n * That - (k_n - 1) * t(Usum))
   Bhat <- t(t(Zhat + Usum) - 2 * That)
   # N2015
   ZhatN <- -b * log(Nhat)
   ThatN <- colMeans(ZhatN)
-  UsumN <- do.call(cbind, pjn[2, ])
+  UsumN <- do.call(cbind, temp[2, ])
   UsumN <-  t(k_n * ThatN - (k_n - 1) * t(UsumN))
   # Bhat was mean-centred, but BhatN isn't (quite)
   BhatN <- t(t(ZhatN + UsumN) - 2 * ThatN)

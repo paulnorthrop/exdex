@@ -5,7 +5,7 @@
 \title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
 \usage{
 \method{vcov}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = c("N2015", "BB2018"), ...)
+  estimator = c("N2015", "BB2018", "both"), ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from
@@ -17,12 +17,15 @@ based on sliding maxima or on disjoint maxima.}
 
 \item{estimator}{A character scalar specifying which variant of the
 semiparametic maxima estimator to use: Northrop (2015) or
-Berghaus and Bucher (2018).}
+Berghaus and Bucher (2018).  If \code{estimator = "both"} then the
+estimated variances of both variants are returned.}
 
 \item{...}{Further arguments.  None are used.}
 }
 \value{
-A 1 by 1 numeric matrix: the estimated variance of the estimator.
+A 1 by 1 numeric matrix if \code{estimator = "N2015"} or
+  \code{"BB2018"} and a vector of length 2 if \code{estimator = "both"},
+  containing the estimated variance(s) of the estimator(s).
 }
 \description{
 \code{vcov} method for class \code{c("spm", "exdex")}.

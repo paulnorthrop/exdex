@@ -141,16 +141,14 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   conf_scale <- match.arg(conf_scale)
   type <- match.arg(type)
   # Set the components that we need, based on argument maxima
+  theta <- coef(object, maxima = maxima, estimator = "both")
+  se <- sqrt(vcov(object, maxima = maxima, estimator = "both"))
   if (maxima == "sliding") {
     uncon <- object$uncon_theta_sl
-    se <- object$se_sl
-    theta <- object$theta_sl
     yz_data <- object$data_sl
     bias_val <- object$bias_sl
   } else {
     uncon <- object$uncon_theta_dj
-    se <- object$se_dj
-    theta <- object$theta_dj
     yz_data <- object$data_dj
     bias_val <- object$bias_dj
   }
@@ -200,8 +198,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     scaleN <- 1
     scaleBB <- 1
   }
+  n <- nobs(object, maxima = maxima)
   # Northrop (2015)
-  n <- length(yz_data[, "N2015"])
   H <- as.matrix(-n / mleN ^ 2)
   V <- as.matrix(H ^ 2 * se["N2015"] ^ 2)
   # Note the multiplication of the data by scaleN and the division of the
@@ -211,7 +209,6 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
                                    p = 1, par_names = "theta",
                                    mle = mleN / scaleN, H = H, V = V)
   # Berghaus and Bucher (2018)
-  n <- length(yz_data[, "BB2018"])
   H <- as.matrix(-n / mleBB ^ 2)
   V <- as.matrix(H ^ 2 * se["BB2018"] ^ 2)
   # Note the multiplication of the data by scaleBB and the division of the

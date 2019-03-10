@@ -96,8 +96,10 @@
 #'       \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
 #'   \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
 #'     are the constraint that they lie in (0, 1] has been applied.}
-#'   \item{data_sl, data_dj}{Vectors of the values of the \eqn{Y}-data and
-#'     the \eqn{Z}-data.}
+#'   \item{data_sl, data_dj}{Matrices containing the \eqn{Y}-data and
+#'     \eqn{Z}-data for the sliding an dijoint maxima respectively.
+#'     The first columns are the \eqn{Y}-data, the second columns the
+#'     \eqn{Z}-data.}
 #'   \item{sigma2dj, sigma2dj_for_sl}{Estimates of the variance
 #'    \eqn{\sigma_{{\rm dj}}^2}{\sigma^2_dj}
 #'    defined on pages 2314-2315 of Berghaus and Bucher (2018).
@@ -391,9 +393,11 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
 #'   maxima.
 #' @param estimator A character scalar specifying which variant of the
 #'   semiparametic maxima estimator to use: Northrop (2015) or
-#'   Berghaus and Bucher (2018).
+#'   Berghaus and Bucher (2018).  If \code{estimator = "both"} then
+#'   estimates for both variants are returned.
 #' @param ... Further arguments.  None are used.
-#' @return A numeric scalar: the required estimate of the extremal index
+#' @return A numeric scalar (or a vector of length 2 if
+#'   \code{estimator = "both"}): the required estimate(s) of the extremal index
 #'   \eqn{\theta}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
@@ -403,7 +407,8 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @export
 coef.spm <- function(object, maxima = c("sliding", "disjoint"),
-                     estimator = c("N2015", "BB2018"), ...) {
+                     estimator = c("N2015", "BB2018", "both"),
+                     constrain = FALSE, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
@@ -412,8 +417,13 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
   ests <- switch(maxima,
                  sliding = object$theta_sl,
                  disjoint = object$theta_dj)
-  ests <- ests[estimator]
-  names(ests) <- "theta"
+  if (estimator == "both") {
+    estimator <- c("N2015", "BB2018")
+    ests <- ests[estimator]
+  } else {
+    ests <- ests[estimator]
+    names(ests) <- "theta"
+  }
   return(ests)
 }
 
@@ -430,9 +440,12 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #'   based on sliding maxima or on disjoint maxima.
 #' @param estimator A character scalar specifying which variant of the
 #'   semiparametic maxima estimator to use: Northrop (2015) or
-#'   Berghaus and Bucher (2018).
+#'   Berghaus and Bucher (2018).  If \code{estimator = "both"} then the
+#'   estimated variances of both variants are returned.
 #' @param ... Further arguments.  None are used.
-#' @return A 1 by 1 numeric matrix: the estimated variance of the estimator.
+#' @return A 1 by 1 numeric matrix if \code{estimator = "N2015"} or
+#'   \code{"BB2018"} and a vector of length 2 if \code{estimator = "both"},
+#'   containing the estimated variance(s) of the estimator(s).
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
@@ -441,14 +454,19 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @export
 vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
-                     estimator = c("N2015", "BB2018"), ...) {
+                     estimator = c("N2015", "BB2018", "both"), ...) {
   maxima <- match.arg(maxima)
   estimator <- match.arg(estimator)
   se <- switch(maxima,
                sliding = object$se_sl,
                disjoint = object$se_dj)
-  vcov <- as.matrix(se[estimator] ^ 2)
-  dimnames(vcov) <- list("theta", "theta")
+  if (estimator == "both") {
+    estimator <- c("N2015", "BB2018")
+    vcov <- se[estimator] ^ 2
+  } else {
+    vcov <- as.matrix(se[estimator] ^ 2)
+    dimnames(vcov) <- list("theta", "theta")
+  }
   return(vcov)
 }
 
@@ -468,7 +486,7 @@ vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
 nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
   maxima <- match.arg(maxima)
   n <- switch(maxima,
-              sliding = length(object$data_sl),
-              disjoint = length(object$data_dj))
+              sliding = nrow(object$data_sl),
+              disjoint = nrow(object$data_dj))
   return(n)
 }

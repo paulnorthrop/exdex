@@ -60,8 +60,10 @@ A list of class \code{c("spm", "exdex")} containing the
       \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
   \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
     are the constraint that they lie in (0, 1] has been applied.}
-  \item{data_sl, data_dj}{Vectors of the values of the \eqn{Y}-data and
-    the \eqn{Z}-data.}
+  \item{data_sl, data_dj}{Matrices containing the \eqn{Y}-data and
+    \eqn{Z}-data for the sliding an dijoint maxima respectively.
+    The first columns are the \eqn{Y}-data, the second columns the
+    \eqn{Z}-data.}
   \item{sigma2dj, sigma2dj_for_sl}{Estimates of the variance
    \eqn{\sigma_{{\rm dj}}^2}{\sigma^2_dj}
    defined on pages 2314-2315 of Berghaus and Bucher (2018).

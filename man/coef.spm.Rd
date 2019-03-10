@@ -5,7 +5,7 @@
 \title{Extract Model Coefficients}
 \usage{
 \method{coef}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = c("N2015", "BB2018"), ...)
+  estimator = c("N2015", "BB2018", "both"), constrain = FALSE, ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from
@@ -17,12 +17,14 @@ maxima.}
 
 \item{estimator}{A character scalar specifying which variant of the
 semiparametic maxima estimator to use: Northrop (2015) or
-Berghaus and Bucher (2018).}
+Berghaus and Bucher (2018).  If \code{estimator = "both"} then
+estimates for both variants are returned.}
 
 \item{...}{Further arguments.  None are used.}
 }
 \value{
-A numeric scalar: the required estimate of the extremal index
+A numeric scalar (or a vector of length 2 if
+  \code{estimator = "both"}): the required estimate(s) of the extremal index
   \eqn{\theta}.
 }
 \description{

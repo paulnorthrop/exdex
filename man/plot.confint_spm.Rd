@@ -7,8 +7,8 @@
 \method{plot}{confint_spm}(x, y = NULL, ndec = 2, ...)
 }
 \arguments{
-\item{x}{an object of class c("confint_spm", "exdex"), a result of a call
-to \code{\link{confint.spm}}.}
+\item{x}{an object of class \code{c("confint_spm", "exdex")}, a result of
+a call to \code{\link{confint.spm}}.}
 
 \item{y}{Not used.}
 
@@ -22,11 +22,15 @@ contains the confidence limits rounded to \code{ndec} decimal places.}
 Nothing is returned.
 }
 \description{
-\code{plot} method for an objects of class c("confint_spm", "exdex").
+\code{plot} method for an objects of class \code{c("confint_spm", "exdex")}.
 }
 \examples{
 res <- spm(newlyn, 20)
 # I can't include these examples until new chandwich is on CRAN
 #cis <- confint(res)
 # plot(cis)
+}
+\seealso{
+\code{\link{confint.spm}}: \code{confint} method for
+  class \code{c("spm", "exdex")}.
 }

@@ -108,6 +108,8 @@
 #' res <- spm(newlyn, 20)
 #' # I can't include these examples until new chandwich is on CRAN
 #' #confint(res)
+#' @seealso \code{\link{plot.confint_spm}}: \code{plot} method for
+#'   class \code{c("confint_spm", "exdex")}.
 #' @export
 confint.spm <- function (object, parm = "theta", level = 0.95,
                          maxima = c("sliding", "disjoint"), constrain = TRUE,
@@ -251,18 +253,22 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 
 # ========================= Methods for confint_spm ========================= #
 
+# ---------------------------- plot.confint_spm ----------------------------- #
+
 #' Plot diagnostics for a confint_spm object
 #'
-#' \code{plot} method for an objects of class c("confint_spm", "exdex").
+#' \code{plot} method for an objects of class \code{c("confint_spm", "exdex")}.
 #'
-#' @param x an object of class c("confint_spm", "exdex"), a result of a call
-#'   to \code{\link{confint.spm}}.
+#' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
+#'   a call to \code{\link{confint.spm}}.
 #' @param y Not used.
 #' @param ndec An integer scalar.  The legend (if included on the plot)
 #'   contains the confidence limits rounded to \code{ndec} decimal places.
 #' @param ... Further arguments to be passed to
 #'   \code{\link[chandwich]{plot.confint}}.
 #' @return Nothing is returned.
+#' @seealso \code{\link{confint.spm}}: \code{confint} method for
+#'   class \code{c("spm", "exdex")}.
 #' @examples
 #' res <- spm(newlyn, 20)
 #' # I can't include these examples until new chandwich is on CRAN
@@ -331,6 +337,37 @@ plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
 #    abline(v = x$object$theta_dj, lty = 1:2)
 #  }
   return(invisible())
+}
+
+# ---------------------------- print.confint_spm ---------------------------- #
+
+#' Print method for a confint_spm object
+#'
+#' \code{print} method for class \code{c("confint_spm", "exdex")}.
+#'
+#' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
+#'   a call to \code{\link{adjust_loglik}}.
+#' @param ... Additional optional arguments to be passed to
+#'   \code{\link{print}}.
+#' @details Just prints the original call to \code{\link{adjust_loglik}}
+#'   and a character vector giving the names of the attributes
+#'   (produced using \code{ls(attributes(x))}) to the function returned
+#'   from \code{\link{adjust_loglik}}.
+#'   To view an individual attribute called \code{att_name} use
+#'   \code{attr(x, "att_name")} or \code{attributes(x)$att_name}.
+#' @return The argument \code{x}, invisibly, as for all
+#'   \code{\link[base]{print}} methods.
+#' @seealso \code{\link{spm}} for estimation of the extremal index
+#'   \eqn{\theta} using a semiparametric maxima method.
+#' @seealso \code{\link{confint.spm}}: \code{confint} method for
+#'   class \code{"spm"}.
+#' @export
+print.confint_spm <- function(x, ...) {
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  print(x$cis)
+  return(invisible(x))
 }
 
 # ============================== confint.kgaps ============================== #

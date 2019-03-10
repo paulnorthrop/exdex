@@ -134,3 +134,7 @@ Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 }
+\seealso{
+\code{\link{plot.confint_spm}}: \code{plot} method for
+  class \code{c("confint_spm", "exdex")}.
+}

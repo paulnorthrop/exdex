@@ -30,7 +30,7 @@
 #'
 #'   If \code{conf_scale = "theta"}
 #'   then confidence intervals are estimated for \eqn{\theta} directly.
-#'   If \code{conf_scale = "log_theta"} then confidence intervals are first
+#'   If \code{conf_scale = "log"} then confidence intervals are first
 #'   estimated for \eqn{\log\theta}{log\theta} and then transformed back
 #'   to the \eqn{\theta}-scale.
 #'
@@ -101,7 +101,7 @@
 #' @export
 confint.spm <- function (object, parm = "theta", level = 0.95,
                          maxima = c("sliding", "disjoint"), constrain = TRUE,
-                         conf_scale = c("theta", "log_theta"),
+                         conf_scale = c("theta", "log"),
                          bias_adjust = TRUE,
                          type = c("vertical", "cholesky", "spectral",
                                   "none"),
@@ -313,7 +313,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 #'
 #'   If \code{conf_scale = "theta"}
 #'   then confidence intervals are estimated for \eqn{\theta} directly.
-#'   If \code{conf_scale = "log_theta"} then confidence intervals are first
+#'   If \code{conf_scale = "log"} then confidence intervals are first
 #'   estimated for \eqn{\log\theta}{log\theta} and then transformed back
 #'   to the \eqn{\theta}-scale.
 #' @param ... Further arguments. None are used currently.
@@ -334,7 +334,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 #' @export
 confint.kgaps <- function (object, parm = "theta",
                            level = 0.95, constrain = TRUE,
-                           conf_scale = c("theta", "log_theta"), ...) {
+                           conf_scale = c("theta", "log"), ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }

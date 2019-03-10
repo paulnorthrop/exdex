@@ -6,7 +6,7 @@
 \usage{
 \method{confint}{spm}(object, parm = "theta", level = 0.95,
   maxima = c("sliding", "disjoint"), constrain = TRUE,
-  conf_scale = c("theta", "log_theta"), bias_adjust = TRUE,
+  conf_scale = c("theta", "log"), bias_adjust = TRUE,
   type = c("vertical", "cholesky", "spectral", "none"), plot = FALSE,
   ndec = 2, ...)
 }
@@ -35,7 +35,7 @@ less than 0 are set to 0.}
 
   If \code{conf_scale = "theta"}
   then confidence intervals are estimated for \eqn{\theta} directly.
-  If \code{conf_scale = "log_theta"} then confidence intervals are first
+  If \code{conf_scale = "log"} then confidence intervals are first
   estimated for \eqn{\log\theta}{log\theta} and then transformed back
   to the \eqn{\theta}-scale.
 

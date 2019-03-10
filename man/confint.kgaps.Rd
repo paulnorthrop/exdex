@@ -5,7 +5,7 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{kgaps}(object, parm = "theta", level = 0.95,
-  constrain = TRUE, conf_scale = c("theta", "log_theta"), ...)
+  constrain = TRUE, conf_scale = c("theta", "log"), ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("kgaps", "exdex")}, returned by
@@ -29,7 +29,7 @@ less than 0 are set to 0.}
 
   If \code{conf_scale = "theta"}
   then confidence intervals are estimated for \eqn{\theta} directly.
-  If \code{conf_scale = "log_theta"} then confidence intervals are first
+  If \code{conf_scale = "log"} then confidence intervals are first
   estimated for \eqn{\log\theta}{log\theta} and then transformed back
   to the \eqn{\theta}-scale.}
 

@@ -500,3 +500,39 @@ nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
               disjoint = nrow(object$data_dj))
   return(n)
 }
+
+# ============================ print.spm() ================================== #
+
+#' Print method for an spm object
+#'
+#' \code{print} method for class \code{c("spm", "exdex")}.
+#'
+#' @param x an object of class \code{c("spm", "exdex")}, a result of
+#'   a call to \code{\link{spm}}.
+#' @param digits The argument \code{digits} to \code{\link{print.default}}.
+#' @param ... Additional argument.  None are used in this function.
+#' @details Prints the original call to \code{\link{spm}}
+#'   and the estimates of the extremal index \eqn{theta}, based on both
+#'   variants of the semiparametric maxima estimator and both sliding
+#'   and disjoint blocks.
+#' @return The argument \code{x}, invisibly, as for all
+#'   \code{\link[base]{print}} methods.
+#' @seealso \code{\link{spm}} for estimation of the extremal index
+#'   \eqn{\theta} using a semiparametric maxima method.
+#' @seealso \code{\link{confint.spm}}: \code{confint} method for
+#'   class \code{"spm"}.
+#' @export
+print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
+      "\n\n", sep = "")
+  cat("Estimates of the extremal index theta:\n")
+  coef_sl <- coef(res, maxima = "sliding", estimator = "both")
+  coef_dj <- coef(res, maxima = "disjoint", estimator = "both")
+  coefs <- rbind(sliding = coef_sl, disjoint = coef_dj)
+  print.default(format(coefs, digits = digits), print.gap = 2L,
+                quote = FALSE)
+  return(invisible(x))
+}

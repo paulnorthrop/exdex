@@ -342,15 +342,10 @@ plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
 #' \code{print} method for class \code{c("confint_spm", "exdex")}.
 #'
 #' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
-#'   a call to \code{\link{adjust_loglik}}.
+#'   a call to \code{\link{confint.spm}}.
 #' @param ... Additional optional arguments to be passed to
 #'   \code{\link{print}}.
-#' @details Just prints the original call to \code{\link{adjust_loglik}}
-#'   and a character vector giving the names of the attributes
-#'   (produced using \code{ls(attributes(x))}) to the function returned
-#'   from \code{\link{adjust_loglik}}.
-#'   To view an individual attribute called \code{att_name} use
-#'   \code{attr(x, "att_name")} or \code{attributes(x)$att_name}.
+#' @details Just prints the matrix of confidence intervals for \eqn{\theta}.
 #' @return The argument \code{x}, invisibly, as for all
 #'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{spm}} for estimation of the extremal index

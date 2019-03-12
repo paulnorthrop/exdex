@@ -344,8 +344,8 @@ plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
 #' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
 #'   a call to \code{\link{confint.spm}}.
 #' @param ... Additional optional arguments to be passed to
-#'   \code{\link{print}}.
-#' @details Just prints the matrix of confidence intervals for \eqn{\theta}.
+#'   \code{\link{print.default}}
+#' @details Prints the matrix of confidence intervals for \eqn{\theta}.
 #' @return The argument \code{x}, invisibly, as for all
 #'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
@@ -357,7 +357,8 @@ print.confint_spm <- function(x, ...) {
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
-  print(x$cis)
+  print(class(x$cis))
+  print(x$cis, ...)
   return(invisible(x))
 }
 

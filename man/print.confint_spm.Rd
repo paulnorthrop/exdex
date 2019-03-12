@@ -11,7 +11,7 @@
 a call to \code{\link{confint.spm}}.}
 
 \item{...}{Additional optional arguments to be passed to
-\code{\link{print}}.}
+\code{\link{print.default}}}
 }
 \value{
 The argument \code{x}, invisibly, as for all
@@ -21,7 +21,7 @@ The argument \code{x}, invisibly, as for all
 \code{print} method for class \code{c("confint_spm", "exdex")}.
 }
 \details{
-Just prints the matrix of confidence intervals for \eqn{\theta}.
+Prints the matrix of confidence intervals for \eqn{\theta}.
 }
 \seealso{
 \code{\link{spm}} for estimation of the extremal index

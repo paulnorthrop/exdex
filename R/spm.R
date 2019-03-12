@@ -129,6 +129,7 @@
 #' temp <- spm(-as.vector(sp500[2:6550]), 250)
 #'
 #' temp <- spm(newlyn, 20)
+#' summary(temp)
 #' @export
 spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
                 constrain = TRUE, varN = TRUE,

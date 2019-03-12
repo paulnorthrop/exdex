@@ -136,6 +136,7 @@ The extremal index \eqn{\theta} is estimated using the
 temp <- spm(-as.vector(sp500[2:6550]), 250)
 
 temp <- spm(newlyn, 20)
+summary(temp)
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

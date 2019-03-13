@@ -6,8 +6,9 @@
 \usage{
 \method{confint}{spm}(object, parm = "theta", level = 0.95,
   maxima = c("sliding", "disjoint"), constrain = TRUE,
-  conf_scale = c("theta", "log"), bias_adjust = TRUE,
-  type = c("vertical", "cholesky", "spectral", "none"), ...)
+  interval_type = c("sym", "lik", "both"), conf_scale = c("theta",
+  "log"), bias_adjust = TRUE, type = c("vertical", "cholesky",
+  "spectral", "none"), ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("spm", "exdex")}, returned by
@@ -28,9 +29,12 @@ limits that are greater than 1 may be obtained.
 If \code{constrain = TRUE} then any lower confidence limits that are
 less than 0 are set to 0.}
 
+\item{interval_type}{A character scalar: \code{"sym"} for intervals of
+type (a), \code{"lik"} for intervals of type (b).}
+
 \item{conf_scale}{A character scalar.  Determines the scale on which
   we use approximate large-sample normality of the estimators to
-  estimate confidence intervals.
+  estimate confidence intervals of type (a).
 
   If \code{conf_scale = "theta"}
   then confidence intervals are estimated for \eqn{\theta} directly.

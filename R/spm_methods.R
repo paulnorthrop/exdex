@@ -147,8 +147,8 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n\n", sep = "")
   cat("Estimates of the extremal index theta:\n")
-  coef_sl <- coef(res, maxima = "sliding", estimator = "both")
-  coef_dj <- coef(res, maxima = "disjoint", estimator = "both")
+  coef_sl <- coef(x, maxima = "sliding", estimator = "both")
+  coef_dj <- coef(x, maxima = "disjoint", estimator = "both")
   coefs <- rbind(sliding = coef_sl, disjoint = coef_dj)
   print.default(format(coefs, digits = digits), print.gap = 2L,
                 quote = FALSE)

@@ -161,31 +161,6 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   if (!is.logical(varN) || length(varN) != 1) {
     stop("'varN' must be a logical scalar")
   }
-  #
-  # Check that the value of b satisfies the inequality in Proposition 4.1
-  # of Berghaus and Bucher (2018).  If not then we don't calculate estimates
-  # of uncertainty and we cannot use the BB3 bias-adjustment.
-  #
-  k_n <- floor(length(data) / b)
-  if (b < sqrt(k_n)) {
-    b_ok <- FALSE
-    warn1 <- paste("b =", b, "is too small")
-  } else if (b > k_n ^ 2) {
-    b_ok <- FALSE
-    warn1 <- "b is too large"
-  } else {
-    b_ok <- TRUE
-  }
-  if (!b_ok) {
-    warn2 <- "Estimates of uncertainty will be missing"
-    if (bias_adjust == "BB3") {
-      bias_adjust <- "BB1"
-      warn3 <- "'bias_adjust' has been changed to ''BB1''"
-      warning("\n", warn1, "\n", warn2, "\n", warn3)
-    } else {
-      warning("\n", warn1, "\n", warn2)
-    }
-  }
   which_dj <- match.arg(which_dj)
   #
   # Estimate sigma2_dj based on Section 4 of Berghaus and Bucher (2018)
@@ -195,25 +170,10 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   # Otherwise, just calculate point estimates of theta
   # At this point these estimates have not been bias-adjusted, unless
   # bias_adjust = "N".
-  if (b_ok) {
-    # Find all sets of maxima of disjoint blocks of length b
-    all_max <- all_maxima(data, b)
-    res <- ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
-  } else {
-    all_max <- all_maxima(data, b, which_dj)
-    # Disjoint maxima
-    Fhaty <- ecdf2(all_max$xd, all_max$yd)
-    k_n <- length(all_max$yd)
-    m <- length(all_max$xd)
-    const <- -log(m - b + k_n)
-    if (bias_adjust == "N") {
-      Fhaty <- (m * Fhaty - b) / (m - b)
-    }
-    res <- list()
-    res$theta_dj <- c(-1 / mean(b * log0const(Fhaty, const)),
-                      1 / (b * mean(1 - Fhaty)))
-    names(res$theta_dj) <- c("N2015", "BB2018")
-  }
+  #
+  # Find all sets of maxima of disjoint blocks of length b
+  all_max <- all_maxima(data, b)
+  res <- ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
   # Sliding maxima
   Fhaty <- ecdf2(all_max$xs, all_max$ys)
   # Avoid over-writing the `disjoint' sample size k_n: it is needed later
@@ -232,34 +192,38 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   #
   # Estimate the sampling variances of the estimators
   #
-  if (b_ok) {
-    res$sigma2sl <- res$sigma2dj_for_sl - (3 - 4 * log(2)) / res$theta_sl ^ 2
-    # res$sigma2sl could contain non-positive values
-    res$sigma2sl[res$sigma2sl <= 0] <- NA
-    indexN <- ifelse(varN, 2, 1)
-    if (varN) {
-      index <- 1:2
-    } else {
-      index <- c(2, 2)
-    }
-    res$se_dj <- res$theta_dj ^ 2 * sqrt(res$sigma2dj[index] / k_n)
-    res$se_sl <- res$theta_sl ^ 2 * sqrt(res$sigma2sl[index] / k_n)
+  res$sigma2sl <- res$sigma2dj_for_sl - (3 - 4 * log(2)) / res$theta_sl ^ 2
+  # res$sigma2sl could contain non-positive values
+  # If it does then replace them with NA
+  res$sigma2sl[res$sigma2sl <= 0] <- NA
+  indexN <- ifelse(varN, 2, 1)
+  if (varN) {
+    index <- 1:2
   } else {
-    res$se_dj <- c(N2015 = NA, BB2018 = NA)
-    res$se_sl <- c(N2015 = NA, BB2018 = NA)
+    index <- c(2, 2)
   }
+  res$se_dj <- res$theta_dj ^ 2 * sqrt(res$sigma2dj[index] / k_n)
+  res$se_sl <- res$theta_sl ^ 2 * sqrt(res$sigma2sl[index] / k_n)
   #
   # Perform BB2018 bias-adjustment if required
   #
   if (bias_adjust == "BB3") {
     res$bias_dj <- res$theta_dj / k_n + res$theta_dj ^ 3 * res$sigma2dj / k_n
-    res$bias_sl <- res$theta_sl / k_n + res$theta_sl ^ 3 * res$sigma2sl / k_n
     res$theta_dj <- res$theta_dj - res$bias_dj
+    BB3adj_sl <- res$theta_sl / k_n + res$theta_sl ^ 3 * res$sigma2sl / k_n
+    BB1adj_sl <- res$theta_sl / k_n
+    res$bias_sl <- ifelse(is.na(res$se_sl), BB1adj_sl, BB3adj_sl)
     res$theta_sl <- res$theta_sl - res$bias_sl
+    if (is.na(res$se_sl[1])) {
+      warning("'bias_adjust' has been changed to ''BB1'' for estimator N2015")
+    }
+    if (is.na(res$se_sl[2])) {
+      warning("'bias_adjust' has been changed to ''BB1'' for estimator BB2018")
+    }
   } else if (bias_adjust == "BB1") {
     res$bias_dj <- res$theta_dj / k_n
-    res$bias_sl <- res$theta_sl / k_n
     res$theta_dj <- res$theta_dj - res$bias_dj
+    res$bias_sl <- res$theta_sl / k_n
     res$theta_sl <- res$theta_sl - res$bias_sl
   } else {
     res$bias_dj <- res$bias_sl <- c(N2015 = NA, BB2018 = NA)

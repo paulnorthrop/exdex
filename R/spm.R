@@ -169,7 +169,7 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   k_n <- floor(length(data) / b)
   if (b < sqrt(k_n)) {
     b_ok <- FALSE
-    warn1 <- "b is too small"
+    warn1 <- paste("b =", b, "is too small")
   } else if (b > k_n ^ 2) {
     b_ok <- FALSE
     warn1 <- "b is too large"
@@ -234,6 +234,8 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   #
   if (b_ok) {
     res$sigma2sl <- res$sigma2dj_for_sl - (3 - 4 * log(2)) / res$theta_sl ^ 2
+    # res$sigma2sl could contain non-positive values
+    res$sigma2sl[res$sigma2sl <= 0] <- NA
     indexN <- ifelse(varN, 2, 1)
     if (varN) {
       index <- 1:2

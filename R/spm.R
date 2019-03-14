@@ -162,6 +162,8 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
     stop("'varN' must be a logical scalar")
   }
   which_dj <- match.arg(which_dj)
+  # Find the number of (disjoint) blocks
+  k_n <- floor(length(data) / b)
   #
   # Estimate sigma2_dj based on Section 4 of Berghaus and Bucher (2018)
   # We require the disjoint maxima to do this.  If sliding = TRUE then

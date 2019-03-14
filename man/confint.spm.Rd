@@ -5,10 +5,10 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{spm}(object, parm = "theta", level = 0.95,
-  maxima = c("sliding", "disjoint"), constrain = TRUE,
-  interval_type = c("sym", "lik", "both"), conf_scale = c("theta",
-  "log"), bias_adjust = TRUE, type = c("vertical", "cholesky",
-  "spectral", "none"), ...)
+  maxima = c("sliding", "disjoint"), interval_type = c("sym", "lik",
+  "both"), constrain = TRUE, conf_scale = c("theta", "log"),
+  bias_adjust = TRUE, type = c("vertical", "cholesky", "spectral",
+  "none"), ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("spm", "exdex")}, returned by
@@ -22,15 +22,15 @@ Here there is only one option: the extremal index \eqn{\theta}.}
 \item{maxima}{A character scalar specifying whether to estimate
 confidence intervals based on sliding maxima or disjoint maxima.}
 
+\item{interval_type}{A character scalar: \code{"sym"} for intervals of
+type (a), \code{"lik"} for intervals of type (b).}
+
 \item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
 any confidence limits that are greater than 1 are set to 1,
 that is, they are constrained to lie in (0, 1].  Otherwise,
 limits that are greater than 1 may be obtained.
 If \code{constrain = TRUE} then any lower confidence limits that are
 less than 0 are set to 0.}
-
-\item{interval_type}{A character scalar: \code{"sym"} for intervals of
-type (a), \code{"lik"} for intervals of type (b).}
 
 \item{conf_scale}{A character scalar.  Determines the scale on which
   we use approximate large-sample normality of the estimators to
@@ -97,7 +97,7 @@ A list of class c("confint_spm", "exdex") containing the
   \item{object}{The input \code{object}.}
   \item{maxima}{The input \code{maxima}.}
   \item{theta}{The relevant estimates of \eqn{\theta} returned from
-    \code{\link[chandwich]{adjust_loglik}}.  These should be equal to
+    \code{\link[chandwich]{adjust_loglik}}.  These are equal to
     \code{object$theta_sl} if \code{maxima = "sliding"},
     \code{object$theta_dj} if \code{maxima = "disjoint"},
     which provides a check that the results are correct.}

@@ -18,14 +18,14 @@
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
 #' @param maxima A character scalar specifying whether to estimate
 #'   confidence intervals based on sliding maxima or disjoint maxima.
+#' @param interval_type A character scalar: \code{"sym"} for intervals of
+#'   type (a), \code{"lik"} for intervals of type (b).
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any confidence limits that are greater than 1 are set to 1,
 #'   that is, they are constrained to lie in (0, 1].  Otherwise,
 #'   limits that are greater than 1 may be obtained.
 #'   If \code{constrain = TRUE} then any lower confidence limits that are
 #'   less than 0 are set to 0.
-#' @param interval_type A character scalar: \code{"sym"} for intervals of
-#'   type (a), \code{"lik"} for intervals of type (b).
 #' @param conf_scale A character scalar.  Determines the scale on which
 #'   we use approximate large-sample normality of the estimators to
 #'   estimate confidence intervals of type (a).
@@ -96,7 +96,7 @@
 #'   \item{object}{The input \code{object}.}
 #'   \item{maxima}{The input \code{maxima}.}
 #'   \item{theta}{The relevant estimates of \eqn{\theta} returned from
-#'     \code{\link[chandwich]{adjust_loglik}}.  These should be equal to
+#'     \code{\link[chandwich]{adjust_loglik}}.  These are equal to
 #'     \code{object$theta_sl} if \code{maxima = "sliding"},
 #'     \code{object$theta_dj} if \code{maxima = "disjoint"},
 #'     which provides a check that the results are correct.}
@@ -114,8 +114,9 @@
 #'   class \code{c("confint_spm", "exdex")}.
 #' @export
 confint.spm <- function (object, parm = "theta", level = 0.95,
-                         maxima = c("sliding", "disjoint"), constrain = TRUE,
+                         maxima = c("sliding", "disjoint"),
                          interval_type = c("sym", "lik", "both"),
+                         constrain = TRUE,
                          conf_scale = c("theta", "log"),
                          bias_adjust = TRUE,
                          type = c("vertical", "cholesky", "spectral",
@@ -183,6 +184,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     pct <- paste(round(100 * a, 1), "%")
     colnames(temp) <- pct
     temp <- list(cis = temp)
+    temp <- list(cis = temp, call = Call, maxima = maxima,
+                 interval_type = interval_type, theta = theta)
     class(temp) <- c("confint_spm", "exdex")
     if (interval_type == "sym") {
       return(temp)
@@ -192,7 +195,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   }
   if (interval_type == "lik" || interval_type == "both") {
     # Likelihood-based confidence intervals.  We use the chandwich package
-    # to adjust the independence loglikelihood so that it curvature at its
+    # to adjust the independence loglikelihood so that its curvature at its
     # maximum corresponds to the estimated standard errors that result from
     # the theory in Berghaus and Bucher (2018). Note that:
     #
@@ -201,11 +204,11 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     #
     # 2. we give the option, via the argument bias_adjust, to bias-adjust
     #    the intervals based on the bias_adjust argument supplied in the
-    #    original call to spm(): if bias_adjust = "BB3" or "BB1" in that call
-    #    then the bias-adjustment is subtracted from the limits of the interval;
-    #    if bias_adjust = "N" in that call then no adjustment in performed
-    #    because this bias-adjustment is applied in the creation of the data
-    #    in object$N2015_data and object$BB2018_data.
+    #    original call to spm():
+    #    if bias_adjust = "BB3" or "BB1" then bias-adjustment is performed here;
+    #    if bias_adjust = "N" then no adjustment in performed here because this
+    #    bias-adjustment is applied in the creation of the data in
+    #    object$N2015_data and object$BB2018_data.
     #
     exponential_loglik <- function(theta, data) {
       if (theta <= 0) return(-Inf)
@@ -224,34 +227,49 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
       scaleBB <- 1
     }
     n <- nobs(object, maxima = maxima)
+    # If a standard error is missing then make the confidence limits missing
     # Northrop (2015)
-    H <- as.matrix(-n / mleN ^ 2)
-    V <- as.matrix(H ^ 2 * se["N2015"] ^ 2)
-    # Note the multiplication of the data by scaleN and the division of the
-    # naive estimate by scaleN, to obtain the bias_adjusted estimate
-    adjN <- chandwich::adjust_loglik(loglik = exponential_loglik,
-                                     data = yz_data[, "N2015"] * scaleN,
-                                     p = 1, par_names = "theta",
-                                     mle = mleN / scaleN, H = H, V = V)
-    # Berghaus and Bucher (2018)
-    H <- as.matrix(-n / mleBB ^ 2)
-    V <- as.matrix(H ^ 2 * se["BB2018"] ^ 2)
-    # Note the multiplication of the data by scaleBB and the division of the
-    # naive estimate by scaleBB, to obtain the bias_adjusted estimate
-    adjBB <- chandwich::adjust_loglik(loglik = exponential_loglik,
-                                      data = yz_data[, "BB2018"] * scaleBB,
-                                      p = 1, par_names = "theta",
-                                      mle = mleBB / scaleBB, H = H, V = V)
-    # Avoid chandwich::conf_intervals()'s profiling messages
-    tempN <- suppressMessages(chandwich::conf_intervals(adjN, conf = 100
-                                                        * level, type = type,
-                                                        lower = 0))
-    tempBB <- suppressMessages(chandwich::conf_intervals(adjBB, conf = 100 *
+    if (is.na(se["N2015"])) {
+      tempN <- NA
+      lower <- c(lower, NA)
+      upper <- c(upper, NA)
+    } else {
+      H <- as.matrix(-n / mleN ^ 2)
+      V <- as.matrix(H ^ 2 * se["N2015"] ^ 2)
+      # Note the multiplication of the data by scaleN and the division of the
+      # naive estimate by scaleN, to obtain the bias_adjusted estimate
+      adjN <- chandwich::adjust_loglik(loglik = exponential_loglik,
+                                       data = yz_data[, "N2015"] * scaleN,
+                                       p = 1, par_names = "theta",
+                                       mle = mleN / scaleN, H = H, V = V)
+      # Avoid chandwich::conf_intervals()'s profiling messages
+      tempN <- suppressMessages(chandwich::conf_intervals(adjN, conf = 100 *
                                                            level, type = type,
-                                                         lower = 0))
-    # Add the likelihood-based intervals to the symmetric ones
-    lower <- c(lower, N2015lik = tempN$prof_CI[1], BB2018lik = tempBB$prof_CI[1])
-    upper <- c(upper, N2015lik = tempN$prof_CI[2], BB2018lik = tempBB$prof_CI[2])
+                                                          lower = 0))
+      # Add the likelihood-based interval to the symmetric ones
+      lower <- c(lower, N2015lik = tempN$prof_CI[1])
+      upper <- c(upper, N2015lik = tempN$prof_CI[2])
+    }
+    # Berghaus and Bucher (2018)
+    if (is.na(se["BB2018"])) {
+      tempBB <- NA
+      lower <- c(lower, NA)
+      upper <- c(upper, NA)
+    } else {
+      H <- as.matrix(-n / mleBB ^ 2)
+      V <- as.matrix(H ^ 2 * se["BB2018"] ^ 2)
+      # Note the multiplication of the data by scaleBB and the division of the
+      # naive estimate by scaleBB, to obtain the bias_adjusted estimate
+      adjBB <- chandwich::adjust_loglik(loglik = exponential_loglik,
+                                        data = yz_data[, "BB2018"] * scaleBB,
+                                        p = 1, par_names = "theta",
+                                        mle = mleBB / scaleBB, H = H, V = V)
+      tempBB <- suppressMessages(chandwich::conf_intervals(adjBB, conf = 100 *
+                                                            level, type = type,
+                                                           lower = 0))
+      lower <- c(lower, BB2018lik = tempBB$prof_CI[1])
+      upper <- c(upper, BB2018lik = tempBB$prof_CI[2])
+    }
   }
   # Constrain the intervals to (0, 1] if required
   if (constrain) {
@@ -264,10 +282,11 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
-  theta <- c(attr(adjN, "MLE"), attr(adjBB, "MLE"))
+  print(theta)
   names(theta) <- c("N2015", "BB2018")
   temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, call = Call,
-               object = object, maxima = maxima, theta = theta)
+               object = object, maxima = maxima, interval_type = interval_type,
+               theta = theta)
   class(temp) <- c("confint_spm", "exdex")
   return(temp)
 }
@@ -299,6 +318,9 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
+  }
+  if (x$interval_type == "sym"){
+    stop("Plot method not available when interval_type = ''sym''")
   }
   tempN <- x$ciN
   tempBB <- x$ciBB

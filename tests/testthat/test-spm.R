@@ -61,51 +61,6 @@ for (i in 1:4){
   }
 }
 
-context("spm when b is too low or too high")
-
-# Check that the results are as expected when b is too low or too high.
-# In these cases:
-#   (a) the estimated SEs are missing
-#   (b) if bias_adjust = "BB3" then bias_adjust is changed to "BB1"
-
-# The permitted range of b for these data is 15 - 196
-
-# b too low
-b_low <- 14
-res1 <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "BB1"))
-res3 <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "BB3"))
-
-test_that(paste("b low, bias_dj"), {
-  testthat::expect_equal(res1$bias_dj, res3$bias_dj, tolerance = my_tol)
-})
-test_that(paste("b low, bias_sl"), {
-  testthat::expect_equal(res1$bias_sl, res3$bias_sl, tolerance = my_tol)
-})
-test_that(paste("b low, se_dj"), {
-  testthat::expect_identical(res1$se_dj, c(N2015 = NA, BB2018 = NA))
-})
-test_that(paste("b low, se_sl"), {
-  testthat::expect_identical(res1$se_sl, c(N2015 = NA, BB2018 = NA))
-})
-
-# b too high
-b_low <- 200
-res1 <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "BB1"))
-res3 <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "BB3"))
-
-test_that(paste("b high, bias_dj"), {
-  testthat::expect_equal(res1$bias_dj, res3$bias_dj, tolerance = my_tol)
-})
-test_that(paste("b high, bias_sl"), {
-  testthat::expect_equal(res1$bias_sl, res3$bias_sl, tolerance = my_tol)
-})
-test_that(paste("b high, se_dj"), {
-  testthat::expect_identical(res1$se_dj, c(N2015 = NA, BB2018 = NA))
-})
-test_that(paste("b high, se_sl"), {
-  testthat::expect_identical(res1$se_sl, c(N2015 = NA, BB2018 = NA))
-})
-
 context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
 
 b <- 100
@@ -113,14 +68,6 @@ resBB1 <- spm(newlyn, b = b, bias_adjust = "BB1")
 resN <- spm(newlyn, b = b, bias_adjust = "N")
 
 test_that(paste("BB1 vs N, b is OK"), {
-  testthat::expect_equal(resBB1$theta_dj["BB2018"],
-                             resN$theta_dj["BB2018"], tolerance = my_tol)
-})
-
-resBB1 <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "BB1"))
-resN <- suppressWarnings(spm(newlyn, b = b_low, bias_adjust = "N"))
-
-test_that(paste("BB1 vs N, b is too low"), {
   testthat::expect_equal(resBB1$theta_dj["BB2018"],
                              resN$theta_dj["BB2018"], tolerance = my_tol)
 })

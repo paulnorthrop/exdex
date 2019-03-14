@@ -16,6 +16,7 @@ spm_check <- function(data, b, sliding = TRUE,
                       constrain = TRUE, varN = TRUE,
                       which_dj = c("last", "first")) {
   Call <- match.call(expand.dots = TRUE)
+  bias_adjust <- match.arg(bias_adjust)
   # We don't check inputs here because this function is only used for
   # testing cases where I have ensured that the input are OK
   which_dj <- match.arg(which_dj)

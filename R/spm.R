@@ -285,7 +285,7 @@ ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
     # For each block, we want an equivalent vector obtained when we delete that
     # block
     fun <- function(i, x) {
-      rowSums(x[, -i])
+      rowSums(x[, -i, drop = FALSE])
     }
     # Column j contains the numbers of values outside of block j that are <= each
     # of the block maxima in y

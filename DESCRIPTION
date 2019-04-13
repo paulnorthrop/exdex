@@ -14,9 +14,12 @@ Description: Performs frequentist inference for the extremal index using the
   Suveges (2007) <doi:10.1007/s10687-007-0034-2>
   and
   Suveges and Davison (2010)  <doi:10.1214/09-AOAS292>.
-Imports: chandwich,
+Imports: 
+    chandwich,
     graphics,
     methods,
+    Rcpp,
+    RcppRoll,
     stats,
     zoo (>= 1.6.4)
 License: GPL (>= 2)
@@ -32,3 +35,5 @@ RoxygenNote: 6.1.0
 VignetteBuilder: knitr
 URL: http://github.com/paulnorthrop/exdex
 BugReports: http://github.com/paulnorthrop/exdex/issues
+LinkingTo: 
+    Rcpp, RcppArmadillo

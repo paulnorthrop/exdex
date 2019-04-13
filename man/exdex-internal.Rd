@@ -15,7 +15,7 @@ spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
   "none"), constrain = TRUE, varN = TRUE, which_dj = c("last",
   "first"))
 
-spm_sigmahat_dj(data, b, dj_maxima, check = FALSE, which_dj)
+spm_sigmahat_dj(data, b, check = FALSE)
 
 log0const_slow(x, const)
 

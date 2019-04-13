@@ -23,6 +23,9 @@ spm_check <- function(data, b, sliding = TRUE,
   # Check that the value of b satisfies the inequality in Proposition 4.1
   # of Berghaus and Bucher (2018)
   k_n <- floor(length(data) / b)
+  if (k_n < 1) {
+    stop("b is too large: it is larger than length(data)")
+  }
   # Assume that the value of b is OK (for variances to be estimated)
   b_ok <- TRUE
   # If we want the last set of disjoint maxima then reverse the data vector
@@ -64,17 +67,13 @@ spm_check <- function(data, b, sliding = TRUE,
     theta_N <- -1 / mean(b * log(Fhaty))
     theta_BB <- 1 / (b * mean(1 - Fhaty))
     # Estimate sigma2_dj based on Section 4 of Berghaus and Bucher (2018)
-    # We require the disjoint maxima to do this.  If sliding = TRUE then
-    # pass these to spm_sigmahat_dj using the dj_maxima argument
-    # Only do this is b_ok = TRUE
+    # We require the disjoint maxima to do this.
+    # Only do this if b_ok = TRUE
     if (b_ok) {
       if (sliding) {
-        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b,
-                                        dj_maxima = disjoint_maxima(data, b),
-                                        which_dj = which_dj)
+        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b)
       } else {
-        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b, dj_maxima = temp,
-                                        which_dj = which_dj)
+        sigma2hat_dj <- spm_sigmahat_dj(data = data, b = b)
       }
       # If sliding = TRUE then estimate sigma2hat_sl
       # Otherwise use sigma2hat_dj
@@ -139,7 +138,7 @@ spm_check <- function(data, b, sliding = TRUE,
 
 #' @keywords internal
 #' @rdname exdex-internal
-spm_sigmahat_dj <- function(data, b, dj_maxima, check = FALSE, which_dj){
+spm_sigmahat_dj <- function(data, b, check = FALSE){
   all_dj_maxima <- all_disjoint_maxima(data, b)
   # The number of blocks and the number of raw observations that contribute
   k_n <- nrow(all_dj_maxima$y)

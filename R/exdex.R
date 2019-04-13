@@ -29,6 +29,8 @@
 #' @import methods
 #' @importFrom graphics plot
 #' @importFrom stats coef confint nobs vcov
+#' @useDynLib exdex, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
 NULL
 
 #' Newlyn sea surges

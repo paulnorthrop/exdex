@@ -1,4 +1,4 @@
-# ============================== spm() ====================================== #
+# ========================== spm_R_quick() ================================== #
 
 #' Semiparametric maxima estimator of the extremal index
 #'
@@ -131,9 +131,9 @@
 #' temp <- spm(newlyn, 20)
 #' summary(temp)
 #' @export
-spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
-                constrain = TRUE, varN = TRUE,
-                which_dj = c("last", "first")) {
+spm_R_quick <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
+                        constrain = TRUE, varN = TRUE,
+                        which_dj = c("last", "first")) {
   Call <- match.call(expand.dots = TRUE)
   #
   # Check inputs
@@ -164,6 +164,9 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   which_dj <- match.arg(which_dj)
   # Find the number of (disjoint) blocks
   k_n <- floor(length(data) / b)
+  if (k_n < 1) {
+    stop("b is too large: it is larger than length(data)")
+  }
   #
   # Estimate sigma2_dj based on Section 4 of Berghaus and Bucher (2018)
   # We require the disjoint maxima to do this.  If sliding = TRUE then

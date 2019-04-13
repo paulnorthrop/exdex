@@ -231,7 +231,234 @@ spm_sigmahat_dj <- function(data, b, check = FALSE){
   return(cbind(Usum, Usum2, Usum3, Usum4))
 }
 
-# ========================== Functions used in spm() ======================== #
+# ============================== spm_R_quick() ============================== #
+
+#' @keywords internal
+#' @rdname exdex-internal
+spm_R_quick <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
+                        constrain = TRUE, varN = TRUE,
+                        which_dj = c("last", "first")) {
+  Call <- match.call(expand.dots = TRUE)
+  #
+  # Check inputs
+  #
+  if (missing(data) || length(data) == 0L || mode(data) != "numeric") {
+    stop("'data' must be a non-empty numeric vector")
+  }
+  if (any(!is.finite(data))) {
+    stop("'data' contains missing or infinite values")
+  }
+  if (is.matrix(data)) {
+    stop("'data' must be a vector")
+  }
+  data <- as.vector(data)
+  if (!is.numeric(b) || length(b) != 1) {
+    stop("'b' must be a numeric scalar (specifically, a positive integer)")
+  }
+  if (b < 1) {
+    stop("'b' must be no smaller than 1")
+  }
+  bias_adjust <- match.arg(bias_adjust)
+  if (!is.logical(constrain) || length(constrain) != 1) {
+    stop("'constrain' must be a logical scalar")
+  }
+  if (!is.logical(varN) || length(varN) != 1) {
+    stop("'varN' must be a logical scalar")
+  }
+  which_dj <- match.arg(which_dj)
+  # Find the number of (disjoint) blocks
+  k_n <- floor(length(data) / b)
+  if (k_n < 1) {
+    stop("b is too large: it is larger than length(data)")
+  }
+  #
+  # Estimate sigma2_dj based on Section 4 of Berghaus and Bucher (2018)
+  # We require the disjoint maxima to do this.  If sliding = TRUE then
+  # pass these to spm_sigmahat_dj using the dj_maxima argument
+  # Only do this is b_ok = TRUE.
+  # Otherwise, just calculate point estimates of theta
+  # At this point these estimates have not been bias-adjusted, unless
+  # bias_adjust = "N".
+  #
+  # Find all sets of maxima of disjoint blocks of length b
+  all_max <- all_maxima(data, b)
+  res <- ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
+  # Sliding maxima
+  Fhaty <- ecdf2(all_max$xs, all_max$ys)
+  # Avoid over-writing the `disjoint' sample size k_n: it is needed later
+  k_n_sl <- length(all_max$ys)
+  m <- length(all_max$xs)
+  const <- -log(m - b + k_n_sl)
+  if (bias_adjust == "N") {
+    Fhaty <- (m * Fhaty - b) / (m - b)
+  }
+  res$theta_sl <- c(-1 / mean(b * log0const(Fhaty, const)),
+                    1 / (b * mean(1 - Fhaty)))
+  names(res$theta_sl) <- c("N2015", "BB2018")
+  #
+  # Add the values of the Y-data and the Z-data to the output
+  res$data_sl <- cbind(N2015 = -b * log(Fhaty), BB2018 = b * (1 - Fhaty))
+  #
+  # Estimate the sampling variances of the estimators
+  #
+  res$sigma2sl <- res$sigma2dj_for_sl - (3 - 4 * log(2)) / res$theta_sl ^ 2
+  # res$sigma2sl could contain non-positive values
+  # If it does then replace them with NA
+  res$sigma2sl[res$sigma2sl <= 0] <- NA
+  indexN <- ifelse(varN, 2, 1)
+  if (varN) {
+    index <- 1:2
+  } else {
+    index <- c(2, 2)
+  }
+  res$se_dj <- res$theta_dj ^ 2 * sqrt(res$sigma2dj[index] / k_n)
+  res$se_sl <- res$theta_sl ^ 2 * sqrt(res$sigma2sl[index] / k_n)
+  #
+  # Perform BB2018 bias-adjustment if required
+  #
+  if (bias_adjust == "BB3") {
+    res$bias_dj <- res$theta_dj / k_n + res$theta_dj ^ 3 * res$sigma2dj / k_n
+    res$theta_dj <- res$theta_dj - res$bias_dj
+    BB3adj_sl <- res$theta_sl / k_n + res$theta_sl ^ 3 * res$sigma2sl / k_n
+    BB1adj_sl <- res$theta_sl / k_n
+    res$bias_sl <- ifelse(is.na(res$se_sl), BB1adj_sl, BB3adj_sl)
+    res$theta_sl <- res$theta_sl - res$bias_sl
+    if (is.na(res$se_sl[1])) {
+      warning("'bias_adjust' has been changed to ''BB1'' for estimator N2015")
+    }
+    if (is.na(res$se_sl[2])) {
+      warning("'bias_adjust' has been changed to ''BB1'' for estimator BB2018")
+    }
+  } else if (bias_adjust == "BB1") {
+    res$bias_dj <- res$theta_dj / k_n
+    res$theta_dj <- res$theta_dj - res$bias_dj
+    res$bias_sl <- res$theta_sl / k_n
+    res$theta_sl <- res$theta_sl - res$bias_sl
+  } else {
+    res$bias_dj <- res$bias_sl <- c(N2015 = NA, BB2018 = NA)
+  }
+  #
+  # Save the unconstrained estimates, so that they can be returned
+  res$uncon_theta_dj <- res$theta_dj
+  res$uncon_theta_sl <- res$theta_sl
+  #
+  # Constrain to (0, 1] if required
+  if (constrain) {
+    res$theta_dj <- pmin(res$theta_dj, 1)
+    res$theta_sl <- pmin(res$theta_sl, 1)
+  }
+  #
+  res$bias_adjust <- bias_adjust
+  res$b <- b
+  res$call <- Call
+  class(res) <- c("spm", "exdex")
+  return(res)
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+ests_sigmahat_dj <- function(all_max, b, which_dj, bias_adjust){
+  # Which of the raw values in x are <= each of the values in y?
+  # For each of the block maxima in y calculate the numbers of the raw
+  # values in each block that are <= the block maximum
+  # k_n is the number of blocks
+  k_n <- nrow(all_max$yd)
+  # m is the number of raw observations
+  m <- nrow(all_max$xd)
+  # Value to replace log(0), in the unlikely event that this happens
+  const <- -log(m - b + k_n)
+  block <- rep(1:k_n, each = b)
+  sum_fun <- function(x, y) {
+    return(vapply(y, function(y) sum(x <= y), 0))
+  }
+  # This returns a list with k_n elements.  The ith element of the list
+  # (a of length vector k_n) contains the numbers of values in the ith block
+  # that are <= each of the block maxima in y
+  #
+  # Function to calculate Fhaty and UsumN for each set of disjoint block maxima
+  UsumN_fn <- function(i) {
+    y <- all_max$yd[, i]
+    x <- all_max$xd[, i]
+    nums_list <- tapply(x, block, sum_fun, y = y)
+    # Make this into a matrix
+    # Column j contains the numbers of values in the ith block that are <= each
+    # of the block maxima in y
+    # Row i contains the numbers of values in each block that are <=
+    # block maximum i in y
+    nums_mat <- do.call(cbind, nums_list)
+    # Therefore, the row sums contain the total number of values that are <=
+    # each block maximum in y
+    # The corresponding proportion is Fhaty in spm(): ecdf of x evaluated at y,
+    # in the disjoint (sliding = FALSE) case
+    Fhaty <- rowSums(nums_mat) / m
+    # For each block, we want an equivalent vector obtained when we delete that
+    # block
+    fun <- function(i, x) {
+      rowSums(x[, -i, drop = FALSE])
+    }
+    # Column j contains the numbers of values outside of block j that are <= each
+    # of the block maxima in y
+    # Row i contains the number of values that are outside block 1, ..., k_n
+    # and <= block maximum i in y
+    # The proportions are Fhat_{-j}(M_{ni}), i, j = 1, ..., k_n
+    FhatjMni <- vapply(1:k_n, fun, numeric(k_n), x = nums_mat) / (m - b)
+    # Column j enables us to calculate Yhatni(j) and/or Zhatni(j)
+    UsumN <- -b * colMeans(log0const(FhatjMni, const))
+    Usum <- b * (1 - colMeans(FhatjMni))
+    return(list(Nhat = Fhaty, UsumN = UsumN, Usum = Usum))
+  }
+  fun_value <- list(numeric(k_n), numeric(k_n), numeric(k_n))
+  # Use all sets of disjoint maxima to estimate sigmahat2_dj for sliding maxima
+  which_vals <- 1:ncol(all_max$yd)
+  temp <- vapply(which_vals, UsumN_fn, fun_value)
+  Nhat <- do.call(cbind, temp[1, ])
+  # BB2018
+  Zhat <- b * (1 - Nhat)
+  That <- colMeans(Zhat)
+  Usum <- do.call(cbind, temp[3, ])
+  Usum <-  t(k_n * That - (k_n - 1) * t(Usum))
+  Bhat <- t(t(Zhat + Usum) - 2 * That)
+  # N2015
+  ZhatN <- -b * log(Nhat)
+  ThatN <- colMeans(ZhatN)
+  UsumN <- do.call(cbind, temp[2, ])
+  UsumN <-  t(k_n * ThatN - (k_n - 1) * t(UsumN))
+  # Bhat was mean-centred, but BhatN isn't (quite)
+  BhatN <- t(t(ZhatN + UsumN) - 2 * ThatN)
+  BhatN <- t(t(BhatN) - colMeans(BhatN))
+  # Estimate sigma2_dj.
+  # First calculate an estimate for each set of disjoint block maxima
+  sigmahat2_dj <- apply(Bhat, 2, function(x) sum(x ^ 2) / length(x))
+  sigmahat2_djN <- apply(BhatN, 2, function(x) sum(x ^ 2) / length(x))
+  # Then, for sliding maxima, take the mean value over all sets of maxima
+  sigmahat2_dj_for_sl <- sum(sigmahat2_dj) / length(sigmahat2_dj)
+  sigmahat2_dj_for_slN <- sum(sigmahat2_djN) / length(sigmahat2_djN)
+  sigma2dj_for_sl <- c(sigmahat2_dj_for_slN, sigmahat2_dj_for_sl)
+  # For disjoint maxima pick either the first or last value, based on which_dj
+  which_dj <- switch(which_dj, first = 1, last = length(sigmahat2_dj))
+  sigma2dj <- c(sigmahat2_djN[which_dj], sigmahat2_dj[which_dj])
+  #
+  # Point estimates: disjoint maxima. Component i of ThatN (N) and That (BB)
+  # contains (the reciprocal of) point estimates of theta based on set of
+  # disjoint maxima i.  Use the mean of these estimates as an overall estimate.
+  # Perform the Northrop (2015) `bias-adjustment' of Fhaty (Nhat here) if
+  # requested and recalculate That and ThatN
+  #
+  if (bias_adjust == "N") {
+    Nhat <- (m * Nhat - b) / (m - b)
+    That <- colMeans(b * (1 - Nhat))
+    ThatN <- colMeans(-b * log0const(Nhat, const))
+  }
+  theta_dj <- 1 / c(ThatN[which_dj], That[which_dj])
+  names(theta_dj) <- names(sigma2dj) <- names(sigma2dj_for_sl) <-
+    c("N2015", "BB2018")
+  return(list(sigma2dj = sigma2dj, sigma2dj_for_sl = sigma2dj_for_sl,
+              theta_dj = theta_dj,
+              data_dj = cbind(N2015 = -b * log(Nhat[, which_dj]),
+                              BB2018 = b * (1 - Nhat[, which_dj]))))
+}
+
+# ================= Functions used in spm() and spm_R_quick() =============== #
 
 # log(x), but return a constant const for an x = 0
 

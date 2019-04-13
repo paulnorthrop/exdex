@@ -4,6 +4,8 @@
 \alias{exdex-internal}
 \alias{spm_check}
 \alias{spm_sigmahat_dj}
+\alias{spm_R_quick}
+\alias{ests_sigmahat_dj}
 \alias{log0const_slow}
 \alias{log0const}
 \alias{ecdf3}
@@ -16,6 +18,11 @@ spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
   "first"))
 
 spm_sigmahat_dj(data, b, check = FALSE)
+
+spm_R_quick(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
+  constrain = TRUE, varN = TRUE, which_dj = c("last", "first"))
+
+ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
 
 log0const_slow(x, const)
 

@@ -1,7 +1,7 @@
-context("spm vs spm_check")
+context("spm_R_quick vs spm_check")
 
-# Check that spm(), faster but not very transparent, gives the same results
-# as spm_check(), slower but more transparent
+# Check that spm_R_quick(), faster but not very transparent, gives the same
+# results as spm_check(), slower but more transparent
 
 # 8 cases:
 # bias_adjust in c("BB3", "BB1", "N", "none")
@@ -18,9 +18,9 @@ my_tol <- 1e-5
 
 for (i in 1:4){
   for (j in 1:2) {
-    res <- spm(newlyn, b = b,
-               bias_adjust = bias_adjust_vec[i],
-               which_dj = which_dj_vec[j])
+    res <- spm_R_quick(newlyn, b = b,
+                       bias_adjust = bias_adjust_vec[i],
+                       which_dj = which_dj_vec[j])
     res_sl <- spm_check(newlyn, b = b, sliding = TRUE,
                         bias_adjust = bias_adjust_vec[i],
                         which_dj = which_dj_vec[j])
@@ -61,13 +61,63 @@ for (i in 1:4){
   }
 }
 
+###############################################################################
+
 context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
 
 b <- 100
-resBB1 <- spm(newlyn, b = b, bias_adjust = "BB1")
-resN <- spm(newlyn, b = b, bias_adjust = "N")
+resBB1 <- spm_R_quick(newlyn, b = b, bias_adjust = "BB1")
+resN <- spm_R_quick(newlyn, b = b, bias_adjust = "N")
 
 test_that(paste("BB1 vs N, b is OK"), {
   testthat::expect_equal(resBB1$theta_dj["BB2018"],
                              resN$theta_dj["BB2018"], tolerance = my_tol)
 })
+
+###############################################################################
+
+context("spm vs spm_R_quick")
+
+# Check that spm(), which uses Rcpp, gives the same results as spm_R_quick()
+
+for (i in 1:4){
+  for (j in 1:2) {
+    res <- spm_R_quick(newlyn, b = b,
+                       bias_adjust = bias_adjust_vec[i],
+                       which_dj = which_dj_vec[j])
+    res_c <- spm_R_quick(newlyn, b = b,
+                         bias_adjust = bias_adjust_vec[i],
+                         which_dj = which_dj_vec[j])
+    my_text <- paste(bias_adjust_vec[i], which_dj_vec[j])
+    test_that(paste(my_text, "sliding, theta"), {
+      testthat::expect_equal(res$theta_sl, res_c$theta_sl, tolerance = my_tol)
+    })
+    test_that(paste(my_text, "disjoint, theta"), {
+      testthat::expect_equal(res$theta_dj, res_c$theta_dj, tolerance = my_tol)
+    })
+    test_that(paste(my_text, "sliding, se"), {
+      testthat::expect_equal(res$se_sl, res_c$se_sl, tolerance = my_tol)
+    })
+    test_that(paste(my_text, "disjoint, se"), {
+      testthat::expect_equal(res$se_dj, res_c$se_dj, tolerance = my_tol)
+    })
+    test_that(paste(my_text, "sliding, bias"), {
+      testthat::expect_equal(res$bias_sl, res_c$bias_sl, tolerance = my_tol)
+    })
+    test_that(paste(my_text, "disjoint, bias"), {
+      testthat::expect_equal(res$bias_dj, res_c$bias_dj, tolerance = my_tol)
+    })
+    test_that(paste(my_text, "sliding, data_sl"), {
+      testthat::expect_equal(summary(res$data_sl),
+                             summary(res_c$data_sl),
+                             tolerance = my_tol)
+    })
+    test_that(paste(my_text, "sliding, data_dj"), {
+      testthat::expect_equal(summary(res$data_dj),
+                             summary(res_c$data_dj),
+                             tolerance = my_tol)
+    })
+  }
+}
+
+

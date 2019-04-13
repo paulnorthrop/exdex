@@ -24,3 +24,7 @@ for (i in 1:length(b_vec)) {
     testthat::expect_equal(sigma_mat[, 4], sigma_mat[, 1], tolerance = my_tol)
   })
 }
+
+# Check that the R function ests_sigmahat_dj() gives the same results as the
+# Rcpp function cpp_sigma2hat_dj
+

@@ -125,17 +125,6 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     stop("use only with \"exdex\" objects")
   }
   Call <- match.call(expand.dots = TRUE)
-  if (is.na(object$se_sl[1])) {
-    temp <- matrix(NA, nrow = 4, ncol = 2)
-    a <- (1 - level) / 2
-    a <- c(a, 1 - a)
-    pct <- paste(round(100 * a, 1), "%")
-    colnames(temp) <- pct
-    rownames(temp) <- c("N2015sym", "BB2018sym", "N2015lik", "BB0218lik")
-    temp <- list(cis = temp)
-    class(temp) <- c("confint_spm", "exdex")
-    return(temp)
-  }
   parm <- match.arg(parm)
   if (level <= 0 || level >= 1) {
     stop("''level'' must be in (0, 1)")
@@ -183,7 +172,6 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     a <- c(a, 1 - a)
     pct <- paste(round(100 * a, 1), "%")
     colnames(temp) <- pct
-    temp <- list(cis = temp)
     temp <- list(cis = temp, call = Call, maxima = maxima,
                  interval_type = interval_type, theta = theta)
     class(temp) <- c("confint_spm", "exdex")
@@ -231,8 +219,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # Northrop (2015)
     if (is.na(se["N2015"])) {
       tempN <- NA
-      lower <- c(lower, NA)
-      upper <- c(upper, NA)
+      lower <- c(lower, N2015 = NA)
+      upper <- c(upper, N2015 = NA)
     } else {
       H <- as.matrix(-n / mleN ^ 2)
       V <- as.matrix(H ^ 2 * se["N2015"] ^ 2)
@@ -253,8 +241,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # Berghaus and Bucher (2018)
     if (is.na(se["BB2018"])) {
       tempBB <- NA
-      lower <- c(lower, NA)
-      upper <- c(upper, NA)
+      lower <- c(lower, BB2018 = NA)
+      upper <- c(upper, BB2018 = NA)
     } else {
       H <- as.matrix(-n / mleBB ^ 2)
       V <- as.matrix(H ^ 2 * se["BB2018"] ^ 2)
@@ -282,7 +270,6 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
-  print(theta)
   names(theta) <- c("N2015", "BB2018")
   temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, call = Call,
                object = object, maxima = maxima, interval_type = interval_type,
@@ -322,18 +309,25 @@ plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
   if (x$interval_type == "sym"){
     stop("Plot method not available when interval_type = ''sym''")
   }
-  tempN <- x$ciN
-  tempBB <- x$ciBB
+  if (is.na(x$ciN) && is.na(x$ciBB)) {
+    stop("There is no adjusted log-likelihood to plot: SEs were missing")
+  }
   temp <- x$cis
   # Produce a plot of the adjusted loglikelihood, if requested
   # Owing to the different scales of the loglikelihoods for N2015 and BB2018 we
   # shoof them to have a maximum of 0, so that we can display them on one plot
-  shoofN <- max(tempN$prof_loglik_vals)
-  shoofBB <- max(tempBB$prof_loglik_vals)
-  tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
-  tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
-  tempN$max_loglik <- tempN$max_loglik - shoofN
-  tempBB$max_loglik <- tempBB$max_loglik - shoofBB
+  if (!is.na(x$ciN)) {
+    tempN <- x$ciN
+    shoofN <- max(tempN$prof_loglik_vals)
+    tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
+    tempN$max_loglik <- tempN$max_loglik - shoofN
+  }
+  if (!is.na(x$ciN)) {
+    tempBB <- x$ciBB
+    shoofBB <- max(tempBB$prof_loglik_vals)
+    tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
+    tempBB$max_loglik <- tempBB$max_loglik - shoofBB
+  }
   # Round confidence limits for inclusion in the legend
   fmt <- paste0("%.", ndec, "f")
   roundN <- sprintf(fmt, round(temp["N2015lik", ], ndec))

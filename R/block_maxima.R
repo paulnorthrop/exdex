@@ -247,3 +247,32 @@ all_maxima <- function(x, b = 1, which_dj = c("all", "first", "last")){
   xd <- temp[-(1:n_max), , drop = FALSE]
   return(list(ys = s_max$y, xs = s_max$x, yd = yd, xd = xd))
 }
+
+all_max_rcpp <- function(x, b = 1, which_dj = c("all", "first", "last")){
+  which_dj <- match.arg(which_dj)
+  # First calculate the sliding block maxima.  All the disjoint maxima that
+  # we need are contained in s_max, and we need the sliding maxima anyway
+  ys <- RcppRoll::roll_max(x = x, n = b, na.rm = TRUE)
+  # The number of maxima of blocks of length b
+  n <- length(x)
+  n_max <- floor(n / b)
+  # Set the possible first indices
+  first_value <- switch(which_dj,
+                        all = 1:(n - n_max * b + 1),
+                        first = 1,
+                        last = n - n_max * b + 1)
+  # A function to return block maxima and contributing values starting from
+  # the first value first
+  get_maxima <- function(first) {
+    s_ind <- seq.int(from = first, by = b, length.out = n_max)
+    return(c(ys[s_ind], x[first:(first + n_max * b - 1)]))
+  }
+  temp <- vapply(first_value, FUN = get_maxima, numeric(n_max * (b + 1)))
+  yd <- temp[1:n_max, , drop = FALSE]
+  xd <- temp[-(1:n_max), , drop = FALSE]
+  #
+#  m <- nrow(xd)
+#  pjn <- cpp_sigma2hat_dj(ys = ys, xs = x, yd = yd, xd = xd, b = b, kn = n_max,
+#                          m = m)
+  return(list(ys = ys, xs = x, yd = yd, xd = xd))
+}

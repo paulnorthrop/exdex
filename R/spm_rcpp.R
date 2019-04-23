@@ -35,7 +35,7 @@
 #' @param which_dj A character scalar.  Determines which set of disjoint
 #'   maxima are used to calculate an estimate of \eqn{\theta}: \code{"first"},
 #'   only the set whose first block starts on the first observation in
-#'   \code{x}; \code{"last"}, only the set whose last block end on the last
+#'   \code{x}; \code{"last"}, only the set whose last block ends on the last
 #'   observation in \code{x}.
 #' @details The extremal index \eqn{\theta} is estimated using the
 #'   semiparametric maxima estimator of Northrop (2015) and variant
@@ -177,14 +177,10 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   # bias_adjust = "N".
   #
   # Find all sets of maxima of disjoint blocks of length b
-#  all_max <- all_maxima(data, b)
   all_max <- all_max_rcpp(data, b, which_dj = "all")
   m <- nrow(all_max$xd)
   res <- cpp_sigma2hat_dj(all_max = all_max, b = b, kn = k_n, m = m,
                           bias_adjust = bias_adjust, which_dj = which_dj)
-#  res <- cpp_sigma2hat_dj(ys = all_max$ys, xs = all_max$xs, yd = all_max$yd,
-#                          xd = all_max$xd, b = b, kn = k_n, m = m,
-#                          bias_adjust = bias_adjust, which_dj = which_dj)
   est_names <- c("N2015", "BB2018")
   # In res theta_dj, sigma2dj,  are 2x1 matrices.  Convert them to named vectors.
   res$theta_dj <- as.vector(res$theta_dj)
@@ -192,7 +188,6 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   res$sigma2dj <- as.vector(res$sigma2dj)
   names(res$sigma2dj) <- est_names
   colnames(res$data_dj) <- est_names
-  #  res <- ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
   # Sliding maxima
   Fhaty <- ecdf2(all_max$xs, all_max$ys)
   # Avoid over-writing the `disjoint' sample size k_n: it is needed later

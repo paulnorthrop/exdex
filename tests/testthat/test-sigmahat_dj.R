@@ -11,7 +11,7 @@ context("sigmahat_dj")
 
 # The permitted range of b for these data is 15 - 196
 my_tol <- 1e-5
-b_vec <- c(15, 20, 100, 196)
+b_vec <- c(15, 100, 196)
 for (i in 1:length(b_vec)) {
   sigma_mat <- spm_sigmahat_dj(data = newlyn, b = b_vec[i], check = TRUE)
   test_that("Usum2 = Usum", {

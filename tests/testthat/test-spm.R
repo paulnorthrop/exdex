@@ -1,7 +1,13 @@
-context("spm_R_quick vs spm_check")
+context("spm_R_quick vs spm_check vs spm")
+
+# Use only a subset of the newlyn data, for speed.
+# With b = 180 there are only two sets of disjoint block maxima
+
+test_data <- newlyn[1:2881]
 
 # Check that spm_R_quick(), faster but not very transparent, gives the same
 # results as spm_check(), slower but more transparent
+# Check that spm(), which uses Rcpp, gives the same results as spm_R_quick()
 
 # 8 cases:
 # bias_adjust in c("BB3", "BB1", "N", "none")
@@ -18,16 +24,18 @@ my_tol <- 1e-5
 
 for (i in 1:4){
   for (j in 1:2) {
-    res <- spm_R_quick(newlyn, b = b,
+    res <- spm_R_quick(test_data, b = b,
                        bias_adjust = bias_adjust_vec[i],
                        which_dj = which_dj_vec[j])
-    res_sl <- spm_check(newlyn, b = b, sliding = TRUE,
+    res_sl <- spm_check(test_data, b = b, sliding = TRUE,
                         bias_adjust = bias_adjust_vec[i],
                         which_dj = which_dj_vec[j])
-    res_dj <- spm_check(newlyn, b = b, sliding = FALSE,
+    res_dj <- spm_check(test_data, b = b, sliding = FALSE,
                         bias_adjust = bias_adjust_vec[i],
                         which_dj = which_dj_vec[j])
-    my_text <- paste(bias_adjust_vec[i], which_dj_vec[j])
+    # spm_R_quick vs spm_check
+    my_text <- paste("spm_R_quick vs spm_check", bias_adjust_vec[i],
+                     which_dj_vec[j])
     test_that(paste(my_text, "sliding, theta"), {
       testthat::expect_equal(res$theta_sl, res_sl$theta, tolerance = my_tol)
     })
@@ -58,37 +66,12 @@ for (i in 1:4){
                                            BB2018 = res_dj$BB2018_data)),
                              tolerance = my_tol)
     })
-  }
-}
-
-###############################################################################
-
-context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
-
-b <- 100
-resBB1 <- spm_R_quick(newlyn, b = b, bias_adjust = "BB1")
-resN <- spm_R_quick(newlyn, b = b, bias_adjust = "N")
-
-test_that(paste("BB1 vs N, b is OK"), {
-  testthat::expect_equal(resBB1$theta_dj["BB2018"],
-                             resN$theta_dj["BB2018"], tolerance = my_tol)
-})
-
-###############################################################################
-
-context("spm vs spm_R_quick")
-
-# Check that spm(), which uses Rcpp, gives the same results as spm_R_quick()
-
-for (i in 1:4){
-  for (j in 1:2) {
-    res <- spm_R_quick(newlyn, b = b,
-                       bias_adjust = bias_adjust_vec[i],
-                       which_dj = which_dj_vec[j])
-    res_c <- spm_R_quick(newlyn, b = b,
-                         bias_adjust = bias_adjust_vec[i],
-                         which_dj = which_dj_vec[j])
-    my_text <- paste(bias_adjust_vec[i], which_dj_vec[j])
+    # spm_R_quick vs spm
+    my_text <- paste("spm vs spm_R_quick", bias_adjust_vec[i],
+                     which_dj_vec[j])
+    res_c <- spm(test_data, b = b,
+                 bias_adjust = bias_adjust_vec[i],
+                 which_dj = which_dj_vec[j])
     test_that(paste(my_text, "sliding, theta"), {
       testthat::expect_equal(res$theta_sl, res_c$theta_sl, tolerance = my_tol)
     })
@@ -120,4 +103,16 @@ for (i in 1:4){
   }
 }
 
+###############################################################################
+
+context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
+
+b <- 180
+resBB1 <- spm_R_quick(test_data, b = b, bias_adjust = "BB1")
+resN <- spm_R_quick(test_data, b = b, bias_adjust = "N")
+
+test_that(paste("BB1 vs N, b is OK"), {
+  testthat::expect_equal(resBB1$theta_dj["BB2018"],
+                         resN$theta_dj["BB2018"], tolerance = my_tol)
+})
 

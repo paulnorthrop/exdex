@@ -227,6 +227,6 @@ print.summary.spm <- function(x, ...) {
   }
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n\n", sep = "")
-  print(x$summary, ...)
+  print(x$matrix, ...)
   invisible(x)
 }

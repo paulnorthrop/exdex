@@ -11,6 +11,10 @@
 \alias{ecdf3}
 \alias{ecdf2}
 \alias{ecdf1}
+\alias{sliding_maxima}
+\alias{disjoint_maxima}
+\alias{all_disjoint_maxima}
+\alias{all_maxima}
 \title{Internal exdex functions}
 \usage{
 spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
@@ -33,6 +37,14 @@ ecdf3(x, y)
 ecdf2(x, y)
 
 ecdf1(x, y, lenx)
+
+sliding_maxima(x, b = 1)
+
+disjoint_maxima(x, b = 1, which_dj = c("first", "last"))
+
+all_disjoint_maxima(x, b = 1, which_dj = c("all", "first", "last"))
+
+all_maxima(x, b = 1, which_dj = c("all", "first", "last"))
 }
 \description{
 Internal exdex functions

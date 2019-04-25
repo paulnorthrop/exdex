@@ -14,6 +14,8 @@
 #'   set whose first block starts on the first observation in \code{x};
 #'   \code{"last"}, only the set whose last block end on the last observation
 #'   in \code{x}.
+#' @param ... Further arguments to be passed to
+#'   \code{\link[RcppRoll]{roll_max}}.
 #' @details \strong{Sliding maxima.} The function
 #'   \code{\link[RcppRoll]{roll_max}} in the \code{RcppRoll} package is used.
 #'
@@ -57,11 +59,11 @@
 #' all_max_rcpp(x, 3, which_dj = "first")
 #' all_max_rcpp(x, 3, which_dj = "last")
 #' @export
-all_max_rcpp <- function(x, b = 1, which_dj = c("all", "first", "last")){
+all_max_rcpp <- function(x, b = 1, which_dj = c("all", "first", "last"), ...){
   which_dj <- match.arg(which_dj)
   # First calculate the sliding block maxima.  All the disjoint maxima that
   # we need are contained in s_max, and we need the sliding maxima anyway
-  ys <- RcppRoll::roll_max(x = x, n = b, na.rm = TRUE)
+  ys <- RcppRoll::roll_max(x = x, n = b, ...)
   # The number of maxima of blocks of length b
   n <- length(x)
   n_max <- floor(n / b)

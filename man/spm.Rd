@@ -83,9 +83,10 @@ A list of class \code{c("spm", "exdex")} containing the
 \description{
 Estimates the extremal index \eqn{\theta} using a semiparametric block
 maxima estimator of Northrop (2015) and a variant of this estimator
-studied by Berghaus and Bucher (2018).  Estimates of uncertainty are
-calculated using the asymptotic theory developed by Berghaus and
-Bucher (2018).
+studied by Berghaus and Bucher (2018), using both sliding (overlapping)
+block maxima and disjoint (non-overlapping) block maxima.  Estimates of
+uncertainty are calculated using the asymptotic theory developed by Berghaus
+and Bucher (2018).
 }
 \details{
 The extremal index \eqn{\theta} is estimated using the
@@ -111,18 +112,15 @@ The extremal index \eqn{\theta} is estimated using the
   observations, are used.
 
   Estimation of the sampling variances of the estimators is based
-  on Proposition 4.1 of Berghaus and Bucher (2018).
+  on Proposition 4.1 on page 2319 of Berghaus and Bucher (2018).
   For the Northrop (2015) variant the user has the choice either to
   use the sampling variance based on the Berghaus and Bucher (2018)
   estimator, i.e. the \eqn{Z}-data (\code{varN = FALSE}) or an analogous
   version tailored to the Northrop (2015) estimator that uses the
-  \eqn{Y}-data (\code{varN = TRUE}).
-
-  A condition imposed in Proposition 4.1 of Berghaus and Bucher (2018)
-  means that \code{b} must be no smaller than \eqn{k^{1/2}} and no larger
-  than \eqn{k^2}, where \eqn{k} is \code{floor(length(data) / b)},
-  i.e. \eqn{k} is the number of complete blocks.  If this is not the case
-  then a warning will be given and
+  \eqn{Y}-data (\code{varN = TRUE}).  The estimator of the sampling
+  variance of the sliding blocks estimator is not constrained to be
+  positive: a negative estimate may result if the block size is small.
+  In this event a warning will be given and
     \itemize{
       \item{estimated standard errors will be missing from the returned
             object,}

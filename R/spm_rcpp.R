@@ -229,11 +229,13 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
     BB1adj_sl <- res$theta_sl / k_n
     res$bias_sl <- ifelse(is.na(res$se_sl), BB1adj_sl, BB3adj_sl)
     res$theta_sl <- res$theta_sl - res$bias_sl
+    b_text <- paste0("For b = ", b)
+    w_text <- " 'bias_adjust' has been changed to ''BB1'' for estimator "
     if (is.na(res$se_sl[1])) {
-      warning("'bias_adjust' has been changed to ''BB1'' for estimator N2015")
+      warning(b_text, w_text, "N2015")
     }
     if (is.na(res$se_sl[2])) {
-      warning("'bias_adjust' has been changed to ''BB1'' for estimator BB2018")
+      warning(b_text, w_text, "BB2018")
     }
   } else if (bias_adjust == "BB1") {
     res$bias_dj <- res$theta_dj / k_n

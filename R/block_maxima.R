@@ -1,4 +1,4 @@
-# ================================= all_maxima ================================
+# =============================== all_max_rcpp ============================== #
 
 #' Sliding and disjoint block maxima
 #'
@@ -81,6 +81,5 @@ all_max_rcpp <- function(x, b = 1, which_dj = c("all", "first", "last"), ...){
   temp <- vapply(first_value, FUN = get_maxima, numeric(n_max * (b + 1)))
   yd <- temp[1:n_max, , drop = FALSE]
   xd <- temp[-(1:n_max), , drop = FALSE]
-  #
   return(list(ys = ys, xs = x, yd = yd, xd = xd))
 }

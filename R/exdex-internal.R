@@ -493,3 +493,92 @@ ecdf2 <- function(x, y) {
 ecdf1 <- function(x, y, lenx) {
   return(vapply(y, function(y) sum(x <= y) / lenx, 0))
 }
+
+# ======== Functions to calculate block maxima, used only in testing ======== #
+
+#' @keywords internal
+#' @rdname exdex-internal
+sliding_maxima <- function(x, b = 1){
+  y <- as.numeric(zoo::rollapply(data = zoo::zoo(x), width = b, FUN = max,
+                                 na.rm = TRUE))
+  return(list(y = y, x = x))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+disjoint_maxima <- function(x, b = 1, which_dj = c("first", "last")){
+  which_dj <- match.arg(which_dj)
+  if (which_dj == "last") {
+    x <- rev(x)
+  }
+  n <- length(x)
+  # number of maxima of blocks of length b
+  n_max <- floor(n / b)
+  # take only the first 1 to n_max*b observations
+  x <- x[1:(n_max * b)]
+  # block indicator: 1, ..., 1, ..., n_max, ..., n_max
+  ind <- rep(1:n_max, each = b)
+  # calculate block maxima
+  y <- as.numeric(tapply(x, ind, max, na.rm = TRUE))
+  if (which_dj == "last") {
+    x <- rev(x)
+    y <- rev(y)
+  }
+  return(list(y = y, x = x))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+all_disjoint_maxima <- function(x, b = 1,
+                                which_dj = c("all", "first", "last")){
+  which_dj <- match.arg(which_dj)
+  n <- length(x)
+  # The number of maxima of blocks of length b
+  n_max <- floor(n / b)
+  # Set the possible first indices
+  first_value <- switch(which_dj,
+                        all = 1:(n - n_max * b + 1),
+                        first = 1,
+                        last = n - n_max * b + 1)
+  # block indicator: 1, ..., 1, ..., n_max, ..., n_max
+  ind <- rep(1:n_max, each = b)
+  get_maxima <- function(first) {
+    last <- first + n_max * b - 1
+    # take only the first_value to n_max * b + first_value - 1 observations
+    xx <- x[first:last]
+    # calculate block maxima
+    y <- as.numeric(tapply(xx, ind, max, na.rm = TRUE))
+    return(c(y, xx))
+  }
+  temp <- vapply(first_value, FUN = get_maxima, numeric(n_max * (b + 1)))
+  y_mat <- temp[1:n_max, , drop = FALSE]
+  x_mat <- temp[-(1:n_max), , drop = FALSE]
+  return(list(y_mat = y_mat, x_mat = x_mat))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+all_maxima <- function(x, b = 1, which_dj = c("all", "first", "last")){
+  which_dj <- match.arg(which_dj)
+  # First calculate the sliding block maxima.  All the disjoint maxima that
+  # we need are contained in s_max, and we need the sliding maxima anyway
+  s_max <- sliding_maxima(x = x, b = b)
+  # The number of maxima of blocks of length b
+  n <- length(x)
+  n_max <- floor(n / b)
+  # Set the possible first indices
+  first_value <- switch(which_dj,
+                        all = 1:(n - n_max * b + 1),
+                        first = 1,
+                        last = n - n_max * b + 1)
+  # A function to return block maxima and contributing values starting from
+  # the first value first
+  get_maxima <- function(first) {
+    s_ind <- seq.int(from = first, by = b, length.out = n_max)
+    return(c(s_max$y[s_ind], x[first:(first + n_max * b - 1)]))
+  }
+  temp <- vapply(first_value, FUN = get_maxima, numeric(n_max * (b + 1)))
+  yd <- temp[1:n_max, , drop = FALSE]
+  xd <- temp[-(1:n_max), , drop = FALSE]
+  return(list(ys = s_max$y, xs = s_max$x, yd = yd, xd = xd))
+}

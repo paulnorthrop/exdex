@@ -9,7 +9,7 @@
 #' uncertainty are calculated using the asymptotic theory developed by Berghaus
 #' and Bucher (2018).
 #'
-#' @param data A numeric vector of raw data.
+#' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param b A numeric scalar.  The block size.
 #' @param bias_adjust A character scalar.  Is bias-adjustment of the
 #'   raw estimate of \eqn{\theta} performed using the bias-reduced
@@ -182,7 +182,7 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   res <- cpp_sigma2hat_dj(all_max = all_max, b = b, kn = k_n, m = m,
                           bias_adjust = bias_adjust, which_dj = which_dj)
   est_names <- c("N2015", "BB2018")
-  # In res theta_dj, sigma2dj,  are 2x1 matrices.  Convert them to named vectors.
+  # In res theta_dj, sigma2dj, are 2x1 matrices.  Convert them to named vectors.
   res$theta_dj <- as.vector(res$theta_dj)
   names(res$theta_dj) <- est_names
   res$sigma2dj <- as.vector(res$sigma2dj)

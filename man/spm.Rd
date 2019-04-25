@@ -8,7 +8,7 @@ spm(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   constrain = TRUE, varN = TRUE, which_dj = c("last", "first"))
 }
 \arguments{
-\item{data}{A numeric vector of raw data.}
+\item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
 \item{b}{A numeric scalar.  The block size.}
 

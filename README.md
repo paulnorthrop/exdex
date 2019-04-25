@@ -16,6 +16,21 @@ The extremal index is a measure of the degree of local dependence in the extreme
 
 ### A simple example
 
+``` r
+library(exdex)
+res <- spm(newlyn, 20)
+summary(res)
+#> 
+#> Call:
+#> spm(data = newlyn, b = 20)
+#> 
+#>                  Estimate Std. Error Bias adj.
+#> N2015, sliding     0.2392    0.01990  0.003317
+#> BB2018, sliding    0.3078    0.01642  0.003026
+#> N2015, disjoint    0.2350    0.02222  0.003726
+#> BB2018, disjoint   0.3042    0.02101  0.003571
+```
+
 ### Installation
 
 You can install exdex from github with:

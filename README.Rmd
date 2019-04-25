@@ -29,6 +29,12 @@ The extremal index \eqn{\theta} is a measure of the degree of local dependence i
 
 ### A simple example
 
+```{r}
+library(exdex)
+res <- spm(newlyn, 20)
+summary(res)
+```
+
 ### Installation
 
 You can install exdex from github with:

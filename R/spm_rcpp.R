@@ -176,6 +176,8 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   #
   # Find all sets of maxima of disjoint blocks of length b
   all_max <- all_max_rcpp(data, b, which_dj = "all")
+  # Here, m is the number of xs that contribute to each set of disjoint block
+  # maxima
   m <- nrow(all_max$xd)
   res <- cpp_sigma2hat_dj(all_max = all_max, b = b, kn = k_n, m = m,
                           bias_adjust = bias_adjust, which_dj = which_dj)
@@ -190,6 +192,7 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   Fhaty <- ecdf2(all_max$xs, all_max$ys)
   # Avoid over-writing the `disjoint' sample size k_n: it is needed later
   k_n_sl <- length(all_max$ys)
+  # Now, m is the number of xs that contribute to the sliding maxima
   m <- length(all_max$xs)
   const <- -log(m - b + k_n_sl)
   if (bias_adjust == "N") {

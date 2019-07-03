@@ -110,6 +110,7 @@
 #' res <- spm(newlyn, 20)
 #' # I can't include these examples until new chandwich is on CRAN
 #' #confint(res)
+#' #confint(res, interval_type = "lik")
 #' @seealso \code{\link{plot.confint_spm}}: \code{plot} method for
 #'   class \code{c("confint_spm", "exdex")}.
 #' @export
@@ -309,20 +310,20 @@ plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
   if (x$interval_type == "sym"){
     stop("Plot method not available when interval_type = ''sym''")
   }
-  if (is.na(x$ciN) && is.na(x$ciBB)) {
+  if (is.na(x$cis["N2015lik", 1]) && is.na(x$cis["BB2018lik", 1])) {
     stop("There is no adjusted log-likelihood to plot: SEs were missing")
   }
   temp <- x$cis
   # Produce a plot of the adjusted loglikelihood, if requested
   # Owing to the different scales of the loglikelihoods for N2015 and BB2018 we
   # shoof them to have a maximum of 0, so that we can display them on one plot
-  if (!is.na(x$ciN)) {
+  if (!is.na(x$cis["N2015lik", 1])) {
     tempN <- x$ciN
     shoofN <- max(tempN$prof_loglik_vals)
     tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
     tempN$max_loglik <- tempN$max_loglik - shoofN
   }
-  if (!is.na(x$ciN)) {
+  if (!is.na(x$cis["BB2018lik", 1])) {
     tempBB <- x$ciBB
     shoofBB <- max(tempBB$prof_loglik_vals)
     tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB

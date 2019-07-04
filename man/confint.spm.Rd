@@ -53,7 +53,8 @@ less than 0 are set to 0.}
   \code{"BB1"} was specified, that is, we have
   \code{object$bias_adjust = "BB3"}
   or \code{"BB1"}.  In these cases the relevant
-  component of \code{object$bias_val} is used to scale \eqn{\theta} so
+  component of \code{object$bias_sl} or \code{object$bias_dj}
+  is used to scale \eqn{\theta} so
   that the location of the maximum of the loglikelihood lies at the
   bias-adjusted estimate of \eqn{\theta}.
 

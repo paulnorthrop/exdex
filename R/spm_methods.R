@@ -9,10 +9,10 @@
 #' @param maxima A character scalar specifying whether to return the estimate
 #'   of the extremal index \eqn{\theta} based on sliding maxima or on disjoint
 #'   maxima.
-#' @param estimator A character scalar specifying which variant of the
-#'   semiparametic maxima estimator to use: Northrop (2015) or
-#'   Berghaus and Bucher (2018).  If \code{estimator = "both"} then
-#'   estimates for both variants are returned.
+#' @param estimator A character vector specifying which variants of the
+#'   semiparametic maxima estimator to use: Northrop (2015) (\code{"N2015"})
+#'   or Berghaus and Bucher (2018) (\code{"BB2018"}) or the
+#'   Berghaus and Bucher (2018) minus \eqn{1/b} (\code{"BB2018"}).
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any estimates that are greater than 1 are set to 1,
 #'   that is, they are constrained to lie in (0, 1].  Otherwise,
@@ -29,13 +29,15 @@
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @export
 coef.spm <- function(object, maxima = c("sliding", "disjoint"),
-                     estimator = c("N2015", "BB2018", "both"),
+                     estimator = c("N2015", "BB2018", "BB2018b"),
                      constrain = FALSE, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
+  if (!all(estimator %in% c("N2015", "BB2018", "BB2018b"))) {
+    stop("estimator must be a subset of c(''N2015'', ''BB2018'', ''BB2018b'')")
+  }
   maxima <- match.arg(maxima)
-  estimator <- match.arg(estimator)
   if (constrain) {
     ests <- switch(maxima,
                    sliding = object$uncon_theta_sl,
@@ -45,13 +47,7 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
                    sliding = object$theta_sl,
                    disjoint = object$theta_dj)
   }
-  if (estimator == "both") {
-    estimator <- c("N2015", "BB2018")
-    ests <- ests[estimator]
-  } else {
-    ests <- ests[estimator]
-    names(ests) <- "theta"
-  }
+  ests <- ests[estimator]
   return(ests)
 }
 
@@ -82,19 +78,18 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @export
 vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
-                     estimator = c("N2015", "BB2018", "both"), ...) {
+                     estimator = c("N2015", "BB2018", "BB2018b"), ...) {
+  if (!inherits(object, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  if (!all(estimator %in% c("N2015", "BB2018", "BB2018b"))) {
+    stop("estimator must be a subset of c(''N2015'', ''BB2018'', ''BB2018b'')")
+  }
   maxima <- match.arg(maxima)
-  estimator <- match.arg(estimator)
   se <- switch(maxima,
                sliding = object$se_sl,
                disjoint = object$se_dj)
-  if (estimator == "both") {
-    estimator <- c("N2015", "BB2018")
-    vcov <- se[estimator] ^ 2
-  } else {
-    vcov <- as.matrix(se[estimator] ^ 2)
-    dimnames(vcov) <- list("theta", "theta")
-  }
+  vcov <- se[estimator] ^ 2
   return(vcov)
 }
 
@@ -112,6 +107,9 @@ vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
 #' @return A numeric scalar: the number of observations used in the fit.
 #' @export
 nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
+  if (!inherits(object, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
   maxima <- match.arg(maxima)
   n <- switch(maxima,
               sliding = nrow(object$data_sl),
@@ -147,8 +145,8 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n\n", sep = "")
   cat("Estimates of the extremal index theta:\n")
-  coef_sl <- coef(x, maxima = "sliding", estimator = "both")
-  coef_dj <- coef(x, maxima = "disjoint", estimator = "both")
+  coef_sl <- coef(x, maxima = "sliding")
+  coef_dj <- coef(x, maxima = "disjoint")
   coefs <- rbind(sliding = coef_sl, disjoint = coef_dj)
   print.default(format(coefs, digits = digits), print.gap = 2L,
                 quote = FALSE)
@@ -198,7 +196,9 @@ summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
                           signif(uncon, digits = digits))
   }
   rownames(res$matrix) <- c("N2015, sliding", "BB2018, sliding",
-                            "N2015, disjoint", "BB2018, disjoint")
+                            "BB2018b, sliding",
+                            "N2015, disjoint", "BB2018, disjoint",
+                            "BB2018b, disjoint")
   class(res) <- "summary.spm"
   return(res)
 }

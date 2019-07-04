@@ -5,7 +5,7 @@
 \title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
 \usage{
 \method{vcov}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = c("N2015", "BB2018", "both"), ...)
+  estimator = c("N2015", "BB2018", "BB2018b"), ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from

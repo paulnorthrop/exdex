@@ -46,7 +46,8 @@
 #'   \code{"BB1"} was specified, that is, we have
 #'   \code{object$bias_adjust = "BB3"}
 #'   or \code{"BB1"}.  In these cases the relevant
-#'   component of \code{object$bias_val} is used to scale \eqn{\theta} so
+#'   component of \code{object$bias_sl} or \code{object$bias_dj}
+#'   is used to scale \eqn{\theta} so
 #'   that the location of the maximum of the loglikelihood lies at the
 #'   bias-adjusted estimate of \eqn{\theta}.
 #'
@@ -183,6 +184,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     lower <- upper <- NULL
   }
   if (interval_type == "lik" || interval_type == "both") {
+    #
     # Likelihood-based confidence intervals.  We use the chandwich package
     # to adjust the independence loglikelihood so that its curvature at its
     # maximum corresponds to the estimated standard errors that result from
@@ -194,7 +196,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # 2. we give the option, via the argument bias_adjust, to bias-adjust
     #    the intervals based on the bias_adjust argument supplied in the
     #    original call to spm():
-    #    if bias_adjust = "BB3" or "BB1" then bias-adjustment is performed here;
+    #    if bias_adjust = "BB3" or "BB1" then bias-adjustment is performed here
     #    if bias_adjust = "N" then no adjustment in performed here because this
     #    bias-adjustment is applied in the creation of the data in
     #    object$N2015_data and object$BB2018_data.

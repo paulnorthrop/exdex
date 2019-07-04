@@ -182,11 +182,13 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   res <- cpp_sigma2hat_dj(all_max = all_max, b = b, kn = k_n, m = m,
                           bias_adjust = bias_adjust, which_dj = which_dj)
   est_names <- c("N2015", "BB2018")
-  # In res theta_dj, sigma2dj, are 2x1 matrices.  Convert them to named vectors.
+  # In res theta_dj ... are 2x1 matrices.  Convert them to named vectors.
   res$theta_dj <- as.vector(res$theta_dj)
   names(res$theta_dj) <- est_names
   res$sigma2dj <- as.vector(res$sigma2dj)
   names(res$sigma2dj) <- est_names
+  res$sigma2dj_for_sl <- as.vector(res$sigma2dj_for_sl)
+  names(res$sigma2dj_for_sl) <- est_names
   colnames(res$data_dj) <- est_names
   # Sliding maxima
   Fhaty <- ecdf2(all_max$xs, all_max$ys)
@@ -200,7 +202,7 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   }
   res$theta_sl <- c(-1 / mean(b * log0const(Fhaty, const)),
                     1 / (b * mean(1 - Fhaty)))
-  names(res$theta_sl) <- c("N2015", "BB2018")
+  names(res$theta_sl) <- est_names
   #
   # Add the values of the Y-data and the Z-data to the output
   res$data_sl <- cbind(N2015 = -b * log(Fhaty), BB2018 = b * (1 - Fhaty))
@@ -246,19 +248,46 @@ spm <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
     res$bias_dj <- res$bias_sl <- c(N2015 = NA, BB2018 = NA)
   }
   #
+  # Add estimates, bias and standard errors for an estimator that results from
+  # applying a further bias-adjustment to the BB2018 estimator.  The adjustment
+  # is to subtract 1/b.  This stems from the fact that the expected value of
+  # the BB2018 variable Z is 1/(theta + 1/b), not 1/theta.
+  #
+  # Estimates
+  res$theta_dj <- c(res$theta_dj, res$theta_dj["BB2018"] - 1 / b)
+  names(res$theta_dj)[3] <- "BB2018b"
+  res$theta_sl <- c(res$theta_sl, res$theta_sl["BB2018"] - 1 / b)
+  names(res$theta_sl)[3] <- "BB2018b"
+  # Bias adjustment
+  res$bias_dj <- c(res$bias_dj, res$bias_dj["BB2018"] + 1 / b)
+  names(res$bias_dj)[3] <- "BB2018b"
+  res$bias_sl <- c(res$bias_sl, res$bias_sl["BB2018"] + 1 / b)
+  names(res$bias_sl)[3] <- "BB2018b"
+  # Standard errors
+  res$se_dj <- c(res$se_dj, res$se_dj["BB2018"])
+  names(res$se_dj)[3] <- "BB2018b"
+  res$se_sl <- c(res$se_sl, res$se_sl["BB2018"])
+  names(res$se_sl)[3] <- "BB2018b"
   # Save the unconstrained estimates, so that they can be returned
   res$uncon_theta_dj <- res$theta_dj
   res$uncon_theta_sl <- res$theta_sl
-  #
   # Constrain to (0, 1] if required
   if (constrain) {
     res$theta_dj <- pmin(res$theta_dj, 1)
     res$theta_sl <- pmin(res$theta_sl, 1)
   }
+  # Constrain estimates to be positive. BB3 bias-adjustment could result in
+  # negative estimates as could subtracting 1/b from BB2018 to form BB2018b.
+  # If an estimate is negative then we also adjust the value of the bias.
+  res$bias_dj <- res$bias_dj - pmax(-res$theta_dj, 0)
+  res$bias_sl <- res$bias_sl - pmax(-res$theta_sl, 0)
+  res$theta_dj <- pmax(res$theta_dj, 0)
+  res$theta_sl <- pmax(res$theta_sl, 0)
   #
   res$bias_adjust <- bias_adjust
   res$b <- b
   res$call <- Call
+  #
   class(res) <- c("spm", "exdex")
   return(res)
 }

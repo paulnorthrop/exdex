@@ -1,16 +1,29 @@
 #' Block length diagnostic plot
 #'
 #' Description
+#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
+#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#' \url{https://doi.org/10.1007/s10687-015-0221-5}
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
 #' \dontrun{
-#' b_vals <- seq(from = 50, to = 100, by = 5)
-#' res <- choose_b(newlyn, b_vals)
+#' # Plot like the top left of Northrop (2015)
+#' # Remove the last 14 values because 2880 has lots of factors
+#' b_vals <- c(2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,32,36,40,45,48,54,60)
+#' res <- choose_b(newlyn[1:2880], b_vals)
+#' # Some b are too small for the sampling variance of the sliding blocks
+#' # estimator to be estimated
 #' plot(res)
+#' plot(res, estimator = "BB2018")
+#' plot(res, maxima = "disjoint")
 #'
-#' b_vals <- seq(from = 25, to = 350, by = 25)
-#' b_vals <- seq(from = 50, to = 350, by = 150)
-#' res <- choose_b(sp500, b_vals)
-#' plot(res)
+#' # S&P 500 Composite Berghaus and Bucher (2018)
+#' b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
+#' res500 <- choose_b(sp500, c(10, b_vals, 357))
+#' plot(res500, ylim = c(0, 1))
+#' plot(res500, estimator = "BB2018", ylim = c(0, 1))
 #' }
 #' @export
 choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
@@ -56,20 +69,20 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
               theta_dj = theta_dj, lower_dj = lower_dj, upper_dj = upper_dj,
               b = b)
   res$call <- Call
-  class(res) <- c("exdex", "block")
+  class(res) <- c("choose_b", "exdex")
   return(res)
 }
 
 
-# =========================== plot.exdex ===========================
+# =========================== plot.choose_b ===========================
 
 #' Plot diagnostics for an exdex object
 #'
-#' \code{plot} method for objects of class "exdex" returned from
-#' \code{\link{choose_b}}
+#' \code{plot} method for objects inheriting from class \code{"choose_b"},
+#' returned from \code{\link{choose_b}}
 #'
-#' @param x an object of class "exdex", a result of a call to
-#'   \code{\link{choose_b}}.
+#' @param x an object of class \code{c("choose_b", "exdex")}, a result of a
+#'   call to \code{\link{choose_b}}.
 #' @param y Not used.
 #' @param ... Additional arguments passed on to
 #'   \code{\link[graphics]{matplot}} and/or \code{\link[graphics]{axis}}.
@@ -95,13 +108,14 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
-#' b_vals <- seq(from = 50, to = 350, by = 150)
+#' b_vals <- seq(from = 25, to = 350, by = 25)
 #' res <- choose_b(sp500, b_vals)
 #' plot(res)
-plot.exdex <- function(x, y, ..., estimator = c("N2015", "BB2018"),
-                       maxima = c("sliding", "disjoint")) {
-  if (!inherits(x, "exdex")) {
-    stop("use only with \"exdex\" objects")
+#' @export
+plot.choose_b <- function(x, y, ..., estimator = c("N2015", "BB2018"),
+                          maxima = c("sliding", "disjoint")) {
+  if (!inherits(x, "choose_b")) {
+    stop("use only with \"choose_b\" objects")
   }
   maxima <- match.arg(maxima)
   estimator <- match.arg(estimator)
@@ -112,7 +126,19 @@ plot.exdex <- function(x, y, ..., estimator = c("N2015", "BB2018"),
     y_data <- cbind(x$lower_dj[, estimator], x$theta_dj[, estimator],
                     x$upper_dj[, estimator])
   }
-  y_lab <- expression(hat(theta)[sl]^{BB})
+  if (maxima == "sliding") {
+    if (estimator == "N2015") {
+      y_lab <- expression(hat(theta)[sl]^{N})
+    } else {
+      y_lab <- expression(hat(theta)[sl]^{BB})
+    }
+  } else {
+    if (estimator == "N2015") {
+      y_lab <- expression(hat(theta)[dj]^{N})
+    } else {
+      y_lab <- expression(hat(theta)[dj]^{BB})
+    }
+  }
   x_data <- x$b
   x_lab <- "block size, b"
   xy_args <- list(x = x_data, y = y_data)
@@ -141,10 +167,10 @@ plot.exdex <- function(x, y, ..., estimator = c("N2015", "BB2018"),
     matplot_args$lty <- c(1, 1, 1)
   }
   if (is.null(matplot_args$mgp)) {
-    matplot_args$mgp <- c(1.75, 0.75, 0)
+    matplot_args$mgp <- c(1.75, 0.6, 0)
   }
   if (is.null(axis_args$mgp)) {
-    axis_args$mgp <- c(1.75, 0.75, 0)
+    axis_args$mgp <- c(1.75, 0.6, 0)
   }
   all_args <- c(xy_args, matplot_args)
   do.call(graphics::matplot, c(all_args, axes = FALSE))

@@ -14,13 +14,29 @@ Description
 }
 \examples{
 \dontrun{
-b_vals <- seq(from = 50, to = 100, by = 5)
-res <- choose_b(newlyn, b_vals)
+# Plot like the top left of Northrop (2015)
+# Remove the last 14 values because 2880 has lots of factors
+b_vals <- c(2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,32,36,40,45,48,54,60)
+res <- choose_b(newlyn[1:2880], b_vals)
+# Some b are too small for the sampling variance of the sliding blocks
+# estimator to be estimated
 plot(res)
+plot(res, estimator = "BB2018")
+plot(res, maxima = "disjoint")
 
-b_vals <- seq(from = 25, to = 350, by = 25)
-b_vals <- seq(from = 50, to = 350, by = 150)
-res <- choose_b(sp500, b_vals)
-plot(res)
+# S&P 500 Composite Berghaus and Bucher (2018)
+b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
+res500 <- choose_b(sp500, c(10, b_vals, 357))
+plot(res500, ylim = c(0, 1))
+plot(res500, estimator = "BB2018", ylim = c(0, 1))
 }
+}
+\references{
+Northrop, P. J. (2015) An efficient semiparametric maxima
+estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+\url{https://doi.org/10.1007/s10687-015-0221-5}
+
+Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+\strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 }

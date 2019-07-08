@@ -5,7 +5,7 @@
 \title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
 \usage{
 \method{vcov}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = c("N2015", "BB2018", "BB2018b"), ...)
+  estimator = "all", ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from
@@ -15,10 +15,11 @@
 estimated variance of the estimator of the extremal index \eqn{\theta}
 based on sliding maxima or on disjoint maxima.}
 
-\item{estimator}{A character scalar specifying which variant of the
-semiparametic maxima estimator to use: Northrop (2015) or
-Berghaus and Bucher (2018).  If \code{estimator = "both"} then the
-estimated variances of both variants are returned.}
+\item{estimator}{A character vector specifying which of the three variants
+of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+or \code{"BB2018b"}.  See \code{\link{spm}} for details.
+If \code{estimator = "all"} then the
+estimated variances of all variants are returned.}
 
 \item{...}{Further arguments.  None are used.}
 }

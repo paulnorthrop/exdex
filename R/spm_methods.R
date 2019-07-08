@@ -9,10 +9,10 @@
 #' @param maxima A character scalar specifying whether to return the estimate
 #'   of the extremal index \eqn{\theta} based on sliding maxima or on disjoint
 #'   maxima.
-#' @param estimator A character vector specifying which variants of the
-#'   semiparametic maxima estimator to use: Northrop (2015) (\code{"N2015"})
-#'   or Berghaus and Bucher (2018) (\code{"BB2018"}) or the
-#'   Berghaus and Bucher (2018) minus \eqn{1/b} (\code{"BB2018"}).
+#' @param estimator A character vector specifying which of the three variants
+#'   of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+#'   or \code{"BB2018b"}.  See \code{\link{spm}} for details.
+#'   If \code{estimator = "all"} then all three estimates are returned.
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any estimates that are greater than 1 are set to 1,
 #'   that is, they are constrained to lie in (0, 1].  Otherwise,
@@ -29,10 +29,12 @@
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @export
 coef.spm <- function(object, maxima = c("sliding", "disjoint"),
-                     estimator = c("N2015", "BB2018", "BB2018b"),
-                     constrain = FALSE, ...) {
+                     estimator = "all", constrain = FALSE, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
+  }
+  if ("all" %in% estimator) {
+    estimator <- c("N2015", "BB2018", "BB2018b")
   }
   if (!all(estimator %in% c("N2015", "BB2018", "BB2018b"))) {
     stop("estimator must be a subset of c(''N2015'', ''BB2018'', ''BB2018b'')")
@@ -62,10 +64,11 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #' @param maxima A character scalar specifying whether to return the
 #'   estimated variance of the estimator of the extremal index \eqn{\theta}
 #'   based on sliding maxima or on disjoint maxima.
-#' @param estimator A character scalar specifying which variant of the
-#'   semiparametic maxima estimator to use: Northrop (2015) or
-#'   Berghaus and Bucher (2018).  If \code{estimator = "both"} then the
-#'   estimated variances of both variants are returned.
+#' @param estimator A character vector specifying which of the three variants
+#'   of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+#'   or \code{"BB2018b"}.  See \code{\link{spm}} for details.
+#'   If \code{estimator = "all"} then the
+#'   estimated variances of all variants are returned.
 #' @param ... Further arguments.  None are used.
 #' @return A 1 by 1 numeric matrix if \code{estimator = "N2015"} or
 #'   \code{"BB2018"} and a vector of length 2 if \code{estimator = "both"},
@@ -78,9 +81,12 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @export
 vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
-                     estimator = c("N2015", "BB2018", "BB2018b"), ...) {
+                     estimator = "all", ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
+  }
+  if ("all" %in% estimator) {
+    estimator <- c("N2015", "BB2018", "BB2018b")
   }
   if (!all(estimator %in% c("N2015", "BB2018", "BB2018b"))) {
     stop("estimator must be a subset of c(''N2015'', ''BB2018'', ''BB2018b'')")
@@ -128,7 +134,7 @@ nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
 #' @param digits The argument \code{digits} to \code{\link{print.default}}.
 #' @param ... Additional arguments.  None are used in this function.
 #' @details Prints the original call to \code{\link{spm}}
-#'   and the estimates of the extremal index \eqn{\theta}, based on both
+#'   and the estimates of the extremal index \eqn{\theta}, based on all three
 #'   variants of the semiparametric maxima estimator and both sliding
 #'   and disjoint blocks.
 #' @return The argument \code{x}, invisibly, as for all
@@ -150,6 +156,15 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   coefs <- rbind(sliding = coef_sl, disjoint = coef_dj)
   print.default(format(coefs, digits = digits), print.gap = 2L,
                 quote = FALSE)
+  # Add warning that se_sl is missing and the consequences
+  if (any(is.na(x$se_sl))) {
+    which_na <- names(temp$se_sl)[is.na(temp$se_sl)]
+    cat("\nStd. Errors missing for estimator(s):", which_na)
+    if (x$bias_adjust == "BB3") {
+      cat("\nBias-adjustment changed from BB3 to BB1 for estimator(s):",
+          which_na)
+    }
+  }
   return(invisible(x))
 }
 
@@ -165,7 +180,7 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 #'   \code{\link[base:Round]{signif}}.
 #' @param ... Additional arguments.  None are used in this function.
 #' @return Returns a list containing the list element \code{object$call}
-#'   and a numeric matrix \code{summary} giving, for both variants of the
+#'   and a numeric matrix \code{summary} giving, for all three variants of the
 #'   semiparametric estimator and both sliding and disjoint blocks,
 #'   the (bias-adjusted) Estimate, the estimated standard error (Std. Error),
 #'   and the bias adjustment (Bias adj.) applied to obtain the estimate, i.e.
@@ -199,6 +214,16 @@ summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
                             "BB2018b, sliding",
                             "N2015, disjoint", "BB2018, disjoint",
                             "BB2018b, disjoint")
+  # Add warning that se_sl is missing and the consequences
+  if (any(is.na(object$se_sl))) {
+    which_na <- names(temp$se_sl)[is.na(temp$se_sl)]
+    if (object$bias_adjust == "BB3") {
+      res$warning <- "Bias-adjustment changed from BB3 to BB1 for estimator(s):"
+      for (i in 1:length(which_na)) {
+        res$warning <- c(res$warning, which_na[i])
+      }
+    }
+  }
   class(res) <- "summary.spm"
   return(res)
 }
@@ -228,5 +253,9 @@ print.summary.spm <- function(x, ...) {
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n\n", sep = "")
   print(x$matrix, ...)
+  if (!is.null(x$warning)) {
+    cat("\n")
+    cat(x$warning)
+  }
   invisible(x)
 }

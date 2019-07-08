@@ -23,7 +23,7 @@ The argument \code{x}, invisibly, as for all
 }
 \details{
 Prints the original call to \code{\link{spm}}
-  and the estimates of the extremal index \eqn{\theta}, based on both
+  and the estimates of the extremal index \eqn{\theta}, based on all three
   variants of the semiparametric maxima estimator and both sliding
   and disjoint blocks.
 }

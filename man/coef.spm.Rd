@@ -5,7 +5,7 @@
 \title{Extract Model Coefficients}
 \usage{
 \method{coef}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = c("N2015", "BB2018", "BB2018b"), constrain = FALSE, ...)
+  estimator = "all", constrain = FALSE, ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from
@@ -15,10 +15,10 @@
 of the extremal index \eqn{\theta} based on sliding maxima or on disjoint
 maxima.}
 
-\item{estimator}{A character vector specifying which variants of the
-semiparametic maxima estimator to use: Northrop (2015) (\code{"N2015"})
-or Berghaus and Bucher (2018) (\code{"BB2018"}) or the
-Berghaus and Bucher (2018) minus \eqn{1/b} (\code{"BB2018"}).}
+\item{estimator}{A character vector specifying which of the three variants
+of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+or \code{"BB2018b"}.  See \code{\link{spm}} for details.
+If \code{estimator = "all"} then all three estimates are returned.}
 
 \item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
 any estimates that are greater than 1 are set to 1,

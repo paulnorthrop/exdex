@@ -18,7 +18,7 @@
 }
 \value{
 Returns a list containing the list element \code{object$call}
-  and a numeric matrix \code{summary} giving, for both variants of the
+  and a numeric matrix \code{summary} giving, for all three variants of the
   semiparametric estimator and both sliding and disjoint blocks,
   the (bias-adjusted) Estimate, the estimated standard error (Std. Error),
   and the bias adjustment (Bias adj.) applied to obtain the estimate, i.e.

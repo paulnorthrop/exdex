@@ -47,19 +47,26 @@ observation in \code{x}.}
 A list of class \code{c("spm", "exdex")} containing the
   components listed below.  The components that are vectors are
   labelled to indicate the estimator to which the constituent values
-  relate: N2015 for Northrop (2015) and BB2018 for
-  Berghaus and Bucher (2018).
+  relate: \code{"N2015"} for Northrop (2015), \code{"BB2018"} for
+  Berghaus and Bucher (2018) and \code{"BB2018b"} for the modified version.
   \item{theta_sl, theta_dj}{ Vectors containing the estimates of
     \eqn{\theta} resulting from sliding maxima and disjoint maxima
     respectively.}
   \item{se_sl, se_dj}{The estimated standard errors associated
-    with the estimates in \code{theta_sl} and \code{theta_dj}.}
+    with the estimates in \code{theta_sl} and \code{theta_dj}.
+    The values for \code{"BB2018"} and \code{"BB2018b"} are identical.}
   \item{bias_sl, bias_dj}{The respective values of the
-      bias-adjustment applied to the raw estimates.  This is only
-      relevant if \code{bias_adjust} is "BB3" or "BB1".  Otherwise,
-      \code{bias_sl} and \code{bias_dj} are \code{c(NA, NA)}.}
-  \item{uncon_theta_sl, uncon_theta_dj}{The estimates of \eqn{\theta}
-    before the constraint that they lie in (0, 1] has been applied.}
+      bias-adjustment applied to the raw estimates, that is, the values
+      subtracted from the raw estimates.  For estimator
+      \code{BB2018b} this includes a contribution for the subtraction
+      of \code{1 / b}.
+      If \code{bias_adjust = "N"} or \code{"none"} then
+      \code{bias_sl} and \code{bias_dj} are \code{c(0, 0, 1 / b)}.}
+  \item{raw_theta_sl, raw_theta_dj}{ Vectors containing the raw estimates
+    of \eqn{\theta}, prior to any bias_adjustment.}
+  \item{uncon_theta_sl, uncon_theta_dj}{The (bias_adjusted) estimates of
+    \eqn{\theta} before the constraint that they lie in (0, 1] has been
+    applied.}
   \item{data_sl, data_dj}{Matrices containing the \eqn{Y}-data and
     \eqn{Z}-data for the sliding an dijoint maxima respectively.
     The first columns are the \eqn{Y}-data, the second columns the
@@ -82,11 +89,14 @@ A list of class \code{c("spm", "exdex")} containing the
 }
 \description{
 Estimates the extremal index \eqn{\theta} using a semiparametric block
-maxima estimator of Northrop (2015) and a variant of this estimator
-studied by Berghaus and Bucher (2018), using both sliding (overlapping)
-block maxima and disjoint (non-overlapping) block maxima.  Estimates of
-uncertainty are calculated using the asymptotic theory developed by Berghaus
-and Bucher (2018).
+maxima estimator of Northrop (2015) (\code{"N2015"}) and a variant of this
+estimator studied by Berghaus and Bucher (2018) (\code{"BB2018"}), using
+both sliding (overlapping) block maxima and disjoint (non-overlapping) block
+maxima.  A simple modification (subtraction of \eqn{1 / b}, where \eqn{b} is
+the block size) of the Berghaus and Bucher (2018) estimator
+(\code{"BB2018b"}) is also calculated.  Estimates of uncertainty are
+calculated using the asymptotic theory developed by Berghaus and Bucher
+(2018).
 }
 \details{
 The extremal index \eqn{\theta} is estimated using the
@@ -104,6 +114,17 @@ The extremal index \eqn{\theta} is estimated using the
   For convenience, we will refer to these values as the
   \eqn{Y}-data and the \eqn{Z}-data.
 
+  The approximate nature of the model for the \eqn{Y}-data arises from the
+  estimation of the distribution function \eqn{F}.  A further
+  approximation motivates the use of the \eqn{Z}-data.  If \eqn{F} is known
+  then the variable \eqn{Z / b} has a beta(1, \eqn{b\theta}) distribution,
+  so that that is, \eqn{Z} has mean \eqn{1 / (\theta + 1/b)}.
+  Therefore, an exponential distribution with mean \eqn{1 / (\theta + 1/b)}
+  may provide a better approximate model, which provides the motivation for
+  subtracting \eqn{1 / b} from the Berghaus and Bucher (2018) estimator.
+  Indeed, the resulting estimates are typically close to those
+  of the Northrop (2015) estimator.
+
   If \code{sliding = TRUE} then the function uses sliding block maxima,
   that is, the largest value observed in \emph{all}
   (\code{length(data) - b + 1}) blocks of \code{b} observations.
@@ -117,18 +138,26 @@ The extremal index \eqn{\theta} is estimated using the
   use the sampling variance based on the Berghaus and Bucher (2018)
   estimator, i.e. the \eqn{Z}-data (\code{varN = FALSE}) or an analogous
   version tailored to the Northrop (2015) estimator that uses the
-  \eqn{Y}-data (\code{varN = TRUE}).  The estimator of the sampling
-  variance of the sliding blocks estimator is not constrained to be
-  positive: a negative estimate may result if the block size is small.
-  In this event a warning will be given and
+  \eqn{Y}-data (\code{varN = TRUE}).
+
+  The estimator of the sampling variance of the sliding blocks estimator is
+  not constrained to be positive: a negative estimate may result if the
+  block size is small.  In this event
+  \strong{no warning will be given until the returned object is printed} and,
+  for the affected estimator (\code{"N2015"} or \code{"BB2018/BB2018b"}),
     \itemize{
-      \item{estimated standard errors will be missing from the returned
-            object,}
+      \item{the corresponding estimated standard errors using sliding
+            blocks will be missing in \code{se_sl} in the returned object,}
       \item{if \code{bias_adjust == "BB3"} then bias-adjustment
-            based on \code{bias_adjust == "BB1"} will be performed instead,
-            because the former relies on the estimated variances of the
-            estimators.}
+            based on \code{bias_adjust == "BB1"} will instead be performed
+            when using sliding bocks, because the former relies on the
+            estimated variances of the estimators.}
     }
+ Similarly, bias adjustment under \code{adjust = "BB3"} and/or subtraction
+ of \eqn{1 / b} in the \code{"BB2018b"} case may, rare cases, produce a
+ negative estimate of \eqn{\theta}.  In these instances an estimate of
+ zero is returned, but the values returned in \code{bias_dj} and
+ \code{bias_sl} are not changed.
 }
 \examples{
 temp <- spm(-as.vector(sp500[2:6550]), 250)

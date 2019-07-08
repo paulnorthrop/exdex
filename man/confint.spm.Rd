@@ -84,8 +84,10 @@ A list of class c("confint_spm", "exdex") containing the
   \% (by default 2.5\% and 97.5\%).
   The row names are a concatentation of the variant of the estimator
   (\code{N2015} for Northrop (2015), \code{BB2018} for
-  Berghaus and Bucher (2018)) and the type of interval
-  (\code{sym} for symmetric and \code{lik} for likelihood-based).}
+  Berghaus and Bucher (2018)), \code{BB2018b} for the modified
+  (by subtracting \code{1 / b}) Berghaus and Bucher (2018)
+  and the type of interval (\code{sym} for symmetric and \code{lik} for
+  likelihood-based).}
   \item{ciN}{The object returned from
     \code{\link[chandwich]{conf_intervals}} that contains information about
     the adjusted loglikelihod for the Northrop (2015) variant of the
@@ -94,6 +96,10 @@ A list of class c("confint_spm", "exdex") containing the
     \code{\link[chandwich]{conf_intervals}} that contains information about
     the adjusted loglikelihod for the Berghaus and Bucher (2018) variant of
     the estimator.}
+  \item{ciBBb}{The object returned from
+    \code{\link[chandwich]{conf_intervals}} that contains information about
+    the adjusted loglikelihod for the modified Berghaus and Bucher (2018)
+    variant of the estimator.}
   \item{call}{The call to \code{spm}.}
   \item{object}{The input \code{object}.}
   \item{maxima}{The input \code{maxima}.}

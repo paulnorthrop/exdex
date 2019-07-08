@@ -83,8 +83,10 @@
 #'   \% (by default 2.5\% and 97.5\%).
 #'   The row names are a concatentation of the variant of the estimator
 #'   (\code{N2015} for Northrop (2015), \code{BB2018} for
-#'   Berghaus and Bucher (2018)) and the type of interval
-#'   (\code{sym} for symmetric and \code{lik} for likelihood-based).}
+#'   Berghaus and Bucher (2018)), \code{BB2018b} for the modified
+#'   (by subtracting \code{1 / b}) Berghaus and Bucher (2018)
+#'   and the type of interval (\code{sym} for symmetric and \code{lik} for
+#'   likelihood-based).}
 #'   \item{ciN}{The object returned from
 #'     \code{\link[chandwich]{conf_intervals}} that contains information about
 #'     the adjusted loglikelihod for the Northrop (2015) variant of the
@@ -93,6 +95,10 @@
 #'     \code{\link[chandwich]{conf_intervals}} that contains information about
 #'     the adjusted loglikelihod for the Berghaus and Bucher (2018) variant of
 #'     the estimator.}
+#'   \item{ciBBb}{The object returned from
+#'     \code{\link[chandwich]{conf_intervals}} that contains information about
+#'     the adjusted loglikelihod for the modified Berghaus and Bucher (2018)
+#'     variant of the estimator.}
 #'   \item{call}{The call to \code{spm}.}
 #'   \item{object}{The input \code{object}.}
 #'   \item{maxima}{The input \code{maxima}.}
@@ -139,9 +145,9 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   conf_scale <- match.arg(conf_scale)
   type <- match.arg(type)
   # Set the components that we need, based on argument maxima
-  theta <- coef(object, maxima = maxima, estimator = "both")
-  uncon <- coef(object, maxima = maxima, estimator = "both", constrain = TRUE)
-  se <- sqrt(vcov(object, maxima = maxima, estimator = "both"))
+  theta <- coef(object, maxima = maxima, estimator = "all")
+  uncon <- coef(object, maxima = maxima, estimator = "all", constrain = TRUE)
+  se <- sqrt(vcov(object, maxima = maxima, estimator = "all"))
   if (maxima == "sliding") {
     yz_data <- object$data_sl
     bias_val <- object$bias_sl
@@ -209,13 +215,13 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # We can achieve this by scaling the data by the ratio of the naive MLE
     # to the bias-adjusted MLE
     mleN <- 1 / mean(yz_data[, "N2015"])
-    mleBB <- 1 / mean(yz_data[, "BB2018"])
+    mleBB <- mleBBb <- 1 / mean(yz_data[, "BB2018"])
     if (bias_adjust && object$bias_adjust %in% c("BB3", "BB1")) {
       scaleN <- mleN / (mleN - bias_val["N2015"])
       scaleBB <- mleBB / (mleBB - bias_val["BB2018"])
+      scaleBBb <- mleBBb / (mleBBb - bias_val["BB2018b"])
     } else {
-      scaleN <- 1
-      scaleBB <- 1
+      scaleN <- scaleBB <- scaleBBb <- 1
     }
     n <- nobs(object, maxima = maxima)
     # If a standard error is missing then make the confidence limits missing
@@ -261,6 +267,27 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
       lower <- c(lower, BB2018lik = tempBB$prof_CI[1])
       upper <- c(upper, BB2018lik = tempBB$prof_CI[2])
     }
+    # Berghaus and Bucher (2018) - 1 / b
+    if (is.na(se["BB2018b"])) {
+      tempBBb <- NA
+      lower <- c(lower, BB2018b = NA)
+      upper <- c(upper, BB2018b = NA)
+    } else {
+      H <- as.matrix(-n / mleBBb ^ 2)
+      V <- as.matrix(H ^ 2 * se["BB2018b"] ^ 2)
+      # Note the multiplication of the data by scaleBB and the division of the
+      # naive estimate by scaleBB, to obtain the bias_adjusted estimate
+      adjBBb <- chandwich::adjust_loglik(loglik = exponential_loglik,
+                                         data = yz_data[, "BB2018"] * scaleBBb,
+                                         p = 1, par_names = "theta",
+                                         mle = mleBBb / scaleBBb, H = H, V = V)
+      tempBBb <- suppressMessages(chandwich::conf_intervals(adjBBb,
+                                                            conf = 100 *
+                                                            level, type = type,
+                                                            lower = 0))
+      lower <- c(lower, BB2018blik = tempBBb$prof_CI[1])
+      upper <- c(upper, BB2018blik = tempBBb$prof_CI[2])
+    }
   }
   # Constrain the intervals to (0, 1] if required
   if (constrain) {
@@ -274,9 +301,9 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
   names(theta) <- c("N2015", "BB2018")
-  temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, call = Call,
-               object = object, maxima = maxima, interval_type = interval_type,
-               theta = theta)
+  temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, ciBBb = tempBBb,
+               call = Call, object = object, maxima = maxima,
+               interval_type = interval_type, theta = theta)
   class(temp) <- c("confint_spm", "exdex")
   return(temp)
 }
@@ -292,6 +319,10 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 #' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
 #'   a call to \code{\link{confint.spm}}.
 #' @param y Not used.
+#' @param estimator A character vector specifying which of the three variants
+#'   of the semiparametic maxima estimator to include in the plot:
+#'   \code{"N2015", "BB2018"} or \code{"BB2018b"}.  See \code{\link{spm}} for
+#'   details. If \code{estimator = "all"} then all three are included.
 #' @param ndec An integer scalar.  The legend (if included on the plot)
 #'   contains the confidence limits rounded to \code{ndec} decimal places.
 #' @param ... Further arguments to be passed to
@@ -305,76 +336,111 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 #' #cis <- confint(res)
 #' # plot(cis)
 #' @export
-plot.confint_spm <- function(x, y = NULL, ndec = 2, ...) {
+plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
   if (x$interval_type == "sym"){
     stop("Plot method not available when interval_type = ''sym''")
   }
-  if (is.na(x$cis["N2015lik", 1]) && is.na(x$cis["BB2018lik", 1])) {
+  if (is.na(x$cis["N2015lik", 1]) && is.na(x$cis["BB2018lik", 1]) &&
+      is.na(x$cis["BB2018blik", 1])) {
     stop("There is no adjusted log-likelihood to plot: SEs were missing")
   }
+  if ("all" %in% estimator) {
+    estimator <- c("N2015", "BB2018", "BB2018b")
+  }
+  if (!all(estimator %in% c("N2015", "BB2018", "BB2018b"))) {
+    stop("estimator must be a subset of c(''N2015'', ''BB2018'', ''BB2018b'')")
+  }
+  n_estimator <- length(estimator)
   temp <- x$cis
   # Produce a plot of the adjusted loglikelihood, if requested
   # Owing to the different scales of the loglikelihoods for N2015 and BB2018 we
   # shoof them to have a maximum of 0, so that we can display them on one plot
-  if (!is.na(x$cis["N2015lik", 1])) {
+  x_obj <- y_obj <- y2_obj <-NULL
+  my_leg <- NULL
+  # Round confidence limits for inclusion in the legend
+  fmt <- paste0("%.", ndec, "f")
+  if ("N2015" %in% estimator && !is.na(x$cis["N2015lik", 1])) {
     tempN <- x$ciN
     shoofN <- max(tempN$prof_loglik_vals)
     tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
     tempN$max_loglik <- tempN$max_loglik - shoofN
+    x_obj <- tempN
+    roundN <- sprintf(fmt, round(temp["N2015lik", ], ndec))
+    my_leg[1] <- paste("N2015:      (", roundN[1], ",", roundN[2], ")")
   }
-  if (!is.na(x$cis["BB2018lik", 1])) {
+  if ("BB2018" %in% estimator && !is.na(x$cis["BB2018lik", 1])) {
     tempBB <- x$ciBB
     shoofBB <- max(tempBB$prof_loglik_vals)
     tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
     tempBB$max_loglik <- tempBB$max_loglik - shoofBB
+    roundBB <- sprintf(fmt, round(temp["BB2018lik", ], ndec))
+    if ("N2015" %in% estimator) {
+      y_obj <- tempBB
+      my_leg[2] <- paste("BB2018:   (", roundBB[1], ",", roundBB[2], ")")
+    } else {
+      x_obj <- tempBB
+      my_leg[1] <- paste("BB2018:   (", roundBB[1], ",", roundBB[2], ")")
+    }
   }
-  # Round confidence limits for inclusion in the legend
-  fmt <- paste0("%.", ndec, "f")
-  roundN <- sprintf(fmt, round(temp["N2015lik", ], ndec))
-  roundBB <- sprintf(fmt, round(temp["BB2018lik", ], ndec))
-  my_leg <- NULL
-  my_leg[1] <- paste("N2015:    (", roundN[1], ",", roundN[2], ")")
-  my_leg[2] <- paste("BB2018: (", roundBB[1], ",", roundBB[2], ")")
+  if ("BB2018b" %in% estimator && !is.na(x$cis["BB2018blik", 1])) {
+    tempBBb <- x$ciBBb
+    shoofBBb <- max(tempBBb$prof_loglik_vals)
+    tempBBb$prof_loglik_vals <- tempBBb$prof_loglik_vals - shoofBBb
+    tempBBb$max_loglik <- tempBBb$max_loglik - shoofBBb
+    roundBBb <- sprintf(fmt, round(temp["BB2018blik", ], ndec))
+    if (n_estimator == 3) {
+      y2_obj <- tempBBb
+      my_leg[3] <- paste("BB2018b: (", roundBBb[1], ",", roundBBb[2], ")")
+    } else if (n_estimator == 2) {
+      y_obj <- tempBBb
+      my_leg[2] <- paste("BB2018b: (", roundBBb[1], ",", roundBBb[2], ")")
+    } else {
+      x_obj <- tempBBb
+      my_leg[1] <- paste("BB2018b: (", roundBBb[1], ",", roundBBb[2], ")")
+    }
+  }
   # A clunky way to avoid conflict between my choice of legend and
   # (legend) title and those that the user might supply via ...
   user_args <- list(...)
   if (is.null(user_args$legend_pos)) {
     if (is.null(user_args$legend) && is.null(user_args$title)) {
-      plot(x = tempN, y = tempBB, legend = my_leg,
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg,
            title = "estimator", legend_pos = "bottom", ...)
     } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
-      plot(x = tempN, y = tempBB, legend = my_leg, legend_pos = "bottom",
-           ...)
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg,
+           legend_pos = "bottom", ...)
     } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
-      plot(x = tempN, y = tempBB, title = "estimator", legend_pos = "bottom",
-           ...)
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, title = "estimator",
+           legend_pos = "bottom", ...)
     } else {
-      plot(x = tempN, y = tempBB, legend_pos = "bottom", ...)
+      plot(x = x_obj, y = y_obj,  y2 = y2_obj, legend_pos = "bottom", ...)
     }
   } else {
     # Make user_args$legend_pos NULL because otherwise
     # is.null(user_args$legend) returns FALSE
     user_args$legend_pos <- NULL
     if (is.null(user_args$legend) && is.null(user_args$title)) {
-      plot(x = tempN, y = tempBB, legend = my_leg,
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg,
            title = "estimator", ...)
     } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
-      plot(x = tempN, y = tempBB, legend = my_leg, ...)
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg, ...)
     } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
-      plot(x = tempN, y = tempBB, title = "estimator", ...)
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, title = "estimator", ...)
     } else {
-      plot(x = tempN, y = tempBB, ...)
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, ...)
     }
   }
+  # Check visually the estimates and the intervals
 #  abline(v = temp["N2015lik", ])
 #  abline(v = temp["BB2018lik", ], lty = 2)
+#  abline(v = temp["BB2018blik", ], lty = 3)
 #  if (x$maxima == "sliding") {
-#    abline(v = x$object$theta_sl, lty = 1:2)
+#    abline(v = x$object$theta_sl, lty = 1:3)
 #  } else {
-#    abline(v = x$object$theta_dj, lty = 1:2)
+#    abline(v = x$object$theta_dj, lty = 1:3)
 #  }
   return(invisible())
 }

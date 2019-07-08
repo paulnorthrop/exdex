@@ -4,13 +4,19 @@
 \alias{plot.confint_spm}
 \title{Plot diagnostics for a confint_spm object}
 \usage{
-\method{plot}{confint_spm}(x, y = NULL, ndec = 2, ...)
+\method{plot}{confint_spm}(x, y = NULL, estimator = "all", ndec = 2,
+  ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("confint_spm", "exdex")}, a result of
 a call to \code{\link{confint.spm}}.}
 
 \item{y}{Not used.}
+
+\item{estimator}{A character vector specifying which of the three variants
+of the semiparametic maxima estimator to include in the plot:
+\code{"N2015", "BB2018"} or \code{"BB2018b"}.  See \code{\link{spm}} for
+details. If \code{estimator = "all"} then all three are included.}
 
 \item{ndec}{An integer scalar.  The legend (if included on the plot)
 contains the confidence limits rounded to \code{ndec} decimal places.}

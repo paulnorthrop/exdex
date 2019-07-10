@@ -67,28 +67,36 @@ for (i in 1:4){
                              tolerance = my_tol)
     })
     # spm_R_quick vs spm
+    # Note: only spm() returns estimates of BB2018b (BB2018 - 1 / b),
+    #       hence the use of [1:2] below
     my_text <- paste("spm vs spm_R_quick", bias_adjust_vec[i],
                      which_dj_vec[j])
     res_c <- spm(test_data, b = b,
                  bias_adjust = bias_adjust_vec[i],
                  which_dj = which_dj_vec[j])
     test_that(paste(my_text, "sliding, theta"), {
-      testthat::expect_equal(res$theta_sl, res_c$theta_sl, tolerance = my_tol)
+      testthat::expect_equal(res$theta_sl, res_c$theta_sl[1:2],
+                             tolerance = my_tol)
     })
     test_that(paste(my_text, "disjoint, theta"), {
-      testthat::expect_equal(res$theta_dj, res_c$theta_dj, tolerance = my_tol)
+      testthat::expect_equal(res$theta_dj, res_c$theta_dj[1:2],
+                             tolerance = my_tol)
     })
     test_that(paste(my_text, "sliding, se"), {
-      testthat::expect_equal(res$se_sl, res_c$se_sl, tolerance = my_tol)
+      testthat::expect_equal(res$se_sl, res_c$se_sl[1:2],
+                             tolerance = my_tol)
     })
     test_that(paste(my_text, "disjoint, se"), {
-      testthat::expect_equal(res$se_dj, res_c$se_dj, tolerance = my_tol)
+      testthat::expect_equal(res$se_dj, res_c$se_dj[1:2],
+                             tolerance = my_tol)
     })
     test_that(paste(my_text, "sliding, bias"), {
-      testthat::expect_equal(res$bias_sl, res_c$bias_sl, tolerance = my_tol)
+      testthat::expect_equal(res$bias_sl, res_c$bias_sl[1:2],
+                             tolerance = my_tol)
     })
     test_that(paste(my_text, "disjoint, bias"), {
-      testthat::expect_equal(res$bias_dj, res_c$bias_dj, tolerance = my_tol)
+      testthat::expect_equal(res$bias_dj, res_c$bias_dj[1:2],
+                             tolerance = my_tol)
     })
     test_that(paste(my_text, "sliding, data_sl"), {
       testthat::expect_equal(summary(res$data_sl),

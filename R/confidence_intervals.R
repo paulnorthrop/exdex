@@ -300,7 +300,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
-  names(theta) <- c("N2015", "BB2018")
+  names(theta) <- c("N2015", "BB2018", "BB2018b")
   temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, ciBBb = tempBBb,
                call = Call, object = object, maxima = maxima,
                interval_type = interval_type, theta = theta)

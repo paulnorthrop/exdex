@@ -92,7 +92,7 @@ spm_check <- function(data, b, sliding = TRUE,
       vars <- theta ^ 4 * c(sigma2hat_N, sigma2hat_BB) / k_n
     }
     # Perform BB2018 bias-adjustment if required
-    bias_N <- bias_BB <- NA
+    bias_N <- bias_BB <- 0
     if (bias_adjust == "BB3") {
       bias_N <- theta_N / k_n + theta_N ^ 3 * sigma2hat_N / k_n
       theta_N <- theta_N * (1 - 1 / k_n) - theta_N ^ 3 * sigma2hat_N / k_n
@@ -335,7 +335,7 @@ spm_R_quick <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
     res$bias_sl <- res$theta_sl / k_n
     res$theta_sl <- res$theta_sl - res$bias_sl
   } else {
-    res$bias_dj <- res$bias_sl <- c(N2015 = NA, BB2018 = NA)
+    res$bias_dj <- res$bias_sl <- c(N2015 = 0, BB2018 = 0)
   }
   #
   # Save the unconstrained estimates, so that they can be returned

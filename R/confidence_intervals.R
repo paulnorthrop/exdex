@@ -139,12 +139,12 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     stop("''level'' must be in (0, 1)")
   }
   maxima <- match.arg(maxima)
+  type <- match.arg(type)
   if (maxima == "sliding" && type == "none") {
     warning("The likelihood-based CIs are vast underestimates of uncertainty!")
   }
   interval_type <- match.arg(interval_type)
   conf_scale <- match.arg(conf_scale)
-  type <- match.arg(type)
   # Set the components that we need, based on argument maxima
   theta <- coef(object, maxima = maxima, estimator = "all")
   uncon <- coef(object, maxima = maxima, estimator = "all", constrain = TRUE)

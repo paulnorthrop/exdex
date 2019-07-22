@@ -1,6 +1,9 @@
 #' Block length diagnostic plot
 #'
 #' Description
+#'
+#' @inheritParams spm
+#' @inheritParams confint.spm
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}

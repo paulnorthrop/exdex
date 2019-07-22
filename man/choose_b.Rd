@@ -9,6 +9,64 @@ choose_b(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   conf_scale = c("theta", "log"), interval_type = c("sym", "lik"),
   type = c("vertical", "cholesky", "spectral", "none"))
 }
+\arguments{
+\item{data}{A numeric vector of raw data.  No missing values are allowed.}
+
+\item{b}{A numeric scalar.  The block size.}
+
+\item{bias_adjust}{A character scalar.  Is bias-adjustment of the
+raw estimate of \eqn{\theta} performed using the bias-reduced
+estimator (\code{bias_adjust = "BB3"}), derived in Section 5 of
+Berghaus and Bucher (2018); or a simpler version
+(\code{bias_adjust = "BB1"}), in which the raw estimate is multiplied by
+\eqn{(k-1) / k}, where \eqn{k} is the number of blocks; or the
+bias-adjustment of the empirical distribution function used to calculate
+the estimate, as detailed in Section 2 of Northrop (2015).  When disjoint
+maxima are used \code{bias_adjust = "BB1"} and \code{bias_adjust = "N"}
+give identical estimates of the Berghaus and Bucher (2018) variant,
+as explained at the end of Section 5 of Berghaus and Bucher (2018).
+If \code{bias_adjust = "none"} then no bias-adjustment is performed.}
+
+\item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
+any estimates that are greater than 1 are set to 1,
+that is, they are constrained to lie in (0, 1].  This is carried out
+\emph{after} any bias-adjustment.  Otherwise,
+estimates that are greater than 1 may be obtained.}
+
+\item{varN}{A logical scalar.  If \code{varN = TRUE} then the estimation
+of the sampling variance of the Northrop (2015) estimator is tailored
+to that estimator.  Otherwise, the sampling variance derived in
+Berghaus and Bucher (2018) is used.
+See \strong{Details} for further information.}
+
+\item{level}{The confidence level required.  A numeric scalar in (0, 1).}
+
+\item{conf_scale}{A character scalar.  Determines the scale on which
+  we use approximate large-sample normality of the estimators to
+  estimate confidence intervals of type (a).
+
+  If \code{conf_scale = "theta"}
+  then confidence intervals are estimated for \eqn{\theta} directly.
+  If \code{conf_scale = "log"} then confidence intervals are first
+  estimated for \eqn{\log\theta}{log\theta} and then transformed back
+  to the \eqn{\theta}-scale.
+
+  Any bias-adjustment requested in the original call to \code{\link{spm}},
+  using it's \code{bias_adjust} argument, is automatically applied here.}
+
+\item{interval_type}{A character scalar: \code{"sym"} for intervals of
+type (a), \code{"lik"} for intervals of type (b).}
+
+\item{type}{A character scalar.  The argument \code{type} to be passed to
+\code{\link[chandwich]{conf_intervals}} in the
+\code{\link[chandwich]{chandwich}} package in order to estimate the
+likelihood-based intervals.
+Using \code{type = "none"} is \emph{not} advised because then the
+intervals are based on naive estimated standard errors.  In particular,
+if (the default) \code{sliding = TRUE} was used in the call to
+\code{\link{spm}} then the likelihood-based confidence intervals provide
+\emph{vast} underestimates of uncertainty.}
+}
 \description{
 Description
 }

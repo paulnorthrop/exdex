@@ -58,8 +58,9 @@
 #'   \code{object$N2015_data} and \code{object$BB2018_data}, on which the
 #'   naive likelihood is based.
 #' @param type A character scalar.  The argument \code{type} to be passed to
-#'   \code{\link[chandwich]{conf_intervals}} in order to estimate the
-#'   likelihood-based intervals.  See \strong{Details}.
+#'   \code{\link[chandwich]{conf_intervals}} in the
+#'   \code{\link[chandwich]{chandwich}} package in order to estimate the
+#'   likelihood-based intervals.
 #'   Using \code{type = "none"} is \emph{not} advised because then the
 #'   intervals are based on naive estimated standard errors.  In particular,
 #'   if (the default) \code{sliding = TRUE} was used in the call to

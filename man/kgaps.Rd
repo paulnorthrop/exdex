@@ -73,4 +73,6 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 
 \code{\link[revdbayes]{kgaps_post}} for Bayesian inference
   about \eqn{\theta} using the K-gaps model.
+
+\code{\link{iwls}}: iterated weighted least squares estimator.
 }

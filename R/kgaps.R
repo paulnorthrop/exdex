@@ -46,6 +46,7 @@
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link[revdbayes]{kgaps_post}} for Bayesian inference
 #'   about \eqn{\theta} using the K-gaps model.
+#' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @examples
 #' ### Newlyn sea-surge data
 #'

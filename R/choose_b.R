@@ -109,7 +109,6 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   return(res)
 }
 
-
 # =========================== plot.choose_b ===========================
 
 #' Plot diagnostics for an exdex object
@@ -150,8 +149,8 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
 #' @export
 plot.choose_b <- function(x, y, ..., estimator = c("N2015", "BB2018"),
                           maxima = c("sliding", "disjoint")) {
-  if (!inherits(x, "choose_b")) {
-    stop("use only with \"choose_b\" objects")
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
   }
   maxima <- match.arg(maxima)
   estimator <- match.arg(estimator)

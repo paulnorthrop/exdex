@@ -18,7 +18,7 @@ set whose first block starts on the first observation in \code{x};
 in \code{x}.}
 
 \item{...}{Further arguments to be passed to
-\code{\link[RcppRoll]{roll_max}}.}
+\code{\link[RcppRoll:RcppRoll-exports]{roll_max}}.}
 }
 \value{
 A list containing
@@ -45,7 +45,8 @@ in the vector \code{x}.  This provides the first step of computations in
 }
 \details{
 \strong{Sliding maxima.} The function
-  \code{\link[RcppRoll]{roll_max}} in the \code{RcppRoll} package is used.
+  \code{\link[RcppRoll:RcppRoll-exports]{roll_max}} in the \code{RcppRoll}
+  package is used.
 
   \strong{Disjoint maxima.}  If \code{n = length(x)} is an integer
   multiple of \code{b}, or if \code{which_dj = "first"} or

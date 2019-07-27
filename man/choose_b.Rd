@@ -67,11 +67,25 @@ if (the default) \code{sliding = TRUE} was used in the call to
 \code{\link{spm}} then the unadjusted likelihood-based confidence
 intervals provide \emph{vast} underestimates of uncertainty.}
 }
+\value{
+An object of class \code{c("choose_b", "exdex")} containing
+  \item{theta_sl,theta_dj }{numeric \code{b} by 3 matrices of estimates of
+  \eqn{\theta} using sliding and disjoint blocks.  Columns 1-3 relate to the
+   estimators \code{N2015}, \code{BB2018} and \code{BB2018b.}}
+  \item{lower_sl,lower_dj }{Similarly for the lower limits of the confidence
+    intervals.}
+  \item{upper_sl,upper_dj }{Similarly for the upper limits of the confidence
+    intervals.}
+  \item{b }{the input \code{b}}
+  \item{call }{the call to \code{choose_b}.}
+}
 \description{
 A plot to aid the choice of the block length \code{b} to supply to
 \code{\link{spm}}.  The general idea is to select the smallest value of
 \code{b} above which estimates of the extremal index \eqn{\theta}
 appear to be constant in \code{b}, taking into account sampling variability.
+\code{choose_b} produces the data from which \code{\link{plot.choose_b}}
+creates the plot.
 }
 \details{
 For each block size in \code{b} the extremal index \eqn{\theta}
@@ -119,4 +133,8 @@ estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
+}
+\seealso{
+\code{\link{plot.choose_b}} to produce the block length diagnostic
+  plot.
 }

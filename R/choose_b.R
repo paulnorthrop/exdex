@@ -4,6 +4,8 @@
 #' \code{\link{spm}}.  The general idea is to select the smallest value of
 #' \code{b} above which estimates of the extremal index \eqn{\theta}
 #' appear to be constant in \code{b}, taking into account sampling variability.
+#' \code{choose_b} produces the data from which \code{\link{plot.choose_b}}
+#' creates the plot.
 #'
 #' @inheritParams spm
 #' @inheritParams confint.spm
@@ -20,6 +22,16 @@
 #'   For very small block sizes it may not be possible to estimate the
 #'   confidence intervals.  See \strong{Details} in \code{\link{spm}}.
 #'   For any such block sizes the intervals will be missing from the plot.
+#' @return An object of class \code{c("choose_b", "exdex")} containing
+#'   \item{theta_sl,theta_dj }{numeric \code{b} by 3 matrices of estimates of
+#'   \eqn{\theta} using sliding and disjoint blocks.  Columns 1-3 relate to the
+#'    estimators \code{N2015}, \code{BB2018} and \code{BB2018b.}}
+#'   \item{lower_sl,lower_dj }{Similarly for the lower limits of the confidence
+#'     intervals.}
+#'   \item{upper_sl,upper_dj }{Similarly for the upper limits of the confidence
+#'     intervals.}
+#'   \item{b }{the input \code{b}}
+#'   \item{call }{the call to \code{choose_b}.}
 #' @references Coles, S. G. (2001) \emph{An Introduction to Statistical
 #'   Modeling of Extreme Values}, Springer-Verlag, London.
 #'   \url{http://dx.doi.org/10.1007/978-1-4471-3675-0_3}
@@ -29,6 +41,8 @@
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
+#' @seealso \code{\link{plot.choose_b}} to produce the block length diagnostic
+#'   plot.
 #' @examples
 #' \dontrun{
 #' # Plot like the top left of Northrop (2015)
@@ -56,7 +70,7 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   Call <- match.call(expand.dots = TRUE)
   # All other inputs are checked in the calls to spm() and confint.spm()
   interval_type <- match.arg(interval_type)
-  which_ests <- c("N2015", "BB2018")
+  which_ests <- c("N2015", "BB2018", "BB2018b")
   which_cis <- paste0(which_ests, interval_type)
   # Objects in which to store the estimates and confidence intervals
   n_b <- length(b)

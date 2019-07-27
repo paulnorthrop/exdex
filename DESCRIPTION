@@ -2,7 +2,7 @@ Package: exdex
 Type: Package
 Title: Estimation of the Extremal Index
 Version: 0.0.0.9000
-Date: 2019-04-25
+Date: 2019-07-27
 Authors@R: c(
     person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk", 
       role = c("aut", "cre", "cph")),
@@ -14,21 +14,20 @@ Description: Performs frequentist inference for the extremal index using the
   Suveges (2007) <doi:10.1007/s10687-007-0034-2>
   and
   Suveges and Davison (2010)  <doi:10.1214/09-AOAS292>.
-Imports: 
-    chandwich,
+Imports: chandwich,
     graphics,
     methods,
     Rcpp,
     RcppRoll,
-    stats,
-    zoo (>= 1.6.4)
+    stats
 License: GPL (>= 2)
 Depends:
     R (>= 3.3.0)
 Suggests: knitr,
     revdbayes,
     rmarkdown,
-    testthat
+    testthat,
+    zoo (>= 1.6.4)
 LazyData: true
 Encoding: UTF-8
 RoxygenNote: 6.1.1

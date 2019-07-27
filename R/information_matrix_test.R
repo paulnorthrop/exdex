@@ -13,17 +13,32 @@
 #'   The information matrix test is performed a over grid of all
 #'   combinations of threshold and \eqn{K} in the vectors \code{thresh}
 #'   and \code{k}.
-#' @details Add details
+#' @details For details of the information matrix test see Suveges and Davison
+#'   (2010).  There are some typing errors on pages 18-19 that have been
+#'   corrected in producing the code: the penultimate term inside \code{{...}}
+#'   in the middle equation on page 18 should be \eqn{(c_j(K))^2}, as should
+#'   the penultimate term in the first equation on page 19; the \code{{...}}
+#'   bracket should be squared in the 4th equation on page 19; the factor
+#'   \eqn{n} should be \eqn{N-1} in the final equation on page 19.
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{https://doi.org/10.1214/09-AOAS292"}
-#' @return A list containing
+#' @return An object (a list) of class \code{c("kgaps_imt", "exdex")}
+#'   containing
+#'   \item{IMT }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
+#'     Column i contains, for \eqn{K} = \code{k[i]}, the values of the
+#'     information matrix test statistic for the set of thresholds in
+#'     \code{thresh}.}
+#'   \item{p }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+#'     containing the corresponding \eqn{p}-values for the test.}
+#'   \item{theta }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+#'     containing the corresponding estimates of \eqn{\theta}.}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @examples
-#' thresh <- quantile(newlyn, probs = 0.90)
-#' imt <- kgaps_imt(newlyn, thresh)
+#' thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' imt <- kgaps_imt(newlyn, thresh, k = 1:5)
 #' @export
 kgaps_imt <- function(data, thresh, k = 1) {
   # Function to return only the MLE of theta
@@ -80,6 +95,8 @@ kgaps_imt <- function(data, thresh, k = 1) {
   u_ps <- as.numeric(substr(names(thresh), 1,
                             nchar(names(thresh), type = "c") - 1))
   rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
+  res <- list(IMT = T_mat, p = p_mat, theta = theta)
+  class(res) <- c("kgaps_imt", "exdex")
   return(list(IMT = T_mat, p = p_mat, theta = theta))
 }
 

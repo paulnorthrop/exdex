@@ -18,18 +18,33 @@ combinations of threshold and \eqn{K} in the vectors \code{thresh}
 and \code{k}.}
 }
 \value{
-A list containing
+An object (a list) of class \code{c("kgaps_imt", "exdex")}
+  containing
+  \item{IMT }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
+    Column i contains, for \eqn{K} = \code{k[i]}, the values of the
+    information matrix test statistic for the set of thresholds in
+    \code{thresh}.}
+  \item{p }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+    containing the corresponding \eqn{p}-values for the test.}
+  \item{theta }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+    containing the corresponding estimates of \eqn{\theta}.}
 }
 \description{
 Performs the information matrix test of Suveges and Davison (2010) to
 diagnose misspecification of the K-gaps model
 }
 \details{
-Add details
+For details of the information matrix test see Suveges and Davison
+  (2010).  There are some typing errors on pages 18-19 that have been
+  corrected in producing the code: the penultimate term inside \code{{...}}
+  in the middle equation on page 18 should be \eqn{(c_j(K))^2}, as should
+  the penultimate term in the first equation on page 19; the \code{{...}}
+  bracket should be squared in the 4th equation on page 19; the factor
+  \eqn{n} should be \eqn{N-1} in the final equation on page 19.
 }
 \examples{
-thresh <- quantile(newlyn, probs = 0.90)
-imt <- kgaps_imt(newlyn, thresh)
+thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+imt <- kgaps_imt(newlyn, thresh, k = 1:5)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

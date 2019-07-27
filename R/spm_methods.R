@@ -158,7 +158,7 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
                 quote = FALSE)
   # Add warning that se_sl is missing and the consequences
   if (any(is.na(x$se_sl))) {
-    which_na <- names(x$se_sl)[is.na(temp$se_sl)]
+    which_na <- names(x$se_sl)[is.na(x$se_sl)]
     cat("\nStd. Errors missing for estimator(s):", which_na)
     if (x$bias_adjust == "BB3") {
       cat("\nBias-adjustment changed from BB3 to BB1 for estimator(s):",
@@ -217,7 +217,7 @@ summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
                             "BB2018b, disjoint")
   # Add warning that se_sl is missing and the consequences
   if (any(is.na(object$se_sl))) {
-    which_na <- names(object$se_sl)[is.na(temp$se_sl)]
+    which_na <- names(object$se_sl)[is.na(object$se_sl)]
     if (object$bias_adjust == "BB3") {
       res$warning <- "Bias-adjustment changed from BB3 to BB1 for estimator(s):"
       for (i in 1:length(which_na)) {

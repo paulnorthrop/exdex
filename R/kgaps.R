@@ -30,14 +30,15 @@
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
 #'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
-#' @return A list containing
-#'   \itemize{
-#'     \item {\code{theta} : } {The maximum likelihood estimate (MLE) of
+#' @return An object (a list) of class \code{"kgaps", "exdex"} containing
+#'     \item{\code{theta} }{The maximum likelihood estimate (MLE) of
 #'       \eqn{\theta}.}
-#'     \item {\code{se} : } {The estimated standard error of the MLE.}
-#'     \item {\code{ss} : } {The list of summary statistics returned from
+#'     \item{\code{se} }{The estimated standard error of the MLE.}
+#'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
-#'   }
+#'     \item{\code{k, thresh, inc_cens} }{The input values of \code{k},
+#'       \code{thresh} and \code{inc_cens}.}
+#'     \item{\code{call }}{The call to \code{kgaps}.}
 #' @seealso \code{\link{confint.kgaps}} to estimate confidence intervals
 #'   for \eqn{theta}.
 #' @seealso \code{\link{kgaps_stat}} for the calculation of sufficient
@@ -54,6 +55,7 @@
 #' kgaps(newlyn, thresh)
 #' @export
 kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
+  Call <- match.call(expand.dots = TRUE)
   if (!is.numeric(thresh) || length(thresh) != 1) {
     stop("thresh must be a numeric scalar")
   }
@@ -88,7 +90,8 @@ kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
   theta_se <- sqrt(1 / obs_info)
-  res <- list(theta = theta_mle, se = theta_se, ss = ss)
+  res <- list(theta = theta_mle, se = theta_se, ss = ss, k = k,
+              thresh = thresh, inc_cens = inc_cens, call = Call)
   class(res) <- c("kgaps", "exdex")
   return(res)
 }
@@ -133,14 +136,14 @@ kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
 #'    differing contributions to the likelihood.
 #'    For full details see Suveges and Davison (2010) and Attalides (2015).
 #' @return A list containing the sufficient statistics, with components
-#'   \itemize{
-#'     \item {\code{N0} : } {the number of zero K-gaps}
-#'     \item {\code{N1} : } {contribution from non-zero K-gaps (see
+#'     \item{\code{N0} }{the number of zero K-gaps}
+#'     \item{\code{N1} }{contribution from non-zero K-gaps (see
 #'       \strong{Details})}
-#'     \item {\code{sum_qs} : } {the sum of the (scaled) K-gaps, i.e.
+#'     \item{\code{sum_qs} }{the sum of the (scaled) K-gaps, i.e.
 #'       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
 #'       is estimated by the proportion of threshold exceedances.}
-#'   }
+#'     \item{\code{n_kgaps} }{the number of \eqn{K}-gaps, including 2
+#'       censored \eqn{K}-gaps if \code{inc_cens = TRUE}.}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
@@ -180,8 +183,11 @@ kgaps_stat <- function(data, thresh, k = 1, inc_cens = FALSE) {
   N1 <- sum(S_k > 0)
   N0 <- N_u - 1 - N1
   sum_qs <- sum(q_u * S_k)
+  # Store the number of K-gaps, for use by nobs.kgaps()
+  n_kgaps <- N0 + N1
   # Include censored inter-exceedance times?
   if (inc_cens) {
+    n_kgaps <- n_kgaps + 2
     # censored inter-exceedance times and K-gaps
     T_u_cens <- c(exc_u[1] - 1, nx - exc_u[N_u])
     S_k_cens <- pmax(T_u_cens - k, 0)
@@ -197,7 +203,7 @@ kgaps_stat <- function(data, thresh, k = 1, inc_cens = FALSE) {
     N1 <- N1 + N1_cens / 2
     sum_qs <- sum_qs + sum_s_cens
   }
-  return(list(N0 = N0, N1 = N1, sum_qs = sum_qs))
+  return(list(N0 = N0, N1 = N1, sum_qs = sum_qs, n_kgaps = n_kgaps))
 }
 
 # =============================== kgaps_loglik ================================

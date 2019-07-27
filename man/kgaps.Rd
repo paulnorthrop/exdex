@@ -23,14 +23,15 @@ contributions from censored inter-exceedance times relating to the
 first and last observation.  See Attalides (2015) for details.}
 }
 \value{
-A list containing
-  \itemize{
-    \item {\code{theta} : } {The maximum likelihood estimate (MLE) of
+An object (a list) of class \code{"kgaps", "exdex"} containing
+    \item{\code{theta} }{The maximum likelihood estimate (MLE) of
       \eqn{\theta}.}
-    \item {\code{se} : } {The estimated standard error of the MLE.}
-    \item {\code{ss} : } {The list of summary statistics returned from
+    \item{\code{se} }{The estimated standard error of the MLE.}
+    \item{\code{ss} }{The list of summary statistics returned from
       \code{\link{kgaps_stat}}.}
-  }
+    \item{\code{k, thresh, inc_cens} }{The input values of \code{k},
+      \code{thresh} and \code{inc_cens}.}
+    \item{\code{call }}{The call to \code{kgaps}.}
 }
 \description{
 Calculates maximum likelihood estimates of the extremal index \eqn{\theta}

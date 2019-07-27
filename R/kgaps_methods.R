@@ -8,13 +8,6 @@
 #'   \code{\link{kgaps}}.
 #' @param ... Further arguments.  None are used.
 #' @return A numeric scalar: the estimate of the extremal index \eqn{\theta}.
-#' @references Suveges, M. and Davison, A. C. (2010) Model
-#'   misspecification in peaks over threshold analysis, \emph{The Annals of
-#'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{https://doi.org/10.1214/09-AOAS292}
-#' @references Attalides, N. (2015) Threshold-based extreme value modelling,
-#'   PhD thesis, University College London.
-#'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @export
 coef.kgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -34,13 +27,6 @@ coef.kgaps <- function(object, ...) {
 #' @param ... Further arguments.  None are used.
 #' @return A 1 by 1 numeric matrix containing the estimated variance of the
 #'   estimator.
-#' @references Suveges, M. and Davison, A. C. (2010) Model
-#'   misspecification in peaks over threshold analysis, \emph{The Annals of
-#'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{https://doi.org/10.1214/09-AOAS292}
-#' @references Attalides, N. (2015) Threshold-based extreme value modelling,
-#'   PhD thesis, University College London.
-#'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @export
 vcov.kgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {

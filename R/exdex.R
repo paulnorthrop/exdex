@@ -1,19 +1,25 @@
 #' exdex: Estimation of the Extremal Index
 #'
 #' Performs frequentist inference about the extremal index using the
-#' methodologies proposed in Northrop (2015), Suveges (2007) and
-#' Suveges and Davison (2010).
+#' methodologies proposed in Northrop (2015), Berghaus and Bucher (2018),
+#' Suveges (2007) and Suveges and Davison (2010).
 #'
-#' @details
-#' Three
+#' @details Functions to implement three estimators of the extremal index
+#'   are provided, namely
 #' \itemize{
-#'   \item{Semiparametric maxima estimator(Northrop, 2015)}
-#'   \item{Iterated weighted least squares estimator: (Suveges, 2007)}
-#'   \item{\eqn{K}-gaps estimator (Suveges and Davision, 2010)}
+#'   \item{\code{\link{spm}}: semiparametric maxima estimator:
+#'     (Northrop, 2015; Berghaus and Bucher, 2018)}
+#'   \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator
+#'     (Suveges and Davision, 2010)}
+#'   \item{\code{\link{iwls}}: iterated weighted least squares estimator:
+#'     (Suveges, 2007)}
 #' }
 #'
 #'   See \code{vignette("exdex-vignette", package = "exdex")} for an
 #'   overview of the package.
+#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
+#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
@@ -24,6 +30,11 @@
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{https://doi.org/10.1214/09-AOAS292}
+#' @seealso \code{\link{spm}} for estimation of the extremal index
+#'   \eqn{\theta} using a semiparametric maxima method.
+#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the K-gaps model.
+#' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @docType package
 #' @name exdex
 #' @import methods

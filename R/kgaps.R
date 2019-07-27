@@ -1,4 +1,4 @@
-# ================================= kgaps_mle =================================
+# =================================== kgaps ===================================
 #
 #' Maximum likelihood estimation for the K-gaps model
 #'
@@ -22,7 +22,7 @@
 #'   If \code{inc_cens = TRUE} then information from censored inter-exceedance
 #'   times is included in the likelihood to be maximized, following
 #'   Attalides (2015).  The form of the log-likelihood is given in the
-#'   \strong{Details} section of \code{\link{kgaps_stats}}.
+#'   \strong{Details} section of \code{\link{kgaps_stat}}.
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
@@ -36,11 +36,11 @@
 #'       \eqn{\theta}.}
 #'     \item {\code{se} : } {The estimated standard error of the MLE.}
 #'     \item {\code{ss} : } {The list of summary statistics returned from
-#'       \code{\link{kgaps_stats}}.}
+#'       \code{\link{kgaps_stat}}.}
 #'   }
 #' @seealso \code{\link{confint.kgaps}} to estimate confidence intervals
 #'   for \eqn{theta}.
-#' @seealso \code{\link{kgaps_stats}} for the calculation of sufficient
+#' @seealso \code{\link{kgaps_stat}} for the calculation of sufficient
 #'   statistics for the K-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
@@ -50,9 +50,9 @@
 #' ### Newlyn sea-surge data
 #'
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' kgaps_mle(newlyn, thresh)
+#' kgaps(newlyn, thresh)
 #' @export
-kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE) {
+kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
   if (!is.numeric(thresh) || length(thresh) != 1) {
     stop("thresh must be a numeric scalar")
   }
@@ -63,7 +63,7 @@ kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE) {
     stop("k must be a numeric scalar")
   }
   # Calculate sufficient statistics
-  ss <- kgaps_stats(data, thresh, k, inc_cens)
+  ss <- kgaps_stat(data, thresh, k, inc_cens)
   # If N0 = 0 then all exceedances occur singly (all K-gaps are positive)
   # and the likelihood is maximized at theta = 1.
   N0 <- ss$N0
@@ -92,7 +92,7 @@ kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE) {
   return(res)
 }
 
-# ================================ kgaps_stats ================================
+# ================================ kgaps_stat =================================
 
 #' Sufficient statistics for the K-gaps model
 #'
@@ -147,13 +147,13 @@ kgaps_mle <- function(data, thresh, k = 1, inc_cens = FALSE) {
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
 #'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
-#' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
+#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @examples
 #' u <- quantile(newlyn, probs = 0.90)
-#' kgaps_stats(newlyn, u)
+#' kgaps_stat(newlyn, u)
 #' @export
-kgaps_stats <- function(data, thresh, k = 1, inc_cens = FALSE) {
+kgaps_stat <- function(data, thresh, k = 1, inc_cens = FALSE) {
   if (any(is.na(data))) {
     stop("No missing values are allowed in ''data''")
   }

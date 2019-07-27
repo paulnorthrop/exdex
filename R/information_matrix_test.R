@@ -9,7 +9,7 @@
 #' @param thresh,k Numeric vectors.  \code{thresh} is a vector of
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
-#'   See \code{\link{kgaps_mle}} for more details.
+#'   See \code{\link{kgaps}} for more details.
 #'   The information matrix test is performed a over grid of all
 #'   combinations of threshold and \eqn{K} in the vectors \code{thresh}
 #'   and \code{k}.
@@ -19,7 +19,7 @@
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{https://doi.org/10.1214/09-AOAS292"}
 #' @return A list containing
-#' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
+#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.90)
@@ -28,7 +28,7 @@
 kgaps_imt <- function(data, thresh, k = 1) {
   # Function to return only the MLE of theta
   mle_only <- function(k, data, thresh) {
-    return(kgaps_mle(data, thresh, k, inc_cens = FALSE)$theta)
+    return(kgaps(data, thresh, k, inc_cens = FALSE)$theta)
   }
   theta <- T_mat <- p_mat <- NULL
   n_u <- length(thresh)

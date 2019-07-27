@@ -63,7 +63,7 @@
 #'   \url{https://doi.org/10.1007/s10687-007-0034-2}
 #' @references Ferro, C.A.T. (2003) Statistical methods for clusters of
 #'   extreme values. Ph.D. thesis, Lancaster University.
-#' @seealso \code{\link{kgaps_mle}} for maximum likelihood estimation of the
+#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.

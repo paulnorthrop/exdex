@@ -9,7 +9,7 @@
 }
 \arguments{
 \item{object}{An object of class \code{c("kgaps", "exdex")}, returned by
-\code{\link{kgaps_mle}}.}
+\code{\link{kgaps}}.}
 
 \item{parm}{Specifies which parameter is to be given a confidence interval.
 Here there is only one option: the extremal index \eqn{\theta}.}
@@ -45,7 +45,7 @@ A matrix with columns giving the lower and upper confidence limits.
 \description{
 \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
 Computes confidence intervals for \eqn{\theta} based on an object returned
-from \code{\link{kgaps_mle}}.  Two types of interval are returned:
+from \code{\link{kgaps}}.  Two types of interval are returned:
 (a) intervals based on approximate large-sample normality of the estimator
 of \eqn{\theta}, which are symmetric about the point estimate,
 and (b) likelihood-based intervals.
@@ -55,7 +55,7 @@ Add details
 }
 \examples{
 thresh <- quantile(newlyn, probs = 0.90)
-res <- kgaps_mle(newlyn, thresh)
+res <- kgaps(newlyn, thresh)
 confint(res)
 }
 \references{

@@ -85,7 +85,7 @@ Ferro, C.A.T. (2003) Statistical methods for clusters of
   extreme values. Ph.D. thesis, Lancaster University.
 }
 \seealso{
-\code{\link{kgaps_mle}} for maximum likelihood estimation of the
+\code{\link{kgaps}} for maximum likelihood estimation of the
   extremal index \eqn{\theta} using the K-gaps model.
 
 \code{\link{spm}} for estimation of the extremal index

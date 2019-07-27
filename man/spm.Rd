@@ -178,6 +178,6 @@ maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 \code{\link{confint.spm}} to estimate confidence intervals
   for \eqn{theta}.
 
-\code{\link{kgaps_mle}} for maximum likelihood estimation of the
+\code{\link{kgaps}} for maximum likelihood estimation of the
   extremal index \eqn{\theta} using the K-gaps model.
 }

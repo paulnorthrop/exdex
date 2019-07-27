@@ -484,13 +484,13 @@ print.confint_spm <- function(x, ...) {
 #'
 #' \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
 #' Computes confidence intervals for \eqn{\theta} based on an object returned
-#' from \code{\link{kgaps_mle}}.  Two types of interval are returned:
+#' from \code{\link{kgaps}}.  Two types of interval are returned:
 #' (a) intervals based on approximate large-sample normality of the estimator
 #' of \eqn{\theta}, which are symmetric about the point estimate,
 #' and (b) likelihood-based intervals.
 #'
 #' @param object An object of class \code{c("kgaps", "exdex")}, returned by
-#'   \code{\link{kgaps_mle}}.
+#'   \code{\link{kgaps}}.
 #' @param parm Specifies which parameter is to be given a confidence interval.
 #'   Here there is only one option: the extremal index \eqn{\theta}.
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
@@ -522,7 +522,7 @@ print.confint_spm <- function(x, ...) {
 #'   \url{https://doi.org/10.1214/09-AOAS292}
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' res <- kgaps_mle(newlyn, thresh)
+#' res <- kgaps(newlyn, thresh)
 #' confint(res)
 #' @export
 confint.kgaps <- function (object, parm = "theta",

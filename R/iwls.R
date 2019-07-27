@@ -47,17 +47,15 @@
 #'   threshold exceedances.  Also, the gaps are scaled as detailed above,
 #'   not by their mean.
 #' @return A list containing
-#'   \itemize{
-#'     \item {\code{theta} : } {The estimate of \eqn{\theta}.}
-#'     \item {\code{se} : } {(If \code{conf} is supplied) the estimated
+#'     \item{\code{theta} }{The estimate of \eqn{\theta}.}
+#'     \item{\code{se} }{(If \code{conf} is supplied) the estimated
 #'       standard error of the estimate.}
-#'     \item {\code{theta_ci} : } {(If \code{conf} is supplied) a numeric
+#'     \item{\code{theta_ci} }{(If \code{conf} is supplied) a numeric
 #'       vector of length two giving lower and upper confidence limits for
 #'       \eqn{\theta}.}
-#'     \item {\code{conv} : } {A convergence indicator: 0 indicates successful
+#'     \item{\code{conv} }{A convergence indicator: 0 indicates successful
 #'       convergence; 1 indicates that \code{maxit} has been reached.}
-#'     \item {\code{niter} : } {The number of iterations performed.}
-#'   }
+#'     \item{\code{niter} }{The number of iterations performed.}
 #' @references Suveges, M. (2007) Likelihood estimation of the extremal
 #'   index. \emph{Extremes}, \strong{10}, 41-55.
 #'   \url{https://doi.org/10.1007/s10687-007-0034-2}

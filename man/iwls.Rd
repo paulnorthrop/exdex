@@ -19,17 +19,15 @@ bootstrapping.}
 }
 \value{
 A list containing
-  \itemize{
-    \item {\code{theta} : } {The estimate of \eqn{\theta}.}
-    \item {\code{se} : } {(If \code{conf} is supplied) the estimated
+    \item{\code{theta} }{The estimate of \eqn{\theta}.}
+    \item{\code{se} }{(If \code{conf} is supplied) the estimated
       standard error of the estimate.}
-    \item {\code{theta_ci} : } {(If \code{conf} is supplied) a numeric
+    \item{\code{theta_ci} }{(If \code{conf} is supplied) a numeric
       vector of length two giving lower and upper confidence limits for
       \eqn{\theta}.}
-    \item {\code{conv} : } {A convergence indicator: 0 indicates successful
+    \item{\code{conv} }{A convergence indicator: 0 indicates successful
       convergence; 1 indicates that \code{maxit} has been reached.}
-    \item {\code{niter} : } {The number of iterations performed.}
-  }
+    \item{\code{niter} }{The number of iterations performed.}
 }
 \description{
 Estimates the extremal index \eqn{\theta} using the iterated weighted least

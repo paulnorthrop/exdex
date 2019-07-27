@@ -2,7 +2,7 @@
 % Please edit documentation in R/iwls_methods.R
 \name{print.iwls}
 \alias{print.iwls}
-\title{Print method for an iwls object}
+\title{Print method for an \code{"iwls"} object}
 \usage{
 \method{print}{iwls}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }

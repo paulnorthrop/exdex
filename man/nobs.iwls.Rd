@@ -2,7 +2,7 @@
 % Please edit documentation in R/iwls_methods.R
 \name{nobs.iwls}
 \alias{nobs.iwls}
-\title{Extract the Number of Observations from a Fit}
+\title{Extract the Number of Observations from an \code{"iwls"} object}
 \usage{
 \method{nobs}{iwls}(object, ...)
 }

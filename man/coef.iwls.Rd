@@ -2,7 +2,7 @@
 % Please edit documentation in R/iwls_methods.R
 \name{coef.iwls}
 \alias{coef.iwls}
-\title{Extract Model Coefficients}
+\title{Extract Model Coefficients from an \code{"iwls"} object}
 \usage{
 \method{coef}{iwls}(object, ...)
 }

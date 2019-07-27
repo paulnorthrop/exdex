@@ -1,6 +1,6 @@
 # =========================== coef.iwls() ================================== #
 
-#' Extract Model Coefficients
+#' Extract Model Coefficients from an \code{"iwls"} object
 #'
 #' \code{coef} method for class \code{c("iwls", "exdex")}.
 #'
@@ -18,7 +18,7 @@ coef.iwls <- function(object, ...) {
 
 # =========================== nobs.iwls() ================================== #
 
-#' Extract the Number of Observations from a Fit
+#' Extract the Number of Observations from an \code{"iwls"} object
 #'
 #' \code{nobs} method for class \code{c("iwls", "exdex")}.
 #'
@@ -37,7 +37,7 @@ nobs.iwls <- function(object, ...) {
 
 # ============================ print.iwls() ================================== #
 
-#' Print method for an iwls object
+#' Print method for an \code{"iwls"} object
 #'
 #' \code{print} method for class \code{c("iwls", "exdex")}.
 #'

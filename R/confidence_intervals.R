@@ -509,12 +509,18 @@ print.confint_spm <- function(x, ...) {
 #'   estimated for \eqn{\log\theta}{log\theta} and then transformed back
 #'   to the \eqn{\theta}-scale.
 #' @param ... Further arguments. None are used currently.
-#' @details Add details
+#' @details Two type of interval are calculated: (a) an interval based on the
+#'   approximate large sample normality of the estimator of \eqn{\theta}
+#'   (if \code{conf_scale = "theta"}) or of \eqn{\log\theta}{log\theta}
+#'   (if \code{conf_scale = "log"}) and (b) a likelihood-based interval,
+#'   based on the approximate large sample chi-squared, with 1 degree of
+#'   freedom, distribution of the log-likelihood ratio statistic.
 #' @return A matrix with columns giving the lower and upper confidence limits.
 #'   These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
 #'   (by default 2.5\% and 97.5\%).
 #'   The row names indicate the type of interval:
-#'   \code{sym} for symmetric and \code{lik} for likelihood-based.
+#'   \code{norm} for intervals based on large sample normality and \code{lik}
+#'   for likelihood-based intervals.
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.

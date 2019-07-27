@@ -40,7 +40,8 @@ A matrix with columns giving the lower and upper confidence limits.
   These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
   (by default 2.5\% and 97.5\%).
   The row names indicate the type of interval:
-  \code{sym} for symmetric and \code{lik} for likelihood-based.
+  \code{norm} for intervals based on large sample normality and \code{lik}
+  for likelihood-based intervals.
 }
 \description{
 \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
@@ -51,7 +52,12 @@ of \eqn{\theta}, which are symmetric about the point estimate,
 and (b) likelihood-based intervals.
 }
 \details{
-Add details
+Two type of interval are calculated: (a) an interval based on the
+  approximate large sample normality of the estimator of \eqn{\theta}
+  (if \code{conf_scale = "theta"}) or of \eqn{\log\theta}{log\theta}
+  (if \code{conf_scale = "log"}) and (b) a likelihood-based interval,
+  based on the approximate large sample chi-squared, with 1 degree of
+  freedom, distribution of the log-likelihood ratio statistic.
 }
 \examples{
 thresh <- quantile(newlyn, probs = 0.90)

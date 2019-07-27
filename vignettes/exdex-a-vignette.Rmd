@@ -1,0 +1,77 @@
+---
+title: "Introducing exdex: Estimation of the Extremal Index"
+author: "Paul Northrop"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Introducing exdex: Estimation of the Extremal Index}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: exdex.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+```
+
+The extremal value index $\theta$ is a measure of the extent of clustering in the extremes of a stationary process, representing the reciprocal of the mean cluster size.  The main purpose of the *exdex* package is to implement the semiparametric maxima estimators developed in @Northrop2015 and @BB2018.  A feature of these works is the use of sliding block maxima, that is, the use of *all* blocks of consecutive values, rather than maxima over disjoint block of values.  This improves efficiency of estimation, albeit at the cost of complicating theoretical work.  Also provided are functions to estimate $\theta$ using two threshold-based methods: the iterated weighted least squares estimator (@Suveges2007) and the $K$-gaps estimator (@SD2010).
+
+## Semiparametric maxima estimators
+
+These estimators are based on the approximate relation $G(u_b) = F(u_b)^{b\theta}$ between the marginal distribution function $F$ of the process and the distribution function $G$ of the block maximum $M$ of $b$ consecutive variables, which applies provided that $b$ and $u_b$ are large. If $G = F^{b\theta}$ then $Y = -b\log F(M)$ has an exponential($\theta$) distribution and $Z = b(1 - F(M))$ is a multiple $b$ of a beta($1, b\theta$) distribution.  
+
+Let $(M_1, \ldots, M_k)$ be a sample of block maxima of $b$ consecutive values.  The marginal distribution function $F$ is not known so we estimate it using the empirical distribution function $\hat{F}$ set
+\[ \quad Y_i = -b \log \hat{F}(M_i), \quad Z_i = b(1 - \hat{F}(M_i)), \quad i = 1, \ldots, k \]
+and define the estimators
+\[ \hat{\theta}_N = \left( \frac{1}{k} \sum_{i=1}^k Y_i \right)^{-1} \quad 
+\hat{\theta}_{BB} = \left( \frac{1}{k} \sum_{i=1}^k Z_i \right)^{-1}. \]
+These two estimators are equivalent asymptotically.
+The former is the estimator proposed in @Northrop2015. @BB2018 derived asymptotic properties of the latter, because it is more amenable to mathematical analysis.
+
+The function `spm` provides three estimators, estimated using both sliding and disjoint block maxima and four types of bias-adjustment.  The estimators are $\hat{\theta}_N, \hat{\theta}_{BB}$ and $\hat{\theta}_{BB}-1/b$. The latter is motivated by the observation that E$(Z)  = (\theta + 1/b)^{-1} < \theta^{-1}$ and therefore the substraction of $1 / b$ provides further bias-adjustment.  In fact empirical results indicate that $\hat{\theta}_N$ and $\hat{\theta}_{BB} - 1/b$ produce almost identical estimates.
+
+### Newlyn Sea Surges
+
+We provide an illustration of the `spm function` using the `newlyn` data, a time series of 2894 maximum seas surges measured at Newlyn, Cornwall, UK over the period 1971-1976.
+
+```{r}
+library(exdex)
+theta <- spm(newlyn, 20)
+# Estimates: BB2018b is BB2018 - 1/b
+theta
+# Estimates, SEs and biad-adjustments
+summary(theta)
+```
+
+There is a `confint` method for calculating confidence intervals.  The likelihood-based intervals are based on an adjustment (performed by the `chandwich` package @chandwich)  of the naive (pseudo-)loglikelihood so that the curvature of the adjusted loglikelihood agrees with the estimated standard errors.
+
+```{r, fig.width=7, fig.height= 6}
+# Sliding maxima, symmetric intervals
+conf <- confint(theta)
+# Sliding maxima, likelihood-based intervals
+conf <- confint(theta, interval_type = "lik")
+plot(conf)
+```
+
+### Block size selection
+
+```{r, fig.width=7, fig.height= 6}
+# Plot like the top left of Northrop (2015)
+# Remove the last 14 values because 2880 has lots of factors
+b_vals <- c(2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,32,36,40,45,48,54,60)
+res <- choose_b(newlyn[1:2880], b_vals)
+# Some b are too small for the sampling variance of the sliding blocks
+# estimator to be estimated
+plot(res)
+```
+
+## Threshold-based estimators
+
+## References
+
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({  "HTML-CSS": { minScaleAdjust: 125, availableFonts: [] }  });
+</script>
+

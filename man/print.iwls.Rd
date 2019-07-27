@@ -23,14 +23,9 @@ The argument \code{x}, invisibly, as for all
 }
 \details{
 Prints the original call to \code{\link{iwls}}
-  and the estimates of the extremal index \eqn{\theta}, based on all three
-  variants of the semiparametric maxima estimator and both sliding
-  and disjoint blocks.
+  and the estimate of the extremal index \eqn{\theta}.
 }
 \seealso{
 \code{\link{iwls}} for maximum likelihood estimation of the
   extremal index \eqn{\theta} using the K-gaps model.
-
-\code{\link{confint.iwls}}: \code{confint} method for
-  class \code{"iwls"}.
 }

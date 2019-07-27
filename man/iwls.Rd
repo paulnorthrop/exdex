@@ -4,34 +4,29 @@
 \alias{iwls}
 \title{Iterated weighted least squares estimation of the extremal index}
 \usage{
-iwls(data, thresh, conf = NULL, maxit = 100)
+iwls(data, thresh, maxit = 100)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
 \item{thresh}{A numeric scalar.  Extreme value threshold applied to data.}
 
-\item{conf}{A numeric scalar.  If \code{conf} is supplied then a
-\code{conf}\% confidence interval for \eqn{\theta} is estimated using
-bootstrapping.}
-
 \item{maxit}{A numeric scalar.  The maximum number of iterations.}
 }
 \value{
-A list containing
+An object (a list) of class \code{"iwls", "exdex"} containing
     \item{\code{theta} }{The estimate of \eqn{\theta}.}
-    \item{\code{se} }{(If \code{conf} is supplied) the estimated
-      standard error of the estimate.}
-    \item{\code{theta_ci} }{(If \code{conf} is supplied) a numeric
-      vector of length two giving lower and upper confidence limits for
-      \eqn{\theta}.}
     \item{\code{conv} }{A convergence indicator: 0 indicates successful
       convergence; 1 indicates that \code{maxit} has been reached.}
     \item{\code{niter} }{The number of iterations performed.}
+    \item{\code{n_gaps }}{The number of time gaps between successive
+      exceedances.}
+    \item{\code{call }}{The call to \code{iwls}.}
 }
 \description{
 Estimates the extremal index \eqn{\theta} using the iterated weighted least
-squares method of Suveges (2007)
+squares method of Suveges (2007).  At the moment no estimates of
+uncertainty are provided.
 }
 \details{
 The iterated weighted least squares algorithm on page 46 of

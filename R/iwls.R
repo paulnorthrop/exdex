@@ -3,13 +3,11 @@
 #' Iterated weighted least squares estimation of the extremal index
 #'
 #' Estimates the extremal index \eqn{\theta} using the iterated weighted least
-#' squares method of Suveges (2007)
+#' squares method of Suveges (2007).  At the moment no estimates of
+#' uncertainty are provided.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param thresh A numeric scalar.  Extreme value threshold applied to data.
-#' @param conf  A numeric scalar.  If \code{conf} is supplied then a
-#'   \code{conf}\% confidence interval for \eqn{\theta} is estimated using
-#'   bootstrapping.
 #' @param maxit A numeric scalar.  The maximum number of iterations.
 #' @details The iterated weighted least squares algorithm on page 46 of
 #'   Suveges (2007) is used to estimate the value of the extremal index.
@@ -46,16 +44,14 @@
 #'   typo: \eqn{N_c + 1} should be \eqn{N}, where \eqn{N} is the number of
 #'   threshold exceedances.  Also, the gaps are scaled as detailed above,
 #'   not by their mean.
-#' @return A list containing
+#' @return An object (a list) of class \code{"iwls", "exdex"} containing
 #'     \item{\code{theta} }{The estimate of \eqn{\theta}.}
-#'     \item{\code{se} }{(If \code{conf} is supplied) the estimated
-#'       standard error of the estimate.}
-#'     \item{\code{theta_ci} }{(If \code{conf} is supplied) a numeric
-#'       vector of length two giving lower and upper confidence limits for
-#'       \eqn{\theta}.}
 #'     \item{\code{conv} }{A convergence indicator: 0 indicates successful
 #'       convergence; 1 indicates that \code{maxit} has been reached.}
 #'     \item{\code{niter} }{The number of iterations performed.}
+#'     \item{\code{n_gaps }}{The number of time gaps between successive
+#'       exceedances.}
+#'     \item{\code{call }}{The call to \code{iwls}.}
 #' @references Suveges, M. (2007) Likelihood estimation of the extremal
 #'   index. \emph{Extremes}, \strong{10}, 41-55.
 #'   \url{https://doi.org/10.1007/s10687-007-0034-2}
@@ -69,7 +65,8 @@
 #' thresh <- quantile(newlyn, probs = 0.90)
 #' iwls(newlyn, thresh)
 #' @export
-iwls <- function(data, thresh, conf = NULL, maxit = 100) {
+iwls <- function(data, thresh, maxit = 100) {
+  Call <- match.call(expand.dots = TRUE)
   if (!is.numeric(thresh) || length(thresh) != 1) {
     stop("thresh must be a numeric scalar")
   }
@@ -85,6 +82,7 @@ iwls <- function(data, thresh, conf = NULL, maxit = 100) {
   # Inter-exceedances times, (largest first) 1-gaps, number of non-zero 1-gaps
   T_u <- diff(exc_u)
   S_1 <- pmax(T_u - 1, 0)
+  n_gaps <- length(S_1)
   # Initial value of n_wls (the number of non-zero 1-gaps)
   n_wls <- length(S_1 > 0)
   # Sort the 1-gaps (largest to smallest) and scale by the sample proportion
@@ -111,10 +109,10 @@ iwls <- function(data, thresh, conf = NULL, maxit = 100) {
   conv <- ifelse(diff_n_wls > 0, 1, 0)
   n_wls <- temp$n_wls
   theta <- temp$theta
-  theta_se <- NULL
-  conf_int <- NULL
-  return(list(theta = theta, se = theta_se, theta_ci = conf_int,
-              conv = conv, niter = niter))
+  res <- list(theta = theta, conv = conv, niter = niter, n_gaps = n_gaps,
+              call = Call)
+  class(res) <- c("iwls", "exdex")
+  return(res)
 }
 
 # ================================== iwls_fun =================================

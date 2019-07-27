@@ -64,11 +64,29 @@ likelihood-based intervals.
 Using \code{type = "none"} is \emph{not} advised because then the
 intervals are based on naive estimated standard errors.  In particular,
 if (the default) \code{sliding = TRUE} was used in the call to
-\code{\link{spm}} then the likelihood-based confidence intervals provide
-\emph{vast} underestimates of uncertainty.}
+\code{\link{spm}} then the unadjusted likelihood-based confidence
+intervals provide \emph{vast} underestimates of uncertainty.}
 }
 \description{
-Description
+A plot to aid the choice of the block length \code{b} to supply to
+\code{\link{spm}}.  The general idea is to select the smallest value of
+\code{b} above which estimates of the extremal index \eqn{\theta}
+appear to be constant in \code{b}, taking into account sampling variability.
+}
+\details{
+For each block size in \code{b} the extremal index \eqn{\theta}
+  is estimated using \code{\link{spm}}.  The estimates of \eqn{\theta}
+  approximate \code{conf}\% confidence intervals for \eqn{\theta} are
+  stored for plotting (by \code{\link{plot.choose_b}})
+  to produce a simple graphical diagnostic to inform the choice of
+  block size.  This plot is used to choose a block size above which the
+  underlying value of \eqn{\theta} may be approximately constant.
+  This is akin to a threshold stability plot: see Chapter 4 of Coles (2001),
+  for example.
+
+  For very small block sizes it may not be possible to estimate the
+  confidence intervals.  See \strong{Details} in \code{\link{spm}}.
+  For any such block sizes the intervals will be missing from the plot.
 }
 \examples{
 \dontrun{
@@ -90,6 +108,10 @@ plot(res500, estimator = "BB2018", ylim = c(0, 1))
 }
 }
 \references{
+Coles, S. G. (2001) \emph{An Introduction to Statistical
+  Modeling of Extreme Values}, Springer-Verlag, London.
+  \url{http://dx.doi.org/10.1007/978-1-4471-3675-0_3}
+
 Northrop, P. J. (2015) An efficient semiparametric maxima
 estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 \url{https://doi.org/10.1007/s10687-015-0221-5}

@@ -15,7 +15,8 @@ Description: Performs frequentist inference for the extremal index of a
   Suveges (2007) <doi:10.1007/s10687-007-0034-2>
   and
   Suveges and Davison (2010)  <doi:10.1214/09-AOAS292>.
-Imports: chandwich,
+Imports: 
+    chandwich,
     graphics,
     methods,
     Rcpp,
@@ -24,7 +25,8 @@ Imports: chandwich,
 License: GPL (>= 2)
 Depends:
     R (>= 3.3.0)
-Suggests: knitr,
+Suggests: 
+    knitr,
     revdbayes,
     rmarkdown,
     testthat,

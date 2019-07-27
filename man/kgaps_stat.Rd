@@ -24,14 +24,14 @@ first and last observation.  See Attalides (2015) for details.}
 }
 \value{
 A list containing the sufficient statistics, with components
-  \itemize{
-    \item {\code{N0} : } {the number of zero K-gaps}
-    \item {\code{N1} : } {contribution from non-zero K-gaps (see
+    \item{\code{N0} }{the number of zero K-gaps}
+    \item{\code{N1} }{contribution from non-zero K-gaps (see
       \strong{Details})}
-    \item {\code{sum_qs} : } {the sum of the (scaled) K-gaps, i.e.
+    \item{\code{sum_qs} }{the sum of the (scaled) K-gaps, i.e.
       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
       is estimated by the proportion of threshold exceedances.}
-  }
+    \item{\code{n_kgaps} }{the number of \eqn{K}-gaps, including 2
+      censored \eqn{K}-gaps if \code{inc_cens = TRUE}.}
 }
 \description{
 Calculates sufficient statistics for the K-gaps model for the extremal index

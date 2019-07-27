@@ -10,7 +10,7 @@
 #'   \item{\code{\link{spm}}: semiparametric maxima estimator:
 #'     (Northrop, 2015; Berghaus and Bucher, 2018)}
 #'   \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator
-#'     (Suveges and Davision, 2010)}
+#'     (Suveges and Davison, 2010)}
 #'   \item{\code{\link{iwls}}: iterated weighted least squares estimator:
 #'     (Suveges, 2007)}
 #' }

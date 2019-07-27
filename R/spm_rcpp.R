@@ -92,7 +92,7 @@
 #'             blocks will be missing in \code{se_sl} in the returned object,}
 #'       \item{if \code{bias_adjust == "BB3"} then bias-adjustment
 #'             based on \code{bias_adjust == "BB1"} will instead be performed
-#'             when using sliding bocks, because the former relies on the
+#'             when using sliding blocks, because the former relies on the
 #'             estimated variances of the estimators.}
 #'     }
 #'  Similarly, bias adjustment under \code{adjust = "BB3"} and/or subtraction
@@ -124,7 +124,7 @@
 #'     \eqn{\theta} before the constraint that they lie in (0, 1] has been
 #'     applied.}
 #'   \item{data_sl, data_dj}{Matrices containing the \eqn{Y}-data and
-#'     \eqn{Z}-data for the sliding an dijoint maxima respectively.
+#'     \eqn{Z}-data for the sliding an disjoint maxima respectively.
 #'     The first columns are the \eqn{Y}-data, the second columns the
 #'     \eqn{Z}-data.}
 #'   \item{sigma2dj, sigma2dj_for_sl}{Estimates of the variance

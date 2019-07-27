@@ -208,7 +208,7 @@ kgaps_stat <- function(data, thresh, k = 1, inc_cens = FALSE) {
 
 # =============================== kgaps_loglik ================================
 
-kgaps_loglik <- function(theta, N0, N1, sum_qs){
+kgaps_loglik <- function(theta, N0, N1, sum_qs, n_kgaps){
   if (theta < 0 || theta > 1) {
     return(-Inf)
   }

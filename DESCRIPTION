@@ -8,9 +8,10 @@ Authors@R: c(
       role = c("aut", "cre", "cph")),
     person("Constantinos", "Christodoulides", role = c("aut", "cph"))
     )
-Description: Performs frequentist inference for the extremal index using the 
-  methodologies described in 
+Description: Performs frequentist inference for the extremal index of a 
+  stationary time series using the methodologies described in 
   Northrop (2015) <doi:10.1007/s10687-015-0221-5>,
+  Berghaus and Bucher (2018) <doi:10.1214/17-AOS1621>
   Suveges (2007) <doi:10.1007/s10687-007-0034-2>
   and
   Suveges and Davison (2010)  <doi:10.1214/09-AOAS292>.

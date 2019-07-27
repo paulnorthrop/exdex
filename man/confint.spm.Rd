@@ -140,9 +140,8 @@ The likelihood-based intervals are estimated using the
 }
 \examples{
 res <- spm(newlyn, 20)
-# I can't include these examples until new chandwich is on CRAN
-#confint(res)
-#confint(res, interval_type = "lik")
+confint(res)
+confint(res, interval_type = "lik")
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

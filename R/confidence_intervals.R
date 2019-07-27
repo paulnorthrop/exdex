@@ -122,9 +122,8 @@
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
 #' res <- spm(newlyn, 20)
-#' # I can't include these examples until new chandwich is on CRAN
-#' #confint(res)
-#' #confint(res, interval_type = "lik")
+#' confint(res)
+#' confint(res, interval_type = "lik")
 #' @seealso \code{\link{plot.confint_spm}}: \code{plot} method for
 #'   class \code{c("confint_spm", "exdex")}.
 #' @export

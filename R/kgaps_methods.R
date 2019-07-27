@@ -66,9 +66,7 @@ nobs.kgaps <- function(object, ...) {
 #' @param digits The argument \code{digits} to \code{\link{print.default}}.
 #' @param ... Additional arguments.  None are used in this function.
 #' @details Prints the original call to \code{\link{kgaps}}
-#'   and the estimates of the extremal index \eqn{\theta}, based on all three
-#'   variants of the semiparametric maxima estimator and both sliding
-#'   and disjoint blocks.
+#'   and the estimate of the extremal index \eqn{\theta}.
 #' @return The argument \code{x}, invisibly, as for all
 #'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the

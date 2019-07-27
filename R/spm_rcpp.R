@@ -82,7 +82,15 @@
 #'   version tailored to the Northrop (2015) estimator that uses the
 #'   \eqn{Y}-data (\code{varN = TRUE}).
 #'
-#'   The estimator of the sampling variance of the sliding blocks estimator is
+#'   The estimates of the sampling variances of the sliding blocks estimators
+#'   are inferred from those of the disjoint blocks estimators (see page 2319
+#'   of Berhaus and Bucher (2018)).  The calculation of the latter uses a set
+#'   of disjoint block maxima.  If \code{length(data)} is not an integer
+#'   multiple of \code{b} then there will be more than one set of these, and
+#'   all are equally valid.  In this event we perform the calculation for all
+#'   such sets and use the mean of the resulting estimates.
+#'
+#'   This estimator of the sampling variance of the sliding blocks estimator is
 #'   not constrained to be positive: a negative estimate may result if the
 #'   block size is small.  In this event
 #'   \strong{no warning will be given until the returned object is printed} and,

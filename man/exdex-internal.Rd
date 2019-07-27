@@ -15,6 +15,10 @@
 \alias{disjoint_maxima}
 \alias{all_disjoint_maxima}
 \alias{all_maxima}
+\alias{kgaps_loglik}
+\alias{kgaps_conf_int}
+\alias{kgaps_quad_solve}
+\alias{iwls_fun}
 \title{Internal exdex functions}
 \usage{
 spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
@@ -45,6 +49,14 @@ disjoint_maxima(x, b = 1, which_dj = c("first", "last"))
 all_disjoint_maxima(x, b = 1, which_dj = c("all", "first", "last"))
 
 all_maxima(x, b = 1, which_dj = c("all", "first", "last"))
+
+kgaps_loglik(theta, N0, N1, sum_qs, n_kgaps)
+
+kgaps_conf_int(theta_mle, ss, conf = 95)
+
+kgaps_quad_solve(N0, N1, sum_qs)
+
+iwls_fun(n_wls, N, S_1_sort, exp_qs, ws, nx)
 }
 \description{
 Internal exdex functions

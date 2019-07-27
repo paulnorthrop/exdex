@@ -582,3 +582,100 @@ all_maxima <- function(x, b = 1, which_dj = c("all", "first", "last")){
   xd <- temp[-(1:n_max), , drop = FALSE]
   return(list(ys = s_max$y, xs = s_max$x, yd = yd, xd = xd))
 }
+
+# ============== Functions used by kgaps() and confint.kgaps() ============== #
+
+# =============================== kgaps_loglik ================================
+#' @keywords internal
+#' @rdname exdex-internal
+kgaps_loglik <- function(theta, N0, N1, sum_qs, n_kgaps){
+  if (theta < 0 || theta > 1) {
+    return(-Inf)
+  }
+  loglik <- 0
+  if (N1 > 0) {
+    loglik <- loglik + 2 * N1 * log(theta) - sum_qs * theta
+  }
+  if (N0 > 0) {
+    loglik <- loglik + N0 * log(1 - theta)
+  }
+  return(loglik)
+}
+
+# ============================== kgaps_conf_int ===============================
+#' @keywords internal
+#' @rdname exdex-internal
+kgaps_conf_int <- function(theta_mle, ss, conf = 95) {
+  cutoff <- stats::qchisq(conf / 100, df = 1)
+  theta_list <- c(list(theta = theta_mle), ss)
+  max_loglik <- do.call(kgaps_loglik, theta_list)
+  ob_fn <- function(theta) {
+    theta_list$theta <- theta
+    loglik <- do.call(kgaps_loglik, theta_list)
+    return(2 * (max_loglik - loglik) - cutoff)
+  }
+  ci_low <- 0
+  ci_up <- 1
+  if (ss$N1 > 0) {
+    ci_low <- stats::uniroot(ob_fn, c(0, theta_mle))$root
+  }
+  if (ss$N0 > 0) {
+    ci_up <- stats::uniroot(ob_fn, c(theta_mle, 1))$root
+  }
+  return(c(ci_low, ci_up))
+}
+
+# ============================== kgaps_quad_solve =============================
+#' @keywords internal
+#' @rdname exdex-internal
+kgaps_quad_solve <- function(N0, N1, sum_qs) {
+  aa <- sum_qs
+  bb <- -(N0 + 2 * N1 + sum_qs)
+  cc <- 2 * N1
+  qq <- -(bb - sqrt(bb ^ 2 - 4 * aa * cc)) / 2
+  theta_mle <- cc / qq
+  return(theta_mle)
+}
+
+# ========================= Function used by iwls() ========================= #
+
+# ================================== iwls_fun =================================
+#' @keywords internal
+#' @rdname exdex-internal
+iwls_fun <- function(n_wls, N, S_1_sort, exp_qs, ws, nx) {
+  #
+  # This function implements the algorithm on page 46 of Suveges (2007).
+  # [In step (1) there is a typo in the paper: in x_i the N_C+1 should be N.]
+  #
+  # Args:
+  # n_wls    : A numeric scalar.  The number of the largest 1-gaps to include
+  #            in the weighted least squares estimation.
+  # N        : A numeric scalar.  The number of threshold excesses.
+  # S_1_sort : A numeric N-vector.  Sorted (largest to smallest) scaled 1-gaps.
+  #            The scaling multiplies the raw 1-gaps by the sample proportion
+  #            of values that exceed u.
+  # exp_qs   : A numeric N-vector.  Standard exponential quantiles (order
+  #            statistics) for a sample of size N.
+  # ws       : A numeric N-vector.  Weights for the least squares fit.
+  # nx       : A numeric scalar.  The number of raw observations.
+  #
+  # Returns: A list with components
+  #    theta : A numeric scalar.  The new estimate of theta.
+  #    n_wls : A numeric scalar.  The new value of n_wls.
+  #
+  # Extract the values corresponding to the largest n_wls 1-gaps
+  # Extract the largest n_wls scaled 1-gaps (ordered largest to smallest)
+  chi_i <- S_1_sort[1:n_wls]
+  # Standard exponential quantiles, based on N 1-gaps (largest to smallest)
+  x_i <- exp_qs[1:n_wls]
+  # Extract the weights for the values in chi_i
+  ws <- ws[1:n_wls]
+  # Weighted least squares for (chi_i, x_i)
+  temp <- stats::lm(chi_i ~ x_i, weights = ws)
+  ab <- temp$coefficients
+  # Estimate theta
+  theta <- min(exp(ab[1] / ab[2]), 1)
+  # Update n_wls
+  n_wls <- floor(theta * (N - 1))
+  return(list(theta = theta, n_wls = n_wls))
+}

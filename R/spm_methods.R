@@ -182,7 +182,8 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 #' @return Returns a list containing the list element \code{object$call}
 #'   and a numeric matrix \code{summary} giving, for all three variants of the
 #'   semiparametric estimator and both sliding and disjoint blocks,
-#'   the (bias-adjusted) Estimate, the estimated standard error (Std. Error),
+#'   the (bias-adjusted) Estimate of the extremal index \eqn{\theta},
+#'   the estimated standard error (Std. Error),
 #'   and the bias adjustment (Bias adj.) applied to obtain the estimate, i.e.
 #'   the value subtracted from the raw estimate.  If any of the
 #'   (bias-adjusted) estimates are greater than 1 then a column

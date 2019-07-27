@@ -72,8 +72,8 @@ likelihood-based intervals.
 Using \code{type = "none"} is \emph{not} advised because then the
 intervals are based on naive estimated standard errors.  In particular,
 if (the default) \code{sliding = TRUE} was used in the call to
-\code{\link{spm}} then the likelihood-based confidence intervals provide
-\emph{vast} underestimates of uncertainty.}
+\code{\link{spm}} then the unadjusted likelihood-based confidence
+intervals provide \emph{vast} underestimates of uncertainty.}
 
 \item{...}{Further arguments. None are used currently.}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm_methods.R
 \name{nobs.spm}
 \alias{nobs.spm}
-\title{Extract the Number of Observations from a Fit}
+\title{Extract the Number of Observations from an \code{"spm"} object}
 \usage{
 \method{nobs}{spm}(object, maxima = c("sliding", "disjoint"), ...)
 }

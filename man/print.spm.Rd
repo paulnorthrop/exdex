@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm_methods.R
 \name{print.spm}
 \alias{print.spm}
-\title{Print method for an spm object}
+\title{Print method for an \code{"spm"} object}
 \usage{
 \method{print}{spm}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }

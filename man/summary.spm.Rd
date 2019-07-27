@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm_methods.R
 \name{summary.spm}
 \alias{summary.spm}
-\title{Summary method for an spm object}
+\title{Summary method for an \code{"spm"} object}
 \usage{
 \method{summary}{spm}(object, digits = max(3, getOption("digits") - 3L),
   ...)

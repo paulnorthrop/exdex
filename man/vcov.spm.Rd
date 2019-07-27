@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm_methods.R
 \name{vcov.spm}
 \alias{vcov.spm}
-\title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
+\title{Calculate Variance-Covariance Matrix for an \code{"spm"} object}
 \usage{
 \method{vcov}{spm}(object, maxima = c("sliding", "disjoint"),
   estimator = "all", ...)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm_methods.R
 \name{coef.spm}
 \alias{coef.spm}
-\title{Extract Model Coefficients}
+\title{Extract Model Coefficients from an \code{"spm"} object}
 \usage{
 \method{coef}{spm}(object, maxima = c("sliding", "disjoint"),
   estimator = "all", constrain = FALSE, ...)

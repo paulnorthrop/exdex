@@ -37,7 +37,7 @@ less than 0 are set to 0.}
 }
 \value{
 A matrix with columns giving the lower and upper confidence limits.
-  These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
+  These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
   (by default 2.5\% and 97.5\%).
   The row names indicate the type of interval:
   \code{sym} for symmetric and \code{lik} for likelihood-based.

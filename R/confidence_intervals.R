@@ -86,7 +86,7 @@
 #' @return A list of class c("confint_spm", "exdex") containing the
 #'   following components.
 #'   \item{cis}{A matrix with columns giving the lower and upper confidence
-#'   limits. These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in
+#'   limits. These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in
 #'   \% (by default 2.5\% and 97.5\%).
 #'   The row names are a concatentation of the variant of the estimator
 #'   (\code{N2015} for Northrop (2015), \code{BB2018} for
@@ -511,7 +511,7 @@ print.confint_spm <- function(x, ...) {
 #' @param ... Further arguments. None are used currently.
 #' @details Add details
 #' @return A matrix with columns giving the lower and upper confidence limits.
-#'   These will be labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
+#'   These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
 #'   (by default 2.5\% and 97.5\%).
 #'   The row names indicate the type of interval:
 #'   \code{sym} for symmetric and \code{lik} for likelihood-based.

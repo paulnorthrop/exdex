@@ -45,7 +45,7 @@ The sample K-gaps are
   K-gaps are independent, the log-likelihood of the K-gaps model is given
   by
   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
-    2 N_1 log \theta - \theta q (S_0 + ... + S_N),}{%
+    2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),}{%
     l(\theta; S_0, ..., S_N) = N_0 log(1 - \theta) + 2 N_1 log \theta -
     \theta q (S_0 + ... + S_N),}
    where \eqn{q} is the threshold exceedance probability,

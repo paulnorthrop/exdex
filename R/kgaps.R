@@ -45,7 +45,8 @@
 #'   statistics for the K-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link[revdbayes]{kgaps_post}} for Bayesian inference
+#' @seealso \code{\link[revdbayes]{kgaps_post}} in the
+#'   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
 #'   about \eqn{\theta} using the K-gaps model.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @examples
@@ -121,7 +122,7 @@ kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
 #'   K-gaps are independent, the log-likelihood of the K-gaps model is given
 #'   by
 #'   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
-#'     2 N_1 log \theta - \theta q (S_0 + ... + S_N),}{%
+#'     2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),}{%
 #'     l(\theta; S_0, ..., S_N) = N_0 log(1 - \theta) + 2 N_1 log \theta -
 #'     \theta q (S_0 + ... + S_N),}
 #'    where \eqn{q} is the threshold exceedance probability,

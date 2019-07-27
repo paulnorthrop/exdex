@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps_methods.R
 \name{coef.kgaps}
 \alias{coef.kgaps}
-\title{Extract Model Coefficients}
+\title{Extract Model Coefficients from a \code{"kgaps"} object}
 \usage{
 \method{coef}{kgaps}(object, ...)
 }

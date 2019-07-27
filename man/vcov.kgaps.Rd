@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps_methods.R
 \name{vcov.kgaps}
 \alias{vcov.kgaps}
-\title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
+\title{Calculate Variance-Covariance Matrix for a \code{"kgaps"} object}
 \usage{
 \method{vcov}{kgaps}(object, ...)
 }

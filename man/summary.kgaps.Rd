@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps_methods.R
 \name{summary.kgaps}
 \alias{summary.kgaps}
-\title{Summary method for an kgaps object}
+\title{Summary method for a \code{"kgaps"} object}
 \usage{
 \method{summary}{kgaps}(object, digits = max(3, getOption("digits") -
   3L), ...)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps_methods.R
 \name{nobs.kgaps}
 \alias{nobs.kgaps}
-\title{Extract the Number of Observations from a Fit}
+\title{Extract the Number of Observations from a \code{"kgaps"} object}
 \usage{
 \method{nobs}{kgaps}(object, ...)
 }

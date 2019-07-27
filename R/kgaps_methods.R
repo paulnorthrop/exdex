@@ -1,6 +1,6 @@
 # =========================== coef.kgaps() ================================== #
 
-#' Extract Model Coefficients
+#' Extract Model Coefficients from a \code{"kgaps"} object
 #'
 #' \code{coef} method for class \code{c("kgaps", "exdex")}.
 #'
@@ -18,7 +18,7 @@ coef.kgaps <- function(object, ...) {
 
 # =========================== vcov.kgaps() ================================== #
 
-#' Calculate Variance-Covariance Matrix for a Fitted Model Object
+#' Calculate Variance-Covariance Matrix for a \code{"kgaps"} object
 #'
 #' \code{vcov} method for class \code{c("kgaps", "exdex")}.
 #'
@@ -37,7 +37,7 @@ vcov.kgaps <- function(object, ...) {
 
 # =========================== nobs.kgaps() ================================== #
 
-#' Extract the Number of Observations from a Fit
+#' Extract the Number of Observations from a \code{"kgaps"} object
 #'
 #' \code{nobs} method for class \code{c("kgaps", "exdex")}.
 #'
@@ -57,7 +57,7 @@ nobs.kgaps <- function(object, ...) {
 
 # ============================ print.kgaps() ================================== #
 
-#' Print method for an kgaps object
+#' Print method for a \code{"kgaps"} object
 #'
 #' \code{print} method for class \code{c("kgaps", "exdex")}.
 #'
@@ -88,7 +88,7 @@ print.kgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 # =============================== summary.kgaps =============================== #
 
-#' Summary method for an kgaps object
+#' Summary method for a \code{"kgaps"} object
 #'
 #' \code{summary} method for class \code{"kgaps"}
 #'

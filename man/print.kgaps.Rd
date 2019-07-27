@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps_methods.R
 \name{print.kgaps}
 \alias{print.kgaps}
-\title{Print method for an kgaps object}
+\title{Print method for a \code{"kgaps"} object}
 \usage{
 \method{print}{kgaps}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }

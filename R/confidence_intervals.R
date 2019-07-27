@@ -71,6 +71,12 @@
 #'   \code{\link[chandwich]{adjust_loglik}} function in the
 #'   \code{\link[chandwich]{chandwich}} package, followed by a call to
 #'   \code{\link[chandwich]{conf_intervals}}.
+#'   This adjusts the naive (pseudo-)loglikelihood so that the curvature of
+#'   the adjust loglikelihood agrees with the estimated standard errors of
+#'   the estimators.  The option \code{type = "none"} should not be used in
+#'   practice because the resulting confidence intervals will be wrong.
+#'   In particular, in the intervals based on sliding maxima will provide
+#'   \emph{vast} underestimates of uncertainty.
 #'
 #'   If \code{object$se} contains \code{NA}s, because the block size \code{b}
 #'   was too small or too large in the call to \code{\link{spm}} then

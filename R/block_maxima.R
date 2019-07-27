@@ -35,22 +35,20 @@
 #'   Also returned are the values in \code{x} that contribute to each set
 #'   of block maxima.
 #' @return A list containing
-#'   \itemize{
-#'     \item {\code{ys} : } {a numeric vector containing one set of sliding
+#'     \item{\code{ys} }{a numeric vector containing one set of sliding
 #'       block maxima.}
-#'     \item {\code{xs} : } {a numeric vector containing the values that
+#'     \item{\code{xs}}{a numeric vector containing the values that
 #'       contribute to \code{ys}, that is, the whole input vector \code{x}.}
-#'     \item {\code{yd} : } {if \code{which_dj = "all"} a \code{floor(n / b)}
+#'     \item{\code{yd} }{if \code{which_dj = "all"} a \code{floor(n / b)}
 #'       by \code{n - floor(n / b) * b + 1} numeric matrix.  Each column
 #'       contains a set of disjoint maxima.  Otherwise, a \code{floor(n / b)}
 #'       by 1 numeric matrix containing one set of block maxima.}
-#'     \item {\code{xd} : } {if \code{which_dj = "all"} a
+#'     \item{\code{xd} }{if \code{which_dj = "all"} a
 #'       \code{floor(n / b) * b} by \code{n - floor(n / b) * b + 1} numeric
 #'       matrix.  Each column contains the values in \code{x} that contribute
 #'       to the corresponding column in \code{yd}.  Otherwise, a
 #'       \code{floor(n / b)} by 1 numeric matrix containing one the one set of
 #'       the values in \code{x} that contribute to \code{yd}.}
-#'   }
 #' @seealso \code{\link{spm}} for semiparametric estimation of the
 #'   extremal index based on block maxima.
 #' @examples

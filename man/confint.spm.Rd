@@ -139,9 +139,19 @@ The likelihood-based intervals are estimated using the
   \code{\link{spm}} documentation for more information.
 }
 \examples{
+# Newlyn sea surges
 res <- spm(newlyn, 20)
 confint(res)
-confint(res, interval_type = "lik")
+cis <- confint(res, interval_type = "lik")
+cis
+plot(cis)
+
+# S&P 500 index
+res <- spm(sp500, 100)
+confint(res)
+cis <- confint(res, interval_type = "lik")
+cis
+plot(cis)
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

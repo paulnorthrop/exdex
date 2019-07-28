@@ -42,16 +42,12 @@ choose_uk <- function(data, thresh, k = 1) {
   n_thresh <- length(thresh)
   n_k <- length(k)
   theta <- matrix(rep(list(), n_thresh * n_k), n_k, n_thresh)
-#  which_comp <- 1
   comp <- function(i, j) {
     return((i - 1) * n_thresh + j)
   }
   for (i in 1:n_k) {
     for (j in 1:n_thresh) {
-#      print(c(which_comp, comp(i, j)))
       theta[[comp(i, j)]] <- kgaps(data, thresh[j], k[i])
-#      theta[[which_comp]] <- kgaps(data, thresh[j], k[i])
-#      which_comp <- which_comp + 1
     }
   }
   imt <- kgaps_imt(data, thresh, k)
@@ -59,7 +55,6 @@ choose_uk <- function(data, thresh, k = 1) {
   class(res) <- c("choose_uk", "exdex")
   return(res)
 }
-
 
 # ============================= plot.choose_uk ===============================
 

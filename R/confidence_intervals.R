@@ -371,7 +371,7 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   # Produce a plot of the adjusted loglikelihood, if requested
   # Owing to the different scales of the loglikelihoods for N2015 and BB2018 we
   # shoof them to have a maximum of 0, so that we can display them on one plot
-  x_obj <- y_obj <- y2_obj <-NULL
+  x_obj <- y_obj <- y2_obj <- NULL
   my_leg <- NULL
   # Round confidence limits for inclusion in the legend
   fmt <- paste0("%.", ndec, "f")

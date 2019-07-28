@@ -353,6 +353,7 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
+  def_par <- graphics::par(no.readonly = TRUE)
   if (x$interval_type == "sym"){
     stop("Plot method not available when interval_type = ''sym''")
   }
@@ -455,6 +456,7 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
 #  } else {
 #    abline(v = x$object$theta_dj, lty = 1:3)
 #  }
+  graphics::par(def_par)
   return(invisible())
 }
 

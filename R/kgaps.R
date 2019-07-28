@@ -30,7 +30,7 @@
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
 #'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
-#' @return An object (a list) of class \code{"kgaps", "exdex"} containing
+#' @return An object (a list) of class \code{c("kgaps", "exdex")} containing
 #'     \item{\code{theta} }{The maximum likelihood estimate (MLE) of
 #'       \eqn{\theta}.}
 #'     \item{\code{se} }{The estimated standard error of the MLE.}

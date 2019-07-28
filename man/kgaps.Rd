@@ -23,7 +23,7 @@ contributions from censored inter-exceedance times relating to the
 first and last observation.  See Attalides (2015) for details.}
 }
 \value{
-An object (a list) of class \code{"kgaps", "exdex"} containing
+An object (a list) of class \code{c("kgaps", "exdex")} containing
     \item{\code{theta} }{The maximum likelihood estimate (MLE) of
       \eqn{\theta}.}
     \item{\code{se} }{The estimated standard error of the MLE.}

@@ -111,7 +111,7 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   return(res)
 }
 
-# =========================== plot.choose_b ===========================
+# ============================== plot.choose_b ================================
 
 #' Plot block length diagnostic for the semiparametric maxima estimator
 #'

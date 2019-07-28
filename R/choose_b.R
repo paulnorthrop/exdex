@@ -141,10 +141,8 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
-#' @examples
-#' b_vals <- seq(from = 25, to = 350, by = 25)
-#' res <- choose_b(sp500, b_vals)
-#' plot(res)
+#' @section Examples:
+#' See the examples in \code{\link{choose_b}}.
 #' @export
 plot.choose_b <- function(x, y, ..., estimator = c("N2015", "BB2018"),
                           maxima = c("sliding", "disjoint")) {

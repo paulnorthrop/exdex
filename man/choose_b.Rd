@@ -117,7 +117,7 @@ plot(res, maxima = "disjoint")
 
 # S&P 500 index: similar to Berghaus and Bucher (2018), Fig 4 top left
 b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
-res500 <- choose_b(sp500, c(10, b_vals, 357))
+res500 <- choose_b(sp500, b_vals)
 plot(res500, ylim = c(0, 1))
 plot(res500, estimator = "BB2018", ylim = c(0, 1))
 }

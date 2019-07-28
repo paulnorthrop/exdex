@@ -38,11 +38,11 @@ Produces a simple diagnostic plot to aid the choice of block
   \code{interval_type}, \code{conf_scale} and \code{type} provided in the
   call to \code{\link{choose_b}}.
 }
-\examples{
-b_vals <- seq(from = 25, to = 350, by = 25)
-res <- choose_b(sp500, b_vals)
-plot(res)
+\section{Examples}{
+
+See the examples in \code{\link{choose_b}}.
 }
+
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima
 estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.

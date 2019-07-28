@@ -63,7 +63,8 @@
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' iwls(newlyn, thresh)
+#' res <- iwls(newlyn, thresh)
+#' res
 #' @export
 iwls <- function(data, thresh, maxit = 100) {
   Call <- match.call(expand.dots = TRUE)

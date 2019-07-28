@@ -67,7 +67,8 @@ The iterated weighted least squares algorithm on page 46 of
 }
 \examples{
 thresh <- quantile(newlyn, probs = 0.90)
-iwls(newlyn, thresh)
+res <- iwls(newlyn, thresh)
+res
 }
 \references{
 Suveges, M. (2007) Likelihood estimation of the extremal

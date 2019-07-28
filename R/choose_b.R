@@ -1,3 +1,5 @@
+# ================================= choose_b ==================================
+
 #' Block length diagnostic for the semiparametric maxima estimator
 #'
 #' Creates data for a plot to aid the choice of the block length \code{b} to

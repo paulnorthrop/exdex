@@ -30,12 +30,11 @@ Nothing is returned.
 \description{
 \code{plot} method for an objects of class \code{c("confint_spm", "exdex")}.
 }
-\examples{
-res <- spm(newlyn, 20)
-# I can't include these examples until new chandwich is on CRAN
-#cis <- confint(res)
-# plot(cis)
+\section{Examples}{
+
+See the examples in \code{\link{confint.spm}}.
 }
+
 \seealso{
 \code{\link{confint.spm}}: \code{confint} method for
   class \code{c("spm", "exdex")}.

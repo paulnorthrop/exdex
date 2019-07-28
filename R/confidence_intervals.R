@@ -121,9 +121,19 @@
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
+#' # Newlyn sea surges
 #' res <- spm(newlyn, 20)
 #' confint(res)
-#' confint(res, interval_type = "lik")
+#' cis <- confint(res, interval_type = "lik")
+#' cis
+#' plot(cis)
+#'
+#' # S&P 500 index
+#' res <- spm(sp500, 100)
+#' confint(res)
+#' cis <- confint(res, interval_type = "lik")
+#' cis
+#' plot(cis)
 #' @seealso \code{\link{plot.confint_spm}}: \code{plot} method for
 #'   class \code{c("confint_spm", "exdex")}.
 #' @export
@@ -336,11 +346,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 #' @return Nothing is returned.
 #' @seealso \code{\link{confint.spm}}: \code{confint} method for
 #'   class \code{c("spm", "exdex")}.
-#' @examples
-#' res <- spm(newlyn, 20)
-#' # I can't include these examples until new chandwich is on CRAN
-#' #cis <- confint(res)
-#' # plot(cis)
+#' @section Examples:
+#' See the examples in \code{\link{confint.spm}}.
 #' @export
 plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   if (!inherits(x, "exdex")) {

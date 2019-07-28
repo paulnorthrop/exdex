@@ -548,8 +548,8 @@ confint.kgaps <- function (object, parm = "theta",
     stop("''level'' must be in (0, 1)")
   }
   conf_scale <- match.arg(conf_scale)
-  theta <- object$theta
-  se <- object$se
+  theta <- coef(object)
+  se <- sqrt(vcov(object))
   # Symmetric confidence intervals, based on large sample normal theory
   # The intervals are (initially) centred on the unconstrained estimate of
   # theta, which may be greater than 1

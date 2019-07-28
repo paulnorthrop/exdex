@@ -124,3 +124,19 @@ test_that(paste("BB1 vs N, b is OK"), {
                          resN$theta_dj["BB2018"], tolerance = my_tol)
 })
 
+# ============================ summary.spm ====================================
+
+context("summary.spm")
+
+theta <- spm(newlyn, 20)
+res <- summary(theta)
+test_that(paste("No warning when b is large enough"), {
+  testthat::expect_identical(res$warning, NULL)
+})
+
+theta <- spm(newlyn, 7)
+res <- summary(theta)
+test_that(paste("Warning when b is small enough"), {
+  testthat::expect_identical(class(res$warning), "character")
+})
+

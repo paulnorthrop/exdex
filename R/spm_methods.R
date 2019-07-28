@@ -10,7 +10,7 @@
 #'   of the extremal index \eqn{\theta} based on sliding maxima or on disjoint
 #'   maxima.
 #' @param estimator A character vector specifying which of the three variants
-#'   of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+#'   of the semiparametric maxima estimator to use: \code{"N2015", "BB2018"}
 #'   or \code{"BB2018b"}.  See \code{\link{spm}} for details.
 #'   If \code{estimator = "all"} then all three estimates are returned.
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
@@ -65,7 +65,7 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #'   estimated variance of the estimator of the extremal index \eqn{\theta}
 #'   based on sliding maxima or on disjoint maxima.
 #' @param estimator A character vector specifying which of the three variants
-#'   of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+#'   of the semiparametric maxima estimator to use: \code{"N2015", "BB2018"}
 #'   or \code{"BB2018b"}.  See \code{\link{spm}} for details.
 #'   If \code{estimator = "all"} then the
 #'   estimated variances of all variants are returned.

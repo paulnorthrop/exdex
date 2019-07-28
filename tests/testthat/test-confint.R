@@ -47,6 +47,8 @@ context("plot.confint_spm")
 
 # Check that plot.confint_spm works
 
+# No legend position via legend_pos
+
 cis <- confint(res, interval_type = "both")
 ciplot <- plot(cis)
 test_that("plot.confint_spm works, sliding", {
@@ -58,8 +60,8 @@ test_that("plot.confint_spm works, sliding, BB2018 only, add leg title", {
   testthat::expect_identical(ciplot, NULL)
 })
 
-ciplot <- plot(cis, estimator = "BB2018b", main = "BB2018b only")
-test_that("plot.confint_spm works, sliding, BB2018b only, add title", {
+ciplot <- plot(cis, estimator = "BB2018b", legend = c("cool", "neat"))
+test_that("plot.confint_spm works, sliding, BB2018b only, add legend", {
   testthat::expect_identical(ciplot, NULL)
 })
 
@@ -70,9 +72,30 @@ test_that("plot.confint_spm works, sliding, 2 ests, user legend & title", {
   testthat::expect_identical(ciplot, NULL)
 })
 
-ciplot <- plot(cis, estimator = c("BB2018", "BB2018b"),
-               main = "BB2018 and BB2018b", legend_pos = "bottomright")
-test_that("plot.confint_spm works, sliding, 2 ests, user legend pos", {
+# Change legend position via legend_pos
+
+cis <- confint(res, interval_type = "both")
+ciplot <- plot(cis, legend_pos = "bottomright")
+test_that("plot.confint_spm works, sliding", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+ciplot <- plot(cis, estimator = "BB2018", title = "BB2018 only",
+               legend_pos = "bottomright")
+test_that("plot.confint_spm works, sliding, BB2018 only, add leg title & pos", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+ciplot <- plot(cis, estimator = "BB2018b", legend = c("cool", "neat"),
+               legend_pos = "bottomright")
+test_that("plot.confint_spm works, sliding, BB2018b only, add leg & pos", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+ciplot <- plot(cis, estimator = c("N2015", "BB2018"),
+               main = "N2015 and BB2018", legend = c("cool", "neat"),
+               title = "2 ests", legend_pos = "bottomright")
+test_that("plot.confint_spm works, sliding, 2 ests, user leg & title & pos", {
   testthat::expect_identical(ciplot, NULL)
 })
 

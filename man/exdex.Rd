@@ -51,4 +51,6 @@ Suveges, M. and Davison, A. C. (2010) Model
   extremal index \eqn{\theta} using the K-gaps model.
 
 \code{\link{iwls}}: iterated weighted least squares estimator.
+
+\code{\link{newlyn}} and \code{\link{sp500}} for example datasets.
 }

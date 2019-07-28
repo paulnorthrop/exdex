@@ -4,13 +4,27 @@
 \alias{plot.choose_uk}
 \title{Plot block length diagnostic for the semiparametric maxima estimator}
 \usage{
-\method{plot}{choose_uk}(x, y, ...)
+\method{plot}{choose_uk}(x, y = c("imts", "theta"), interval_type, level,
+  ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_uk", "exdex")}, a result of a
 call to \code{\link{choose_uk}}.}
 
-\item{y}{Not used.}
+\item{y}{A character scalar indicating what should be plotted.
+This is only relevant if, in the call to \code{\link{choose_uk}} that
+produced \code{x} either only one value threshold was supplied via
+\code{thresh} or only one value of \eqn{K} was supplied via \code{k}.
+In that event, information matrix test statistics are plotted if
+\code{y = "imts"} and estimates of, and confidence intervals for,
+\eqn{\theta} is plotted if \code{y = "theta"}.
+Otherwise, information matrix test statistics are plotted.}
+
+\item{interval_type}{A character scalar.  The type of confidence interval
+to be plotted, if \code{y = "theta"}.  See \code{\link{confint.spm}}.}
+
+\item{level}{The confidence level required.  A numeric scalar in (0, 1).
+Only relevant if \code{y = "theta"}.}
 
 \item{...}{Additional arguments passed on to
 \code{\link[graphics]{matplot}} and/or \code{\link[graphics]{axis}}.}

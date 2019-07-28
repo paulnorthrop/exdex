@@ -36,7 +36,8 @@
 #'   K-gaps model
 #' @examples
 #' thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' res <- choose_uk(newlyn, thresh = thresh, k = 1:5)
+#' imt_theta <- choose_uk(newlyn, thresh = thresh, k = 1:5)
+#' plot(imt_theta)
 #' @export
 choose_uk <- function(data, thresh, k = 1) {
   n_thresh <- length(thresh)
@@ -65,7 +66,18 @@ choose_uk <- function(data, thresh, k = 1) {
 #'
 #' @param x an object of class \code{c("choose_uk", "exdex")}, a result of a
 #'   call to \code{\link{choose_uk}}.
-#' @param y Not used.
+#' @param y A character scalar indicating what should be plotted.
+#'  This is only relevant if, in the call to \code{\link{choose_uk}} that
+#'  produced \code{x} either only one value threshold was supplied via
+#'  \code{thresh} or only one value of \eqn{K} was supplied via \code{k}.
+#'  In that event, information matrix test statistics are plotted if
+#'  \code{y = "imts"} and estimates of, and confidence intervals for,
+#'  \eqn{\theta} is plotted if \code{y = "theta"}.
+#'  Otherwise, information matrix test statistics are plotted.
+#' @param interval_type A character scalar.  The type of confidence interval
+#'   to be plotted, if \code{y = "theta"}.  See \code{\link{confint.spm}}.
+#' @param level The confidence level required.  A numeric scalar in (0, 1).
+#'   Only relevant if \code{y = "theta"}.
 #' @param ... Additional arguments passed on to
 #'   \code{\link[graphics]{matplot}} and/or \code{\link[graphics]{axis}}.
 #' @details Add details
@@ -74,6 +86,28 @@ choose_uk <- function(data, thresh, k = 1) {
 #' @section Examples:
 #' See the examples in \code{\link{choose_uk}}.
 #' @export
-plot.choose_uk <- function(x, y, ...) {
+plot.choose_uk <- function(x, y = c("imts", "theta"), interval_type, level,
+                           ...) {
+  y <- match.arg(y)
+  # Extract the values of k and thresh
+  k <- x$imt$k
+  thresh <- x$imt$thresh
+  n_k <- length(k)
+  n_thresh <- length(thresh)
+  if (n_k == 1 && n_thresh == 1) {
+    stop("Object contains only 1 threshold and one value of K")
+  }
+  def_par <- graphics::par(no.readonly = TRUE)
+  # 1. k is a scalar and thresh is a vector
+  if (n_k == 1 && n_thresh > 1) {
+     if (y == "theta") {
+       graphics::matplot()
+     } else {
+       graphics::matplot(x$imt$thresh, x$imt$imt, type = "l")
+     }
+  }
+  # 2. k is a scalar and thresh is a vector
+  # 3. Both k and thresh are vectors
+  graphics::par(def_par)
   return()
 }

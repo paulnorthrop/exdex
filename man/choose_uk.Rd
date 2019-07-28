@@ -40,7 +40,8 @@ For each combination of threshold in \code{thresh} and \eqn{K}
 }
 \examples{
 thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-res <- choose_uk(newlyn, thresh = thresh, k = 1:5)
+imt_theta <- choose_uk(newlyn, thresh = thresh, k = 1:5)
+plot(imt_theta)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

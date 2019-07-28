@@ -26,14 +26,17 @@
 #'   \url{https://doi.org/10.1214/09-AOAS292"}
 #' @return An object (a list) of class \code{c("kgaps_imt", "exdex")}
 #'   containing
-#'   \item{IMT }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
-#'     Column i contains, for \eqn{K} = \code{k[i]}, the values of the
+#'   \item{imt }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
+#'     Column i contains, for K = \code{k[i]}, the values of the
 #'     information matrix test statistic for the set of thresholds in
-#'     \code{thresh}.}
+#'     \code{thresh}.  The column names are the values in code{k}.
+#'     The row names are the approximate empirical percentage quantile levels
+#'     of the thresholds in \code{thresh}.}
 #'   \item{p }{A \code{length(thresh)} by \code{length(k)} numeric matrix
 #'     containing the corresponding \eqn{p}-values for the test.}
 #'   \item{theta }{A \code{length(thresh)} by \code{length(k)} numeric matrix
 #'     containing the corresponding estimates of \eqn{\theta}.}
+#'   \item{thresh,k }{The input \code{thresh} and \code{k}.}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @examples
@@ -92,12 +95,70 @@ kgaps_imt <- function(data, thresh, k = 1) {
   }
   # End of loop over thresholds ----------
   colnames(T_mat) <- colnames(p_mat) <- colnames(theta) <- k
-  u_ps <- as.numeric(substr(names(thresh), 1,
-                            nchar(names(thresh), type = "c") - 1))
+#  u_ps <- as.numeric(substr(names(thresh), 1,
+#                            nchar(names(thresh), type = "c") - 1))
+  if (is.null(names(thresh))) {
+    u_ps <- round(100 * sapply(thresh, function(x) mean(data < x)))
+  } else {
+    u_ps <- as.numeric(substr(names(thresh), 1, nchar(names(thresh),
+                                                     type = "c") - 1))
+  }
   rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
-  res <- list(IMT = T_mat, p = p_mat, theta = theta)
+  res <- list(imt = T_mat, p = p_mat, theta = theta, thresh = thresh, k = k)
   class(res) <- c("kgaps_imt", "exdex")
-  return(list(IMT = T_mat, p = p_mat, theta = theta))
+  return(res)
 }
 
+# ============================== plot.kgaps_imt ===============================
 
+#' Plot method for object of class \code{"kgaps_imt"}
+#'
+#' \code{plot} method for objects inheriting from class \code{"kgaps_imt"},
+#' returned from \code{\link{kgaps_imt}}
+#'
+#' @param x an object of class \code{c("kgaps_imt", "exdex")}, a result of a
+#'   call to \code{\link{kgaps_imt}}.
+#' @param y A character scalar.   What should we plot on the vertical axis:
+#'   \code{"imt"} for the information matrix test statistic,
+#'   \code{"pvalue"} for the \eqn{p}-value associated with the information
+#'     matrix test statistic,
+#'   \code{"theta"} for the K-gaps estimate of \eqn{theta}.
+#' @param horiz_axis A character scalar.  Should we plot \eqn{K} or
+#'   threshold on the horizontal axis?
+#' @param alpha A numeric scalar in (0, 1).  Significance level.
+#' @param ... Additional arguments.
+#' @return In addition to producing the plot a list of the arguments used
+#'   by \code{\link[graphics]{matplot}}, \code{\link[graphics]{axis}} is
+#'   returned (invisibly).
+#' @seealso \code{\link{kgaps_imt}}.
+#' @examples
+#' thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' imt <- kgaps_imt(newlyn, thresh, k = 1:5)
+#' plot(imt)
+#' @export
+plot.kgaps_imt <- function(x, y = c("imt", "pvalue", "theta"),
+                           horiz_axis = c("k", "thresh"),
+                           alpha = 0.05, ...) {
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  y <- match.arg(y)
+  horiz_axis <- match.arg(horiz_axis)
+  # Decide which values to plot on the vertical axis
+  yvals <- switch(y, imt = x$imt, pvalue = x$pvalue, theta = x$theta)
+  if (horiz_axis == "k") {
+    yvals <- t(yvals)
+  }
+  xvals <- switch(horiz_axis, k = x$k, thresh = x$thresh)
+  my_xlab <- ifelse(horiz_axis == "k", "K", "threshold")
+  my_ylab <- switch(y, imt = "IMT statistic", pvalue = "p-value",
+                    theta = "theta")
+  my_plot <- function(x, y, ..., xlab = my_xlab, ylab = my_ylab) {
+    graphics::matplot(x = x, y = y, ..., xlab = xlab, ylab = ylab)
+  }
+  my_plot(xvals, yvals, ...)
+  if (y == "imt") {
+    graphics::abline(h = stats::qchisq(alpha, df  = 1, lower.tail = FALSE))
+  }
+  return(invisible())
+}

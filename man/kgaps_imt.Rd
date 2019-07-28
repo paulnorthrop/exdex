@@ -20,14 +20,17 @@ and \code{k}.}
 \value{
 An object (a list) of class \code{c("kgaps_imt", "exdex")}
   containing
-  \item{IMT }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
-    Column i contains, for \eqn{K} = \code{k[i]}, the values of the
+  \item{imt }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
+    Column i contains, for K = \code{k[i]}, the values of the
     information matrix test statistic for the set of thresholds in
-    \code{thresh}.}
+    \code{thresh}.  The column names are the values in code{k}.
+    The row names are the approximate empirical percentage quantile levels
+    of the thresholds in \code{thresh}.}
   \item{p }{A \code{length(thresh)} by \code{length(k)} numeric matrix
     containing the corresponding \eqn{p}-values for the test.}
   \item{theta }{A \code{length(thresh)} by \code{length(k)} numeric matrix
     containing the corresponding estimates of \eqn{\theta}.}
+  \item{thresh,k }{The input \code{thresh} and \code{k}.}
 }
 \description{
 Performs the information matrix test of Suveges and Davison (2010) to

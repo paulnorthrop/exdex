@@ -1,4 +1,4 @@
-#' Block length diagnostic plot
+#' Block length diagnostic for the semiparametric maxima estimator
 #'
 #' A plot to aid the choice of the block length \code{b} to supply to
 #' \code{\link{spm}}.  The general idea is to select the smallest value of
@@ -112,7 +112,7 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
 
 # =========================== plot.choose_b ===========================
 
-#' Plot diagnostics for an exdex object
+#' Plot block length diagnostic for the semiparametric maxima estimator
 #'
 #' \code{plot} method for objects inheriting from class \code{"choose_b"},
 #' returned from \code{\link{choose_b}}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/choose_b.R
 \name{plot.choose_b}
 \alias{plot.choose_b}
-\title{Plot diagnostics for an exdex object}
+\title{Plot block length diagnostic for the semiparametric maxima estimator}
 \usage{
 \method{plot}{choose_b}(x, y, ..., estimator = c("N2015", "BB2018"),
   maxima = c("sliding", "disjoint"))

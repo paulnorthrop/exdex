@@ -2,7 +2,7 @@
 % Please edit documentation in R/choose_b.R
 \name{choose_b}
 \alias{choose_b}
-\title{Block length diagnostic plot}
+\title{Block length diagnostic for the semiparametric maxima estimator}
 \usage{
 choose_b(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   constrain = TRUE, varN = TRUE, level = 0.95,

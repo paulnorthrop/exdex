@@ -58,9 +58,20 @@ test_that("plot.confint_spm works, sliding, BB2018 only, add title", {
   testthat::expect_identical(ciplot, NULL)
 })
 
+ciplot <- plot(cis, estimator = "BB2018b", main = "BB2018b only")
+test_that("plot.confint_spm works, sliding, BB2018b only, add title", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
 ciplot <- plot(cis, estimator = c("N2015", "BB2018"),
                main = "N2015 and BB2018", legend = c("cool", "neat"))
 test_that("plot.confint_spm works, sliding, 2 ests, user legend", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+ciplot <- plot(cis, estimator = c("BB2018", "BB2018b"),
+               main = "BB2018 and BB2018b", legend_pos = "bottomright")
+test_that("plot.confint_spm works, sliding, 2 ests, user legend pos", {
   testthat::expect_identical(ciplot, NULL)
 })
 

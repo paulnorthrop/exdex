@@ -104,6 +104,7 @@ For each block size in \code{b} the extremal index \eqn{\theta}
 }
 \examples{
 \dontrun{
+# Newlyn seas surges
 # Plot like the top left of Northrop (2015)
 # Remove the last 14 values because 2880 has lots of factors
 b_vals <- c(2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,32,36,40,45,48,54,60)
@@ -114,7 +115,7 @@ plot(res)
 plot(res, estimator = "BB2018")
 plot(res, maxima = "disjoint")
 
-# S&P 500 Composite Berghaus and Bucher (2018)
+# S&P 500 index: similar to Berghaus and Bucher (2018), Fig 4 top left
 b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
 res500 <- choose_b(sp500, c(10, b_vals, 357))
 plot(res500, ylim = c(0, 1))

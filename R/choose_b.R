@@ -45,6 +45,7 @@
 #'   plot.
 #' @examples
 #' \dontrun{
+#' # Newlyn seas surges
 #' # Plot like the top left of Northrop (2015)
 #' # Remove the last 14 values because 2880 has lots of factors
 #' b_vals <- c(2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,32,36,40,45,48,54,60)
@@ -55,9 +56,9 @@
 #' plot(res, estimator = "BB2018")
 #' plot(res, maxima = "disjoint")
 #'
-#' # S&P 500 Composite Berghaus and Bucher (2018)
+#' # S&P 500 index: similar to Berghaus and Bucher (2018), Fig 4 top left
 #' b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
-#' res500 <- choose_b(sp500, c(10, b_vals, 357))
+#' res500 <- choose_b(sp500, b_vals)
 #' plot(res500, ylim = c(0, 1))
 #' plot(res500, estimator = "BB2018", ylim = c(0, 1))
 #' }
@@ -132,9 +133,7 @@ choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
 #'   The type of confidence interval is determined by the arguments
 #'   \code{interval_type}, \code{conf_scale} and \code{type} provided in the
 #'   call to \code{\link{choose_b}}.
-#' @return In addition to producing the plot a list of the arguments used
-#'   by \code{\link[graphics]{matplot}}, \code{\link[graphics]{axis}} is
-#'   returned (invisibly).
+#' @return Nothing is returned.
 #' @seealso \code{\link{choose_b}}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
@@ -219,5 +218,5 @@ plot.choose_b <- function(x, y, ..., estimator = c("N2015", "BB2018"),
   } else {
     graphics::box()
   }
-  return(invisible(list(matplot_args = matplot_args, axis_args = axis_args)))
+  return(invisible())
 }

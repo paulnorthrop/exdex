@@ -55,7 +55,9 @@
 #' ### Newlyn sea-surge data
 #'
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' kgaps(newlyn, thresh)
+#' theta <- kgaps(newlyn, thresh)
+#' theta
+#' summary(theta)
 #' @export
 kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
   Call <- match.call(expand.dots = TRUE)

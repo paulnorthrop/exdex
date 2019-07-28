@@ -61,8 +61,8 @@ Two type of interval are calculated: (a) an interval based on the
 }
 \examples{
 thresh <- quantile(newlyn, probs = 0.90)
-res <- kgaps(newlyn, thresh)
-confint(res)
+theta <- kgaps(newlyn, thresh)
+confint(theta)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

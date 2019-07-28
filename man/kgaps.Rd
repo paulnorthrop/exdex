@@ -50,7 +50,9 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
 ### Newlyn sea-surge data
 
 thresh <- quantile(newlyn, probs = 0.90)
-kgaps(newlyn, thresh)
+theta <- kgaps(newlyn, thresh)
+theta
+summary(theta)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

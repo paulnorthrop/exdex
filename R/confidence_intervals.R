@@ -534,8 +534,8 @@ print.confint_spm <- function(x, ...) {
 #'   \url{https://doi.org/10.1214/09-AOAS292}
 #' @examples
 #' thresh <- quantile(newlyn, probs = 0.90)
-#' res <- kgaps(newlyn, thresh)
-#' confint(res)
+#' theta <- kgaps(newlyn, thresh)
+#' confint(theta)
 #' @export
 confint.kgaps <- function (object, parm = "theta",
                            level = 0.95, constrain = TRUE,

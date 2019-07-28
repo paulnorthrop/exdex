@@ -81,6 +81,27 @@ test_that("plot.confint_spm works, user plot args, disjoint", {
   testthat::expect_identical(ciplot, NULL)
 })
 
+# Extreme example where b is so small that the SEs for the sliding blocks
+# version of the estimator cannot be calculated
+
+# b = 7 makes BB2018 SE missing, and the plot should work
+res_small_b <- spm(newlyn, 7)
+cis <- confint(res_small_b, interval_type = "lik")
+ciplot <- plot(cis, xlab = "my xlab", lwd = 2, col = "blue")
+test_that("plot.confint_spm works, user plot args, disjoint", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+# b = 4 makes both N2015 and BB2018 SE missing, and plot.confint_spm()
+# should stop
+res_small_b <- spm(newlyn, 4)
+cis <- confint(res_small_b, interval_type = "lik")
+ciplot <- try(plot(cis, xlab = "my xlab", lwd = 2, col = "blue"),
+              silent = TRUE)
+test_that("plot.confint_spm works, user plot args, disjoint", {
+  testthat::expect_identical(class(ciplot), "try-error")
+})
+
 # ================================== kgaps ===================================
 
 context("confint.kgaps")

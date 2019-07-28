@@ -244,8 +244,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # Northrop (2015)
     if (is.na(se["N2015"])) {
       tempN <- NA
-      lower <- c(lower, N2015 = NA)
-      upper <- c(upper, N2015 = NA)
+      lower <- c(lower, N2015lik = NA)
+      upper <- c(upper, N2015lik = NA)
     } else {
       H <- as.matrix(-n / mleN ^ 2)
       V <- as.matrix(H ^ 2 * se["N2015"] ^ 2)
@@ -266,8 +266,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # Berghaus and Bucher (2018)
     if (is.na(se["BB2018"])) {
       tempBB <- NA
-      lower <- c(lower, BB2018 = NA)
-      upper <- c(upper, BB2018 = NA)
+      lower <- c(lower, BB2018lik = NA)
+      upper <- c(upper, BB2018lik = NA)
     } else {
       H <- as.matrix(-n / mleBB ^ 2)
       V <- as.matrix(H ^ 2 * se["BB2018"] ^ 2)
@@ -286,8 +286,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     # Berghaus and Bucher (2018) - 1 / b
     if (is.na(se["BB2018b"])) {
       tempBBb <- NA
-      lower <- c(lower, BB2018b = NA)
-      upper <- c(upper, BB2018b = NA)
+      lower <- c(lower, BB2018blik = NA)
+      upper <- c(upper, BB2018blik = NA)
     } else {
       H <- as.matrix(-n / mleBBb ^ 2)
       V <- as.matrix(H ^ 2 * se["BB2018b"] ^ 2)

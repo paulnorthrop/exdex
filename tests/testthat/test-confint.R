@@ -43,7 +43,7 @@ test_that("spm lik intervals don't depend on conf_scale", {
 
 # ============================= plot.confint.spm =============================
 
-# Check that plot.confint_spm works in various situations
+# Check that plot.confint_spm works
 
 cis <- confint(res, interval_type = "both")
 ciplot <- plot(cis)
@@ -51,7 +51,7 @@ test_that("plot.confint_spm works, sliding", {
   testthat::expect_identical(ciplot, NULL)
 })
 
-cis <- confint(res, interval_type = "both")
+cis <- confint(res, interval_type = "both", maxima = "disjoint")
 ciplot <- plot(cis, xlab = "my xlab", lwd = 2, col = "blue")
 test_that("plot.confint_spm works, user plot args, disjoint", {
   testthat::expect_identical(ciplot, NULL)

@@ -168,10 +168,15 @@ The extremal index \eqn{\theta} is estimated using the
  \code{bias_sl} are not changed.
 }
 \examples{
-temp <- spm(-as.vector(sp500[2:6550]), 250)
+# Newlyn sea surges
+theta <- spm(newlyn, 20)
+theta
+summary(theta)
 
-temp <- spm(newlyn, 20)
-summary(temp)
+# S&P 500 index
+theta <- spm(sp500, 100)
+theta
+summary(theta)
 }
 \references{
 Northrop, P. J. (2015) An efficient semiparametric maxima

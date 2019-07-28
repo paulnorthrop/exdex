@@ -140,16 +140,16 @@ The likelihood-based intervals are estimated using the
 }
 \examples{
 # Newlyn sea surges
-res <- spm(newlyn, 20)
-confint(res)
-cis <- confint(res, interval_type = "lik")
+theta <- spm(newlyn, 20)
+confint(theta)
+cis <- confint(theta, interval_type = "lik")
 cis
 plot(cis)
 
 # S&P 500 index
-res <- spm(sp500, 100)
-confint(res)
-cis <- confint(res, interval_type = "lik")
+theta <- spm(sp500, 100)
+confint(theta)
+cis <- confint(theta, interval_type = "lik")
 cis
 plot(cis)
 }

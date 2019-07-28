@@ -2,6 +2,8 @@ context("confint.spm")
 
 my_tol <- 1e-5
 
+# =================================== spm ====================================
+
 res <- spm(newlyn, 100)
 
 ci1 <- confint(res, type = "cholesky")
@@ -38,6 +40,24 @@ which_rows <- c("N2015lik", "BB2018lik")
 test_that("spm lik intervals don't depend on conf_scale", {
   testthat::expect_identical(ci1$cis[which_rows, ], ci3$cis[which_rows, ])
 })
+
+# ============================= plot.confint.spm =============================
+
+# Check that plot.confint_spm works in various situations
+
+cis <- confint(res, interval_type = "both")
+ciplot <- plot(cis)
+test_that("plot.confint_spm works, sliding", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+cis <- confint(res, interval_type = "both")
+ciplot <- plot(cis, xlab = "my xlab", lwd = 2, col = "blue")
+test_that("plot.confint_spm works, user plot args, disjoint", {
+  testthat::expect_identical(ciplot, NULL)
+})
+
+# ================================== kgaps ===================================
 
 context("confint.kgaps")
 

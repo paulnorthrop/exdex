@@ -64,7 +64,7 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 }
 \seealso{
 \code{\link{confint.kgaps}} to estimate confidence intervals
-  for \eqn{theta}.
+  for \eqn{\theta}.
 
 \code{\link{kgaps_imt}} for the informatin matrix test, which
   may be used to inform the choice of the pair (\code{thresh, k}).
@@ -72,12 +72,12 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 \code{\link{kgaps_stat}} for the calculation of sufficient
   statistics for the K-gaps model.
 
-\code{\link{spm}} for estimation of the extremal index
-  \eqn{\theta} using a semiparametric maxima method.
-
 \code{\link[revdbayes]{kgaps_post}} in the
   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
   about \eqn{\theta} using the K-gaps model.
+
+\code{\link{spm}} for estimation of the extremal index
+  \eqn{\theta} using a semiparametric maxima method.
 
 \code{\link{iwls}}: iterated weighted least squares estimator.
 }

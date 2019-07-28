@@ -43,6 +43,8 @@ test_that("spm lik intervals don't depend on conf_scale", {
 
 # ============================= plot.confint.spm =============================
 
+context("plot.confint_spm")
+
 # Check that plot.confint_spm works
 
 cis <- confint(res, interval_type = "both")

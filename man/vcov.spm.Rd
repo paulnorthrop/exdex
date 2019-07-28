@@ -16,7 +16,7 @@ estimated variance of the estimator of the extremal index \eqn{\theta}
 based on sliding maxima or on disjoint maxima.}
 
 \item{estimator}{A character vector specifying which of the three variants
-of the semiparametic maxima estimator to use: \code{"N2015", "BB2018"}
+of the semiparametric maxima estimator to use: \code{"N2015", "BB2018"}
 or \code{"BB2018b"}.  See \code{\link{spm}} for details.
 If \code{estimator = "all"} then the
 estimated variances of all variants are returned.}

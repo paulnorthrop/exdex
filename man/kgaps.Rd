@@ -66,7 +66,7 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 \code{\link{confint.kgaps}} to estimate confidence intervals
   for \eqn{\theta}.
 
-\code{\link{kgaps_imt}} for the informatin matrix test, which
+\code{\link{kgaps_imt}} for the information matrix test, which
   may be used to inform the choice of the pair (\code{thresh, k}).
 
 \code{\link{kgaps_stat}} for the calculation of sufficient

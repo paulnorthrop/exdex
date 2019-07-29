@@ -48,6 +48,12 @@ u <- quantile(newlyn, probs = 0.9)
 imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
 plot(imt_theta)
 plot(imt_theta, y = "theta")
+
+# Multipe thresholds and run parameters
+u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
+plot(imt_theta)
+plot(imt_theta, y = "theta")
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

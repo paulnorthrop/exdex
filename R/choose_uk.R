@@ -45,6 +45,12 @@
 #' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
 #' plot(imt_theta)
 #' plot(imt_theta, y = "theta")
+#'
+#' # Multipe thresholds and run parameters
+#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
+#' plot(imt_theta)
+#' plot(imt_theta, y = "theta")
 #' @export
 choose_uk <- function(data, u, k = 1) {
   n_u <- length(u)
@@ -91,18 +97,20 @@ choose_uk <- function(data, u, k = 1) {
 #'   \code{conf_scale} determines the scale on which we use approximate
 #'   large-sample normality of the estimator to estimate confidence intervals.
 #'   See \code{\link{confint.kgaps}}.
-#' @param alpha A numeric scalar in (0, 1). The significance level to be used
-#'   for the information matrix test.
+#' @param alpha A numeric vector with entries in (0, 1). The significance
+#'   level(s) to be used for the information matrix test.
 #' @param constrain A logical scalar.  The argument \code{constrain} to
 #'  \code{\link{confint.kgaps}}.
-#' @param for_abline Only relevant when \code{y = "imt"} and at one of
+#' @param for_abline Only relevant when \code{y = "imts"} and at one of
 #'   \code{u} or \code{k} is scalar. A list of graphical parameters to be
 #'   passed to \code{\link{abline}} to indicate the critical value of the
 #'   information matrix test implied by \code{alpha}.
 #' @param digits An integer. Used for formatting the value of the threshold
 #'   with \code{\link[base:Round]{signif}} before adding its value to a plot.
-#' @param ... Additional arguments passed on to
-#'   \code{\link[graphics]{matplot}}.
+#' @param leg_pos A character scalar.  The position of any legend added to
+#'   a plot.  Only relevant when both the arguments \code{u} and \code{k}
+#'   in the call to \code{\link{choose_uk}} have length greater than one.
+#' @param ... Additional arguments passed to \code{\link[graphics]{matplot}}.
 #' @details Add details
 #' @return Nothing is returned.
 #' @seealso \code{\link{choose_uk}}.
@@ -114,7 +122,7 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
                            conf_scale = c("theta", "log"), alpha = 0.05,
                            constrain = TRUE,
                            for_abline = list(lty = 2, lwd = 1, col = 1),
-                           digits = 3, ...) {
+                           digits = 3, leg_pos = "topright", ...) {
   y <- match.arg(y)
   interval_type <- match.arg(interval_type)
   conf_scale <- match.arg(conf_scale)
@@ -133,10 +141,11 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
   }
   def_par <- graphics::par(no.readonly = TRUE)
   # My plotting functions: to give defaults but allow the user to override
-  my_matplot <- function(x, y, ..., type = "l", lty = 1, col = 1,
-                         xlab = my_xlab, ylab = my_ylab, ylim = my_ylim) {
+  my_matplot <- function(x, y, ..., type = "l", lty = my_lty, col = my_col,
+                         xlab = my_xlab, ylab = my_ylab, ylim = my_ylim,
+                         lwd = my_lwd) {
     graphics::matplot(x = x, y = y, ..., type = type, lty = lty, col = col,
-                      xlab = xlab, ylab = ylab, ylim = ylim)
+                      xlab = xlab, ylab = ylab, ylim = ylim, lwd = lwd)
   }
   my_title <- function(..., main = my_main) {
     graphics::title(..., main = main)
@@ -146,53 +155,94 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
   # One of k or u is scalar
   cond1 <- n_k == 1 && n_u > 1
   cond2 <- n_k > 1 && n_u == 1
+  my_lwd <- 1
   if (cond1 || cond2)  {
-     max_uk <- max(n_k, n_u)
-     ymat <- matrix(NA, ncol= 3, nrow = max_uk)
-     if (cond1) {
-       xvec <- u
-     } else {
-       xvec <- k
-     }
-     loop_vec <- 1:max_uk
-     if (y == "theta") {
-       for (ij in loop_vec) {
-         if (cond1) {
-           kgaps_object <- x$theta[[comp(1, ij)]]
-         } else {
-           kgaps_object <- x$theta[[comp(ij, 1)]]
-         }
-         temp <- confint(kgaps_object, level = level,
-                         interval_type = interval_type,
-                         conf_scale = conf_scale, constrain = constrain)
-         ymat[ij, 1] <- kgaps_object$theta
-         ymat[ij, 2:3] <- temp
-       }
-       my_ylab <- "theta"
-       my_xlab <- ifelse(cond1, "threshold u", "run parameter K")
-       my_ylim <- c(0, 1)
-       my_matplot(xvec, ymat, ...)
-       my_main <- ifelse(cond1, paste0("run parameter K = ", k),
-                         paste0("threshold u = ", signif(u, digits = digits)))
-       my_title(...)
-     } else {
-       my_ylab <- "IMT"
-       my_xlab <- ifelse(cond1, "threshold u", "run parameter K")
-       my_ylim <- c(0, max(x$imt$imt))
-       if (cond1) {
-         xvec <- x$imt$u
-         ymat <- x$imt$imt
-       } else {
-         xvec <- x$imt$k
-         ymat <- t(x$imt$imt)
-       }
-       my_matplot(xvec, ymat)
-       my_main <- ifelse(cond1, paste0("run parameter K = ", k),
-                         paste0("threshold u = ", signif(u, digits = digits)))
-       my_title(...)
-       for_abline <- c(for_abline, h = crit)
-       do.call(graphics::abline, for_abline)
-     }
+    my_col <- my_lty <- 1
+    max_uk <- max(n_k, n_u)
+    ymat <- matrix(NA, ncol = 3, nrow = max_uk)
+    if (cond1) {
+      xvec <- u
+    } else {
+      xvec <- k
+    }
+    loop_vec <- 1:max_uk
+    if (y == "theta") {
+      for (ij in loop_vec) {
+        if (cond1) {
+          kgaps_object <- x$theta[[comp(1, ij)]]
+        } else {
+          kgaps_object <- x$theta[[comp(ij, 1)]]
+        }
+        temp <- confint(kgaps_object, level = level,
+                        interval_type = interval_type,
+                        conf_scale = conf_scale, constrain = constrain)
+        ymat[ij, 1] <- kgaps_object$theta
+        ymat[ij, 2:3] <- temp
+      }
+      my_ylab <- "theta"
+      my_xlab <- ifelse(cond1, "threshold u", "run parameter K")
+      my_ylim <- c(0, 1)
+      my_matplot(xvec, ymat, ...)
+      my_main <- ifelse(cond1, paste0("run parameter K = ", k),
+                        paste0("threshold u = ", signif(u, digits = digits)))
+      my_title(...)
+    } else {
+      my_ylab <- "IMT"
+      my_xlab <- ifelse(cond1, "threshold u", "run parameter K")
+      my_ylim <- c(0, max(x$imt$imt))
+      if (cond1) {
+        xvec <- x$imt$u
+        ymat <- x$imt$imt
+      } else {
+        xvec <- x$imt$k
+        ymat <- t(x$imt$imt)
+      }
+      my_matplot(xvec, ymat, ...)
+      my_main <- ifelse(cond1, paste0("run parameter K = ", k),
+                        paste0("threshold u = ", signif(u, digits = digits)))
+      my_title(...)
+      for_abline <- c(for_abline, list(h = crit))
+      do.call(graphics::abline, for_abline)
+      graphics::mtext(as.character(alpha), 4, at = crit, las = 1, cex = 0.8)
+    }
+  } else {
+    my_lty <- 1
+    my_col <- 1:n_k
+    xvec <- x$imt$u
+    if (y == "theta") {
+      ymat <- x$imt$theta
+      my_ylab <- "theta"
+      my_ylim <- c(0, 1)
+    } else {
+      ymat <- x$imt$imt
+      my_ylab <- "IMT"
+      my_ylim <- c(0, max(x$imt$imt))
+    }
+    my_xlab <- "threshold u"
+    my_matplot(xvec, ymat, ...)
+    if (y == "imts") {
+      for_abline <- c(for_abline, list(h = crit))
+      do.call(graphics::abline, for_abline)
+      graphics::mtext(as.character(alpha), 4, at = crit, las = 1, cex = 0.8)
+    }
+    user_args <- list(...)
+    if (is.null(user_args$lty)) {
+      leg_lty <- my_lty
+    } else {
+      leg_lty <- user_args$lty
+    }
+    if (is.null(user_args$col)) {
+      leg_col <- my_col
+    } else {
+      leg_col <- user_args$col
+    }
+    if (is.null(user_args$lwd)) {
+      leg_lwd <- my_lwd
+    } else {
+      leg_lwd <- user_args$lwd
+    }
+    graphics::legend(leg_pos, legend = paste0("k = ", k), lty = leg_lty,
+                     col = leg_col, lwd = leg_lwd)
   }
   # Both k and u are vectors
   graphics::par(def_par)

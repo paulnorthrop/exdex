@@ -18,7 +18,7 @@
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
 #' @param maxima A character scalar specifying whether to estimate
 #'   confidence intervals based on sliding maxima or disjoint maxima.
-#' @param interval_type A character scalar: \code{"sym"} for intervals of
+#' @param interval_type A character scalar: \code{"norm"} for intervals of
 #'   type (a), \code{"lik"} for intervals of type (b).
 #' @param constrain A logical scalar.  If \code{constrain = TRUE} then
 #'   any confidence limits that are greater than 1 are set to 1,
@@ -92,7 +92,7 @@
 #'   (\code{N2015} for Northrop (2015), \code{BB2018} for
 #'   Berghaus and Bucher (2018)), \code{BB2018b} for the modified
 #'   (by subtracting \code{1 / b}) Berghaus and Bucher (2018)
-#'   and the type of interval (\code{sym} for symmetric and \code{lik} for
+#'   and the type of interval (\code{norm} for symmetric and \code{lik} for
 #'   likelihood-based).}
 #'   \item{ciN}{The object returned from
 #'     \code{\link[chandwich]{conf_intervals}} that contains information about
@@ -139,7 +139,7 @@
 #' @export
 confint.spm <- function (object, parm = "theta", level = 0.95,
                          maxima = c("sliding", "disjoint"),
-                         interval_type = c("sym", "lik", "both"),
+                         interval_type = c("norm", "lik", "both"),
                          constrain = TRUE,
                          conf_scale = c("theta", "log"),
                          bias_adjust = TRUE,
@@ -171,7 +171,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     yz_data <- object$data_dj
     bias_val <- object$bias_dj
   }
-  if (interval_type == "sym" || interval_type == "both") {
+  if (interval_type == "norm" || interval_type == "both") {
     # Symmetric confidence intervals, based on large sample normal theory
     # The intervals are (initially) centred on the unconstrained estimate of
     # theta, which may be greater than 1
@@ -183,8 +183,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
       lower <- exp(log(uncon) - z_val * se / theta)
       upper <- exp(log(uncon) + z_val * se / theta)
     }
-    names(lower) <- paste0(names(lower), "sym")
-    names(upper) <- paste0(names(upper), "sym")
+    names(lower) <- paste0(names(lower), "norm")
+    names(upper) <- paste0(names(upper), "norm")
     # Constrain the intervals to (0, 1] if required
     if (constrain) {
       lower <- pmin(lower, 1)
@@ -199,7 +199,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     temp <- list(cis = temp, call = Call, maxima = maxima,
                  interval_type = interval_type, theta = theta)
     class(temp) <- c("confint_spm", "exdex")
-    if (interval_type == "sym") {
+    if (interval_type == "norm") {
       return(temp)
     }
   } else {
@@ -354,8 +354,8 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
     stop("use only with \"exdex\" objects")
   }
   def_par <- graphics::par(no.readonly = TRUE)
-  if (x$interval_type == "sym"){
-    stop("Plot method not available when interval_type = ''sym''")
+  if (x$interval_type == "norm"){
+    stop("Plot method not available when interval_type = ''norm''")
   }
   if (is.na(x$cis["N2015lik", 1]) && is.na(x$cis["BB2018lik", 1]) &&
       is.na(x$cis["BB2018blik", 1])) {
@@ -578,6 +578,6 @@ confint.kgaps <- function (object, parm = "theta",
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
-  rownames(temp) <- c("sym", "lik")
+  rownames(temp) <- c("norm", "lik")
   return(temp)
 }

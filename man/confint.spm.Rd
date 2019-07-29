@@ -5,7 +5,7 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{spm}(object, parm = "theta", level = 0.95,
-  maxima = c("sliding", "disjoint"), interval_type = c("sym", "lik",
+  maxima = c("sliding", "disjoint"), interval_type = c("norm", "lik",
   "both"), constrain = TRUE, conf_scale = c("theta", "log"),
   bias_adjust = TRUE, type = c("vertical", "cholesky", "spectral",
   "none"), ...)
@@ -22,7 +22,7 @@ Here there is only one option: the extremal index \eqn{\theta}.}
 \item{maxima}{A character scalar specifying whether to estimate
 confidence intervals based on sliding maxima or disjoint maxima.}
 
-\item{interval_type}{A character scalar: \code{"sym"} for intervals of
+\item{interval_type}{A character scalar: \code{"norm"} for intervals of
 type (a), \code{"lik"} for intervals of type (b).}
 
 \item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
@@ -87,7 +87,7 @@ A list of class c("confint_spm", "exdex") containing the
   (\code{N2015} for Northrop (2015), \code{BB2018} for
   Berghaus and Bucher (2018)), \code{BB2018b} for the modified
   (by subtracting \code{1 / b}) Berghaus and Bucher (2018)
-  and the type of interval (\code{sym} for symmetric and \code{lik} for
+  and the type of interval (\code{norm} for symmetric and \code{lik} for
   likelihood-based).}
   \item{ciN}{The object returned from
     \code{\link[chandwich]{conf_intervals}} that contains information about

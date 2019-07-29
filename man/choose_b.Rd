@@ -6,7 +6,7 @@
 \usage{
 choose_b(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   constrain = TRUE, varN = TRUE, level = 0.95,
-  conf_scale = c("theta", "log"), interval_type = c("sym", "lik"),
+  conf_scale = c("theta", "log"), interval_type = c("norm", "lik"),
   type = c("vertical", "cholesky", "spectral", "none"))
 }
 \arguments{
@@ -54,7 +54,7 @@ See \strong{Details} for further information.}
   Any bias-adjustment requested in the original call to \code{\link{spm}},
   using it's \code{bias_adjust} argument, is automatically applied here.}
 
-\item{interval_type}{A character scalar: \code{"sym"} for intervals of
+\item{interval_type}{A character scalar: \code{"norm"} for intervals of
 type (a), \code{"lik"} for intervals of type (b).}
 
 \item{type}{A character scalar.  The argument \code{type} to be passed to

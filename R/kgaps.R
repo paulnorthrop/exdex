@@ -23,6 +23,10 @@
 #'   times is included in the likelihood to be maximized, following
 #'   Attalides (2015).  The form of the log-likelihood is given in the
 #'   \strong{Details} section of \code{\link{kgaps_stat}}.
+#'
+#'   It is possible that the estimate of \eqn{\theta} is equal to 1, and also
+#'   possible that it is equal to 0. \code{\link{kgaps_stats}} explains the
+#'   respective properties of the data that cause these events to occur.
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
@@ -140,6 +144,13 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 #'    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
 #'    differing contributions to the likelihood.
 #'    For full details see Suveges and Davison (2010) and Attalides (2015).
+#'
+#'    If \eqn{N_1 = 0} then we are in the degenerate case where there is one
+#'    cluster (all \eqn{K}-gaps are zero) and the likelihood is maximized at
+#'    \eqn{\theta = 0}.
+#'
+#'    If \eqn{N_0 = 0} then all exceedances occur singly (all \eqn{K}-gaps are
+#'    positive) and the likelihood is maximized at \eqn{\theta = 1}.
 #' @return A list containing the sufficient statistics, with components
 #'     \item{\code{N0} }{the number of zero \eqn{K}-gaps}
 #'     \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see

@@ -45,6 +45,10 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
   times is included in the likelihood to be maximized, following
   Attalides (2015).  The form of the log-likelihood is given in the
   \strong{Details} section of \code{\link{kgaps_stat}}.
+
+  It is possible that the estimate of \eqn{\theta} is equal to 1, and also
+  possible that it is equal to 0. \code{\link{kgaps_stats}} explains the
+  respective properties of the data that cause these events to occur.
 }
 \examples{
 ### Newlyn sea-surge data

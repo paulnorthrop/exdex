@@ -59,6 +59,13 @@ The sample \eqn{K}-gaps are
    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
    differing contributions to the likelihood.
    For full details see Suveges and Davison (2010) and Attalides (2015).
+
+   If \eqn{N_1 = 0} then we are in the degenerate case where there is one
+   cluster (all \eqn{K}-gaps are zero) and the likelihood is maximized at
+   \eqn{\theta = 0}.
+
+   If \eqn{N_0 = 0} then all exceedances occur singly (all \eqn{K}-gaps are
+   positive) and the likelihood is maximized at \eqn{\theta = 1}.
 }
 \examples{
 u <- quantile(newlyn, probs = 0.90)

@@ -2,7 +2,7 @@ Package: exdex
 Type: Package
 Title: Estimation of the Extremal Index
 Version: 0.0.0.9000
-Date: 2019-07-28
+Date: 2019-07-29
 Authors@R: c(
     person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk", 
       role = c("aut", "cre", "cph")),

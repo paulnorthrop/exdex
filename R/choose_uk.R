@@ -4,7 +4,7 @@
 #' estimator
 #'
 #' Creates data for a plot to aid the choice of the threshold and
-#' run parameter \eqn{K} for the \qen{K}-gaps estimator (see
+#' run parameter \eqn{K} for the \eqn{K}-gaps estimator (see
 #' \code{\link{kgaps}}).  \code{\link{plot.choose_uk}} creates the plot.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.

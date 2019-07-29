@@ -503,12 +503,6 @@ print.confint_spm <- function(x, ...) {
 #' @param parm Specifies which parameter is to be given a confidence interval.
 #'   Here there is only one option: the extremal index \eqn{\theta}.
 #' @param level The confidence level required.  A numeric scalar in (0, 1).
-#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
-#'   any confidence limits that are greater than 1 are set to 1,
-#'   that is, they are constrained to lie in (0, 1].  Otherwise,
-#'   limits that are greater than 1 may be obtained.
-#'   If \code{constrain = TRUE} then any lower confidence limits that are
-#'   less than 0 are set to 0.
 #' @param interval_type A character scalar: \code{"norm"} for intervals of
 #'   type (a), \code{"lik"} for intervals of type (b).
 #' @param conf_scale A character scalar.  If \code{interval_type = "norm"} then
@@ -520,6 +514,12 @@ print.confint_spm <- function(x, ...) {
 #'   If \code{conf_scale = "log"} then confidence intervals are first
 #'   estimated for \eqn{\log\theta}{log\theta} and then transformed back
 #'   to the \eqn{\theta}-scale.
+#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
+#'   any confidence limits that are greater than 1 are set to 1,
+#'   that is, they are constrained to lie in (0, 1].  Otherwise,
+#'   limits that are greater than 1 may be obtained.
+#'   If \code{constrain = TRUE} then any lower confidence limits that are
+#'   less than 0 are set to 0.
 #' @param ... Further arguments. None are used currently.
 #' @details Two type of interval are calculated: (a) an interval based on the
 #'   approximate large sample normality of the estimator of \eqn{\theta}
@@ -542,10 +542,10 @@ print.confint_spm <- function(x, ...) {
 #' theta <- kgaps(newlyn, u)
 #' confint(theta)
 #' @export
-confint.kgaps <- function (object, parm = "theta",
-                           level = 0.95, constrain = TRUE,
+confint.kgaps <- function (object, parm = "theta", level = 0.95,
                            interval_type = c("both", "norm", "lik"),
-                           conf_scale = c("theta", "log"), ...) {
+                           conf_scale = c("theta", "log"), constrain = TRUE,
+                           ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }

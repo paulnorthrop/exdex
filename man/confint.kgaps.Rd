@@ -5,8 +5,8 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{kgaps}(object, parm = "theta", level = 0.95,
-  constrain = TRUE, interval_type = c("both", "norm", "lik"),
-  conf_scale = c("theta", "log"), ...)
+  interval_type = c("both", "norm", "lik"), conf_scale = c("theta",
+  "log"), constrain = TRUE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("kgaps", "exdex")}, returned by
@@ -16,13 +16,6 @@
 Here there is only one option: the extremal index \eqn{\theta}.}
 
 \item{level}{The confidence level required.  A numeric scalar in (0, 1).}
-
-\item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
-any confidence limits that are greater than 1 are set to 1,
-that is, they are constrained to lie in (0, 1].  Otherwise,
-limits that are greater than 1 may be obtained.
-If \code{constrain = TRUE} then any lower confidence limits that are
-less than 0 are set to 0.}
 
 \item{interval_type}{A character scalar: \code{"norm"} for intervals of
 type (a), \code{"lik"} for intervals of type (b).}
@@ -36,6 +29,13 @@ type (a), \code{"lik"} for intervals of type (b).}
   If \code{conf_scale = "log"} then confidence intervals are first
   estimated for \eqn{\log\theta}{log\theta} and then transformed back
   to the \eqn{\theta}-scale.}
+
+\item{constrain}{A logical scalar.  If \code{constrain = TRUE} then
+any confidence limits that are greater than 1 are set to 1,
+that is, they are constrained to lie in (0, 1].  Otherwise,
+limits that are greater than 1 may be obtained.
+If \code{constrain = TRUE} then any lower confidence limits that are
+less than 0 are set to 0.}
 
 \item{...}{Further arguments. None are used currently.}
 }

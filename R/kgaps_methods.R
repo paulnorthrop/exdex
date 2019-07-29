@@ -70,7 +70,7 @@ nobs.kgaps <- function(object, ...) {
 #' @return The argument \code{x}, invisibly, as for all
 #'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @seealso \code{\link{confint.kgaps}}: \code{confint} method for
 #'   class \code{"kgaps"}.
 #' @export

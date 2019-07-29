@@ -50,7 +50,7 @@ nobs.iwls <- function(object, ...) {
 #' @return The argument \code{x}, invisibly, as for all
 #'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{iwls}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @export
 print.iwls <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   if (!inherits(x, "exdex")) {

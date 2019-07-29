@@ -1,9 +1,9 @@
 # =================================== kgaps ===================================
 #
-#' Maximum likelihood estimation for the K-gaps model
+#' Maximum likelihood estimation for the \eqn{K}-gaps model
 #'
 #' Calculates maximum likelihood estimates of the extremal index \eqn{\theta}
-#' based on the K-gaps model for threshold inter-exceedances times of
+#' based on the \eqn{K}-gaps model for threshold inter-exceedances times of
 #' Suveges and Davison (2010).
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
@@ -18,7 +18,7 @@
 #'   contributions from censored inter-exceedance times relating to the
 #'   first and last observation.  See Attalides (2015) for details.
 #' @details The maximum likelihood estimate of the extremal index \eqn{\theta}
-#'   under the K-gaps model of Suveges and Davison (2010) is calculated.
+#'   under the \eqn{K}-gaps model of Suveges and Davison (2010) is calculated.
 #'   If \code{inc_cens = TRUE} then information from censored inter-exceedance
 #'   times is included in the likelihood to be maximized, following
 #'   Attalides (2015).  The form of the log-likelihood is given in the
@@ -44,10 +44,10 @@
 #' @seealso \code{\link{kgaps_imt}} for the information matrix test, which
 #'   may be used to inform the choice of the pair (\code{u, k}).
 #' @seealso \code{\link{kgaps_stat}} for the calculation of sufficient
-#'   statistics for the K-gaps model.
+#'   statistics for the \eqn{K}-gaps model.
 #' @seealso \code{\link[revdbayes]{kgaps_post}} in the
 #'   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
-#'   about \eqn{\theta} using the K-gaps model.
+#'   about \eqn{\theta} using the \eqn{K}-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
@@ -103,10 +103,10 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 
 # ================================ kgaps_stat =================================
 
-#' Sufficient statistics for the K-gaps model
+#' Sufficient statistics for the \eqn{K}-gaps model
 #'
-#' Calculates sufficient statistics for the K-gaps model for the extremal index
-#' \eqn{\theta}.
+#' Calculates sufficient statistics for the \eqn{K}-gaps model for the extremal
+#' index \eqn{\theta}.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
@@ -119,32 +119,32 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 #' @param inc_cens A logical scalar indicating whether or not to include
 #'   contributions from censored inter-exceedance times relating to the
 #'   first and last observation.  See Attalides (2015) for details.
-#' @details The sample K-gaps are
+#' @details The sample \eqn{K}-gaps are
 #'   \eqn{S_0, S_1, ..., S_{N-1}, S_N}{S_0, S_1, ..., S_(N-1), S_N},
 #'   where \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)} are uncensored and
 #'   \eqn{S_0} and \eqn{S_N} are censored.  Under the assumption that the
-#'   K-gaps are independent, the log-likelihood of the K-gaps model is given
-#'   by
+#'   \eqn{K}-gaps are independent, the log-likelihood of the \eqn{K}-gaps
+#'   model is given by
 #'   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
 #'     2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),}{%
 #'     l(\theta; S_0, ..., S_N) = N_0 log(1 - \theta) + 2 N_1 log \theta -
 #'     \theta q (S_0 + ... + S_N),}
 #'    where \eqn{q} is the threshold exceedance probability,
-#'    \eqn{N_0} is the number of sample K-gaps that are equal to zero and
+#'    \eqn{N_0} is the number of sample \eqn{K}-gaps that are equal to zero and
 #'    (apart from an adjustment for the contributions of \eqn{S_0} and
-#'    \eqn{S_N}) \eqn{N_1} is the number of positive sample K-gaps.
+#'    \eqn{S_N}) \eqn{N_1} is the number of positive sample \eqn{K}-gaps.
 #'    Specifically, \eqn{N_1} is equal to the number of
 #'    \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)}
 #'    that are positive plus \eqn{(I_0 + I_N) / 2}, where \eqn{I_0 = 1} if
 #'    \eqn{S_0} is greater than zero and similarly for \eqn{I_N}.
-#'    The differing treatment of uncensored and censored K-gaps reflects
+#'    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
 #'    differing contributions to the likelihood.
 #'    For full details see Suveges and Davison (2010) and Attalides (2015).
 #' @return A list containing the sufficient statistics, with components
-#'     \item{\code{N0} }{the number of zero K-gaps}
-#'     \item{\code{N1} }{contribution from non-zero K-gaps (see
+#'     \item{\code{N0} }{the number of zero \eqn{K}-gaps}
+#'     \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see
 #'       \strong{Details})}
-#'     \item{\code{sum_qs} }{the sum of the (scaled) K-gaps, i.e.
+#'     \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
 #'       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
 #'       is estimated by the proportion of threshold exceedances.}
 #'     \item{\code{n_kgaps} }{the number of \eqn{K}-gaps, including 2
@@ -157,7 +157,7 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 #'   PhD thesis, University College London.
 #'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @examples
 #' u <- quantile(newlyn, probs = 0.90)
 #' kgaps_stat(newlyn, u)

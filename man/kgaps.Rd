@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps.R
 \name{kgaps}
 \alias{kgaps}
-\title{Maximum likelihood estimation for the K-gaps model}
+\title{Maximum likelihood estimation for the \eqn{K}-gaps model}
 \usage{
 kgaps(data, u, k = 1, inc_cens = FALSE)
 }
@@ -35,12 +35,12 @@ An object (a list) of class \code{c("kgaps", "exdex")} containing
 }
 \description{
 Calculates maximum likelihood estimates of the extremal index \eqn{\theta}
-based on the K-gaps model for threshold inter-exceedances times of
+based on the \eqn{K}-gaps model for threshold inter-exceedances times of
 Suveges and Davison (2010).
 }
 \details{
 The maximum likelihood estimate of the extremal index \eqn{\theta}
-  under the K-gaps model of Suveges and Davison (2010) is calculated.
+  under the \eqn{K}-gaps model of Suveges and Davison (2010) is calculated.
   If \code{inc_cens = TRUE} then information from censored inter-exceedance
   times is included in the likelihood to be maximized, following
   Attalides (2015).  The form of the log-likelihood is given in the
@@ -72,11 +72,11 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
   may be used to inform the choice of the pair (\code{u, k}).
 
 \code{\link{kgaps_stat}} for the calculation of sufficient
-  statistics for the K-gaps model.
+  statistics for the \eqn{K}-gaps model.
 
 \code{\link[revdbayes]{kgaps_post}} in the
   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
-  about \eqn{\theta} using the K-gaps model.
+  about \eqn{\theta} using the \eqn{K}-gaps model.
 
 \code{\link{spm}} for estimation of the extremal index
   \eqn{\theta} using a semiparametric maxima method.

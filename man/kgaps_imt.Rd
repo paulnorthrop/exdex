@@ -2,7 +2,7 @@
 % Please edit documentation in R/information_matrix_test.R
 \name{kgaps_imt}
 \alias{kgaps_imt}
-\title{Information matrix test under the K-gaps model}
+\title{Information matrix test under the \eqn{K}-gaps model}
 \usage{
 kgaps_imt(data, u, k = 1)
 }
@@ -31,7 +31,7 @@ An object (a list) of class \code{c("kgaps_imt", "exdex")}
 }
 \description{
 Performs the information matrix test of Suveges and Davison (2010) to
-diagnose misspecification of the K-gaps model
+diagnose misspecification of the \eqn{K}-gaps model
 }
 \details{
 The information matrix test is performed a over grid of all
@@ -58,5 +58,5 @@ Suveges, M. and Davison, A. C. (2010) Model
 }
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the K-gaps model.
+  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 }

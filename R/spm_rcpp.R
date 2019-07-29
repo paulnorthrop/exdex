@@ -153,7 +153,7 @@
 #' @seealso \code{\link{confint.spm}} to estimate confidence intervals
 #'   for \eqn{theta}.
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.

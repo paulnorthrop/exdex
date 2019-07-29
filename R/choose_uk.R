@@ -1,10 +1,11 @@
 # ================================= choose_uk =================================
 
-#' Threshold and runs parameter diagnostic for the K-gaps estimator
+#' Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the \eqn{K}-gaps
+#' estimator
 #'
 #' Creates data for a plot to aid the choice of the threshold and
-#' run parameter \eqn{K} for the K-gaps estimator (see \code{\link{kgaps}}).
-#' \code{\link{plot.choose_uk}} creates the plot.
+#' run parameter \eqn{K} for the \qen{K}-gaps estimator (see
+#' \code{\link{kgaps}}).  \code{\link{plot.choose_uk}} creates the plot.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param u,k Numeric vectors.  \code{u} is a vector of
@@ -28,9 +29,9 @@
 #'     \code{c("kgaps", "exdex")}, a result of a call
 #'     \code{kgaps(data, u[j], k[i])} to \code{\link{kgaps}}.}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @seealso \code{\link{kgaps_imt}} for the information matrix test under the
-#'   K-gaps model
+#'   \eqn{K}-gaps model
 #' @examples
 #' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 #' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)

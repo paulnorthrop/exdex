@@ -2,7 +2,8 @@
 % Please edit documentation in R/choose_uk.R
 \name{choose_uk}
 \alias{choose_uk}
-\title{Threshold and runs parameter diagnostic for the K-gaps estimator}
+\title{Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the \eqn{K}-gaps
+estimator}
 \usage{
 choose_uk(data, u, k = 1)
 }
@@ -26,8 +27,8 @@ An object (a list) of class \code{c("choose_uk", "exdex")}
 }
 \description{
 Creates data for a plot to aid the choice of the threshold and
-run parameter \eqn{K} for the K-gaps estimator (see \code{\link{kgaps}}).
-\code{\link{plot.choose_uk}} creates the plot.
+run parameter \eqn{K} for the \qen{K}-gaps estimator (see
+\code{\link{kgaps}}).  \code{\link{plot.choose_uk}} creates the plot.
 }
 \details{
 For each combination of threshold in \code{u} and \eqn{K}
@@ -48,8 +49,8 @@ Suveges, M. and Davison, A. C. (2010) Model
 }
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the K-gaps model.
+  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 
 \code{\link{kgaps_imt}} for the information matrix test under the
-  K-gaps model
+  \eqn{K}-gaps model
 }

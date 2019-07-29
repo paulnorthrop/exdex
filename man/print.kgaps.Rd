@@ -27,7 +27,7 @@ Prints the original call to \code{\link{kgaps}}
 }
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the K-gaps model.
+  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 
 \code{\link{confint.kgaps}}: \code{confint} method for
   class \code{"kgaps"}.

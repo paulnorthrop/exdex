@@ -1,9 +1,9 @@
 # ================================= kgaps_imt =================================
 #
-#' Information matrix test under the K-gaps model
+#' Information matrix test under the \eqn{K}-gaps model
 #'
 #' Performs the information matrix test of Suveges and Davison (2010) to
-#' diagnose misspecification of the K-gaps model
+#' diagnose misspecification of the \eqn{K}-gaps model
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param u,k Numeric vectors.  \code{u} is a vector of
@@ -39,7 +39,7 @@
 #'     containing the corresponding estimates of \eqn{\theta}.}
 #'   \item{u,k }{The input \code{u} and \code{k}.}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the K-gaps model.
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @examples
 #' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 #' imt <- kgaps_imt(newlyn, u, k = 1:5)

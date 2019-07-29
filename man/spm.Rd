@@ -192,7 +192,7 @@ maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
   for \eqn{theta}.
 
 \code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the K-gaps model.
+  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 
 \code{\link{iwls}}: iterated weighted least squares estimator.
 }

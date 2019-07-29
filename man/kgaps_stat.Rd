@@ -2,7 +2,7 @@
 % Please edit documentation in R/kgaps.R
 \name{kgaps_stat}
 \alias{kgaps_stat}
-\title{Sufficient statistics for the K-gaps model}
+\title{Sufficient statistics for the \eqn{K}-gaps model}
 \usage{
 kgaps_stat(data, u, k = 1, inc_cens = FALSE)
 }
@@ -24,39 +24,39 @@ first and last observation.  See Attalides (2015) for details.}
 }
 \value{
 A list containing the sufficient statistics, with components
-    \item{\code{N0} }{the number of zero K-gaps}
-    \item{\code{N1} }{contribution from non-zero K-gaps (see
+    \item{\code{N0} }{the number of zero \eqn{K}-gaps}
+    \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see
       \strong{Details})}
-    \item{\code{sum_qs} }{the sum of the (scaled) K-gaps, i.e.
+    \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
       is estimated by the proportion of threshold exceedances.}
     \item{\code{n_kgaps} }{the number of \eqn{K}-gaps, including 2
       censored \eqn{K}-gaps if \code{inc_cens = TRUE}.}
 }
 \description{
-Calculates sufficient statistics for the K-gaps model for the extremal index
-\eqn{\theta}.
+Calculates sufficient statistics for the \eqn{K}-gaps model for the extremal
+index \eqn{\theta}.
 }
 \details{
-The sample K-gaps are
+The sample \eqn{K}-gaps are
   \eqn{S_0, S_1, ..., S_{N-1}, S_N}{S_0, S_1, ..., S_(N-1), S_N},
   where \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)} are uncensored and
   \eqn{S_0} and \eqn{S_N} are censored.  Under the assumption that the
-  K-gaps are independent, the log-likelihood of the K-gaps model is given
-  by
+  \eqn{K}-gaps are independent, the log-likelihood of the \eqn{K}-gaps
+  model is given by
   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
     2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),}{%
     l(\theta; S_0, ..., S_N) = N_0 log(1 - \theta) + 2 N_1 log \theta -
     \theta q (S_0 + ... + S_N),}
    where \eqn{q} is the threshold exceedance probability,
-   \eqn{N_0} is the number of sample K-gaps that are equal to zero and
+   \eqn{N_0} is the number of sample \eqn{K}-gaps that are equal to zero and
    (apart from an adjustment for the contributions of \eqn{S_0} and
-   \eqn{S_N}) \eqn{N_1} is the number of positive sample K-gaps.
+   \eqn{S_N}) \eqn{N_1} is the number of positive sample \eqn{K}-gaps.
    Specifically, \eqn{N_1} is equal to the number of
    \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)}
    that are positive plus \eqn{(I_0 + I_N) / 2}, where \eqn{I_0 = 1} if
    \eqn{S_0} is greater than zero and similarly for \eqn{I_N}.
-   The differing treatment of uncensored and censored K-gaps reflects
+   The differing treatment of uncensored and censored \eqn{K}-gaps reflects
    differing contributions to the likelihood.
    For full details see Suveges and Davison (2010) and Attalides (2015).
 }
@@ -76,5 +76,5 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 }
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the K-gaps model.
+  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 }

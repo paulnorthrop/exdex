@@ -6,7 +6,8 @@
 \usage{
 \method{plot}{choose_uk}(x, y = c("imts", "theta"), level = 0.95,
   interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
-  constrain = TRUE, for_abline = list(lty = 1, lwd = 1, col = 1), ...)
+  alpha = 0.05, constrain = TRUE, for_abline = list(lty = 2, lwd = 1,
+  col = 1), digits = 3, ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_uk", "exdex")}, a result of a
@@ -32,14 +33,22 @@ to be plotted, if \code{y = "theta"}.  See \code{\link{confint.kgaps}}.}
 large-sample normality of the estimator to estimate confidence intervals.
 See \code{\link{confint.kgaps}}.}
 
+\item{alpha}{A numeric scalar in (0, 1). The significance level to be used
+for the information matrix test.}
+
 \item{constrain}{A logical scalar.  The argument \code{constrain} to
 \code{\link{confint.kgaps}}.}
 
-\item{...}{Additional arguments passed on to
-\code{\link[graphics]{matplot}} and/or \code{\link[graphics]{axis}}.}
+\item{for_abline}{Only relevant when \code{y = "imt"} and at one of
+\code{u} or \code{k} is scalar. A list of graphical parameters to be
+passed to \code{\link{abline}} to indicate the critical value of the
+information matrix test implied by \code{alpha}.}
 
-\item{alpha}{A numeric scalar in (0, 1). The significance level to be used
-for the information matrix test.}
+\item{digits}{An integer. Used for formatting the value of the threshold
+with \code{\link[base:Round]{signif}} before adding its value to a plot.}
+
+\item{...}{Additional arguments passed on to
+\code{\link[graphics]{matplot}}.}
 }
 \value{
 Nothing is returned.

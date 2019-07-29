@@ -111,7 +111,8 @@ choose_uk <- function(data, u, k = 1) {
 #' @export
 plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
                            interval_type = c("norm", "lik"),
-                           conf_scale = c("theta", "log"), constrain = TRUE,
+                           conf_scale = c("theta", "log"), alpha = 0.05,
+                           constrain = TRUE,
                            for_abline = list(lty = 2, lwd = 1, col = 1),
                            digits = 3, ...) {
   y <- match.arg(y)

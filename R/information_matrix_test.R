@@ -65,7 +65,6 @@ kgaps_imt <- function(data, u, k = 1) {
     n_u <- length(exc_u)
     # proportion of values that exceed u
     q_u <- n_u / nx
-#    q_u <- (n_u - 1) / nx # mev
     # inter-exceedance times
     T_u <- diff(exc_u)
     #
@@ -88,7 +87,6 @@ kgaps_imt <- function(data, u, k = 1) {
     temp <- ld * rep(Dnd / In, rep(nrow(ld), ncol(ld)))
     Vn <- colMeans((dc - temp) ^ 2)
     test_stats <- (n_u - 1) * Dn ^ 2 / Vn
-#    test_stats <- n_u * Dn ^ 2 / Vn # mev
     pvals <- stats::pchisq(test_stats, df = 1, lower.tail = FALSE)
     theta <- rbind(theta, thetahat)
     T_mat <- rbind(T_mat, test_stats)

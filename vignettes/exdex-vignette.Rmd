@@ -63,7 +63,7 @@ For this small block size of $b = 20$ there is an appreciable difference between
 
 We also consider a dataset (`sp500`) that is similar to one analysed in @BB2018: daily log returns of the S&P 500 index, from 3rd January 1990 to 9th October 2018.  We use a block size $b = 225$, which is similar to that chosen by @BB2018.
 
-```{r}
+```{r, fig.width=7, fig.height= 6}
 theta <- spm(sp500, 225)
 summary(theta)
 conf <- confint(theta, interval_type = "lik")
@@ -96,7 +96,6 @@ For the `sp500` data we obtain the following plot.
 b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
 res500 <- choose_b(sp500, b_vals)
 plot(res500, ylim = c(0, 1))
-plot(res500, estimator = "BB2018", ylim = c(0, 1))
 ```
 
 The estimates of \eqn{theta} stabilise less quickly than for the `newlyn` data but $b = 225$ seems to be reasonable choice.
@@ -119,7 +118,7 @@ summary(theta)
 
 @SD2010 propose a diagnostic test, an information matrix text (IMT), to inform the choice of $(u, K)$.  The test is based on a statistics that compares the Fisher information for $\theta$ to the variance of the score statistic, both evaluated at the estimate $\hat{\theta}$, because these two quantities are equal for a well-specified regular model.  The following code performs this test, using a test of size $\alpha = 0.05$, for a range of values of $u$ and $K$ and produces graphical summary containing a horizontal line to indicator the critical value of the test.
 
-```{r}
+```{r, fig.width=7, fig.height= 6}
 u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
 imt_theta <- choose_uk(sp500, u = u, k = 1:5)
 plot(imt_theta, uprob = TRUE, alpha = 0.05)

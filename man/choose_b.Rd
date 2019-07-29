@@ -84,8 +84,8 @@ An object of class \code{c("choose_b", "exdex")} containing
 Creates data for a plot to aid the choice of the block length \code{b} to
 supply to \code{\link{spm}}.  The general idea is to select the smallest
 value of \code{b} above which estimates of the extremal index \eqn{\theta}
-appear to be constant in \code{b}, taking into account sampling variability.
-\code{\link{plot.choose_b}} creates the plot.
+appear to be constant eith respect to \code{b}, taking into account sampling
+variability.  \code{\link{plot.choose_b}} creates the plot.
 }
 \details{
 For each block size in \code{b} the extremal index \eqn{\theta}

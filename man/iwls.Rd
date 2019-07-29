@@ -67,8 +67,8 @@ The iterated weighted least squares algorithm on page 46 of
 }
 \examples{
 u <- quantile(newlyn, probs = 0.90)
-res <- iwls(newlyn, u)
-res
+theta <- iwls(newlyn, u)
+theta
 }
 \references{
 Suveges, M. (2007) Likelihood estimation of the extremal

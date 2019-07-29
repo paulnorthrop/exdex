@@ -30,22 +30,22 @@ and define the estimators
 These two estimators are equivalent asymptotically.
 The former is the estimator proposed in @Northrop2015. @BB2018 derived asymptotic properties of the latter, because it is more amenable to mathematical analysis.
 
-The function `spm` provides three estimators, estimated using both sliding and disjoint block maxima and four types of bias-adjustment.  The estimators are $\hat{\theta}_N, \hat{\theta}_{BB}$ and $\hat{\theta}_{BB}-1/b$. The latter is motivated by the observation that E$(Z)  = (\theta + 1/b)^{-1} < \theta^{-1}$ and therefore the substraction of $1 / b$ provides further bias-adjustment.  In fact empirical results indicate that $\hat{\theta}_N$ and $\hat{\theta}_{BB} - 1/b$ produce almost identical estimates.
+The function `spm` provides three estimators, estimated using both sliding and disjoint block maxima and four types of bias-adjustment.  The estimators are $\hat{\theta}_N, \hat{\theta}_{BB}$ and $\hat{\theta}_{BB}-1/b$. The latter is motivated by the observation that E$(Z)  = (\theta + 1/b)^{-1} < \theta^{-1}$ and therefore the subtraction of $1 / b$ provides further bias-adjustment.  In fact empirical results indicate that $\hat{\theta}_N$ and $\hat{\theta}_{BB} - 1/b$ produce similar estimates.
 
-### Newlyn Sea Surges
+### Newlyn sea surges
 
-We provide an illustration of the `spm function` using the `newlyn` data, a time series of 2894 maximum seas surges measured at Newlyn, Cornwall, UK over the period 1971-1976.
+We provide an illustration of the `spm` function using the `newlyn` data, a time series of 2894 maximum seas surges measured at Newlyn, Cornwall, UK over the period 1971-1976.  We use a block size $b = 20$.  We explain in a moment how this value was chosen.
 
 ```{r}
 library(exdex)
 theta <- spm(newlyn, 20)
 # Estimates: BB2018b is BB2018 - 1/b
 theta
-# Estimates, SEs and biad-adjustments
+# Estimates, SEs and bias-adjustments
 summary(theta)
 ```
 
-There is a `confint` method for calculating confidence intervals.  The likelihood-based intervals are based on an adjustment (performed by the `chandwich` package @chandwich)  of the naive (pseudo-)loglikelihood so that the curvature of the adjusted loglikelihood agrees with the estimated standard errors.
+There is a `confint` method for calculating confidence intervals using objects returned from `spm`.  The likelihood-based intervals are based on an adjustment (performed by the `chandwich` package @chandwich) of the naive (pseudo-)loglikelihood so that the curvature of the adjusted loglikelihood agrees with the estimated standard errors.
 
 ```{r, fig.width=7, fig.height= 6}
 # Sliding maxima, symmetric intervals
@@ -57,17 +57,41 @@ plot(conf)
 
 ### Block size selection
 
+An informal way to choose the value of $b$ is plots estimates of $\theta$ over a range of values of $b$ and to select the smallest $b$ above which these estimates appear to be constant with respect to $b$, taking into account sampling variability.  The function `choose_b`, and its associated plot method, does this, quantifying sampling variablity using pointwise confidence intervals.  The plot method allows us to select one of 3 estimators and choose whether to use sliding or disjoint block maxima.  The default is to plot the estimates using the @Northrop2015 estimator applied to sliding maxima.
+
 ```{r, fig.width=7, fig.height= 6}
 # Plot like the top left of Northrop (2015)
-# Remove the last 14 values because 2880 has lots of factors
+# We remove the 14 values because 2880 has lots of factors
 b_vals <- c(2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,32,36,40,45,48,54,60)
 res <- choose_b(newlyn[1:2880], b_vals)
 # Some b are too small for the sampling variance of the sliding blocks
 # estimator to be estimated
-plot(res)
+plot(res, ylim = c(0, 1))
 ```
 
+This plots suggests that $b = 20$ is a reasonable block size to choose.  Indeed the point estimates varies smoothly with $b$ and varies little for $b \geq 20$. The confidence intervals tend to widen as $b$ increases, although the method for estimating these intervals is somewhat sensitive to block size owing to its use of disjoint block maxima. See the help file for `spm` and @BB2018 for further information. Note that for very small values of $b$ it may not be possible to estimate the confidence intervals, hence the missing intervals in this plot.
+
 ## Threshold-based estimators
+
+### $K$-gaps
+
+```{r}
+u <- quantile(newlyn, probs = 0.90)
+theta <- kgaps(newlyn, u)
+theta
+summary(theta)
+```
+
+### Iterated weighted least squares
+
+The current implementation of this estimator is very limited: only an estimate is produced, with no estimates of uncertainty.  The next release of *exdex* wil rectify this.
+
+
+```{r}
+u <- quantile(newlyn, probs = 0.90)
+theta <- iwls(newlyn, u)
+theta
+```
 
 ## References
 

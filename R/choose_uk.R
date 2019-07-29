@@ -34,21 +34,21 @@
 #'   \eqn{K}-gaps model
 #' @seealso \code{\link{plot.choose_uk}} to produce the diagnostic plot.
 #' @examples
+#' # Multiple thresholds and run parameters
+#' u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+#' imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+#' plot(imt_theta)
+#' plot(imt_theta, y = "theta")
+#'
 #' # One run parameter K, many thresholds u
-#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' imt_theta <- choose_uk(newlyn, u = u, k = 1)
+#' u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+#' imt_theta <- choose_uk(sp500, u = u, k = 1)
 #' plot(imt_theta)
 #' plot(imt_theta, y = "theta")
 #'
 #' # One threshold u, many run parameters K
-#' u <- quantile(newlyn, probs = 0.9)
-#' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
-#' plot(imt_theta)
-#' plot(imt_theta, y = "theta")
-#'
-#' # Multipe thresholds and run parameters
-#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
+#' u <- quantile(sp500, probs = 0.9)
+#' imt_theta <- choose_uk(sp500, u = u, k = 1:5)
 #' plot(imt_theta)
 #' plot(imt_theta, y = "theta")
 #' @export
@@ -74,7 +74,8 @@ choose_uk <- function(data, u, k = 1) {
 
 # ============================= plot.choose_uk ===============================
 
-#' Plot block length diagnostic for the semiparametric maxima estimator
+#' Plot Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
+#' \eqn{K}-gaps estimator
 #'
 #' \code{plot} method for objects inheriting from class \code{"choose_uk"},
 #' returned from \code{\link{choose_uk}}
@@ -82,7 +83,7 @@ choose_uk <- function(data, u, k = 1) {
 #' @param x an object of class \code{c("choose_uk", "exdex")}, a result of a
 #'   call to \code{\link{choose_uk}}.
 #' @param y A character scalar indicating what should be plotted on the
-#'   vertical axes of the plot: information matrix test statistics
+#'   vertical axes of the plot: information matrix test statistics (IMTS)
 #'   if \code{y = "imts"} and estimates of \eqn{\theta} if \code{y = "theta"}.
 #'   If \code{y = "theta"}, and either \code{x$u} or \code{x$k} have length
 #'   one, then 100\code{level}\% confidence intervals are added to the plot.
@@ -102,15 +103,34 @@ choose_uk <- function(data, u, k = 1) {
 #' @param for_abline Only relevant when \code{y = "imts"} and at one of
 #'   \code{u} or \code{k} is scalar. A list of graphical parameters to be
 #'   passed to \code{\link{abline}} to indicate the critical value of the
-#'   information matrix test implied by \code{alpha}.
+#'   information matrix test (IMT) implied by \code{alpha}.
 #' @param digits An integer. Used for formatting the value of the threshold
 #'   with \code{\link[base:Round]{signif}} before adding its value to a plot.
+#' @param uprob A logical scalar. Should we plot \code{x$u} on the
+#'   horizontal axis (\code{uprob = FALSE}) or the approximate sample quantile
+#'   to which \code{x$u} corresponds (\code{uprob = FALSE})?
 #' @param leg_pos A character scalar.  The position of any legend added to
 #'   a plot.  Only relevant when both the arguments \code{u} and \code{k}
 #'   in the call to \code{\link{choose_uk}} have length greater than one.
 #' @param ... Additional arguments passed to \code{\link[graphics]{matplot}}.
 #' @details The type of plot produced depends mainly on \code{y}.
-#'   If \code{y = "imts"} then the
+#'
+#'   If \code{y = "imts"} then the values of IMTS are plotted against the
+#'   thresholds in \code{x$u} (or their corresponding approximate sample
+#'   quantile levels if \code{uprob = TRUE}) for each value of \eqn{K}
+#'   in \code{x$k}.  Horizontal lines are added to indicate the critical
+#'   values of the IMT for the significance levels in \code{alpha}.
+#'   We would not reject at the 100\code{alpha}\% level combinations of
+#'   threshold and \eqn{K} corresponding to values of the IMTS that fall
+#'   below the line.
+#'
+#'   If \code{y = "theta"} then estimates of \eqn{\theta} are plotted on the
+#'   vertical axis.  If both \code{x$u} and \code{x$k$} have length greater
+#'   than one then only these estimates are plotted.  If either \code{x$u}
+#'   or \code{x$k} have length one then approximate 100\code{level}\%
+#'   confidence intevals are added to the plot and the variable,
+#'   \code{x$u} or \code{x$k} that has length greater than one is plotted on
+#'   the horizontal axis.
 #' @return Nothing is returned.
 #' @seealso \code{\link{choose_uk}}.
 #' @section Examples:
@@ -121,7 +141,9 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
                            conf_scale = c("theta", "log"), alpha = 0.05,
                            constrain = TRUE,
                            for_abline = list(lty = 2, lwd = 1, col = 1),
-                           digits = 3, leg_pos = "topright", ...) {
+                           digits = 3, uprob = FALSE,
+                           leg_pos = if (y == "imts") "topright" else "topleft",
+                           ...) {
   y <- match.arg(y)
   interval_type <- match.arg(interval_type)
   conf_scale <- match.arg(conf_scale)
@@ -130,8 +152,10 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
   u <- x$imt$u
   n_k <- length(k)
   n_u <- length(u)
+  # Approximate sample quantiles of threshold u
+  u_ps <- rownames(x$imt$imt)
   if (n_k == 1 && n_u == 1) {
-    stop("Object contains only 1 threshold and one value of K")
+    stop("Object contains only 1 threshold and 1 value of K")
   }
   # Function to set the correct element of the matrix of lists theta
   # i indexes k, j indexes u
@@ -160,7 +184,11 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
     max_uk <- max(n_k, n_u)
     ymat <- matrix(NA, ncol = 3, nrow = max_uk)
     if (cond1) {
-      xvec <- u
+      if (uprob) {
+        xvec <- u_ps
+      } else {
+        xvec <- u
+      }
     } else {
       xvec <- k
     }
@@ -180,17 +208,28 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
       }
       my_ylab <- "theta"
       my_xlab <- ifelse(cond1, "threshold u", "run parameter K")
+      if (uprob & cond1) {
+        my_xlab <- "sample quantile level of threshold u"
+      }
       my_ylim <- c(0, 1)
       my_matplot(xvec, ymat, ...)
       my_main <- ifelse(cond1, paste0("run parameter K = ", k),
-                        paste0("threshold u = ", signif(u, digits = digits)))
+                        paste0("threshold u = ", signif(u, digits = digits),
+                               " (", u_ps, "% quantile)"))
       my_title(...)
     } else {
-      my_ylab <- "IMT"
+      my_ylab <- "IMTS"
       my_xlab <- ifelse(cond1, "threshold u", "run parameter K")
-      my_ylim <- c(0, max(x$imt$imt))
+      if (uprob & cond1) {
+        my_xlab <- "sample quantile level of threshold u"
+      }
+      my_ylim <- c(0, max(x$imt$imt, na.rm = TRUE))
       if (cond1) {
-        xvec <- x$imt$u
+        if (uprob) {
+          xvec <- u_ps
+        } else {
+          xvec <- x$imt$u
+        }
         ymat <- x$imt$imt
       } else {
         xvec <- x$imt$k
@@ -198,31 +237,45 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
       }
       my_matplot(xvec, ymat, ...)
       my_main <- ifelse(cond1, paste0("run parameter K = ", k),
-                        paste0("threshold u = ", signif(u, digits = digits)))
+                        paste0("threshold u = ", signif(u, digits = digits),
+                               " (", u_ps, "% quantile)"))
       my_title(...)
       for_abline <- c(for_abline, list(h = crit))
       do.call(graphics::abline, for_abline)
-      graphics::mtext(as.character(alpha), 4, at = crit, las = 1, cex = 0.8)
+      graphics::mtext(as.character(alpha), 4, at = crit, las = 1, cex = 0.8,
+                      adj = 1, padj = 1)
     }
   } else {
     my_lty <- 1
     my_col <- 1:n_k
-    xvec <- x$imt$u
+    if (uprob) {
+      xvec <- u_ps
+    } else {
+      xvec <- x$imt$u
+    }
     if (y == "theta") {
       ymat <- x$imt$theta
       my_ylab <- "theta"
       my_ylim <- c(0, 1)
     } else {
       ymat <- x$imt$imt
-      my_ylab <- "IMT"
-      my_ylim <- c(0, max(x$imt$imt))
+      my_ylab <- "IMTS"
+      my_ylim <- c(0, max(x$imt$imt, na.rm = TRUE))
     }
-    my_xlab <- "threshold u"
+    if (uprob) {
+      my_xlab <- "sample quantile level of threshold u"
+    } else {
+      my_xlab <- "threshold u"
+    }
     my_matplot(xvec, ymat, ...)
+#    if (!is.null(u_ps)) {
+#      graphics::axis(3, at = xvec, labels = u_ps)
+#    }
     if (y == "imts") {
       for_abline <- c(for_abline, list(h = crit))
       do.call(graphics::abline, for_abline)
-      graphics::mtext(as.character(alpha), 4, at = crit, las = 1, cex = 0.8)
+      graphics::mtext(as.character(alpha), 4, at = crit, las = 1, cex = 0.8,
+                      adj = 1, padj = 1)
     }
     user_args <- list(...)
     if (is.null(user_args$lty)) {

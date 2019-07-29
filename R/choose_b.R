@@ -20,6 +20,11 @@
 #'   This is akin to a threshold stability plot: see Chapter 4 of Coles (2001),
 #'   for example.
 #'
+#'   The nature of the calculation of the sampling variances of the estimates
+#'   of \eqn{\theta} (see \code{\link{spm}} for details) means that
+#'   \code{choose_b} may be a little slow to run if \code{b} contains many
+#'   values, particularly if some of them are small.
+#'
 #'   For very small block sizes it may not be possible to estimate the
 #'   confidence intervals.  See \strong{Details} in \code{\link{spm}}.
 #'   For any such block sizes the intervals will be missing from the plot.

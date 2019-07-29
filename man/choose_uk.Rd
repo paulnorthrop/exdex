@@ -37,21 +37,21 @@ For each combination of threshold in \code{u} and \eqn{K}
   information matrix test of Suveges and Davison (2010).
 }
 \examples{
+# Multiple thresholds and run parameters
+u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+plot(imt_theta)
+plot(imt_theta, y = "theta")
+
 # One run parameter K, many thresholds u
-u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-imt_theta <- choose_uk(newlyn, u = u, k = 1)
+u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(sp500, u = u, k = 1)
 plot(imt_theta)
 plot(imt_theta, y = "theta")
 
 # One threshold u, many run parameters K
-u <- quantile(newlyn, probs = 0.9)
-imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
-plot(imt_theta)
-plot(imt_theta, y = "theta")
-
-# Multipe thresholds and run parameters
-u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
+u <- quantile(sp500, probs = 0.9)
+imt_theta <- choose_uk(sp500, u = u, k = 1:5)
 plot(imt_theta)
 plot(imt_theta, y = "theta")
 }

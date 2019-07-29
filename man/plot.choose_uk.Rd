@@ -2,19 +2,21 @@
 % Please edit documentation in R/choose_uk.R
 \name{plot.choose_uk}
 \alias{plot.choose_uk}
-\title{Plot block length diagnostic for the semiparametric maxima estimator}
+\title{Plot Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
+\eqn{K}-gaps estimator}
 \usage{
 \method{plot}{choose_uk}(x, y = c("imts", "theta"), level = 0.95,
   interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
   alpha = 0.05, constrain = TRUE, for_abline = list(lty = 2, lwd = 1,
-  col = 1), digits = 3, leg_pos = "topright", ...)
+  col = 1), digits = 3, uprob = FALSE, leg_pos = if (y == "imts")
+  "topright" else "topleft", ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_uk", "exdex")}, a result of a
 call to \code{\link{choose_uk}}.}
 
 \item{y}{A character scalar indicating what should be plotted on the
-vertical axes of the plot: information matrix test statistics
+vertical axes of the plot: information matrix test statistics (IMTS)
 if \code{y = "imts"} and estimates of \eqn{\theta} if \code{y = "theta"}.
 If \code{y = "theta"}, and either \code{x$u} or \code{x$k} have length
 one, then 100\code{level}\% confidence intervals are added to the plot.}
@@ -40,10 +42,14 @@ level(s) to be used for the information matrix test.}
 \item{for_abline}{Only relevant when \code{y = "imts"} and at one of
 \code{u} or \code{k} is scalar. A list of graphical parameters to be
 passed to \code{\link{abline}} to indicate the critical value of the
-information matrix test implied by \code{alpha}.}
+information matrix test (IMT) implied by \code{alpha}.}
 
 \item{digits}{An integer. Used for formatting the value of the threshold
 with \code{\link[base:Round]{signif}} before adding its value to a plot.}
+
+\item{uprob}{A logical scalar. Should we plot \code{x$u} on the
+horizontal axis (\code{uprob = FALSE}) or the approximate sample quantile
+to which \code{x$u} corresponds (\code{uprob = FALSE})?}
 
 \item{leg_pos}{A character scalar.  The position of any legend added to
 a plot.  Only relevant when both the arguments \code{u} and \code{k}
@@ -60,7 +66,23 @@ returned from \code{\link{choose_uk}}
 }
 \details{
 The type of plot produced depends mainly on \code{y}.
-  If \code{y = "imts"} then the
+
+  If \code{y = "imts"} then the values of IMTS are plotted against the
+  thresholds in \code{x$u} (or their corresponding approximate sample
+  quantile levels if \code{uprob = TRUE}) for each value of \eqn{K}
+  in \code{x$k}.  Horizontal lines are added to indicate the critical
+  values of the IMT for the significance levels in \code{alpha}.
+  We would not reject at the 100\code{alpha}\% level combinations of
+  threshold and \eqn{K} corresponding to values of the IMTS that fall
+  below the line.
+
+  If \code{y = "theta"} then estimates of \eqn{\theta} are plotted on the
+  vertical axis.  If both \code{x$u} and \code{x$k$} have length greater
+  than one then only these estimates are plotted.  If either \code{x$u}
+  or \code{x$k} have length one then approximate 100\code{level}\%
+  confidence intevals are added to the plot and the variable,
+  \code{x$u} or \code{x$k} that has length greater than one is plotted on
+  the horizontal axis.
 }
 \section{Examples}{
 

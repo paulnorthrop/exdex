@@ -88,7 +88,11 @@
 #'   of disjoint block maxima.  If \code{length(data)} is not an integer
 #'   multiple of \code{b} then there will be more than one set of these, and
 #'   all are equally valid.  In this event we perform the calculation for all
-#'   such sets and use the mean of the resulting estimates.
+#'   such sets and use the mean of the resulting estimates.  This reduces the
+#'   sampling variability of the estimates at the expense of slowing down
+#'   the calculation somewhat, particularly if \code{b} is small.  This may
+#'   become apparent when calling \code{spm} repeatedly in
+#'   \code{\link{choose_b}}.
 #'
 #'   This estimator of the sampling variance of the sliding blocks estimator is
 #'   not constrained to be positive: a negative estimate may result if the

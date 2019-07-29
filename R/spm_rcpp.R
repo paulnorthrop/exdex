@@ -166,12 +166,12 @@
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
 #' @examples
-#' # Newlyn sea surges
+#' ### Newlyn sea surges
 #' theta <- spm(newlyn, 20)
 #' theta
 #' summary(theta)
 #'
-#' # S&P 500 index
+#' ### S&P 500 index
 #' theta <- spm(sp500, 100)
 #' theta
 #' summary(theta)

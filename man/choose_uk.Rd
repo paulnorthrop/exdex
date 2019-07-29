@@ -37,10 +37,13 @@ For each combination of threshold in \code{u} and \eqn{K}
   information matrix test of Suveges and Davison (2010).
 }
 \examples{
+### S&P 500 index
+
 # Multiple thresholds and run parameters
 u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
 imt_theta <- choose_uk(sp500, u = u, k = 1:5)
 plot(imt_theta)
+plot(imt_theta, uprob = TRUE)
 plot(imt_theta, y = "theta")
 
 # One run parameter K, many thresholds u
@@ -54,6 +57,12 @@ u <- quantile(sp500, probs = 0.9)
 imt_theta <- choose_uk(sp500, u = u, k = 1:5)
 plot(imt_theta)
 plot(imt_theta, y = "theta")
+
+### Newlyn sea surges
+
+u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
+plot(imt_theta, uprob = TRUE)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

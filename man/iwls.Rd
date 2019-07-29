@@ -66,6 +66,14 @@ The iterated weighted least squares algorithm on page 46 of
   not by their mean.
 }
 \examples{
+### S&P 500 index
+
+u <- quantile(sp500, probs = 0.60)
+theta <- iwls(sp500, u)
+theta
+
+### Newlyn sea surges
+
 u <- quantile(newlyn, probs = 0.90)
 theta <- iwls(newlyn, u)
 theta

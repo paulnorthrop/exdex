@@ -62,6 +62,14 @@
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @examples
+#' ### S&P 500 index
+#'
+#' u <- quantile(sp500, probs = 0.60)
+#' theta <- iwls(sp500, u)
+#' theta
+#'
+#' ### Newlyn sea surges
+#'
 #' u <- quantile(newlyn, probs = 0.90)
 #' theta <- iwls(newlyn, u)
 #' theta

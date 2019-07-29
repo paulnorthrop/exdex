@@ -47,6 +47,8 @@
 #'   for \eqn{\theta}.
 #' @seealso \code{\link{kgaps_imt}} for the information matrix test, which
 #'   may be used to inform the choice of the pair (\code{u, k}).
+#' @seealso \code{\link{choose_uk}} for a diagnostic plot based on
+#'   \code{\link{kgaps_imt}}.
 #' @seealso \code{\link{kgaps_stat}} for the calculation of sufficient
 #'   statistics for the \eqn{K}-gaps model.
 #' @seealso \code{\link[revdbayes]{kgaps_post}} in the
@@ -56,10 +58,16 @@
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @examples
-#' ### Newlyn sea-surge data
+#' ### S&P 500 index
+#' u <- quantile(sp500, probs = 0.60)
+#' theta <- kgaps(sp500, u)
+#' theta
+#' summary(theta)
 #'
-#' u <- quantile(newlyn, probs = 0.90)
-#' theta <- kgaps(newlyn, u)
+#' ### Newlyn sea surges
+#'
+#' u <- quantile(newlyn, probs = 0.60)
+#' theta <- kgaps(newlyn, u, k= 2)
 #' theta
 #' summary(theta)
 #' @export

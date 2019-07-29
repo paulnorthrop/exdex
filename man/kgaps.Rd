@@ -51,10 +51,16 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
   respective properties of the data that cause these events to occur.
 }
 \examples{
-### Newlyn sea-surge data
+### S&P 500 index
+u <- quantile(sp500, probs = 0.60)
+theta <- kgaps(sp500, u)
+theta
+summary(theta)
 
-u <- quantile(newlyn, probs = 0.90)
-theta <- kgaps(newlyn, u)
+### Newlyn sea surges
+
+u <- quantile(newlyn, probs = 0.60)
+theta <- kgaps(newlyn, u, k= 2)
 theta
 summary(theta)
 }
@@ -74,6 +80,9 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
 
 \code{\link{kgaps_imt}} for the information matrix test, which
   may be used to inform the choice of the pair (\code{u, k}).
+
+\code{\link{choose_uk}} for a diagnostic plot based on
+  \code{\link{kgaps_imt}}.
 
 \code{\link{kgaps_stat}} for the calculation of sufficient
   statistics for the \eqn{K}-gaps model.

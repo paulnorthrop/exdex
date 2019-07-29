@@ -172,12 +172,12 @@ The extremal index \eqn{\theta} is estimated using the
  \code{bias_sl} are not changed.
 }
 \examples{
-# Newlyn sea surges
+### Newlyn sea surges
 theta <- spm(newlyn, 20)
 theta
 summary(theta)
 
-# S&P 500 index
+### S&P 500 index
 theta <- spm(sp500, 100)
 theta
 summary(theta)

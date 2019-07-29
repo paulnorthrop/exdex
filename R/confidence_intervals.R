@@ -590,6 +590,10 @@ confint.kgaps <- function (object, parm = "theta", level = 0.95,
   a <- c(a, 1 - a)
   pct <- paste(round(100 * a, 1), "%")
   colnames(temp) <- pct
-  rownames(temp) <- c("norm", "lik")
+  row_names <- interval_type
+  if (row_names == "both") {
+    row_names <- c("norm", "lik")
+  }
+  rownames(temp) <- row_names
   return(temp)
 }

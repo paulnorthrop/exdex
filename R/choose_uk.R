@@ -86,8 +86,9 @@ choose_uk <- function(data, u, k = 1) {
 #'   if \code{y = "imts"} and estimates of \eqn{\theta} if \code{y = "theta"}.
 #'   If \code{y = "theta"}, and either \code{x$u} or \code{x$k} have length
 #'   one, then 100\code{level}\% confidence intervals are added to the plot.
-#' @param level A numeric scalar in (0, 1).  The confidence level used in calculating confidence intervals
-#'   for \eqn{\theta}.  Only relevant if \code{y = "theta"}.
+#' @param level A numeric scalar in (0, 1).  The confidence level used in
+#'   calculating confidence intervals for \eqn{\theta}.  Only relevant if
+#'   \code{y = "theta"} and either \code{x$u} or \code{x$k} have length one.
 #' @param interval_type A character scalar.  The type of confidence interval
 #'   to be plotted, if \code{y = "theta"}.  See \code{\link{confint.kgaps}}.
 #' @param conf_scale A character scalar.  If \code{interval_type = "norm"} then

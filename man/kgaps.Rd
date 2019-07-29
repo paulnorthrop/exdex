@@ -47,7 +47,7 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
   \strong{Details} section of \code{\link{kgaps_stat}}.
 
   It is possible that the estimate of \eqn{\theta} is equal to 1, and also
-  possible that it is equal to 0. \code{\link{kgaps_stats}} explains the
+  possible that it is equal to 0. \code{\link{kgaps_stat}} explains the
   respective properties of the data that cause these events to occur.
 }
 \examples{

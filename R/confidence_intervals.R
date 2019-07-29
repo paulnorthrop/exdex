@@ -20,15 +20,10 @@
 #'   confidence intervals based on sliding maxima or disjoint maxima.
 #' @param interval_type A character scalar: \code{"norm"} for intervals of
 #'   type (a), \code{"lik"} for intervals of type (b).
-#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
-#'   any confidence limits that are greater than 1 are set to 1,
-#'   that is, they are constrained to lie in (0, 1].  Otherwise,
-#'   limits that are greater than 1 may be obtained.
-#'   If \code{constrain = TRUE} then any lower confidence limits that are
-#'   less than 0 are set to 0.
-#' @param conf_scale A character scalar.  Determines the scale on which
-#'   we use approximate large-sample normality of the estimators to
-#'   estimate confidence intervals of type (a).
+#' @param conf_scale A character scalar.  If \code{interval_type = "norm"} then
+#'   \code{conf_scale} determines the scale on which we use approximate
+#'   large-sample normality of the estimators to estimate confidence intervals
+#'   of type (a).
 #'
 #'   If \code{conf_scale = "theta"}
 #'   then confidence intervals are estimated for \eqn{\theta} directly.
@@ -38,6 +33,12 @@
 #'
 #'   Any bias-adjustment requested in the original call to \code{\link{spm}},
 #'   using it's \code{bias_adjust} argument, is automatically applied here.
+#' @param constrain A logical scalar.  If \code{constrain = TRUE} then
+#'   any confidence limits that are greater than 1 are set to 1,
+#'   that is, they are constrained to lie in (0, 1].  Otherwise,
+#'   limits that are greater than 1 may be obtained.
+#'   If \code{constrain = TRUE} then any lower confidence limits that are
+#'   less than 0 are set to 0.
 #' @param bias_adjust A logical scalar.  If \code{bias_adjust = TRUE} then,
 #'   if appropriate, bias-adjustment is also applied to the loglikelihood
 #'   before it is adjusted using \code{\link[chandwich]{adjust_loglik}}.
@@ -140,8 +141,8 @@
 confint.spm <- function (object, parm = "theta", level = 0.95,
                          maxima = c("sliding", "disjoint"),
                          interval_type = c("norm", "lik", "both"),
-                         constrain = TRUE,
                          conf_scale = c("theta", "log"),
+                         constrain = TRUE,
                          bias_adjust = TRUE,
                          type = c("vertical", "cholesky", "spectral",
                                   "none"), ...) {

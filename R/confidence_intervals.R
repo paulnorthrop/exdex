@@ -511,7 +511,7 @@ print.confint_spm <- function(x, ...) {
 #'   less than 0 are set to 0.
 #' @param interval_type A character scalar: \code{"norm"} for intervals of
 #'   type (a), \code{"lik"} for intervals of type (b).
-#' @param conf_scale A character scalar.  \code{interval_type = "norm"} then
+#' @param conf_scale A character scalar.  If \code{interval_type = "norm"} then
 #'   \code{conf_scale} determines the scale on which we use approximate
 #'   large-sample normality of the estimator to estimate confidence intervals.
 #'

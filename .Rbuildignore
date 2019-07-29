@@ -1,4 +1,3 @@
-^decluster\.R$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^create_datasets$

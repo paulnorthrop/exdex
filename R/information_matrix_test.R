@@ -2,7 +2,7 @@
 #
 #' Information matrix test under the \eqn{K}-gaps model
 #'
-#' Performs the information matrix test of Suveges and Davison (2010) to
+#' Performs the information matrix test (IMT) of Suveges and Davison (2010) to
 #' diagnose misspecification of the \eqn{K}-gaps model
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
@@ -10,11 +10,12 @@
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
-#' @details The information matrix test is performed a over grid of all
+#' @details The IMT is performed a over grid of all
 #'   combinations of threshold and \eqn{K} in the vectors \code{u}
-#'   and \code{k}.
+#'   and \code{k}.  If the estimate of \eqn{\theta} is 0 then the
+#'   IMT statistic, and its associated \eqn{p}-value will be \code{NA}.
 #'
-#'   For details of the information matrix test see Suveges and Davison
+#'   For details of the IMT see Suveges and Davison
 #'   (2010).  There are some typing errors on pages 18-19 that have been
 #'   corrected in producing the code: the penultimate term inside \code{{...}}
 #'   in the middle equation on page 18 should be \eqn{(c_j(K))^2}, as should
@@ -82,6 +83,8 @@ kgaps_imt <- function(data, u, k = 1) {
     Dn <- Jn - In
     dc <- ld ^ 2 - neg_ldd
     dcd <- 4 * c_mat / theta_mat ^ 2 + ifelse(c_mat == 0, 0, -4 / theta_mat ^ 3)
+    # Force NA, rather than NA, in cases where thetahat = 0
+    dcd[is.nan(dcd)] <- NA
     Dnd <- colMeans(dcd)
     # Multiply the columns of ld by the corresponding elements of Dnd / In
     temp <- ld * rep(Dnd / In, rep(nrow(ld), ncol(ld)))

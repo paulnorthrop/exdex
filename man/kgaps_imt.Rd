@@ -30,15 +30,16 @@ An object (a list) of class \code{c("kgaps_imt", "exdex")}
   \item{u,k }{The input \code{u} and \code{k}.}
 }
 \description{
-Performs the information matrix test of Suveges and Davison (2010) to
+Performs the information matrix test (IMT) of Suveges and Davison (2010) to
 diagnose misspecification of the \eqn{K}-gaps model
 }
 \details{
-The information matrix test is performed a over grid of all
+The IMT is performed a over grid of all
   combinations of threshold and \eqn{K} in the vectors \code{u}
-  and \code{k}.
+  and \code{k}.  If the estimate of \eqn{\theta} is 0 then the
+  IMT statistic, and its associated \eqn{p}-value will be \code{NA}.
 
-  For details of the information matrix test see Suveges and Davison
+  For details of the IMT see Suveges and Davison
   (2010).  There are some typing errors on pages 18-19 that have been
   corrected in producing the code: the penultimate term inside \code{{...}}
   in the middle equation on page 18 should be \eqn{(c_j(K))^2}, as should

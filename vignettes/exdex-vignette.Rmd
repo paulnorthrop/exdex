@@ -16,7 +16,9 @@ bibliography: exdex.bib
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
 
-The extremal value index $\theta$ is a measure of the extent of clustering in the extremes of a stationary process, representing the reciprocal of the mean cluster size.  The main purpose of the *exdex* package is to implement the semiparametric maxima estimators developed in @Northrop2015 and @BB2018.  A feature of these works is the use of sliding block maxima, that is, the use of *all* blocks of consecutive values, rather than maxima over disjoint block of values.  This improves efficiency of estimation, albeit at the cost of complicating theoretical work.  Also provided are functions to estimate $\theta$ using two threshold-based methods: the iterated weighted least squares estimator (@Suveges2007) and the $K$-gaps estimator (@SD2010).
+The extremal value index $\theta$ is a measure of the extent of clustering in the extremes of a stationary process, representing the reciprocal of the mean cluster size.  
+
+The main purpose of the *exdex* package is to implement the semiparametric maxima estimators developed in @Northrop2015 and @BB2018.  A feature of these works is the use of sliding block maxima, that is, the use of *all* blocks of consecutive values, rather than maxima over disjoint block of values.  This improves efficiency of estimation, albeit at the cost of complicating theoretical work.  Also provided are functions to estimate $\theta$ using two threshold-based methods: the $K$-gaps estimator (@SD2010) and the iterated weighted least squares estimator (@Suveges2007).
 
 ## Semiparametric maxima estimators
 
@@ -30,11 +32,11 @@ and define the estimators
 These two estimators are equivalent asymptotically.
 The former is the estimator proposed in @Northrop2015. @BB2018 derived asymptotic properties of the latter, because it is more amenable to mathematical analysis.
 
-The function `spm` provides three estimators, estimated using both sliding and disjoint block maxima and four types of bias-adjustment.  The estimators are $\hat{\theta}_N, \hat{\theta}_{BB}$ and $\hat{\theta}_{BB}-1/b$. The latter is motivated by the observation that E$(Z)  = (\theta + 1/b)^{-1} < \theta^{-1}$ and therefore the subtraction of $1 / b$ provides further bias-adjustment.  In fact empirical results indicate that $\hat{\theta}_N$ and $\hat{\theta}_{BB} - 1/b$ produce similar estimates.
+The function `spm` provides three estimators, estimated using both sliding and disjoint block maxima and four types of bias-adjustment.  The estimators are $\hat{\theta}_N, \hat{\theta}_{BB}$ and $\hat{\theta}_{BB}-1/b$. The latter is motivated by the observation that E$(Z) = (\theta + 1/b)^{-1} < \theta^{-1}$ and therefore the subtraction of $1 / b$ provides further bias-adjustment.  In fact empirical results indicate that $\hat{\theta}_N$ and $\hat{\theta}_{BB} - 1/b$ produce similar estimates.
 
 ### Newlyn sea surges
 
-We provide an illustration of the `spm` function using the `newlyn` data, a time series of 2894 maximum seas surges measured at Newlyn, Cornwall, UK over the period 1971-1976.  We use a block size $b = 20$.  We explain in a moment how this value was chosen.
+We provide an illustration of the `spm` function using the `newlyn` data, a time series of 2894 maximum seas surges measured at Newlyn, Cornwall, UK over the period 1971-1976.  We use a block size $b = 20$.  We explain in [Block size selection](#choosb) how this value was chosen.
 
 ```{r}
 library(exdex)
@@ -55,9 +57,26 @@ conf <- confint(theta, interval_type = "lik")
 plot(conf)
 ```
 
-### Block size selection
+For this small block size of $b = 20$ there is an appreciable difference between the inferences from the N2015 and BB2018 estimates.
 
-An informal way to choose the value of $b$ is plots estimates of $\theta$ over a range of values of $b$ and to select the smallest $b$ above which these estimates appear to be constant with respect to $b$, taking into account sampling variability.  The function `choose_b`, and its associated plot method, does this, quantifying sampling variablity using pointwise confidence intervals.  The plot method allows us to select one of 3 estimators and choose whether to use sliding or disjoint block maxima.  The default is to plot the estimates using the @Northrop2015 estimator applied to sliding maxima.
+### S&P 500 index
+
+We also consider a dataset (`sp500`) that is similar to one analysed in @BB2018: daily log returns of the S&P 500 index, from 3rd January 1990 to 9th October 2018.  We use a block size $b = 225$, which is similar to that chosen by @BB2018.
+
+```{r}
+theta <- spm(sp500, 225)
+summary(theta)
+conf <- confint(theta, interval_type = "lik")
+plot(conf)
+```
+
+For this large block size there is very little difference between the inferences produce by the three estimators.
+
+### Block size selection {#chooseb}
+
+An informal way to choose the value of $b$ is plots estimates of $\theta$ over a range of values of $b$ and to select the smallest $b$ above which these estimates appear to be constant with respect to $b$, taking into account sampling variability.  The function `choose_b`, and its associated plot method, does this, quantifying sampling variability using pointwise confidence intervals.  The plot method allows us to select one of 3 estimators and choose whether to use sliding or disjoint block maxima.  The default is to plot the estimates using the @Northrop2015 estimator applied to sliding maxima.
+
+For the `newlyn` data we obtain the following plot.
 
 ```{r, fig.width=7, fig.height= 6}
 # Plot like the top left of Northrop (2015)
@@ -71,21 +90,48 @@ plot(res, ylim = c(0, 1))
 
 This plots suggests that $b = 20$ is a reasonable block size to choose.  Indeed the point estimates varies smoothly with $b$ and varies little for $b \geq 20$. The confidence intervals tend to widen as $b$ increases, although the method for estimating these intervals is somewhat sensitive to block size owing to its use of disjoint block maxima. See the help file for `spm` and @BB2018 for further information. Note that for very small values of $b$ it may not be possible to estimate the confidence intervals, hence the missing intervals in this plot.
 
+For the `sp500` data we obtain the following plot.
+
+```{r, fig.width=7, fig.height= 6}
+b_vals <- c(10, seq(from = 25, to = 350, by = 25), 357)
+res500 <- choose_b(sp500, b_vals)
+plot(res500, ylim = c(0, 1))
+plot(res500, estimator = "BB2018", ylim = c(0, 1))
+```
+
+The estimates of \eqn{theta} stabilise less quickly than for the `newlyn` data but $b = 225$ seems to be reasonable choice.
+
 ## Threshold-based estimators
+
+These estimators are based on the distribution of the times at which observations exceed some high threshold $u$.  They are based on @FS2003, which uses a limiting ($u \rightarrow \infty$) mixture model to represent the distribution of within- and between-cluster interexceedance times.  Under the model with probability $\theta$ an interexeedance time has an exponential distribution with mean $1/\theta$ (a between-cluster time) and otherwise the  interexceedance time is, in theory, zero (a within-cluster time).  
+
+In practice, zero interexceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small interexceedance times.  The following estimators take different approaches to solving this problem. 
 
 ### $K$-gaps
 
+@SD2010 to introduce an extra tuning parameter, *run* parameter $K$ that truncates interexceedance times, with the effect that any interexceedance time that is $\leq K$ is set to zero.  Provided that a suitable value of $K$ is chosen $\theta$ may be estimated under the mixture model using maximum likelihood estimation.  The following code does this using a particular threshold and $K = 1$.
+
 ```{r}
-u <- quantile(newlyn, probs = 0.90)
-theta <- kgaps(newlyn, u)
-theta
+u <- quantile(sp500, probs = 0.60)
+theta <- kgaps(sp500, u, k = 1)
 summary(theta)
 ```
 
+@SD2010 propose a diagnostic test, an information matrix text (IMT), to inform the choice of $(u, K)$.  The test is based on a statistics that compares the Fisher information for $\theta$ to the variance of the score statistic, both evaluated at the estimate $\hat{\theta}$, because these two quantities are equal for a well-specified regular model.  The following code performs this test, using a test of size $\alpha = 0.05$, for a range of values of $u$ and $K$ and produces graphical summary containing a horizontal line to indicator the critical value of the test.
+
+```{r}
+u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+plot(imt_theta, uprob = TRUE, alpha = 0.05)
+```
+
+Large values of the IMT statistic suggest a poor choice of $(u, K)$.  Diagnostic plots like this are never clear cut but the fact that for $K = 1$ the IMT statistics drops below the critical value at around the sample 60\% quantile suggests the combination of $u$ and $K$ that we used above.
+
 ### Iterated weighted least squares
 
-The current implementation of this estimator is very limited: only an estimate is produced, with no estimates of uncertainty.  The next release of *exdex* wil rectify this.
+Under the limiting mixture model $\theta$ is the proportion of interexceedance times that are between clusters.  @Suveges2007 uses this to devise and iterated scheme for estimating $\theta$.  An initial estimate of $\theta$ is set. An exponential distribution is fitted to the largest $100\theta\%$ of the interexceedance times using weighted least squares estimation.  Then the new estimate of $\theta$ is used to set the putative exponential sample and the estimation proceeds until the estimate of $\theta$ converges.
 
+The current implementation of this estimator in *exdex* is very limited: only an estimate is produced, with no estimates of uncertainty.  The next release of *exdex* will rectify this.
 
 ```{r}
 u <- quantile(newlyn, probs = 0.90)

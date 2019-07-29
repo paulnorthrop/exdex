@@ -1,5 +1,3 @@
-plot_fn.R
-threshplot.R
 decluster.R
 man/find_clusters.Rd
 .Rproj.user

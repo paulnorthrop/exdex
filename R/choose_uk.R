@@ -105,8 +105,8 @@ choose_uk <- function(data, u, k = 1) {
 #'   \code{conf_scale} determines the scale on which we use approximate
 #'   large-sample normality of the estimator to estimate confidence intervals.
 #'   See \code{\link{confint.kgaps}}.
-#' @param alpha A numeric vector with entries in (0, 1). The significance
-#'   level(s) to be used for the information matrix test.
+#' @param alpha A numeric vector with entries in (0, 1). The size of the test
+#'   to be performed.
 #' @param constrain A logical scalar.  The argument \code{constrain} to
 #'  \code{\link{confint.kgaps}}.
 #' @param for_abline Only relevant when \code{y = "imts"} and at one of
@@ -277,9 +277,6 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
       my_xlab <- "threshold u"
     }
     my_matplot(xvec, ymat, ...)
-#    if (!is.null(u_ps)) {
-#      graphics::axis(3, at = xvec, labels = u_ps)
-#    }
     if (y == "imts") {
       for_abline <- c(for_abline, list(h = crit))
       do.call(graphics::abline, for_abline)
@@ -302,7 +299,7 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
     } else {
       leg_lwd <- user_args$lwd
     }
-    graphics::legend(leg_pos, legend = paste0("k = ", k), lty = leg_lty,
+    graphics::legend(leg_pos, legend = paste0("K = ", k), lty = leg_lty,
                      col = leg_col, lwd = leg_lwd)
   }
   # Both k and u are vectors

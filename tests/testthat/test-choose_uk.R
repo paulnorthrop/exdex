@@ -21,3 +21,22 @@ for (i in 1:length(k_vals)) {
     })
   }
 }
+
+# =============================== plot.choose_uk ==============================
+
+# Check that plot.choose_uk works
+
+# S&P 500 index
+u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+
+ukplot <- plot(imt_theta)
+test_that("plot.choose_uk works", {
+  testthat::expect_identical(ukplot, NULL)
+})
+
+ukplot <- plot(imt_theta, y = "theta", ylim = c(0, 1), xlab = "my xlab", lwd = 2,
+               col = 1:5)
+test_that("plot.choose_b works, user plot args", {
+  testthat::expect_identical(ukplot, NULL)
+})

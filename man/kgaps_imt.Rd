@@ -12,10 +12,7 @@ kgaps_imt(data, thresh, k = 1)
 \item{thresh, k}{Numeric vectors.  \code{thresh} is a vector of
 extreme value thresholds applied to data.  \code{k} is a vector of values
 of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
-See \code{\link{kgaps}} for more details.
-The information matrix test is performed a over grid of all
-combinations of threshold and \eqn{K} in the vectors \code{thresh}
-and \code{k}.}
+See \code{\link{kgaps}} for more details.}
 }
 \value{
 An object (a list) of class \code{c("kgaps_imt", "exdex")}
@@ -37,7 +34,11 @@ Performs the information matrix test of Suveges and Davison (2010) to
 diagnose misspecification of the K-gaps model
 }
 \details{
-For details of the information matrix test see Suveges and Davison
+The information matrix test is performed a over grid of all
+  combinations of threshold and \eqn{K} in the vectors \code{thresh}
+  and \code{k}.
+
+  For details of the information matrix test see Suveges and Davison
   (2010).  There are some typing errors on pages 18-19 that have been
   corrected in producing the code: the penultimate term inside \code{{...}}
   in the middle equation on page 18 should be \eqn{(c_j(K))^2}, as should

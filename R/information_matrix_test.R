@@ -10,10 +10,11 @@
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
-#'   The information matrix test is performed a over grid of all
+#' @details The information matrix test is performed a over grid of all
 #'   combinations of threshold and \eqn{K} in the vectors \code{thresh}
 #'   and \code{k}.
-#' @details For details of the information matrix test see Suveges and Davison
+#'
+#'   For details of the information matrix test see Suveges and Davison
 #'   (2010).  There are some typing errors on pages 18-19 that have been
 #'   corrected in producing the code: the penultimate term inside \code{{...}}
 #'   in the middle equation on page 18 should be \eqn{(c_j(K))^2}, as should
@@ -95,8 +96,6 @@ kgaps_imt <- function(data, thresh, k = 1) {
   }
   # End of loop over thresholds ----------
   colnames(T_mat) <- colnames(p_mat) <- colnames(theta) <- k
-#  u_ps <- as.numeric(substr(names(thresh), 1,
-#                            nchar(names(thresh), type = "c") - 1))
   if (is.null(names(thresh))) {
     u_ps <- round(100 * sapply(thresh, function(x) mean(data < x)))
   } else {

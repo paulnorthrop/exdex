@@ -7,14 +7,29 @@ cache: packages
 sudo: false
 warnings_are_errors: true
 
+before_install:
+  - source before-install.sh
+
 os:
-  - linux
-  - osx
+   - linux
+#  - osx
+
+addons:
+  apt:
+    packages:
+      - gcc-4.9
+      - g++-4.9
+      - clang
 
 r:
   - release
-#  - devel
-  - oldrel
+  - devel
+#  - oldrel
+
+env:
+#  - COMPILER=gcc-4.4
+#  - COMPILER=gcc
+  - COMPILER=clang
 
 r_packages:
   - covr

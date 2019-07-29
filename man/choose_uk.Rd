@@ -32,7 +32,7 @@ run parameter \eqn{K} for the \eqn{K}-gaps estimator (see
 }
 \details{
 For each combination of threshold in \code{u} and \eqn{K}
-  in \code{k} the functions \code{\link{kgaps}} and \code{link{kgaps_imt}}
+  in \code{k} the functions \code{\link{kgaps}} and \code{\link{kgaps_imt}}
   are called in order to estimate \eqn{\theta} and to perform the
   information matrix test of Suveges and Davison (2010).
 }
@@ -53,4 +53,6 @@ Suveges, M. and Davison, A. C. (2010) Model
 
 \code{\link{kgaps_imt}} for the information matrix test under the
   \eqn{K}-gaps model
+
+\code{\link{plot.choose_uk}} to produce the diagnostic plot.
 }

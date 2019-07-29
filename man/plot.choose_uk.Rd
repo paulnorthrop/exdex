@@ -4,8 +4,9 @@
 \alias{plot.choose_uk}
 \title{Plot block length diagnostic for the semiparametric maxima estimator}
 \usage{
-\method{plot}{choose_uk}(x, y = c("imts", "theta"), interval_type, level,
-  ...)
+\method{plot}{choose_uk}(x, y = c("imts", "theta"), level = 0.95,
+  interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
+  constrain = TRUE, for_abline = list(lty = 1, lwd = 1, col = 1), ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_uk", "exdex")}, a result of a
@@ -20,14 +21,25 @@ In that event, information matrix test statistics are plotted if
 \eqn{\theta} is plotted if \code{y = "theta"}.
 Otherwise, information matrix test statistics are plotted.}
 
-\item{interval_type}{A character scalar.  The type of confidence interval
-to be plotted, if \code{y = "theta"}.  See \code{\link{confint.spm}}.}
+\item{level}{A numeric scalar in (0, 1).  The confidence level used in calculating confidence intervals
+for \eqn{\theta}.  Only relevant if \code{y = "theta"}.}
 
-\item{level}{The confidence level required.  A numeric scalar in (0, 1).
-Only relevant if \code{y = "theta"}.}
+\item{interval_type}{A character scalar.  The type of confidence interval
+to be plotted, if \code{y = "theta"}.  See \code{\link{confint.kgaps}}.}
+
+\item{conf_scale}{A character scalar.  If \code{interval_type = "norm"} then
+\code{conf_scale} determines the scale on which we use approximate
+large-sample normality of the estimator to estimate confidence intervals.
+See \code{\link{confint.kgaps}}.}
+
+\item{constrain}{A logical scalar.  The argument \code{constrain} to
+\code{\link{confint.kgaps}}.}
 
 \item{...}{Additional arguments passed on to
 \code{\link[graphics]{matplot}} and/or \code{\link[graphics]{axis}}.}
+
+\item{alpha}{A numeric scalar in (0, 1). The significance level to be used
+for the information matrix test.}
 }
 \value{
 Nothing is returned.

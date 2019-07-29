@@ -5,7 +5,8 @@
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{kgaps}(object, parm = "theta", level = 0.95,
-  constrain = TRUE, conf_scale = c("theta", "log"), ...)
+  constrain = TRUE, interval_type = c("both", "norm", "lik"),
+  conf_scale = c("theta", "log"), ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("kgaps", "exdex")}, returned by
@@ -22,6 +23,9 @@ that is, they are constrained to lie in (0, 1].  Otherwise,
 limits that are greater than 1 may be obtained.
 If \code{constrain = TRUE} then any lower confidence limits that are
 less than 0 are set to 0.}
+
+\item{interval_type}{A character scalar: \code{"norm"} for intervals of
+type (a), \code{"lik"} for intervals of type (b).}
 
 \item{conf_scale}{A character scalar.  Determines the scale on which
   we use approximate large-sample normality of the estimators to
@@ -46,7 +50,7 @@ A matrix with columns giving the lower and upper confidence limits.
 \description{
 \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
 Computes confidence intervals for \eqn{\theta} based on an object returned
-from \code{\link{kgaps}}.  Two types of interval are returned:
+from \code{\link{kgaps}}.  Two types of interval may be returned:
 (a) intervals based on approximate large-sample normality of the estimator
 of \eqn{\theta}, which are symmetric about the point estimate,
 and (b) likelihood-based intervals.

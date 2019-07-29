@@ -4,7 +4,7 @@
 #'
 #' \code{confint} method for objects of class \code{c("spm", "exdex")}.
 #' Computes confidence intervals for \eqn{\theta} based on an object returned
-#' from \code{\link{spm}}.  Two types of interval are returned:
+#' from \code{\link{spm}}.  Two types of interval may be returned:
 #' (a) intervals based on approximate large-sample normality of the estimators
 #' of \eqn{\theta}, which are symmetric about the respective point estimates,
 #' and (b) likelihood-based intervals based on an adjustment of a naive
@@ -492,7 +492,7 @@ print.confint_spm <- function(x, ...) {
 #'
 #' \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
 #' Computes confidence intervals for \eqn{\theta} based on an object returned
-#' from \code{\link{kgaps}}.  Two types of interval are returned:
+#' from \code{\link{kgaps}}.  Two types of interval may be returned:
 #' (a) intervals based on approximate large-sample normality of the estimator
 #' of \eqn{\theta}, which are symmetric about the point estimate,
 #' and (b) likelihood-based intervals.
@@ -508,6 +508,8 @@ print.confint_spm <- function(x, ...) {
 #'   limits that are greater than 1 may be obtained.
 #'   If \code{constrain = TRUE} then any lower confidence limits that are
 #'   less than 0 are set to 0.
+#' @param interval_type A character scalar: \code{"norm"} for intervals of
+#'   type (a), \code{"lik"} for intervals of type (b).
 #' @param conf_scale A character scalar.  Determines the scale on which
 #'   we use approximate large-sample normality of the estimators to
 #'   estimate confidence intervals.
@@ -541,6 +543,7 @@ print.confint_spm <- function(x, ...) {
 #' @export
 confint.kgaps <- function (object, parm = "theta",
                            level = 0.95, constrain = TRUE,
+                           interval_type = c("both", "norm", "lik"),
                            conf_scale = c("theta", "log"), ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
@@ -549,24 +552,31 @@ confint.kgaps <- function (object, parm = "theta",
   if (level <= 0 || level >= 1) {
     stop("''level'' must be in (0, 1)")
   }
+  interval_type <- match.arg(interval_type)
   conf_scale <- match.arg(conf_scale)
   theta <- coef(object)
   se <- sqrt(vcov(object))
-  # Symmetric confidence intervals, based on large sample normal theory
-  # The intervals are (initially) centred on the unconstrained estimate of
-  # theta, which may be greater than 1
-  z_val <- stats::qnorm(1 - (1 - level) / 2)
-  if (conf_scale == "theta") {
-    lower <- theta - z_val * se
-    upper <- theta + z_val * se
+  if (interval_type == "norm" || interval_type == "both") {
+    # Symmetric confidence intervals, based on large sample normal theory
+    # The intervals are (initially) centred on the unconstrained estimate of
+    # theta, which may be greater than 1
+    z_val <- stats::qnorm(1 - (1 - level) / 2)
+    if (conf_scale == "theta") {
+      lower <- theta - z_val * se
+      upper <- theta + z_val * se
+    } else {
+      lower <- exp(log(theta) - z_val * se / theta)
+      upper <- exp(log(theta) + z_val * se / theta)
+    }
   } else {
-    lower <- exp(log(theta) - z_val * se / theta)
-    upper <- exp(log(theta) + z_val * se / theta)
+    lower <- upper <- NULL
   }
-  # Likelihood-based confidence intervals.
-  temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss, conf = 100 * level)
-  lower <- c(lower, temp[1])
-  upper <- c(upper, temp[2])
+  if (interval_type == "lik" || interval_type == "both") {
+    # Likelihood-based confidence intervals.
+    temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss, conf = 100 * level)
+    lower <- c(lower, temp[1])
+    upper <- c(upper, temp[2])
+  }
   # Constrain the intervals to (0, 1] if required
   if (constrain) {
     lower <- pmin(lower, 1)

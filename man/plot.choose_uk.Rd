@@ -33,8 +33,8 @@ to be plotted, if \code{y = "theta"}.  See \code{\link{confint.kgaps}}.}
 large-sample normality of the estimator to estimate confidence intervals.
 See \code{\link{confint.kgaps}}.}
 
-\item{alpha}{A numeric vector with entries in (0, 1). The significance
-level(s) to be used for the information matrix test.}
+\item{alpha}{A numeric vector with entries in (0, 1). The size of the test
+to be performed.}
 
 \item{constrain}{A logical scalar.  The argument \code{constrain} to
 \code{\link{confint.kgaps}}.}

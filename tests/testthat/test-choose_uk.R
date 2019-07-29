@@ -34,9 +34,34 @@ ukplot <- plot(imt_theta)
 test_that("plot.choose_uk works", {
   testthat::expect_identical(ukplot, NULL)
 })
-
 ukplot <- plot(imt_theta, y = "theta", ylim = c(0, 1), xlab = "my xlab", lwd = 2,
                col = 1:5)
 test_that("plot.choose_b works, user plot args", {
   testthat::expect_identical(ukplot, NULL)
 })
+
+# One run parameter K, many thresholds u
+u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+imt_theta <- choose_uk(sp500, u = u, k = 1)
+ukplot <- plot(imt_theta)
+test_that("plot.choose_uk works", {
+  testthat::expect_identical(ukplot, NULL)
+})
+ukplot <- plot(imt_theta, y = "theta", ylim = c(0, 1), xlab = "my xlab", lwd = 2,
+               col = 1:5)
+test_that("plot.choose_b works, user plot args", {
+  testthat::expect_identical(ukplot, NULL)
+})
+
+# One threshold u, many run parameters K
+u <- quantile(sp500, probs = 0.9)
+imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+test_that("plot.choose_uk works", {
+  testthat::expect_identical(ukplot, NULL)
+})
+ukplot <- plot(imt_theta, y = "theta", ylim = c(0, 1), xlab = "my xlab", lwd = 2,
+               col = 1:5)
+test_that("plot.choose_b works, user plot args", {
+  testthat::expect_identical(ukplot, NULL)
+})
+

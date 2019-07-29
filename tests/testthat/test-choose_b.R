@@ -7,8 +7,8 @@ context("choose_b")
 # S&P 500 index: vastly reduced number of block sizes, for speed
 b_vals <- seq(from = 150, to = 350, by = 100)
 res500 <- choose_b(sp500, b_vals)
-bplot <- plot(res500)
 
+bplot <- plot(res500)
 test_that("plot.choose_b works", {
   testthat::expect_identical(bplot, NULL)
 })

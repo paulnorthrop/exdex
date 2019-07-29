@@ -66,8 +66,8 @@
 #' @export
 choose_b <- function(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
                      constrain = TRUE, varN = TRUE, level = 0.95,
-                     conf_scale = c("theta", "log"),
                      interval_type = c("norm", "lik"),
+                     conf_scale = c("theta", "log"),
                      type = c("vertical", "cholesky", "spectral", "none")) {
   Call <- match.call(expand.dots = TRUE)
   # All other inputs are checked in the calls to spm() and confint.spm()

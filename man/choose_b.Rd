@@ -6,7 +6,7 @@
 \usage{
 choose_b(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
   constrain = TRUE, varN = TRUE, level = 0.95,
-  conf_scale = c("theta", "log"), interval_type = c("norm", "lik"),
+  interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
   type = c("vertical", "cholesky", "spectral", "none"))
 }
 \arguments{
@@ -41,9 +41,13 @@ See \strong{Details} for further information.}
 
 \item{level}{The confidence level required.  A numeric scalar in (0, 1).}
 
-\item{conf_scale}{A character scalar.  Determines the scale on which
-  we use approximate large-sample normality of the estimators to
-  estimate confidence intervals of type (a).
+\item{interval_type}{A character scalar: \code{"norm"} for intervals of
+type (a), \code{"lik"} for intervals of type (b).}
+
+\item{conf_scale}{A character scalar.  If \code{interval_type = "norm"} then
+  \code{conf_scale} determines the scale on which we use approximate
+  large-sample normality of the estimators to estimate confidence intervals
+  of type (a).
 
   If \code{conf_scale = "theta"}
   then confidence intervals are estimated for \eqn{\theta} directly.
@@ -53,9 +57,6 @@ See \strong{Details} for further information.}
 
   Any bias-adjustment requested in the original call to \code{\link{spm}},
   using it's \code{bias_adjust} argument, is automatically applied here.}
-
-\item{interval_type}{A character scalar: \code{"norm"} for intervals of
-type (a), \code{"lik"} for intervals of type (b).}
 
 \item{type}{A character scalar.  The argument \code{type} to be passed to
 \code{\link[chandwich]{conf_intervals}} in the

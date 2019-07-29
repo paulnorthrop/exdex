@@ -573,7 +573,8 @@ confint.kgaps <- function (object, parm = "theta",
   }
   if (interval_type == "lik" || interval_type == "both") {
     # Likelihood-based confidence intervals.
-    temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss, conf = 100 * level)
+    temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss,
+                           conf = 100 * level)
     lower <- c(lower, temp[1])
     upper <- c(upper, temp[2])
   }

@@ -9,12 +9,12 @@ warnings_are_errors: true
 
 os:
   - linux
-#  - osx
+  - osx
 
 r:
   - release
-  - devel
-#  - oldrel
+#  - devel
+  - oldrel
 
 r_packages:
   - covr

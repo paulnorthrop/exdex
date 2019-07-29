@@ -39,7 +39,7 @@ to that estimator.  Otherwise, the sampling variance derived in
 Berghaus and Bucher (2018) is used.
 See \strong{Details} for further information.}
 
-\item{level}{The confidence level required.  A numeric scalar in (0, 1).}
+\item{level}{A numeric scalar in (0, 1). The confidence level required.}
 
 \item{interval_type}{A character scalar: \code{"norm"} for intervals of
 type (a), \code{"lik"} for intervals of type (b).}

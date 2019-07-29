@@ -17,7 +17,7 @@
 \item{parm}{Specifies which parameter is to be given a confidence interval.
 Here there is only one option: the extremal index \eqn{\theta}.}
 
-\item{level}{The confidence level required.  A numeric scalar in (0, 1).}
+\item{level}{A numeric scalar in (0, 1). The confidence level required.}
 
 \item{maxima}{A character scalar specifying whether to estimate
 confidence intervals based on sliding maxima or disjoint maxima.}

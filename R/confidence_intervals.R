@@ -15,7 +15,7 @@
 #'   \code{\link{spm}}.
 #' @param parm Specifies which parameter is to be given a confidence interval.
 #'   Here there is only one option: the extremal index \eqn{\theta}.
-#' @param level The confidence level required.  A numeric scalar in (0, 1).
+#' @param level A numeric scalar in (0, 1). The confidence level required.
 #' @param maxima A character scalar specifying whether to estimate
 #'   confidence intervals based on sliding maxima or disjoint maxima.
 #' @param interval_type A character scalar: \code{"norm"} for intervals of

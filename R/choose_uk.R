@@ -81,14 +81,11 @@ choose_uk <- function(data, u, k = 1) {
 #'
 #' @param x an object of class \code{c("choose_uk", "exdex")}, a result of a
 #'   call to \code{\link{choose_uk}}.
-#' @param y A character scalar indicating what should be plotted.
-#'  This is only relevant if, in the call to \code{\link{choose_uk}} that
-#'  produced \code{x} either only one value threshold was supplied via
-#'  \code{u} or only one value of \eqn{K} was supplied via \code{k}.
-#'  In that event, information matrix test statistics are plotted if
-#'  \code{y = "imts"} and estimates of, and confidence intervals for,
-#'  \eqn{\theta} is plotted if \code{y = "theta"}.
-#'  Otherwise, information matrix test statistics are plotted.
+#' @param y A character scalar indicating what should be plotted on the
+#'   vertical axes of the plot: information matrix test statistics
+#'   if \code{y = "imts"} and estimates of \eqn{\theta} if \code{y = "theta"}.
+#'   If \code{y = "theta"}, and either \code{x$u} or \code{x$k} have length
+#'   one, then 100\code{level}\% confidence intervals are added to the plot.
 #' @param level A numeric scalar in (0, 1).  The confidence level used in calculating confidence intervals
 #'   for \eqn{\theta}.  Only relevant if \code{y = "theta"}.
 #' @param interval_type A character scalar.  The type of confidence interval
@@ -111,7 +108,8 @@ choose_uk <- function(data, u, k = 1) {
 #'   a plot.  Only relevant when both the arguments \code{u} and \code{k}
 #'   in the call to \code{\link{choose_uk}} have length greater than one.
 #' @param ... Additional arguments passed to \code{\link[graphics]{matplot}}.
-#' @details Add details
+#' @details The type of plot produced depends mainly on \code{y}.
+#'   If \code{y = "imts"} then the
 #' @return Nothing is returned.
 #' @seealso \code{\link{choose_uk}}.
 #' @section Examples:

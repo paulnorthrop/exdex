@@ -7,20 +7,17 @@
 \method{plot}{choose_uk}(x, y = c("imts", "theta"), level = 0.95,
   interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
   alpha = 0.05, constrain = TRUE, for_abline = list(lty = 2, lwd = 1,
-  col = 1), digits = 3, ...)
+  col = 1), digits = 3, leg_pos = "topright", ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_uk", "exdex")}, a result of a
 call to \code{\link{choose_uk}}.}
 
-\item{y}{A character scalar indicating what should be plotted.
-This is only relevant if, in the call to \code{\link{choose_uk}} that
-produced \code{x} either only one value threshold was supplied via
-\code{u} or only one value of \eqn{K} was supplied via \code{k}.
-In that event, information matrix test statistics are plotted if
-\code{y = "imts"} and estimates of, and confidence intervals for,
-\eqn{\theta} is plotted if \code{y = "theta"}.
-Otherwise, information matrix test statistics are plotted.}
+\item{y}{A character scalar indicating what should be plotted on the
+vertical axes of the plot: information matrix test statistics
+if \code{y = "imts"} and estimates of \eqn{\theta} if \code{y = "theta"}.
+If \code{y = "theta"}, and either \code{x$u} or \code{x$k} have length
+one, then 100\code{level}\% confidence intervals are added to the plot.}
 
 \item{level}{A numeric scalar in (0, 1).  The confidence level used in calculating confidence intervals
 for \eqn{\theta}.  Only relevant if \code{y = "theta"}.}
@@ -33,13 +30,13 @@ to be plotted, if \code{y = "theta"}.  See \code{\link{confint.kgaps}}.}
 large-sample normality of the estimator to estimate confidence intervals.
 See \code{\link{confint.kgaps}}.}
 
-\item{alpha}{A numeric scalar in (0, 1). The significance level to be used
-for the information matrix test.}
+\item{alpha}{A numeric vector with entries in (0, 1). The significance
+level(s) to be used for the information matrix test.}
 
 \item{constrain}{A logical scalar.  The argument \code{constrain} to
 \code{\link{confint.kgaps}}.}
 
-\item{for_abline}{Only relevant when \code{y = "imt"} and at one of
+\item{for_abline}{Only relevant when \code{y = "imts"} and at one of
 \code{u} or \code{k} is scalar. A list of graphical parameters to be
 passed to \code{\link{abline}} to indicate the critical value of the
 information matrix test implied by \code{alpha}.}
@@ -47,8 +44,11 @@ information matrix test implied by \code{alpha}.}
 \item{digits}{An integer. Used for formatting the value of the threshold
 with \code{\link[base:Round]{signif}} before adding its value to a plot.}
 
-\item{...}{Additional arguments passed on to
-\code{\link[graphics]{matplot}}.}
+\item{leg_pos}{A character scalar.  The position of any legend added to
+a plot.  Only relevant when both the arguments \code{u} and \code{k}
+in the call to \code{\link{choose_uk}} have length greater than one.}
+
+\item{...}{Additional arguments passed to \code{\link[graphics]{matplot}}.}
 }
 \value{
 Nothing is returned.
@@ -58,7 +58,8 @@ Nothing is returned.
 returned from \code{\link{choose_uk}}
 }
 \details{
-Add details
+The type of plot produced depends mainly on \code{y}.
+  If \code{y = "imts"} then the
 }
 \section{Examples}{
 

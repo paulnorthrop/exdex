@@ -4,12 +4,12 @@
 \alias{kgaps_imt}
 \title{Information matrix test under the K-gaps model}
 \usage{
-kgaps_imt(data, thresh, k = 1)
+kgaps_imt(data, u, k = 1)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
-\item{thresh, k}{Numeric vectors.  \code{thresh} is a vector of
+\item{u, k}{Numeric vectors.  \code{u} is a vector of
 extreme value thresholds applied to data.  \code{k} is a vector of values
 of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
 See \code{\link{kgaps}} for more details.}
@@ -17,17 +17,17 @@ See \code{\link{kgaps}} for more details.}
 \value{
 An object (a list) of class \code{c("kgaps_imt", "exdex")}
   containing
-  \item{imt }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
+  \item{imt }{A \code{length(u)} by \code{length(k)} numeric matrix.
     Column i contains, for K = \code{k[i]}, the values of the
     information matrix test statistic for the set of thresholds in
-    \code{thresh}.  The column names are the values in code{k}.
+    \code{u}.  The column names are the values in code{k}.
     The row names are the approximate empirical percentage quantile levels
-    of the thresholds in \code{thresh}.}
-  \item{p }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+    of the thresholds in \code{u}.}
+  \item{p }{A \code{length(u)} by \code{length(k)} numeric matrix
     containing the corresponding \eqn{p}-values for the test.}
-  \item{theta }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+  \item{theta }{A \code{length(u)} by \code{length(k)} numeric matrix
     containing the corresponding estimates of \eqn{\theta}.}
-  \item{thresh,k }{The input \code{thresh} and \code{k}.}
+  \item{u,k }{The input \code{u} and \code{k}.}
 }
 \description{
 Performs the information matrix test of Suveges and Davison (2010) to
@@ -35,7 +35,7 @@ diagnose misspecification of the K-gaps model
 }
 \details{
 The information matrix test is performed a over grid of all
-  combinations of threshold and \eqn{K} in the vectors \code{thresh}
+  combinations of threshold and \eqn{K} in the vectors \code{u}
   and \code{k}.
 
   For details of the information matrix test see Suveges and Davison
@@ -47,8 +47,8 @@ The information matrix test is performed a over grid of all
   \eqn{n} should be \eqn{N-1} in the final equation on page 19.
 }
 \examples{
-thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-imt <- kgaps_imt(newlyn, thresh, k = 1:5)
+u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+imt <- kgaps_imt(newlyn, u, k = 1:5)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

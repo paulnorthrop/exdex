@@ -7,7 +7,7 @@
 #' Suveges and Davison (2010).
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
-#' @param thresh A numeric scalar.  Extreme value threshold applied to data.
+#' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger
 #'   than \code{k} units are assigned to the same cluster, resulting in a
@@ -36,13 +36,13 @@
 #'     \item{\code{se} }{The estimated standard error of the MLE.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
-#'     \item{\code{k, thresh, inc_cens} }{The input values of \code{k},
-#'       \code{thresh} and \code{inc_cens}.}
+#'     \item{\code{k, u, inc_cens} }{The input values of \code{k},
+#'       \code{u} and \code{inc_cens}.}
 #'     \item{\code{call }}{The call to \code{kgaps}.}
 #' @seealso \code{\link{confint.kgaps}} to estimate confidence intervals
 #'   for \eqn{\theta}.
 #' @seealso \code{\link{kgaps_imt}} for the information matrix test, which
-#'   may be used to inform the choice of the pair (\code{thresh, k}).
+#'   may be used to inform the choice of the pair (\code{u, k}).
 #' @seealso \code{\link{kgaps_stat}} for the calculation of sufficient
 #'   statistics for the K-gaps model.
 #' @seealso \code{\link[revdbayes]{kgaps_post}} in the
@@ -54,24 +54,24 @@
 #' @examples
 #' ### Newlyn sea-surge data
 #'
-#' thresh <- quantile(newlyn, probs = 0.90)
-#' theta <- kgaps(newlyn, thresh)
+#' u <- quantile(newlyn, probs = 0.90)
+#' theta <- kgaps(newlyn, u)
 #' theta
 #' summary(theta)
 #' @export
-kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
+kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
   Call <- match.call(expand.dots = TRUE)
-  if (!is.numeric(thresh) || length(thresh) != 1) {
-    stop("thresh must be a numeric scalar")
+  if (!is.numeric(u) || length(u) != 1) {
+    stop("u must be a numeric scalar")
   }
-  if (thresh >= max(data)) {
-    stop("thresh must be less than max(data)")
+  if (u >= max(data)) {
+    stop("u must be less than max(data)")
   }
   if (!is.numeric(k) || length(k) != 1) {
     stop("k must be a numeric scalar")
   }
   # Calculate sufficient statistics
-  ss <- kgaps_stat(data, thresh, k, inc_cens)
+  ss <- kgaps_stat(data, u, k, inc_cens)
   # If N0 = 0 then all exceedances occur singly (all K-gaps are positive)
   # and the likelihood is maximized at theta = 1.
   N0 <- ss$N0
@@ -96,7 +96,7 @@ kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
   }
   theta_se <- sqrt(1 / obs_info)
   res <- list(theta = theta_mle, se = theta_se, ss = ss, k = k,
-              thresh = thresh, inc_cens = inc_cens, call = Call)
+              u = u, inc_cens = inc_cens, call = Call)
   class(res) <- c("kgaps", "exdex")
   return(res)
 }
@@ -109,7 +109,7 @@ kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
 #' \eqn{\theta}.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
-#' @param thresh A numeric scalar.  Extreme value threshold applied to data.
+#' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger
 #'   than \code{k} units are assigned to the same cluster, resulting in a
@@ -162,22 +162,22 @@ kgaps <- function(data, thresh, k = 1, inc_cens = FALSE) {
 #' u <- quantile(newlyn, probs = 0.90)
 #' kgaps_stat(newlyn, u)
 #' @export
-kgaps_stat <- function(data, thresh, k = 1, inc_cens = FALSE) {
+kgaps_stat <- function(data, u, k = 1, inc_cens = FALSE) {
   if (any(is.na(data))) {
     stop("No missing values are allowed in ''data''")
   }
-  if (!is.numeric(thresh) || length(thresh) != 1) {
-    stop("thresh must be a numeric scalar")
+  if (!is.numeric(u) || length(u) != 1) {
+    stop("u must be a numeric scalar")
   }
-  if (thresh >= max(data)) {
-    stop("thresh must be less than max(data)")
+  if (u >= max(data)) {
+    stop("u must be less than max(data)")
   }
   if (!is.numeric(k) || length(k) != 1) {
     stop("k must be a numeric scalar")
   }
   # Sample size, positions, number and proportion of exceedances
   nx <- length(data)
-  exc_u <- (1:nx)[data > thresh]
+  exc_u <- (1:nx)[data > u]
   N_u <- length(exc_u)
 #  q_u <- (N_u - 1) / nx # mev
   q_u <- N_u / nx

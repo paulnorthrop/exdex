@@ -7,14 +7,11 @@
 #' \code{\link{plot.choose_uk}} creates the plot.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
-#' @param thresh,k Numeric vectors.  \code{thresh} is a vector of
+#' @param u,k Numeric vectors.  \code{u} is a vector of
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
-#'   The information matrix test is performed a over grid of all
-#'   combinations of threshold and \eqn{K} in the vectors \code{thresh}
-#'   and \code{k}.
-#' @details For each combination of threshold in \code{thresh} and \eqn{K}
+#' @details For each combination of threshold in \code{u} and \eqn{K}
 #'   in \code{k} the functions \code{\link{kgaps}} and \code{link{kgaps_imt}}
 #'   are called in order to estimate \eqn{\theta} and to perform the
 #'   information matrix test of Suveges and Davison (2010).
@@ -26,32 +23,32 @@
 #'   containing
 #'   \item{imt }{an object of class \code{c("kgaps_imt", "exdex")} returned
 #'     from \code{\link{kgaps_imt}}.}
-#'   \item{theta }{a \code{length(thresh)} by \code{length(k)} matrix.
+#'   \item{theta }{a \code{length(u)} by \code{length(k)} matrix.
 #'     Element (i,j) of \code{theta} contains an object (a list) of class
 #'     \code{c("kgaps", "exdex")}, a result of a call
-#'     \code{kgaps(data, thresh[j], k[i])} to \code{\link{kgaps}}.}
+#'     \code{kgaps(data, u[j], k[i])} to \code{\link{kgaps}}.}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @seealso \code{\link{kgaps_imt}} for the information matrix test under the
 #'   K-gaps model
 #' @examples
-#' thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' imt_theta <- choose_uk(newlyn, thresh = thresh, k = 1:5)
+#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
 #' plot(imt_theta)
 #' @export
-choose_uk <- function(data, thresh, k = 1) {
-  n_thresh <- length(thresh)
+choose_uk <- function(data, u, k = 1) {
+  n_u <- length(u)
   n_k <- length(k)
-  theta <- matrix(rep(list(), n_thresh * n_k), n_k, n_thresh)
+  theta <- matrix(rep(list(), n_u * n_k), n_k, n_u)
   comp <- function(i, j) {
-    return((i - 1) * n_thresh + j)
+    return((i - 1) * n_u + j)
   }
   for (i in 1:n_k) {
-    for (j in 1:n_thresh) {
-      theta[[comp(i, j)]] <- kgaps(data, thresh[j], k[i])
+    for (j in 1:n_u) {
+      theta[[comp(i, j)]] <- kgaps(data, u[j], k[i])
     }
   }
-  imt <- kgaps_imt(data, thresh, k)
+  imt <- kgaps_imt(data, u, k)
   res <- list(imt = imt, theta = theta)
   class(res) <- c("choose_uk", "exdex")
   return(res)
@@ -69,7 +66,7 @@ choose_uk <- function(data, thresh, k = 1) {
 #' @param y A character scalar indicating what should be plotted.
 #'  This is only relevant if, in the call to \code{\link{choose_uk}} that
 #'  produced \code{x} either only one value threshold was supplied via
-#'  \code{thresh} or only one value of \eqn{K} was supplied via \code{k}.
+#'  \code{u} or only one value of \eqn{K} was supplied via \code{k}.
 #'  In that event, information matrix test statistics are plotted if
 #'  \code{y = "imts"} and estimates of, and confidence intervals for,
 #'  \eqn{\theta} is plotted if \code{y = "theta"}.
@@ -89,25 +86,25 @@ choose_uk <- function(data, thresh, k = 1) {
 plot.choose_uk <- function(x, y = c("imts", "theta"), interval_type, level,
                            ...) {
   y <- match.arg(y)
-  # Extract the values of k and thresh
+  # Extract the values of k and u
   k <- x$imt$k
-  thresh <- x$imt$thresh
+  u <- x$imt$u
   n_k <- length(k)
-  n_thresh <- length(thresh)
-  if (n_k == 1 && n_thresh == 1) {
+  n_u <- length(u)
+  if (n_k == 1 && n_u == 1) {
     stop("Object contains only 1 threshold and one value of K")
   }
   def_par <- graphics::par(no.readonly = TRUE)
-  # 1. k is a scalar and thresh is a vector
-  if (n_k == 1 && n_thresh > 1) {
+  # 1. k is a scalar and u is a vector
+  if (n_k == 1 && n_u > 1) {
      if (y == "theta") {
        graphics::matplot()
      } else {
-       graphics::matplot(x$imt$thresh, x$imt$imt, type = "l")
+       graphics::matplot(x$imt$u, x$imt$imt, type = "l")
      }
   }
-  # 2. k is a scalar and thresh is a vector
-  # 3. Both k and thresh are vectors
+  # 2. k is a scalar and u is a vector
+  # 3. Both k and u are vectors
   graphics::par(def_par)
   return()
 }

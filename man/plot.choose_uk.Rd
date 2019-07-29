@@ -14,7 +14,7 @@ call to \code{\link{choose_uk}}.}
 \item{y}{A character scalar indicating what should be plotted.
 This is only relevant if, in the call to \code{\link{choose_uk}} that
 produced \code{x} either only one value threshold was supplied via
-\code{thresh} or only one value of \eqn{K} was supplied via \code{k}.
+\code{u} or only one value of \eqn{K} was supplied via \code{k}.
 In that event, information matrix test statistics are plotted if
 \code{y = "imts"} and estimates of, and confidence intervals for,
 \eqn{\theta} is plotted if \code{y = "theta"}.

@@ -7,12 +7,12 @@
 #' uncertainty are provided.
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
-#' @param thresh A numeric scalar.  Extreme value threshold applied to data.
+#' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param maxit A numeric scalar.  The maximum number of iterations.
 #' @details The iterated weighted least squares algorithm on page 46 of
 #'   Suveges (2007) is used to estimate the value of the extremal index.
 #'   This approach uses the time \emph{gaps} between successive exceedances
-#'   in the data \code{data} of the threshold \code{thresh}.  The \eqn{i}th
+#'   in the data \code{data} of the threshold \code{u}.  The \eqn{i}th
 #'   gap is defined as \eqn{T_i - 1}, where \eqn{T_i} is the difference in
 #'   the occurrence time of exceedance \eqn{i} and exceedance \eqn{i + 1}.
 #'   Therefore, threshold exceedances at adjacent time points produce a gap
@@ -20,7 +20,7 @@
 #'
 #'   The model underlying this approach is an exponential-point mas mixture
 #'   for \emph{scaled gaps}, that is, gaps multiplied by the proportion of
-#'   values in  \code{data} that exceed \code{thresh}.  Under this model
+#'   values in  \code{data} that exceed \code{u}.  Under this model
 #'   scaled gaps are zero (`within-cluster' interexceedance times) with
 #'   probability \eqn{1 - \theta} and otherwise (`between-cluster'
 #'   interexceedance times) follow an exponential distribution with mean
@@ -62,23 +62,23 @@
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @examples
-#' thresh <- quantile(newlyn, probs = 0.90)
-#' res <- iwls(newlyn, thresh)
+#' u <- quantile(newlyn, probs = 0.90)
+#' res <- iwls(newlyn, u)
 #' res
 #' @export
-iwls <- function(data, thresh, maxit = 100) {
+iwls <- function(data, u, maxit = 100) {
   Call <- match.call(expand.dots = TRUE)
-  if (!is.numeric(thresh) || length(thresh) != 1) {
-    stop("thresh must be a numeric scalar")
+  if (!is.numeric(u) || length(u) != 1) {
+    stop("u must be a numeric scalar")
   }
-  if (thresh >= max(data)) {
-    stop("thresh must be less than max(data)")
+  if (u >= max(data)) {
+    stop("u must be less than max(data)")
   }
   # Calculate the quantities required to call iwls_fun()
   #
   # Sample size, positions, number and proportion of exceedances
   nx <- length(data)
-  exc_u <- (1:nx)[data > thresh]
+  exc_u <- (1:nx)[data > u]
   N <- length(exc_u)
   # Inter-exceedances times, (largest first) 1-gaps, number of non-zero 1-gaps
   T_u <- diff(exc_u)

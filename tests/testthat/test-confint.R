@@ -130,9 +130,9 @@ test_that("plot.confint_spm works, user plot args, disjoint", {
 
 context("confint.kgaps")
 
-thresh <- quantile(newlyn, probs = 0.90)
+u <- quantile(newlyn, probs = 0.90)
 
-res <- kgaps(newlyn, thresh)
+res <- kgaps(newlyn, u)
 res1 <- confint(res)
 res2 <- confint(res, conf_scale = "log")
 test_that("kgaps lik intervals don't depend on conf_scale", {
@@ -141,7 +141,7 @@ test_that("kgaps lik intervals don't depend on conf_scale", {
 
 # Repeat for inc_cens = TRUE
 
-res <- kgaps(newlyn, thresh, inc_cens = TRUE)
+res <- kgaps(newlyn, u, inc_cens = TRUE)
 res1 <- confint(res)
 res2 <- confint(res, conf_scale = "log")
 test_that("kgaps lik intervals don't depend on conf_scale", {

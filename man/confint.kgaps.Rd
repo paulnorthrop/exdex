@@ -60,8 +60,8 @@ Two type of interval are calculated: (a) an interval based on the
   freedom, distribution of the log-likelihood ratio statistic.
 }
 \examples{
-thresh <- quantile(newlyn, probs = 0.90)
-theta <- kgaps(newlyn, thresh)
+u <- quantile(newlyn, probs = 0.90)
+theta <- kgaps(newlyn, u)
 confint(theta)
 }
 \references{

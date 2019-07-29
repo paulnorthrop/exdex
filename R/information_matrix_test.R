@@ -6,12 +6,12 @@
 #' diagnose misspecification of the K-gaps model
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
-#' @param thresh,k Numeric vectors.  \code{thresh} is a vector of
+#' @param u,k Numeric vectors.  \code{u} is a vector of
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
 #' @details The information matrix test is performed a over grid of all
-#'   combinations of threshold and \eqn{K} in the vectors \code{thresh}
+#'   combinations of threshold and \eqn{K} in the vectors \code{u}
 #'   and \code{k}.
 #'
 #'   For details of the information matrix test see Suveges and Davison
@@ -27,40 +27,40 @@
 #'   \url{https://doi.org/10.1214/09-AOAS292"}
 #' @return An object (a list) of class \code{c("kgaps_imt", "exdex")}
 #'   containing
-#'   \item{imt }{A \code{length(thresh)} by \code{length(k)} numeric matrix.
+#'   \item{imt }{A \code{length(u)} by \code{length(k)} numeric matrix.
 #'     Column i contains, for K = \code{k[i]}, the values of the
 #'     information matrix test statistic for the set of thresholds in
-#'     \code{thresh}.  The column names are the values in code{k}.
+#'     \code{u}.  The column names are the values in code{k}.
 #'     The row names are the approximate empirical percentage quantile levels
-#'     of the thresholds in \code{thresh}.}
-#'   \item{p }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+#'     of the thresholds in \code{u}.}
+#'   \item{p }{A \code{length(u)} by \code{length(k)} numeric matrix
 #'     containing the corresponding \eqn{p}-values for the test.}
-#'   \item{theta }{A \code{length(thresh)} by \code{length(k)} numeric matrix
+#'   \item{theta }{A \code{length(u)} by \code{length(k)} numeric matrix
 #'     containing the corresponding estimates of \eqn{\theta}.}
-#'   \item{thresh,k }{The input \code{thresh} and \code{k}.}
+#'   \item{u,k }{The input \code{u} and \code{k}.}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the K-gaps model.
 #' @examples
-#' thresh <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' imt <- kgaps_imt(newlyn, thresh, k = 1:5)
+#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' imt <- kgaps_imt(newlyn, u, k = 1:5)
 #' @export
-kgaps_imt <- function(data, thresh, k = 1) {
+kgaps_imt <- function(data, u, k = 1) {
   # Function to return only the MLE of theta
-  mle_only <- function(k, data, thresh) {
-    return(kgaps(data, thresh, k, inc_cens = FALSE)$theta)
+  mle_only <- function(k, data, u) {
+    return(kgaps(data, u, k, inc_cens = FALSE)$theta)
   }
   theta <- T_mat <- p_mat <- NULL
-  n_u <- length(thresh)
+  n_u <- length(u)
   n_k <- length(k)
   # Beginning of loop over all thresholds ----------
   for (iu in 1:n_u) {
-    u <- thresh[iu]
+    the_u <- u[iu]
     # Calculate the MLE of theta for each value of k
-    thetahat <- vapply(k, mle_only, 0, data = data, thresh = u)
+    thetahat <- vapply(k, mle_only, 0, data = data, u = the_u)
     # sample size of x
     nx <- length(data)
     # positions of exceedances of u
-    exc_u <- (1:nx)[data > u]
+    exc_u <- (1:nx)[data > the_u]
     # number of exceedances
     n_u <- length(exc_u)
     # proportion of values that exceed u
@@ -96,14 +96,14 @@ kgaps_imt <- function(data, thresh, k = 1) {
   }
   # End of loop over thresholds ----------
   colnames(T_mat) <- colnames(p_mat) <- colnames(theta) <- k
-  if (is.null(names(thresh))) {
-    u_ps <- round(100 * sapply(thresh, function(x) mean(data < x)))
+  if (is.null(names(u))) {
+    u_ps <- round(100 * sapply(u, function(x) mean(data < x)))
   } else {
-    u_ps <- as.numeric(substr(names(thresh), 1, nchar(names(thresh),
+    u_ps <- as.numeric(substr(names(u), 1, nchar(names(u),
                                                      type = "c") - 1))
   }
   rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
-  res <- list(imt = T_mat, p = p_mat, theta = theta, thresh = thresh, k = k)
+  res <- list(imt = T_mat, p = p_mat, theta = theta, u = u, k = k)
   class(res) <- c("kgaps_imt", "exdex")
   return(res)
 }

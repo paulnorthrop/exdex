@@ -4,12 +4,12 @@
 \alias{kgaps}
 \title{Maximum likelihood estimation for the K-gaps model}
 \usage{
-kgaps(data, thresh, k = 1, inc_cens = FALSE)
+kgaps(data, u, k = 1, inc_cens = FALSE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
-\item{thresh}{A numeric scalar.  Extreme value threshold applied to data.}
+\item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 
 \item{k}{A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 Davison (2010).  Threshold inter-exceedances times that are not larger
@@ -29,8 +29,8 @@ An object (a list) of class \code{c("kgaps", "exdex")} containing
     \item{\code{se} }{The estimated standard error of the MLE.}
     \item{\code{ss} }{The list of summary statistics returned from
       \code{\link{kgaps_stat}}.}
-    \item{\code{k, thresh, inc_cens} }{The input values of \code{k},
-      \code{thresh} and \code{inc_cens}.}
+    \item{\code{k, u, inc_cens} }{The input values of \code{k},
+      \code{u} and \code{inc_cens}.}
     \item{\code{call }}{The call to \code{kgaps}.}
 }
 \description{
@@ -49,8 +49,8 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
 \examples{
 ### Newlyn sea-surge data
 
-thresh <- quantile(newlyn, probs = 0.90)
-theta <- kgaps(newlyn, thresh)
+u <- quantile(newlyn, probs = 0.90)
+theta <- kgaps(newlyn, u)
 theta
 summary(theta)
 }
@@ -69,7 +69,7 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
   for \eqn{\theta}.
 
 \code{\link{kgaps_imt}} for the information matrix test, which
-  may be used to inform the choice of the pair (\code{thresh, k}).
+  may be used to inform the choice of the pair (\code{u, k}).
 
 \code{\link{kgaps_stat}} for the calculation of sufficient
   statistics for the K-gaps model.

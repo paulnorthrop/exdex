@@ -535,8 +535,8 @@ print.confint_spm <- function(x, ...) {
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{https://doi.org/10.1214/09-AOAS292}
 #' @examples
-#' thresh <- quantile(newlyn, probs = 0.90)
-#' theta <- kgaps(newlyn, thresh)
+#' u <- quantile(newlyn, probs = 0.90)
+#' theta <- kgaps(newlyn, u)
 #' confint(theta)
 #' @export
 confint.kgaps <- function (object, parm = "theta",

@@ -4,12 +4,12 @@
 \alias{iwls}
 \title{Iterated weighted least squares estimation of the extremal index}
 \usage{
-iwls(data, thresh, maxit = 100)
+iwls(data, u, maxit = 100)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
-\item{thresh}{A numeric scalar.  Extreme value threshold applied to data.}
+\item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 
 \item{maxit}{A numeric scalar.  The maximum number of iterations.}
 }
@@ -32,7 +32,7 @@ uncertainty are provided.
 The iterated weighted least squares algorithm on page 46 of
   Suveges (2007) is used to estimate the value of the extremal index.
   This approach uses the time \emph{gaps} between successive exceedances
-  in the data \code{data} of the threshold \code{thresh}.  The \eqn{i}th
+  in the data \code{data} of the threshold \code{u}.  The \eqn{i}th
   gap is defined as \eqn{T_i - 1}, where \eqn{T_i} is the difference in
   the occurrence time of exceedance \eqn{i} and exceedance \eqn{i + 1}.
   Therefore, threshold exceedances at adjacent time points produce a gap
@@ -40,7 +40,7 @@ The iterated weighted least squares algorithm on page 46 of
 
   The model underlying this approach is an exponential-point mas mixture
   for \emph{scaled gaps}, that is, gaps multiplied by the proportion of
-  values in  \code{data} that exceed \code{thresh}.  Under this model
+  values in  \code{data} that exceed \code{u}.  Under this model
   scaled gaps are zero (`within-cluster' interexceedance times) with
   probability \eqn{1 - \theta} and otherwise (`between-cluster'
   interexceedance times) follow an exponential distribution with mean
@@ -66,8 +66,8 @@ The iterated weighted least squares algorithm on page 46 of
   not by their mean.
 }
 \examples{
-thresh <- quantile(newlyn, probs = 0.90)
-res <- iwls(newlyn, thresh)
+u <- quantile(newlyn, probs = 0.90)
+res <- iwls(newlyn, u)
 res
 }
 \references{

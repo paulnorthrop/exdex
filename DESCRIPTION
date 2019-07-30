@@ -16,7 +16,7 @@ Description: Performs frequentist inference for the extremal index of a
     Berghaus and Bucher (2018) <doi:10.1214/17-AOS1621>.  Sliding block maxima
     are used to increase precision of estimation. The other type of methodology
     uses a model for the distribution of threshold inter-exceedance times
-    (Ferro and Segers (2003) <https://doi.org/10.1111/1467-9868.00401>). Two 
+    (Ferro and Segers (2003) <doi:10.1111/1467-9868.00401>). Two 
     versions of this type of approach are provided, following Suveges (2007) 
     <doi:10.1007/s10687-007-0034-2> and Suveges and Davison (2010)  
     <doi:10.1214/09-AOAS292>.

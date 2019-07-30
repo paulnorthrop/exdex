@@ -6,3 +6,5 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^before-install\.sh$
+^doc$
+^Meta$

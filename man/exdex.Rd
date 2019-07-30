@@ -6,7 +6,9 @@
 \alias{exdex-package}
 \title{exdex: Estimation of the Extremal Index}
 \description{
-Performs frequentist inference about the extremal index using the
+The extremal index \eqn{\theta} is a measure of the degree of local
+dependence in the extremes of a stationary process.  The \emph{exdex}
+package  performs frequentist inference about \eqn{\theta} using the
 methodologies proposed in Northrop (2015), Berghaus and Bucher (2018),
 Suveges (2007) and Suveges and Davison (2010).
 }
@@ -14,12 +16,12 @@ Suveges (2007) and Suveges and Davison (2010).
 Functions to implement three estimators of the extremal index
   are provided, namely
 \itemize{
-  \item{\code{\link{spm}}: semiparametric maxima estimator:
-    (Northrop, 2015; Berghaus and Bucher, 2018)}
-  \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator
-    (Suveges and Davison, 2010)}
-  \item{\code{\link{iwls}}: iterated weighted least squares estimator:
-    (Suveges, 2007)}
+  \item{\code{\link{spm}}: semiparametric maxima estimator, using block
+    maxima: (Northrop, 2015; Berghaus and Bucher, 2018)}
+  \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
+    interexceedance times (Suveges and Davison, 2010)}
+  \item{\code{\link{iwls}}: iterated weighted least squares estimator,
+    using threshold interexceedance times: (Suveges, 2007)}
 }
 
   See \code{vignette("exdex-vignette", package = "exdex")} for an

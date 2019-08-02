@@ -155,7 +155,6 @@ plot.choose_b <- function(x, y, ..., estimator = c("N2015", "BB2018"),
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
-  def_par <- graphics::par(no.readonly = TRUE)
   maxima <- match.arg(maxima)
   estimator <- match.arg(estimator)
   if (maxima == "sliding") {
@@ -223,6 +222,5 @@ plot.choose_b <- function(x, y, ..., estimator = c("N2015", "BB2018"),
   } else {
     graphics::box()
   }
-  graphics::par(def_par)
   return(invisible())
 }

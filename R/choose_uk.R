@@ -302,7 +302,6 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
     graphics::legend(leg_pos, legend = paste0("K = ", k), lty = leg_lty,
                      col = leg_col, lwd = leg_lwd)
   }
-  # Both k and u are vectors
   graphics::par(def_par)
   return(invisible())
 }

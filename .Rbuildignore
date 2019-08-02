@@ -8,3 +8,4 @@
 ^before-install\.sh$
 ^doc$
 ^Meta$
+^CRAN-RELEASE$

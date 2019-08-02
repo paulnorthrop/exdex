@@ -108,7 +108,7 @@ For each block size in \code{b} the extremal index \eqn{\theta}
   For any such block sizes the intervals will be missing from the plot.
 }
 \examples{
-\dontrun{
+\donttest{
 # Newlyn seas surges
 # Plot like the top left of Northrop (2015)
 # Remove the last 14 values because 2880 has lots of factors

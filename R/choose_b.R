@@ -50,7 +50,7 @@
 #' @seealso \code{\link{plot.choose_b}} to produce the block length diagnostic
 #'   plot.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Newlyn seas surges
 #' # Plot like the top left of Northrop (2015)
 #' # Remove the last 14 values because 2880 has lots of factors

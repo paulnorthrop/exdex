@@ -3,14 +3,14 @@
 exdex
 =====
 
-[![Travis-CI Build Status](https://travis-ci.org/paulnorthrop/exdex.svg?branch=master)](https://travis-ci.org/paulnorthrop/exdex) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&svg=true)](https://ci.appveyor.com/project/paulnorthrop/exdex) [![Coverage Status](https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master)](https://codecov.io/github/paulnorthrop/exdex?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/paulnorthrop/exdex.svg?branch=master)](https://travis-ci.org/paulnorthrop/exdex) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&svg=true)](https://ci.appveyor.com/project/paulnorthrop/exdex) [![Coverage Status](https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master)](https://codecov.io/github/paulnorthrop/exdex?branch=master) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/exdex)](https://cran.r-project.org/package=exdex)
 
 Estimation of the Extremal Index
 --------------------------------
 
 ### What does exdex do?
 
-The extremal index is a measure of the degree of local dependence in the extremes of a stationary process. The `exdex` package performs frequentist inference about using two types of methodology.
+The extremal index *θ* is a measure of the degree of local dependence in the extremes of a stationary process. The `exdex` package performs frequentist inference about *θ* using two types of methodology.
 
 One type ([Northrop, 2015](https://doi.org/10.1007/s10687-015-0221-5)) is based on a model that relates the distribution of block maxima to the marginal distribution of the data, leading to a semiparametric maxima estimator. Two versions of this type of estimator are provided, following [Northrop, 2015](https://doi.org/10.1007/s10687-015-0221-5) and [Berghaus and Bücher, 2018](https://doi.org/10.1214/17-AOS1621)). A slightly modified version of the latter is also provided. Estimates are produced using both disjoint and sliding block maxima, that latter providing greater precision of estimation.
 

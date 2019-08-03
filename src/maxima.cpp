@@ -61,7 +61,7 @@ Rcpp::List cpp_sigma2hat_dj(const Rcpp::List& all_max,
   arma::mat Nhat(kn, ktop), Zhat(kn, ktop), ZhatN(kn, ktop) ;
   arma::mat Usum(ktop, kn), UsumN(ktop, kn), Bhat(ktop, kn), BhatN(ktop, kn) ;
   arma::mat data_dj(kn, 2) ;
-  double constant =   -log(m - b + kn) ;
+  double constant =   -log(m - b + kn + 0.0) ;
   // Loop over the required columns of yd and xd
   for (int k = 0; k < ktop; k++) {
     arma::vec y = yd.col(k) ;

@@ -1,15 +1,13 @@
 ## Resubmission
-This is a resubmission.  In this version I have:
-
-* Removed the calls to graphics::par() from the functions plot.choose_uk(), plot.choose_b() and plot.confint_spm().
-
-* Wrapped the examples in the documentation for choose_b() with \donttest{}, rather than \dontrun{}.
+This is a patch release to fix an overloading ambiguity that caused a compilation error for v1.0.0 on Solaris. (Sorry!)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
 ## Test environments
+
+- solaris-x86-patched using r-hub
 
 - osx (on travis-ci), R-oldrel, R-release            
 - ubuntu 12.04 + GCC (on travis-ci), R-release, R-devel
@@ -18,4 +16,4 @@ This is a resubmission.  In this version I have:
 
 ## Downstream dependencies
 
-None. This is a new submission
+None. 

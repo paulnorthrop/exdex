@@ -5,11 +5,13 @@
 #' \code{confint} method for objects of class \code{c("spm", "exdex")}.
 #' Computes confidence intervals for \eqn{\theta} based on an object returned
 #' from \code{\link{spm}}.  Two types of interval may be returned:
-#' (a) intervals based on approximate large-sample normality of the estimators
-#' of \eqn{\theta}, which are symmetric about the respective point estimates,
-#' and (b) likelihood-based intervals based on an adjustment of a naive
-#' (pseudo-) loglikelihood, using the \code{\link[chandwich]{adjust_loglik}}
-#' function in the \code{\link[chandwich]{chandwich}} package.
+#' (a) intervals that are based on approximate large-sample normality of the
+#' estimators of \eqn{\theta} (or of \eqn{\log\theta}{log\theta} if
+#' \code{conf_scale = "log"}), and which are symmetric about the respective
+#' point estimates, and (b) likelihood-based intervals based on an adjustment
+#' of a naive (pseudo-) loglikelihood, using the
+#' \code{\link[chandwich]{adjust_loglik}} function in the
+#' \code{\link[chandwich]{chandwich}} package.
 #'
 #' @param object An object of class \code{c("spm", "exdex")}, returned by
 #'   \code{\link{spm}}.

@@ -40,7 +40,7 @@
 #'   \item{call }{the call to \code{choose_b}.}
 #' @references Coles, S. G. (2001) \emph{An Introduction to Statistical
 #'   Modeling of Extreme Values}, Springer-Verlag, London.
-#'   \url{http://dx.doi.org/10.1007/978-1-4471-3675-0_3}
+#'   \url{https://doi.org/10.1007/978-1-4471-3675-0_3}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}

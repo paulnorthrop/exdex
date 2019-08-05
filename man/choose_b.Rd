@@ -130,7 +130,7 @@ plot(res500, estimator = "BB2018", ylim = c(0, 1))
 \references{
 Coles, S. G. (2001) \emph{An Introduction to Statistical
   Modeling of Extreme Values}, Springer-Verlag, London.
-  \url{http://dx.doi.org/10.1007/978-1-4471-3675-0_3}
+  \url{https://doi.org/10.1007/978-1-4471-3675-0_3}
 
 Northrop, P. J. (2015) An efficient semiparametric maxima
 estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.

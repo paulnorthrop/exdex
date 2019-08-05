@@ -1,5 +1,5 @@
 ## Resubmission
-This is a patch release to fix an overloading ambiguity that caused a compilation error for v1.0.0 on Solaris. (Sorry!)
+This is a patch release to fix an overloading ambiguity that resulted in installation failure of v1.0.0 on Solaris. (Sorry!)
 
 ## R CMD check results
 

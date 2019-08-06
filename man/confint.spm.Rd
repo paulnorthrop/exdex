@@ -84,7 +84,7 @@ A list of class c("confint_spm", "exdex") containing the
   \item{cis}{A matrix with columns giving the lower and upper confidence
   limits. These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in
   \% (by default 2.5\% and 97.5\%).
-  The row names are a concatentation of the variant of the estimator
+  The row names are a concatenation of the variant of the estimator
   (\code{N2015} for Northrop (2015), \code{BB2018} for
   Berghaus and Bucher (2018)), \code{BB2018b} for the modified
   (by subtracting \code{1 / b}) Berghaus and Bucher (2018)
@@ -92,15 +92,15 @@ A list of class c("confint_spm", "exdex") containing the
   likelihood-based).}
   \item{ciN}{The object returned from
     \code{\link[chandwich]{conf_intervals}} that contains information about
-    the adjusted loglikelihod for the Northrop (2015) variant of the
+    the adjusted loglikelihood for the Northrop (2015) variant of the
     estimator.}
   \item{ciBB}{The object returned from
     \code{\link[chandwich]{conf_intervals}} that contains information about
-    the adjusted loglikelihod for the Berghaus and Bucher (2018) variant of
+    the adjusted loglikelihood for the Berghaus and Bucher (2018) variant of
     the estimator.}
   \item{ciBBb}{The object returned from
     \code{\link[chandwich]{conf_intervals}} that contains information about
-    the adjusted loglikelihod for the modified Berghaus and Bucher (2018)
+    the adjusted loglikelihood for the modified Berghaus and Bucher (2018)
     variant of the estimator.}
   \item{call}{The call to \code{spm}.}
   \item{object}{The input \code{object}.}

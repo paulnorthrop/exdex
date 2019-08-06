@@ -137,7 +137,7 @@ choose_uk <- function(data, u, k = 1) {
 #'   vertical axis.  If both \code{x$u} and \code{x$k$} have length greater
 #'   than one then only these estimates are plotted.  If either \code{x$u}
 #'   or \code{x$k} have length one then approximate 100\code{level}\%
-#'   confidence intevals are added to the plot and the variable,
+#'   confidence intervals are added to the plot and the variable,
 #'   \code{x$u} or \code{x$k} that has length greater than one is plotted on
 #'   the horizontal axis.
 #' @return Nothing is returned.

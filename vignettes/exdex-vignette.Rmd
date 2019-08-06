@@ -102,7 +102,7 @@ The estimates of $\theta$ stabilise less quickly than for the `newlyn` data but 
 
 ## Threshold-based estimators
 
-These estimators are based on the distribution of the times at which observations exceed some high threshold $u$.  They are based on @FS2003, which uses a limiting ($u \rightarrow \infty$) mixture model to represent the distribution of within- and between-cluster interexceedance times.  Under the model with probability $\theta$ an interexeedance time has an exponential distribution with mean $1/\theta$ (a between-cluster time) and otherwise the  interexceedance time is, in theory, zero (a within-cluster time).  
+These estimators are based on the distribution of the times at which observations exceed some high threshold $u$.  They are based on @FS2003, which uses a limiting ($u \rightarrow \infty$) mixture model to represent the distribution of within- and between-cluster interexceedance times.  Under the model with probability $\theta$ an interexceedance time has an exponential distribution with mean $1/\theta$ (a between-cluster time) and otherwise the  interexceedance time is, in theory, zero (a within-cluster time).  
 
 In practice, zero interexceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small interexceedance times.  The following estimators take different approaches to solving this problem. 
 

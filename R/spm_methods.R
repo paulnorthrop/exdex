@@ -174,13 +174,14 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 #'
 #' \code{summary} method for class \code{"spm"}
 #'
-#' @param object an object of class "spm", a result of a call to
+#' @param object an object of class \code{"spm"}, a result of a call to
 #'   \code{\link{spm}}.
 #' @param digits An integer. Used for number formatting with
 #'   \code{\link[base:Round]{signif}}.
 #' @param ... Additional arguments.  None are used in this function.
-#' @return Returns a list containing the list element \code{object$call}
-#'   and a numeric matrix \code{summary} giving, for all three variants of the
+#' @return Returns an object (a list) of class \code{"summary.spm"}
+#'   containing the list element \code{object$call} and a numeric
+#'   matrix \code{matrix} giving, for all three variants of the
 #'   semiparametric estimator and both sliding and disjoint blocks,
 #'   the (bias-adjusted) Estimate of the extremal index \eqn{\theta},
 #'   the estimated standard error (Std. Error),
@@ -235,11 +236,13 @@ summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
 #'
 #' \code{print} method for an object \code{x} of class \code{"summary.spm"}.
 #'
-#' @param x An object of class "summary.pm", a result of a call to
+#' @param x An object of class \code{"summary.spm"}, a result of a call to
 #'   \code{\link{summary.spm}}.
 #' @param ... Additional arguments passed on to \code{\link{print.default}}.
-#' @return Prints the numeric matrix \code{x$summary} returned from
-#' \code{\link{summary.spm}}.
+#' @details Prints the call and the numeric matrix \code{x$matrix} returned from
+#'   \code{\link{summary.spm}}.
+#' @return The argument \code{x}, invisibly, as for all
+#'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{confint.spm}} for estimation of confidence intervals

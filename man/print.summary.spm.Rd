@@ -7,17 +7,21 @@
 \method{print}{summary.spm}(x, ...)
 }
 \arguments{
-\item{x}{An object of class "summary.pm", a result of a call to
+\item{x}{An object of class \code{"summary.spm"}, a result of a call to
 \code{\link{summary.spm}}.}
 
 \item{...}{Additional arguments passed on to \code{\link{print.default}}.}
 }
 \value{
-Prints the numeric matrix \code{x$summary} returned from
-\code{\link{summary.spm}}.
+The argument \code{x}, invisibly, as for all
+  \code{\link[base]{print}} methods.
 }
 \description{
 \code{print} method for an object \code{x} of class \code{"summary.spm"}.
+}
+\details{
+Prints the call and the numeric matrix \code{x$matrix} returned from
+  \code{\link{summary.spm}}.
 }
 \section{Examples}{
 

@@ -8,7 +8,7 @@
   ...)
 }
 \arguments{
-\item{object}{an object of class "spm", a result of a call to
+\item{object}{an object of class \code{"spm"}, a result of a call to
 \code{\link{spm}}.}
 
 \item{digits}{An integer. Used for number formatting with
@@ -17,8 +17,9 @@
 \item{...}{Additional arguments.  None are used in this function.}
 }
 \value{
-Returns a list containing the list element \code{object$call}
-  and a numeric matrix \code{summary} giving, for all three variants of the
+Returns an object (a list) of class \code{"summary.spm"}
+  containing the list element \code{object$call} and a numeric
+  matrix \code{matrix} giving, for all three variants of the
   semiparametric estimator and both sliding and disjoint blocks,
   the (bias-adjusted) Estimate of the extremal index \eqn{\theta},
   the estimated standard error (Std. Error),

@@ -32,10 +32,8 @@
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{https://doi.org/10.1214/09-AOAS292}
-#' @seealso \code{\link{spm}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+#' @seealso \code{\link{spm}}: semiparametric maxima estimator.
+#' @seealso \code{\link{kgaps}}: \eqn{K}-gaps estimator.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @seealso \code{\link{newlyn}} and \code{\link{sp500}} for example datasets.
 #' @docType package

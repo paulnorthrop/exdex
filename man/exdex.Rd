@@ -46,11 +46,9 @@ Suveges, M. and Davison, A. C. (2010) Model
   \url{https://doi.org/10.1214/09-AOAS292}
 }
 \seealso{
-\code{\link{spm}} for estimation of the extremal index
-  \eqn{\theta} using a semiparametric maxima method.
+\code{\link{spm}}: semiparametric maxima estimator.
 
-\code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+\code{\link{kgaps}}: \eqn{K}-gaps estimator.
 
 \code{\link{iwls}}: iterated weighted least squares estimator.
 

@@ -228,4 +228,3 @@ kgaps_stat <- function(data, u, k = 1, inc_cens = FALSE) {
   }
   return(list(N0 = N0, N1 = N1, sum_qs = sum_qs, n_kgaps = n_kgaps))
 }
-

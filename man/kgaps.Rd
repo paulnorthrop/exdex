@@ -58,7 +58,6 @@ theta
 summary(theta)
 
 ### Newlyn sea surges
-
 u <- quantile(newlyn, probs = 0.60)
 theta <- kgaps(newlyn, u, k= 2)
 theta

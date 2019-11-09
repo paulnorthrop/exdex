@@ -1,0 +1,60 @@
+destination: docs
+
+development:
+  mode: unreleased
+
+template:
+  params:
+    bootswatch: paper
+
+reference:
+  - title: Package
+    desc: ~
+    contents:
+      - "exdex"
+  - title: Inference for the extremal index
+    desc: ~
+    contents:
+      - "spm"
+      - "confint.spm"
+      - "kgaps"
+      - "kgaps_stat"
+      - "confint.kgaps"
+      - "kgaps_imt"
+      - "iwls"
+  - title: Choosing tuning parameters
+    desc: ~
+    contents:
+      - "choose_b"
+      - "choose_uk"
+  - title: Calculating block maxima
+    desc: ~
+    contents:
+      - "all_max_rcpp"
+  - title: Example data
+    desc: ~
+    contents:
+      - "newlyn"
+      - "sp500"
+  - title: Generics
+    desc: ~
+    contents:
+      - "coef.spm"
+      - "coef.kgaps"
+      - "coef.iwls"
+      - "nobs.spm"
+      - "nobs.kgaps"
+      - "nobs.iwls"
+      - "plot.choose_b"
+      - "plot.choose_uk"
+      - "plot.confint_spm"
+      - "print.confint_spm"
+      - "print.spm"
+      - "print.kgaps"
+      - "print.iwls"
+      - "print.summary.spm"
+      - "print.summary.kgaps"
+      - "summary.spm"
+      - "summary.kgaps"
+      - "vcov.spm"
+      - "vcov.kgaps"

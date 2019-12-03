@@ -1,7 +1,3 @@
-## Resubmission
-
-This is a patch release to fix an overloading ambiguity that resulted in installation failure of v1.0.0 on Solaris. (Sorry!)
-
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
@@ -9,7 +5,6 @@ This is a patch release to fix an overloading ambiguity that resulted in install
 ## Test environments
 
 - solaris-x86-patched using r-hub
-
 - osx (on travis-ci), R-oldrel, R-release            
 - ubuntu 12.04 + GCC (on travis-ci), R-release, R-devel
 - ubuntu 12.04 + clang (on travis-ci), R-release, R-devel

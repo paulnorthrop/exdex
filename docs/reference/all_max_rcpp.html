@@ -8,10 +8,12 @@
 
 <title>Sliding and disjoint block maxima — all_max_rcpp • exdex</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,13 +34,14 @@
 
 
 
-<meta property="og:title" content="Sliding and disjoint block maxima — all_max_rcpp" />
 
+<meta property="og:title" content="Sliding and disjoint block maxima — all_max_rcpp" />
 <meta property="og:description" content="Calculates the (sliding) maxima of all blocks of b contiguous values
 and all sets of the maxima of disjoint blocks of b contiguous values
 in the vector x.  This provides the first step of computations in
 spm." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -100,7 +103,6 @@ spm." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/exdex">
@@ -127,16 +129,14 @@ spm." />
     </div>
 
     <div class="ref-description">
-    
     <p>Calculates the (sliding) maxima of all blocks of <code>b</code> contiguous values
 and all sets of the maxima of disjoint blocks of <code>b</code> contiguous values
 in the vector <code>x</code>.  This provides the first step of computations in
 <code><a href='spm.html'>spm</a></code>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>all_max_rcpp</span>(<span class='no'>x</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>which_dj</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"first"</span>, <span class='st'>"last"</span>), <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -162,7 +162,7 @@ in <code>x</code>.</p></td>
 <code><a href='https://rdrr.io/pkg/RcppRoll/man/RcppRoll-exports.html'>roll_max</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list containing</p>
@@ -181,7 +181,6 @@ in <code>x</code>.</p></td>
       <code><a href='https://rdrr.io/r/base/Round.html'>floor(n / b)</a></code> by 1 numeric matrix containing one the one set of
       the values in <code>x</code> that contribute to <code>yd</code>.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Sliding maxima.</strong> The function
@@ -200,12 +199,10 @@ in <code>x</code>.</p></td>
   that blocks containing missing values produce a non-missing result.</p>
 <p>Also returned are the values in <code>x</code> that contribute to each set
   of block maxima.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='spm.html'>spm</a></code> for semiparametric estimation of the
   extremal index based on block maxima.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>11</span>
@@ -284,13 +281,9 @@ in <code>x</code>.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

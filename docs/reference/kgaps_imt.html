@@ -8,10 +8,12 @@
 
 <title>Information matrix test under the \(K\)-gaps model — kgaps_imt • exdex</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,11 +34,12 @@
 
 
 
-<meta property="og:title" content="Information matrix test under the \(K\)-gaps model — kgaps_imt" />
 
+<meta property="og:title" content="Information matrix test under the \(K\)-gaps model — kgaps_imt" />
 <meta property="og:description" content="Performs the information matrix test (IMT) of Suveges and Davison (2010) to
 diagnose misspecification of the \(K\)-gaps model" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -98,7 +101,6 @@ diagnose misspecification of the \(K\)-gaps model" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/exdex">
@@ -125,14 +127,12 @@ diagnose misspecification of the \(K\)-gaps model" />
     </div>
 
     <div class="ref-description">
-    
     <p>Performs the information matrix test (IMT) of Suveges and Davison (2010) to
 diagnose misspecification of the \(K\)-gaps model</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>kgaps_imt</span>(<span class='no'>data</span>, <span class='no'>u</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -148,7 +148,7 @@ of the run parameter \(K\), as defined in Suveges and Davison (2010).
 See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object (a list) of class <code><a href='https://rdrr.io/r/base/c.html'>c("kgaps_imt", "exdex")</a></code>
@@ -165,7 +165,6 @@ See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
     containing the corresponding estimates of \(\theta\).</p></dd>
   <dt>u,k </dt><dd><p>The input <code>u</code> and <code>k</code>.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The IMT is performed a over grid of all
@@ -179,19 +178,16 @@ See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
   the penultimate term in the first equation on page 19; the <code>{...}</code>
   bracket should be squared in the 4th equation on page 19; the factor
   \(n\) should be \(N-1\) in the final equation on page 19.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, <em>The Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
   <a href='https://doi.org/10.1214/09-AOAS292'>https://doi.org/10.1214/09-AOAS292</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='kgaps.html'>kgaps</a></code> for maximum likelihood estimation of the
   extremal index \(\theta\) using the \(K\)-gaps model.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='no'>newlyn</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.9</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>))
@@ -201,15 +197,10 @@ See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

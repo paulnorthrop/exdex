@@ -8,10 +8,12 @@
 
 <title>Confidence intervals for the extremal index \(\theta\) — confint.spm • exdex</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,8 +34,8 @@
 
 
 
-<meta property="og:title" content="Confidence intervals for the extremal index \(\theta\) — confint.spm" />
 
+<meta property="og:title" content="Confidence intervals for the extremal index \(\theta\) — confint.spm" />
 <meta property="og:description" content="confint method for objects of class c(&quot;spm&quot;, &quot;exdex&quot;).
 Computes confidence intervals for \(\theta\) based on an object returned
 from spm.  Two types of interval may be returned:
@@ -45,6 +47,7 @@ of a naive (pseudo-) loglikelihood, using the
 adjust_loglik function in the
 chandwich package." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -106,7 +109,6 @@ chandwich package." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/exdex">
@@ -133,7 +135,6 @@ chandwich package." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>confint</code> method for objects of class <code><a href='https://rdrr.io/r/base/c.html'>c("spm", "exdex")</a></code>.
 Computes confidence intervals for \(\theta\) based on an object returned
 from <code><a href='spm.html'>spm</a></code>.  Two types of interval may be returned:
@@ -144,7 +145,6 @@ point estimates, and (b) likelihood-based intervals based on an adjustment
 of a naive (pseudo-) loglikelihood, using the
 <code><a href='https://rdrr.io/pkg/chandwich/man/adjust_loglik.html'>adjust_loglik</a></code> function in the
 <code><a href='https://rdrr.io/pkg/chandwich/man/chandwich.html'>chandwich</a></code> package.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for spm</span>
@@ -153,7 +153,7 @@ of a naive (pseudo-) loglikelihood, using the
   <span class='st'>"both"</span>), <span class='kw'>conf_scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"theta"</span>, <span class='st'>"log"</span>), <span class='kw'>constrain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>bias_adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vertical"</span>, <span class='st'>"cholesky"</span>, <span class='st'>"spectral"</span>,
   <span class='st'>"none"</span>), <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -242,7 +242,7 @@ intervals provide <em>vast</em> underestimates of uncertainty.</p></td>
       <td><p>Further arguments. None are used currently.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of class c("confint_spm", "exdex") containing the
@@ -277,7 +277,6 @@ intervals provide <em>vast</em> underestimates of uncertainty.</p></td>
     <code>object$theta_dj</code> if <code>maxima = "disjoint"</code>,
     which provides a check that the results are correct.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The likelihood-based intervals are estimated using the
@@ -295,7 +294,6 @@ intervals provide <em>vast</em> underestimates of uncertainty.</p></td>
   confidence intervals cannot be estimated.  A matrix of <code>NA</code>s
   will be returned.  See the <strong>Details</strong> section of the
   <code><a href='spm.html'>spm</a></code> documentation for more information.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Northrop, P. J. (2015) An efficient semiparametric maxima
@@ -304,12 +302,10 @@ estimator of the extremal index. <em>Extremes</em> <strong>18</strong>(4), 585-6
 <p>Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 maximum likelihood estimator for the extremal index. <em>Ann. Statist.</em>
 <strong>46</strong>(5), 2307-2335. <a href='https://doi.org/10.1214/17-AOS1621'>https://doi.org/10.1214/17-AOS1621</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot.confint_spm.html'>plot.confint_spm</a></code>: <code>plot</code> method for
   class <code><a href='https://rdrr.io/r/base/c.html'>c("confint_spm", "exdex")</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Newlyn sea surges</span>
@@ -337,15 +333,10 @@ maximum likelihood estimator for the extremal index. <em>Ann. Statist.</em>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

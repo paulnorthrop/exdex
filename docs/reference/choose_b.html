@@ -8,10 +8,12 @@
 
 <title>Block length diagnostic for the semiparametric maxima estimator — choose_b • exdex</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -32,14 +34,15 @@
 
 
 
-<meta property="og:title" content="Block length diagnostic for the semiparametric maxima estimator — choose_b" />
 
+<meta property="og:title" content="Block length diagnostic for the semiparametric maxima estimator — choose_b" />
 <meta property="og:description" content="Creates data for a plot to aid the choice of the block length b to
 supply to spm.  The general idea is to select the smallest
 value of b above which estimates of the extremal index \(\theta\)
 appear to be constant with respect to b, taking into account sampling
 variability.  plot.choose_b creates the plot." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -101,7 +104,6 @@ variability.  plot.choose_b creates the plot." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/exdex">
@@ -128,20 +130,18 @@ variability.  plot.choose_b creates the plot." />
     </div>
 
     <div class="ref-description">
-    
     <p>Creates data for a plot to aid the choice of the block length <code>b</code> to
 supply to <code><a href='spm.html'>spm</a></code>.  The general idea is to select the smallest
 value of <code>b</code> above which estimates of the extremal index \(\theta\)
 appear to be constant with respect to <code>b</code>, taking into account sampling
 variability.  <code><a href='plot.choose_b.html'>plot.choose_b</a></code> creates the plot.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>choose_b</span>(<span class='no'>data</span>, <span class='no'>b</span>, <span class='kw'>bias_adjust</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"BB3"</span>, <span class='st'>"BB1"</span>, <span class='st'>"N"</span>, <span class='st'>"none"</span>),
   <span class='kw'>constrain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>varN</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>interval_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"norm"</span>, <span class='st'>"lik"</span>), <span class='kw'>conf_scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"theta"</span>, <span class='st'>"log"</span>),
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vertical"</span>, <span class='st'>"cholesky"</span>, <span class='st'>"spectral"</span>, <span class='st'>"none"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -220,7 +220,7 @@ if (the default) <code>sliding = TRUE</code> was used in the call to
 intervals provide <em>vast</em> underestimates of uncertainty.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("choose_b", "exdex")</a></code> containing</p>
@@ -234,7 +234,6 @@ intervals provide <em>vast</em> underestimates of uncertainty.</p></td>
   <dt>b </dt><dd><p>the input <code>b</code></p></dd>
   <dt>call </dt><dd><p>the call to <code>choose_b</code>.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For each block size in <code>b</code> the extremal index \(\theta\)
@@ -253,7 +252,6 @@ intervals provide <em>vast</em> underestimates of uncertainty.</p></td>
 <p>For very small block sizes it may not be possible to estimate the
   confidence intervals.  See <strong>Details</strong> in <code><a href='spm.html'>spm</a></code>.
   For any such block sizes the intervals will be missing from the plot.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Coles, S. G. (2001) <em>An Introduction to Statistical
@@ -265,12 +263,10 @@ estimator of the extremal index. <em>Extremes</em> <strong>18</strong>(4), 585-6
 <p>Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 maximum likelihood estimator for the extremal index. <em>Ann. Statist.</em>
 <strong>46</strong>(5), 2307-2335. <a href='https://doi.org/10.1214/17-AOS1621'>https://doi.org/10.1214/17-AOS1621</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot.choose_b.html'>plot.choose_b</a></code> to produce the block length diagnostic
   plot.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -292,15 +288,10 @@ maximum likelihood estimator for the extremal index. <em>Ann. Statist.</em>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

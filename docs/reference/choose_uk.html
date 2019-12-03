@@ -9,10 +9,12 @@
 <title>Threshold \(u\) and runs parameter \(K\) diagnostic for the \(K\)-gaps
 estimator — choose_uk • exdex</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -33,13 +35,14 @@ estimator — choose_uk • exdex</title>
 
 
 
+
 <meta property="og:title" content="Threshold \(u\) and runs parameter \(K\) diagnostic for the \(K\)-gaps
 estimator — choose_uk" />
-
 <meta property="og:description" content="Creates data for a plot to aid the choice of the threshold and
 run parameter \(K\) for the \(K\)-gaps estimator (see
 kgaps).  plot.choose_uk creates the plot." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -101,7 +104,6 @@ kgaps).  plot.choose_uk creates the plot." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paulnorthrop/exdex">
@@ -129,15 +131,13 @@ estimator</h1>
     </div>
 
     <div class="ref-description">
-    
     <p>Creates data for a plot to aid the choice of the threshold and
 run parameter \(K\) for the \(K\)-gaps estimator (see
 <code><a href='kgaps.html'>kgaps</a></code>).  <code><a href='plot.choose_uk.html'>plot.choose_uk</a></code> creates the plot.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>choose_uk</span>(<span class='no'>data</span>, <span class='no'>u</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -153,7 +153,7 @@ of the run parameter \(K\), as defined in Suveges and Davison (2010).
 See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object (a list) of class <code><a href='https://rdrr.io/r/base/c.html'>c("choose_uk", "exdex")</a></code>
@@ -165,21 +165,18 @@ See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
     <code><a href='https://rdrr.io/r/base/c.html'>c("kgaps", "exdex")</a></code>, a result of a call
     <code><a href='kgaps.html'>kgaps(data, u[j], k[i])</a></code> to <code><a href='kgaps.html'>kgaps</a></code>.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For each combination of threshold in <code>u</code> and \(K\)
   in <code>k</code> the functions <code><a href='kgaps.html'>kgaps</a></code> and <code><a href='kgaps_imt.html'>kgaps_imt</a></code>
   are called in order to estimate \(\theta\) and to perform the
   information matrix test of Suveges and Davison (2010).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, <em>The Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
   <a href='https://doi.org/10.1214/09-AOAS292'>https://doi.org/10.1214/09-AOAS292</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='kgaps.html'>kgaps</a></code> for maximum likelihood estimation of the
@@ -187,7 +184,6 @@ See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
 <p><code><a href='kgaps_imt.html'>kgaps_imt</a></code> for the information matrix test under the
   \(K\)-gaps model</p>
 <p><code><a href='plot.choose_uk.html'>plot.choose_uk</a></code> to produce the diagnostic plot.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### S&amp;P 500 index</span>
@@ -214,15 +210,10 @@ See <code><a href='kgaps.html'>kgaps</a></code> for more details.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

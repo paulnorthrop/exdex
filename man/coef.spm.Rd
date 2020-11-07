@@ -4,8 +4,13 @@
 \alias{coef.spm}
 \title{Extract Model Coefficients from an \code{"spm"} object}
 \usage{
-\method{coef}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = "all", constrain = FALSE, ...)
+\method{coef}{spm}(
+  object,
+  maxima = c("sliding", "disjoint"),
+  estimator = "all",
+  constrain = FALSE,
+  ...
+)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from

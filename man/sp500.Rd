@@ -4,9 +4,11 @@
 \name{sp500}
 \alias{sp500}
 \title{Daily log returns of the Standard and Poor (S&P) 500 index}
-\format{A vector of length 7250, created using \code{\link[zoo]{zoo}}
+\format{
+A vector of length 7250, created using \code{\link[zoo]{zoo}}
   with an "index" attribute giving the date of the corresponding negated
-  log return.}
+  log return.
+}
 \source{
 Yahoo finance \url{https://finance.yahoo.com/quote/^SPX/history/}
 }

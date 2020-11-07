@@ -21,14 +21,26 @@
 \alias{iwls_fun}
 \title{Internal exdex functions}
 \usage{
-spm_check(data, b, sliding = TRUE, bias_adjust = c("BB3", "BB1", "N",
-  "none"), constrain = TRUE, varN = TRUE, which_dj = c("last",
-  "first"))
+spm_check(
+  data,
+  b,
+  sliding = TRUE,
+  bias_adjust = c("BB3", "BB1", "N", "none"),
+  constrain = TRUE,
+  varN = TRUE,
+  which_dj = c("last", "first")
+)
 
 spm_sigmahat_dj(data, b, check = FALSE)
 
-spm_R_quick(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
-  constrain = TRUE, varN = TRUE, which_dj = c("last", "first"))
+spm_R_quick(
+  data,
+  b,
+  bias_adjust = c("BB3", "BB1", "N", "none"),
+  constrain = TRUE,
+  varN = TRUE,
+  which_dj = c("last", "first")
+)
 
 ests_sigmahat_dj(all_max, b, which_dj, bias_adjust)
 

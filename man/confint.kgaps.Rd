@@ -4,9 +4,15 @@
 \alias{confint.kgaps}
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
-\method{confint}{kgaps}(object, parm = "theta", level = 0.95,
-  interval_type = c("both", "norm", "lik"), conf_scale = c("theta",
-  "log"), constrain = TRUE, ...)
+\method{confint}{kgaps}(
+  object,
+  parm = "theta",
+  level = 0.95,
+  interval_type = c("both", "norm", "lik"),
+  conf_scale = c("theta", "log"),
+  constrain = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class \code{c("kgaps", "exdex")}, returned by

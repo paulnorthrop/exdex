@@ -4,8 +4,13 @@
 \alias{plot.choose_b}
 \title{Plot block length diagnostic for the semiparametric maxima estimator}
 \usage{
-\method{plot}{choose_b}(x, y, ..., estimator = c("N2015", "BB2018"),
-  maxima = c("sliding", "disjoint"))
+\method{plot}{choose_b}(
+  x,
+  y,
+  ...,
+  estimator = c("N2015", "BB2018"),
+  maxima = c("sliding", "disjoint")
+)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_b", "exdex")}, a result of a

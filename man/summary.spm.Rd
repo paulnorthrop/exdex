@@ -4,8 +4,7 @@
 \alias{summary.spm}
 \title{Summary method for an \code{"spm"} object}
 \usage{
-\method{summary}{spm}(object, digits = max(3, getOption("digits") - 3L),
-  ...)
+\method{summary}{spm}(object, digits = max(3, getOption("digits") - 3L), ...)
 }
 \arguments{
 \item{object}{an object of class \code{"spm"}, a result of a call to

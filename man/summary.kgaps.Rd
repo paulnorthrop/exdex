@@ -4,8 +4,7 @@
 \alias{summary.kgaps}
 \title{Summary method for a \code{"kgaps"} object}
 \usage{
-\method{summary}{kgaps}(object, digits = max(3, getOption("digits") -
-  3L), ...)
+\method{summary}{kgaps}(object, digits = max(3, getOption("digits") - 3L), ...)
 }
 \arguments{
 \item{object}{an object of class "kgaps", a result of a call to

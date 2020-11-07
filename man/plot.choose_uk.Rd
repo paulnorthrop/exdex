@@ -5,11 +5,20 @@
 \title{Plot Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
 \eqn{K}-gaps estimator}
 \usage{
-\method{plot}{choose_uk}(x, y = c("imts", "theta"), level = 0.95,
-  interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
-  alpha = 0.05, constrain = TRUE, for_abline = list(lty = 2, lwd = 1,
-  col = 1), digits = 3, uprob = FALSE, leg_pos = if (y == "imts")
-  "topright" else "topleft", ...)
+\method{plot}{choose_uk}(
+  x,
+  y = c("imts", "theta"),
+  level = 0.95,
+  interval_type = c("norm", "lik"),
+  conf_scale = c("theta", "log"),
+  alpha = 0.05,
+  constrain = TRUE,
+  for_abline = list(lty = 2, lwd = 1, col = 1),
+  digits = 3,
+  uprob = FALSE,
+  leg_pos = if (y == "imts") "topright" else "topleft",
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class \code{c("choose_uk", "exdex")}, a result of a

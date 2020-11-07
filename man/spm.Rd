@@ -4,8 +4,14 @@
 \alias{spm}
 \title{Semiparametric maxima estimator of the extremal index}
 \usage{
-spm(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
-  constrain = TRUE, varN = TRUE, which_dj = c("last", "first"))
+spm(
+  data,
+  b,
+  bias_adjust = c("BB3", "BB1", "N", "none"),
+  constrain = TRUE,
+  varN = TRUE,
+  which_dj = c("last", "first")
+)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}

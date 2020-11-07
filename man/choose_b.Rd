@@ -4,10 +4,17 @@
 \alias{choose_b}
 \title{Block length diagnostic for the semiparametric maxima estimator}
 \usage{
-choose_b(data, b, bias_adjust = c("BB3", "BB1", "N", "none"),
-  constrain = TRUE, varN = TRUE, level = 0.95,
-  interval_type = c("norm", "lik"), conf_scale = c("theta", "log"),
-  type = c("vertical", "cholesky", "spectral", "none"))
+choose_b(
+  data,
+  b,
+  bias_adjust = c("BB3", "BB1", "N", "none"),
+  constrain = TRUE,
+  varN = TRUE,
+  level = 0.95,
+  interval_type = c("norm", "lik"),
+  conf_scale = c("theta", "log"),
+  type = c("vertical", "cholesky", "spectral", "none")
+)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}

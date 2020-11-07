@@ -4,11 +4,18 @@
 \alias{confint.spm}
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
-\method{confint}{spm}(object, parm = "theta", level = 0.95,
-  maxima = c("sliding", "disjoint"), interval_type = c("norm", "lik",
-  "both"), conf_scale = c("theta", "log"), constrain = TRUE,
-  bias_adjust = TRUE, type = c("vertical", "cholesky", "spectral",
-  "none"), ...)
+\method{confint}{spm}(
+  object,
+  parm = "theta",
+  level = 0.95,
+  maxima = c("sliding", "disjoint"),
+  interval_type = c("norm", "lik", "both"),
+  conf_scale = c("theta", "log"),
+  constrain = TRUE,
+  bias_adjust = TRUE,
+  type = c("vertical", "cholesky", "spectral", "none"),
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class \code{c("spm", "exdex")}, returned by

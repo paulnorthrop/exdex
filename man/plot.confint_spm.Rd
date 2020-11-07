@@ -4,8 +4,7 @@
 \alias{plot.confint_spm}
 \title{Plot diagnostics for a confint_spm object}
 \usage{
-\method{plot}{confint_spm}(x, y = NULL, estimator = "all", ndec = 2,
-  ...)
+\method{plot}{confint_spm}(x, y = NULL, estimator = "all", ndec = 2, ...)
 }
 \arguments{
 \item{x}{an object of class \code{c("confint_spm", "exdex")}, a result of

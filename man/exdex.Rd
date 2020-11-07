@@ -3,7 +3,6 @@
 \docType{package}
 \name{exdex}
 \alias{exdex}
-\alias{exdex-package}
 \title{exdex: Estimation of the Extremal Index}
 \description{
 The extremal index \eqn{\theta} is a measure of the degree of local

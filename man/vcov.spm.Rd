@@ -4,8 +4,7 @@
 \alias{vcov.spm}
 \title{Calculate Variance-Covariance Matrix for an \code{"spm"} object}
 \usage{
-\method{vcov}{spm}(object, maxima = c("sliding", "disjoint"),
-  estimator = "all", ...)
+\method{vcov}{spm}(object, maxima = c("sliding", "disjoint"), estimator = "all", ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("spm", "exdex")} returned from

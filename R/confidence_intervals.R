@@ -380,7 +380,7 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   fmt <- paste0("%.", ndec, "f")
   if ("N2015" %in% estimator && !is.na(x$cis["N2015lik", 1])) {
     tempN <- x$ciN
-    shoofN <- max(tempN$prof_loglik_vals)
+    shoofN <- max(tempN$prof_loglik_vals, na.rm = TRUE)
     tempN$prof_loglik_vals <- tempN$prof_loglik_vals - shoofN
     tempN$max_loglik <- tempN$max_loglik - shoofN
     x_obj <- tempN
@@ -389,7 +389,7 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   }
   if ("BB2018" %in% estimator && !is.na(x$cis["BB2018lik", 1])) {
     tempBB <- x$ciBB
-    shoofBB <- max(tempBB$prof_loglik_vals)
+    shoofBB <- max(tempBB$prof_loglik_vals, na.rm = TRUE)
     tempBB$prof_loglik_vals <- tempBB$prof_loglik_vals - shoofBB
     tempBB$max_loglik <- tempBB$max_loglik - shoofBB
     roundBB <- sprintf(fmt, round(temp["BB2018lik", ], ndec))
@@ -403,7 +403,7 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   }
   if ("BB2018b" %in% estimator && !is.na(x$cis["BB2018blik", 1])) {
     tempBBb <- x$ciBBb
-    shoofBBb <- max(tempBBb$prof_loglik_vals)
+    shoofBBb <- max(tempBBb$prof_loglik_vals, na.rm = TRUE)
     tempBBb$prof_loglik_vals <- tempBBb$prof_loglik_vals - shoofBBb
     tempBBb$max_loglik <- tempBBb$max_loglik - shoofBBb
     roundBBb <- sprintf(fmt, round(temp["BB2018blik", ], ndec))

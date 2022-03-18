@@ -15,8 +15,8 @@
 #'   corresponding to an inter-exceedance time of \eqn{T} is given by
 #'   \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.
 #' @param inc_cens A logical scalar indicating whether or not to include
-#'   contributions from censored inter-exceedance times relating to the
-#'   first and last observation.  See Attalides (2015) for details.
+#'   contributions from censored inter-exceedance times, relating to the
+#'   first and last observations.  See Attalides (2015) for details.
 #' @details The maximum likelihood estimate of the extremal index \eqn{\theta}
 #'   under the \eqn{K}-gaps model of Suveges and Davison (2010) is calculated.
 #'   If \code{inc_cens = TRUE} then information from censored inter-exceedance

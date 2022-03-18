@@ -117,6 +117,7 @@
 #'     \code{object$theta_sl} if \code{maxima = "sliding"},
 #'     \code{object$theta_dj} if \code{maxima = "disjoint"},
 #'     which provides a check that the results are correct.}
+#'   \item{level}{The input \code{level}.}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #' \url{https://doi.org/10.1007/s10687-015-0221-5}
@@ -200,7 +201,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
     pct <- paste(round(100 * a, 1), "%")
     colnames(temp) <- pct
     temp <- list(cis = temp, call = Call, maxima = maxima,
-                 interval_type = interval_type, theta = theta)
+                 interval_type = interval_type, theta = theta, level = level)
     class(temp) <- c("confint_spm", "exdex")
     if (interval_type == "norm") {
       return(temp)
@@ -322,7 +323,7 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
   names(theta) <- c("N2015", "BB2018", "BB2018b")
   temp <- list(cis = temp, ciN = tempN, ciBB = tempBB, ciBBb = tempBBb,
                call = Call, object = object, maxima = maxima,
-               interval_type = interval_type, theta = theta)
+               interval_type = interval_type, theta = theta, level = level)
   class(temp) <- c("confint_spm", "exdex")
   return(temp)
 }
@@ -421,15 +422,16 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
   # A clunky way to avoid conflict between my choice of legend and
   # (legend) title and those that the user might supply via ...
   user_args <- list(...)
+  leg_title <- paste0("estimator: ", 100*x$level, "% CI")
   if (is.null(user_args$legend_pos)) {
     if (is.null(user_args$legend) && is.null(user_args$title)) {
       plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg,
-           title = "estimator", legend_pos = "bottom", ...)
+           title = leg_title, legend_pos = "bottom", ...)
     } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
       plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg,
            legend_pos = "bottom", ...)
     } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
-      plot(x = x_obj, y = y_obj, y2 = y2_obj, title = "estimator",
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, title = leg_title,
            legend_pos = "bottom", ...)
     } else {
       plot(x = x_obj, y = y_obj,  y2 = y2_obj, legend_pos = "bottom", ...)
@@ -440,11 +442,11 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
     user_args$legend_pos <- NULL
     if (is.null(user_args$legend) && is.null(user_args$title)) {
       plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg,
-           title = "estimator", ...)
+           title = leg_title, ...)
     } else if (is.null(user_args$legend) && !is.null(user_args$title)) {
       plot(x = x_obj, y = y_obj, y2 = y2_obj, legend = my_leg, ...)
     } else if (!is.null(user_args$legend) && is.null(user_args$title)) {
-      plot(x = x_obj, y = y_obj, y2 = y2_obj, title = "estimator", ...)
+      plot(x = x_obj, y = y_obj, y2 = y2_obj, title = leg_title, ...)
     } else {
       plot(x = x_obj, y = y_obj, y2 = y2_obj, ...)
     }
@@ -527,12 +529,17 @@ print.confint_spm <- function(x, ...) {
 #'   (if \code{conf_scale = "log"}) and (b) a likelihood-based interval,
 #'   based on the approximate large sample chi-squared, with 1 degree of
 #'   freedom, distribution of the log-likelihood ratio statistic.
-#' @return A matrix with columns giving the lower and upper confidence limits.
-#'   These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in \%
-#'   (by default 2.5\% and 97.5\%).
+#' @return A list of class c("confint_kgaps", "exdex") containing the
+#'   following components.
+#'   \item{cis}{A matrix with columns giving the lower and upper confidence
+#'   limits. These are labelled as (1 - level)/2 and 1 - (1 - level)/2 in
+#'   \% (by default 2.5\% and 97.5\%).
 #'   The row names indicate the type of interval:
 #'   \code{norm} for intervals based on large sample normality and \code{lik}
-#'   for likelihood-based intervals.
+#'   for likelihood-based intervals.}
+#'   \item{call}{The call to \code{spm}.}
+#'   \item{object}{The input object \code{object}.}
+#'   \item{level}{The input \code{level}.}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
@@ -540,7 +547,9 @@ print.confint_spm <- function(x, ...) {
 #' @examples
 #' u <- quantile(newlyn, probs = 0.90)
 #' theta <- kgaps(newlyn, u)
-#' confint(theta)
+#' cis <- confint(theta)
+#' cis
+#' plot(cis)
 #' @export
 confint.kgaps <- function (object, parm = "theta", level = 0.95,
                            interval_type = c("both", "norm", "lik"),
@@ -549,6 +558,7 @@ confint.kgaps <- function (object, parm = "theta", level = 0.95,
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
+  Call <- match.call(expand.dots = TRUE)
   parm <- match.arg(parm)
   if (level <= 0 || level >= 1) {
     stop("''level'' must be in (0, 1)")
@@ -595,5 +605,80 @@ confint.kgaps <- function (object, parm = "theta", level = 0.95,
     row_names <- c("norm", "lik")
   }
   rownames(temp) <- row_names
+  temp <- list(cis = temp, call = Call, object = object, level = level)
+  class(temp) <- c("confint_kgaps", "exdex")
   return(temp)
+}
+
+# ========================= Method for confint_kgaps ======================== #
+
+# ---------------------------- plot.confint_kgaps --------------------------- #
+
+#' Plot diagnostics for a confint_kgaps object
+#'
+#' \code{plot} method for an objects of class
+#' \code{c("confint_kgaps", "exdex")}.
+#'
+#' @param x an object of class \code{c("confint_kgaps", "exdex")}, a result of
+#'   a call to \code{\link{confint.kgaps}}.
+#' @param y Not used.
+#' @param ... Further arguments to be passed to
+#'   \code{\link[chandwich]{plot.confint}}.
+#' @return Nothing is returned.
+#' @seealso \code{\link{confint.kgaps}}: \code{confint} method for
+#'   class \code{c("kgaps", "exdex")}.
+#' @section Examples:
+#' See the examples in \code{\link{confint.kgaps}}.
+#' @export
+plot.confint_kgaps <- function(x, y = NULL, ...) {
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  if (!("lik" %in% rownames(x$cis))) {
+    stop("Plot method not available when interval_type = ''norm''")
+  }
+  prof_ci <- x$cis[rownames(x$cis) == "lik"]
+  theta <- seq(0.99 * prof_ci[1], 1.01 * prof_ci[2], length = 100)
+  kloglik <- function(theta) {
+    do.call(kgaps_loglik, c(list(theta = theta), x$object$ss))
+  }
+  prof_lik <- vapply(theta, kloglik, 0.0)
+  my_plot <- function(xx, y, ..., type = "l", xlab = expression(theta),
+                      ylab = "log-likelihood",
+                      main = paste0(100 * x$level, "% confidence interval")) {
+    graphics::plot(xx, y, ..., type = type, xlab = xlab, ylab = ylab,
+                   main = main)
+  }
+  my_plot(theta, prof_lik, ...)
+  cutoff <- x$object$max_loglik - stats::qchisq(x$level, 1) / 2
+  graphics::abline(h = cutoff)
+  axis(1, at = prof_ci,  labels = round(prof_ci, 3), tick = FALSE,
+       mgp = c(3, 0.15, 0))
+  return(invisible())
+}
+
+# --------------------------- print.confint_kgaps --------------------------- #
+
+#' Print method for a confint_kgaps object
+#'
+#' \code{print} method for class \code{c("confint_kgaps", "exdex")}.
+#'
+#' @param x an object of class \code{c("confint_kgaps", "exdex")}, a result of
+#'   a call to \code{\link{confint.kgaps}}.
+#' @param ... Additional optional arguments to be passed to
+#'   \code{\link{print.default}}
+#' @details Prints the matrix of confidence intervals for \eqn{\theta}.
+#' @return The argument \code{x}, invisibly, as for all
+#'   \code{\link[base]{print}} methods.
+#' @seealso \code{\link{kgaps}} for estimation of the extremal index
+#'   \eqn{\theta} using a semiparametric maxima method.
+#' @seealso \code{\link{confint.kgaps}}: \code{confint} method for
+#'   class \code{"kgaps"}.
+#' @export
+print.confint_kgaps <- function(x, ...) {
+  if (!inherits(x, "exdex")) {
+    stop("use only with \"exdex\" objects")
+  }
+  print(x$cis, ...)
+  return(invisible(x))
 }

@@ -212,7 +212,7 @@ plot.choose_uk <- function(x, y = c("imts", "theta"), level = 0.95,
                         interval_type = interval_type,
                         conf_scale = conf_scale, constrain = constrain)
         ymat[ij, 1] <- kgaps_object$theta
-        ymat[ij, 2:3] <- temp
+        ymat[ij, 2:3] <- temp$cis
       }
       my_ylab <- "theta"
       my_xlab <- ifelse(cond1, "threshold u", "run parameter K")

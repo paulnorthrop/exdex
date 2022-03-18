@@ -42,6 +42,7 @@
 #'       \code{\link{kgaps_stat}}.}
 #'     \item{\code{k, u, inc_cens} }{The input values of \code{k},
 #'       \code{u} and \code{inc_cens}.}
+#'     \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
 #'     \item{\code{call }}{The call to \code{kgaps}.}
 #' @seealso \code{\link{confint.kgaps}} to estimate confidence intervals
 #'   for \eqn{\theta}.
@@ -107,8 +108,9 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
   theta_se <- sqrt(1 / obs_info)
+  max_loglik <- do.call(kgaps_loglik, c(list(theta = theta_mle), ss))
   res <- list(theta = theta_mle, se = theta_se, ss = ss, k = k,
-              u = u, inc_cens = inc_cens, call = Call)
+              u = u, inc_cens = inc_cens, max_loglik = max_loglik, call = Call)
   class(res) <- c("kgaps", "exdex")
   return(res)
 }

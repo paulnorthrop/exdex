@@ -31,6 +31,7 @@ An object (a list) of class \code{c("kgaps", "exdex")} containing
       \code{\link{kgaps_stat}}.}
     \item{\code{k, u, inc_cens} }{The input values of \code{k},
       \code{u} and \code{inc_cens}.}
+    \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
     \item{\code{call }}{The call to \code{kgaps}.}
 }
 \description{

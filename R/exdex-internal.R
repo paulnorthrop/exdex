@@ -586,9 +586,11 @@ all_maxima <- function(x, b = 1, which_dj = c("all", "first", "last")){
 # ============== Functions used by kgaps() and confint.kgaps() ============== #
 
 # =============================== kgaps_loglik ================================
+# The argument n_kgaps is not used here but it is included because it is
+# included in the list returned by kgaps_stat()
 #' @keywords internal
 #' @rdname exdex-internal
-kgaps_loglik <- function(theta, N0, N1, sum_qs, n_kgaps){
+kgaps_loglik <- function(theta, N0, N1, sum_qs, n_kgaps) {
   if (theta < 0 || theta > 1) {
     return(-Inf)
   }

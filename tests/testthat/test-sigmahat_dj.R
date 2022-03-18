@@ -1,4 +1,4 @@
-context("sigmahat_dj")
+#context("sigmahat_dj")
 
 # Check that the various ways of calculating a summation involved in the
 # estimation of sigma^2_dj on page 2319 of Berghaus and Bucher (2018)

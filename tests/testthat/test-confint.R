@@ -1,4 +1,4 @@
-context("confint.spm")
+#context("confint.spm")
 
 my_tol <- 1e-5
 
@@ -43,7 +43,7 @@ test_that("spm lik intervals don't depend on conf_scale", {
 
 # ============================= plot.confint.spm =============================
 
-context("plot.confint_spm")
+#context("plot.confint_spm")
 
 # Check that plot.confint_spm works
 
@@ -128,7 +128,7 @@ test_that("plot.confint_spm works, user plot args, disjoint", {
 
 # ================================== kgaps ===================================
 
-context("confint.kgaps")
+#context("confint.kgaps")
 
 u <- quantile(newlyn, probs = 0.90)
 

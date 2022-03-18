@@ -1,4 +1,4 @@
-context("choose_uk")
+#context("choose_uk")
 
 # Check that calling choose_uk() with vector arguments u and k gives
 # the same results as calling kgaps repeatedly with scalar arguments

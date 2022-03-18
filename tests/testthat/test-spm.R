@@ -1,4 +1,4 @@
-context("spm_R_quick vs spm_check vs spm")
+#context("spm_R_quick vs spm_check vs spm")
 
 # Use only a subset of the newlyn data, for speed.
 # With b = 180 there are only two sets of disjoint block maxima
@@ -113,7 +113,7 @@ for (i in 1:4){
 
 ###############################################################################
 
-context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
+#context("spm: equivalence of BB2018 when bias_adjust = ''BB1'' and ''N''")
 
 b <- 180
 resBB1 <- spm_R_quick(test_data, b = b, bias_adjust = "BB1")
@@ -126,7 +126,7 @@ test_that(paste("BB1 vs N, b is OK"), {
 
 # ============================ summary.spm ====================================
 
-context("summary.spm")
+#context("summary.spm")
 
 theta <- spm(newlyn, 20)
 res <- summary(theta)

@@ -1,4 +1,4 @@
-context("log0const")
+#context("log0const")
 
 # Test that log0const(), a quick but less transparent version of
 # log0const_slow() gives the correct answers
@@ -13,7 +13,7 @@ test_that("log0const slow = log0const fast", {
   testthat::expect_equal(test1, test2)
 })
 
-context("Empirical c.d.f.")
+#context("Empirical c.d.f.")
 
 x <- newlyn
 temp <- disjoint_maxima(newlyn)

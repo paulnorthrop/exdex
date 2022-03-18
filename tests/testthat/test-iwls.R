@@ -1,4 +1,4 @@
-context("iwls")
+#context("iwls")
 
 # Check that iwls() works (on the newlyn data) over a range of thresholds
 

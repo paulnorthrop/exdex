@@ -4,7 +4,7 @@
 
 my_tol <- 1e-10
 
-context("disjoint_maxima")
+#context("disjoint_maxima")
 
 x <- 1:9
 index <- c(3, 6, 9)
@@ -44,7 +44,7 @@ test_that("x = 1:11, b = 3, all_disjoint_maxima input values", {
   testthat::expect_equal(temp$x_mat[, 1], temp2$x, tol = my_tol)
 })
 
-context("sliding_maxima")
+#context("sliding_maxima")
 
 # all_maxima() vs truth and all_maxima() vs sliding_maxima()
 
@@ -101,7 +101,7 @@ test_that("x = 1:11, b = 3, all_maxima, which_dj = first, input values", {
 })
 
 
-context("all_maxima, newlyn")
+#context("all_maxima, newlyn")
 
 # Check that the function all_maxima() gives the same results as the
 # functions all_disjoint_maxima(), disjoint_maxima() and sliding_maxima(),

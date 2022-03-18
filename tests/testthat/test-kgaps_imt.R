@@ -1,4 +1,4 @@
-context("kgaps_imt")
+#context("kgaps_imt")
 
 # Check that calling kgaps_imt() with vector arguments u and k gives
 # the same results as calling kgaps_imt() repeatedly with scalar arguments

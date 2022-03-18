@@ -117,6 +117,7 @@ A list of class c("confint_spm", "exdex") containing the
     \code{object$theta_sl} if \code{maxima = "sliding"},
     \code{object$theta_dj} if \code{maxima = "disjoint"},
     which provides a check that the results are correct.}
+  \item{level}{The input \code{level}.}
 }
 \description{
 \code{confint} method for objects of class \code{c("spm", "exdex")}.

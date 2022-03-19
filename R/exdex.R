@@ -81,6 +81,8 @@ NULL
 #' analysed in Reich and Shaby (2016).
 #' @format A 774 by 10 numeric matrix.  Column i contains the hourly maximum
 #'   wind gusts from Cheeseboro in the year 2000 + i - 1.
+#' @note There are a total of 42 missing values, located in 6 of the 10 years,
+#'   namely 2000-2003 and 2005-2006.
 #' @source The Remote Automated Weather Stations USA Climate Archive at
 #'   \url{https://raws.dri.edu/}, more specifically the Daily Summaries of the
 #'   \href{https://raws.dri.edu/cgi-bin/rawMAIN.pl?caCCHB}{Cheeseboro page}.

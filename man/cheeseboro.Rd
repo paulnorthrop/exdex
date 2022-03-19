@@ -22,6 +22,10 @@ the Cheeseboro weather station near Thousand Oaks, Southern California, USA
 during the month of January over the period 2000-2009. These data are
 analysed in Reich and Shaby (2016).
 }
+\note{
+There are a total of 42 missing values, located in 6 of the 10 years,
+  namely 2000-2003 and 2005-2006.
+}
 \references{
 Reich, B. J. and Shaby, B. A. (2016). 'Time series of Extremes',
 in Dey, D. K. and Yan, J. (eds.) Extreme Value Modeling and Risk Analysis.

@@ -1,0 +1,14 @@
+#context("summary.kgaps")
+
+# Check that summary.kgaps() returns the correct values
+
+### S&P 500 index
+u <- quantile(sp500, probs = 0.60)
+theta <- kgaps(sp500, u)
+res1 <- signif(c(theta$theta, theta$se),
+               digits = max(3, getOption("digits") - 3L))
+res2 <- summary(theta)$matrix
+
+test_that("Fitted object and summary() agree", {
+  testthat::expect_equivalent(res1, res2)
+})

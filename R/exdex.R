@@ -72,3 +72,19 @@ NULL
 #'   log return.
 #' @source Yahoo finance \url{https://finance.yahoo.com/quote/^SPX/history/}
 "sp500"
+
+#' Cheeseboro hourly maximum wind gusts
+#'
+#' The matrix \code{cheeseboro} contains hourly maximum wind gusts recorded at
+#' the Cheeseboro weather station near Thousand Oaks, Southern California, USA
+#' during the month of January over the period 2000-2009. These data are
+#' analysed in Reich and Shaby (2016).
+#' @format A 774 by 10 numeric matrix.  Column i contains the hourly maximum
+#'   wind gusts from Cheeseboro in the year 2000 + i - 1.
+#' @source The Remote Automated Weather Stations USA Climate Archive at
+#'   \url{https://raws.dri.edu/}, more specifically the Daily Summaries of the
+#'   \href{https://raws.dri.edu/cgi-bin/rawMAIN.pl?caCCHB}{Cheeseboro page}.
+#' @references Reich, B. J. and Shaby, B. A. (2016). 'Time series of Extremes',
+#' in Dey, D. K. and Yan, J. (eds.) Extreme Value Modeling and Risk Analysis.
+#' New York: Chapman and Hall/CRC, pp. 131-151.
+"cheeseboro"

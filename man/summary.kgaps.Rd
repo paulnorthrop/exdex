@@ -17,7 +17,7 @@
 }
 \value{
 Returns a list containing the list element \code{object$call}
-  and a numeric matrix \code{summary} giving the Estimate of the extremal
+  and a numeric matrix \code{summary} giving the estimate of the extremal
   index \eqn{\theta} and the estimated standard error (Std. Error).
 }
 \description{

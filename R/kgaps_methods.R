@@ -98,7 +98,7 @@ print.kgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 #'   \code{\link[base:Round]{signif}}.
 #' @param ... Additional arguments.  None are used in this function.
 #' @return Returns a list containing the list element \code{object$call}
-#'   and a numeric matrix \code{summary} giving the Estimate of the extremal
+#'   and a numeric matrix \code{summary} giving the estimate of the extremal
 #'   index \eqn{\theta} and the estimated standard error (Std. Error).
 #' @seealso \code{\link{kgaps}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.

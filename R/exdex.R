@@ -79,8 +79,11 @@ NULL
 #' the Cheeseboro weather station near Thousand Oaks, Southern California, USA
 #' during the month of January over the period 2000-2009. These data are
 #' analysed in Reich and Shaby (2016).
-#' @format A 774 by 10 numeric matrix.  Column i contains the hourly maximum
-#'   wind gusts from Cheeseboro in the year 2000 + i - 1.
+#' @format A 774 by 10 numeric matrix.  Column \code{i} contains the hourly
+#'   maximum wind gusts from Cheeseboro in the year 2000 + \code{i} - 1.
+#'   The columns are named 2000, 2001, ..., 2009 and the rows are named
+#'   day\code{j}hour\code{k}, where \code{j} is the day of the month and
+#'   \code{k} the hour of the day.
 #' @note There are a total of 42 missing values, located in 6 of the 10 years,
 #'   namely 2000-2003 and 2005-2006.
 #' @source The Remote Automated Weather Stations USA Climate Archive at

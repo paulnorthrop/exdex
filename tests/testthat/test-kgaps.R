@@ -17,6 +17,9 @@ test_that("Fitted object and summary() agree", {
 
 theta2 <- kgaps(as.matrix(sp500), u)
 
+theta$call <- NULL
+theta2$call <- NULL
+
 test_that("kgaps: vector data vs matrix data", {
   testthat::expect_equivalent(theta, theta2)
 })

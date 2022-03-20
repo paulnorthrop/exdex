@@ -6,7 +6,11 @@
 #' based on the \eqn{K}-gaps model for threshold inter-exceedances times of
 #' Suveges and Davison (2010).
 #'
-#' @param data A numeric vector of raw data.  No missing values are allowed.
+#' @param data A numeric vector or numeric matrix of raw data.  If \code{data}
+#'   is a matrix then the log-likelihood is constructed as the sum of
+#'   (independent) contributions from different columns. A common situation is
+#'   where each column relates to a different year.
+#'   No missing values are allowed.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger
@@ -83,8 +87,10 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
   if (!is.numeric(k) || length(k) != 1) {
     stop("k must be a numeric scalar")
   }
-  # Calculate sufficient statistics
-  ss <- kgaps_stat(data, u, k, inc_cens)
+  # Calculate sufficient statistics for each column in data and then sum
+  stats_list <- apply(as.matrix(data), 2, kgaps_stat, u = u, k = k,
+                      inc_cens = inc_cens)
+  ss <- Reduce(f = function(...) Map("+", ...), stats_list)
   # If N0 = 0 then all exceedances occur singly (all K-gaps are positive)
   # and the likelihood is maximized at theta = 1.
   N0 <- ss$N0

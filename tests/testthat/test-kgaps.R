@@ -12,3 +12,11 @@ res2 <- summary(theta)$matrix
 test_that("Fitted object and summary() agree", {
   testthat::expect_equivalent(res1, res2)
 })
+
+# Check that kgaps() gives the same output for vector and matrix data input
+
+theta2 <- kgaps(as.matrix(sp500), u)
+
+test_that("kgaps: vector data vs matrix data", {
+  testthat::expect_equivalent(theta, theta2)
+})

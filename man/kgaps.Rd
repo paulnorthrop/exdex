@@ -8,10 +8,11 @@ kgaps(data, u, k = 1, inc_cens = FALSE)
 }
 \arguments{
 \item{data}{A numeric vector or numeric matrix of raw data.  If \code{data}
-is a matrix then the log-likelihood is constructed as the sum of
-(independent) contributions from different columns. A common situation is
-where each column relates to a different year.
-No missing values are allowed.}
+  is a matrix then the log-likelihood is constructed as the sum of
+  (independent) contributions from different columns. A common situation is
+  where each column relates to a different year.
+
+  If \code{data} contains missing values then ...}
 
 \item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 
@@ -66,6 +67,12 @@ summary(theta)
 
 u <- quantile(newlyn, probs = 0.60)
 theta <- kgaps(newlyn, u, k = 2)
+theta
+summary(theta)
+
+### Cheeseboro wind gusts
+
+theta <- kgaps(cheeseboro, 45, k = 2)
 theta
 summary(theta)
 }

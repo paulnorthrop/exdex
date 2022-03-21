@@ -10,7 +10,8 @@
 #'   is a matrix then the log-likelihood is constructed as the sum of
 #'   (independent) contributions from different columns. A common situation is
 #'   where each column relates to a different year.
-#'   No missing values are allowed.
+#'
+#'   If \code{data} contains missing values then ...
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger
@@ -75,17 +76,28 @@
 #' theta <- kgaps(newlyn, u, k = 2)
 #' theta
 #' summary(theta)
+#'
+#' ### Cheeseboro wind gusts
+#'
+#' theta <- kgaps(cheeseboro, 45, k = 2)
+#' theta
+#' summary(theta)
 #' @export
 kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
   Call <- match.call(expand.dots = TRUE)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
   }
-  if (u >= max(data)) {
+  if (u >= max(data, na.rm = TRUE)) {
     stop("u must be less than max(data)")
   }
   if (!is.numeric(k) || length(k) != 1) {
     stop("k must be a numeric scalar")
+  }
+  # If there are missing values then use split_by_NAs to extract sequences
+  # of non-missing values
+  if (anyNA(data)) {
+    data <- split_by_NAs(data)
   }
   # Calculate sufficient statistics for each column in data and then sum
   stats_list <- apply(as.matrix(data), 2, kgaps_stat, u = u, k = k,
@@ -190,14 +202,9 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 #' kgaps_stat(newlyn, u)
 #' @export
 kgaps_stat <- function(data, u, k = 1, inc_cens = FALSE) {
-  if (any(is.na(data))) {
-    stop("No missing values are allowed in ''data''")
-  }
+  data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
-  }
-  if (u >= max(data)) {
-    stop("u must be less than max(data)")
   }
   if (!is.numeric(k) || length(k) != 1) {
     stop("k must be a numeric scalar")

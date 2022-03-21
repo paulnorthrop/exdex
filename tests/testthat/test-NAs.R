@@ -56,4 +56,47 @@ test_that("split_by_NAs is correct, example 2", {
   testthat::expect_equal(newx2, res2)
 })
 
+### Basic checks for the cheeseboro data
 
+# By hand: the number of sequences of NAs for each year
+# 2000: 5
+# 2001: 4
+# 2002: 10
+# 2003: 5
+# 2004: 1
+# 2005: 2
+# 2006: 2
+# 2007: 1
+# 2008: 1
+# 2009: 1
+# total: 32
+
+res1 <- split_by_NAs(cheeseboro[, 1])
+res2 <- split_by_NAs(cheeseboro[, 2])
+res3 <- split_by_NAs(cheeseboro[, 3])
+res4 <- split_by_NAs(cheeseboro[, 4])
+res5 <- split_by_NAs(cheeseboro[, 5])
+res6 <- split_by_NAs(cheeseboro[, 6])
+res7 <- split_by_NAs(cheeseboro[, 7])
+res8 <- split_by_NAs(cheeseboro[, 8])
+res9 <- split_by_NAs(cheeseboro[, 9])
+res10 <- split_by_NAs(cheeseboro[, 10])
+restotal <- split_by_NAs(cheeseboro)
+
+byhand <- c(5, 4, 10, 5, 1, 2, 2, 1, 1, 1, 32)
+res <- c(ncol(res1), ncol(res2), ncol(res3), ncol(res4), ncol(res5),
+         ncol(res6), ncol(res7), ncol(res8), ncol(res9), ncol(res10),
+         ncol(restotal))
+
+test_that("split_by_NAs is correct, cheeseboro", {
+  testthat::expect_equal(byhand, res)
+})
+
+# Check that the number of non-missing values has been preserved
+
+no_NA1 <- sum(!is.na(cheeseboro))
+no_NA2 <- sum(!is.na(restotal))
+
+test_that("split_by_NAs is correct, cheeseboro non-missings", {
+  testthat::expect_equal(no_NA1, no_NA2)
+})

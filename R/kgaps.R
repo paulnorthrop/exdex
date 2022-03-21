@@ -213,7 +213,6 @@ kgaps_stat <- function(data, u, k = 1, inc_cens = FALSE) {
   nx <- length(data)
   exc_u <- (1:nx)[data > u]
   N_u <- length(exc_u)
-#  q_u <- (N_u - 1) / nx # mev
   q_u <- N_u / nx
   # Inter-exceedances times and K-gaps
   T_u <- diff(exc_u)

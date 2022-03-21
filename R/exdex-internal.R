@@ -643,7 +643,7 @@ kgaps_quad_solve <- function(N0, N1, sum_qs) {
 #' @keywords internal
 #' @rdname exdex-internal
 split_by_NAs <- function(x) {
-  #  If a is not a matrix then make it a matrix
+  #  If x is not a matrix then make it a matrix
   if (!is.matrix(x)) {
     x <- as.matrix(x)
   }

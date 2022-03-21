@@ -678,6 +678,7 @@ split_by_NAs <- function(x) {
     c(x[from[i]:to[i], column[i]], rep(NA, na_fill))
   }
   newx <- sapply(1:n_seq, newx_fn, from = from, to = to, column = column)
+  dimnames(newx) <- NULL
   return(newx)
 }
 

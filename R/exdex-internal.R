@@ -643,17 +643,25 @@ kgaps_quad_solve <- function(N0, N1, sum_qs) {
 #' @keywords internal
 #' @rdname exdex-internal
 split_by_NAs <- function(x) {
-  #  temp <- rle(is.na(x))
+  #  If a is not a matrix then make it a matrix
+  if (!is.matrix(x)) {
+    x <- as.matrix(x)
+  }
   # temp is a list of lists, one entry in main list for each column in x
   # temp[[i]]$lengths: lengths of successive sequences of NAs and non-NAs
   # temp[[i]]$values: a FALSE indicates a non-NA component in temp$lengths
   temp <- apply(!is.na(x), 2, rle)
   # A vector of the columns in which each sequence lives in x
   column <- rep(1:ncol(x), sapply(temp, function(x) sum(x$values)))
-  # Find the length max_leng of the longest sequence of non-missing values
-  max_leng <- Reduce(f = function(...) Map(max, ...), temp)$lengths
-  # Find the total number of sequences of non-missing values
-  n_seq <- Reduce(f = function(...) Map(sum, ...), temp)$values
+  if (length(temp) == 1) {
+    max_leng <- max(temp[[1]]$lengths)
+    n_seq <- sum(temp[[1]]$values)
+  } else {
+    # Find the length max_leng of the longest sequence of non-missing values
+    max_leng <- Reduce(f = function(...) Map(max, ...), temp)$lengths
+    # Find the total number of sequences of non-missing values
+    n_seq <- Reduce(f = function(...) Map(sum, ...), temp)$values
+  }
   # Create vectors, from and to, containing the starting and ending rows for
   # each sequence, so that sequence i is x[from[i]:to[i], column[i]]
   from_fn <- function(x) {

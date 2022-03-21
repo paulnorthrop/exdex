@@ -1,0 +1,59 @@
+#context("Splitting by NAs")
+
+# Check that splitting a matrix into non missing sequences by column gives
+# the correct results
+
+### Example 1
+
+# Create a simple matrix
+x <- matrix(1:50, 10, 5)
+x[3, 1] <- NA
+x[8, 1] <- NA
+x[1:2, 3] <- NA
+x[5, 3] <- NA
+x[10, 3] <- NA
+x[1:3, 4] <- NA
+x[7:10, 5] <- NA
+
+# Find newx by hand
+newx <- matrix(NA, nrow = 10, ncol = 8)
+newx[1:2, 1] <- 1:2
+newx[1:4, 2] <- 4:7
+newx[1:2, 3] <- 9:10
+newx[, 4] <- 11:20
+newx[1:2, 5] <- 23:24
+newx[1:4, 6] <- 26:29
+newx[1:7, 7] <- 34:40
+newx[1:6, 8] <- 41:46
+
+res <- split_by_NAs(x)
+
+test_that("split_by_NAs is correct, example 1", {
+  testthat::expect_equal(newx, res)
+})
+
+### Example 2
+
+# Create a simple matrix
+x2 <- matrix(1:27, 9, 3)
+x2[1:2, 1] <- NA
+x2[9, 1] <- NA
+x2[1, 2] <- NA
+x2[8:9, 2] <- NA
+x2[1, 3] <- NA
+x2[4, 3] <- NA
+
+# Find newx by hand
+newx2 <- matrix(NA, nrow = 6, ncol = 4)
+newx2[1:6, 1] <- 3:8
+newx2[1:6, 2] <- 11:16
+newx2[1:2, 3] <- 20:21
+newx2[1:5, 4] <- 23:27
+
+res2 <- split_by_NAs(x)
+
+test_that("split_by_NAs is correct, example 2", {
+  testthat::expect_equal(newx2, res2)
+})
+
+

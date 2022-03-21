@@ -50,7 +50,7 @@ newx2[1:6, 2] <- 11:16
 newx2[1:2, 3] <- 20:21
 newx2[1:5, 4] <- 23:27
 
-res2 <- split_by_NAs(x)
+res2 <- split_by_NAs(x2)
 
 test_that("split_by_NAs is correct, example 2", {
   testthat::expect_equal(newx2, res2)

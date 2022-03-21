@@ -18,6 +18,7 @@
 \alias{kgaps_loglik}
 \alias{kgaps_conf_int}
 \alias{kgaps_quad_solve}
+\alias{split_by_NAs}
 \alias{iwls_fun}
 \title{Internal exdex functions}
 \usage{
@@ -67,6 +68,8 @@ kgaps_loglik(theta, N0, N1, sum_qs, n_kgaps)
 kgaps_conf_int(theta_mle, ss, conf = 95)
 
 kgaps_quad_solve(N0, N1, sum_qs)
+
+split_by_NAs(x)
 
 iwls_fun(n_wls, N, S_1_sort, exp_qs, ws, nx)
 }

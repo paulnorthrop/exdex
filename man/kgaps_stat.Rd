@@ -7,7 +7,7 @@
 kgaps_stat(data, u, k = 1, inc_cens = FALSE)
 }
 \arguments{
-\item{data}{A numeric vector of raw data.  No missing values are allowed.}
+\item{data}{A numeric vector of raw data.}
 
 \item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 

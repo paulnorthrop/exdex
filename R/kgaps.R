@@ -140,7 +140,7 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 #' Calculates sufficient statistics for the \eqn{K}-gaps model for the extremal
 #' index \eqn{\theta}.
 #'
-#' @param data A numeric vector of raw data.  No missing values are allowed.
+#' @param data A numeric vector of raw data.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger

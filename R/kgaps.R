@@ -168,7 +168,8 @@ kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
 #'    Specifically, \eqn{N_1} is equal to the number of
 #'    \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)}
 #'    that are positive plus \eqn{(I_0 + I_N) / 2}, where \eqn{I_0 = 1} if
-#'    \eqn{S_0} is greater than zero and similarly for \eqn{I_N}.
+#'    \eqn{S_0} is greater than zero and \eqn{I_0 = 0} otherwise, and similarly
+#'    for \eqn{I_N}.
 #'    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
 #'    differing contributions to the likelihood.
 #'    For full details see Suveges and Davison (2010) and Attalides (2015).

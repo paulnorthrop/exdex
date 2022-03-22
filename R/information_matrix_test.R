@@ -100,8 +100,7 @@ kgaps_imt <- function(data, u, k = 1) {
   if (is.null(names(u))) {
     u_ps <- round(100 * sapply(u, function(x) mean(data < x)))
   } else {
-    u_ps <- as.numeric(substr(names(u), 1, nchar(names(u),
-                                                     type = "c") - 1))
+    u_ps <- as.numeric(substr(names(u), 1, nchar(names(u), type = "c") - 1))
   }
   rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
   res <- list(imt = T_mat, p = p_mat, theta = theta, u = u, k = k)

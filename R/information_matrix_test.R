@@ -83,7 +83,7 @@ kgaps_imt <- function(data, u, k = 1) {
     Dn <- Jn - In
     dc <- ld ^ 2 - neg_ldd
     dcd <- 4 * c_mat / theta_mat ^ 2 + ifelse(c_mat == 0, 0, -4 / theta_mat ^ 3)
-    # Force NA, rather than NA, in cases where thetahat = 0
+    # Force NA, rather than NaN, in cases where thetahat = 0
     dcd[is.nan(dcd)] <- NA
     Dnd <- colMeans(dcd)
     # Multiply the columns of ld by the corresponding elements of Dnd / In

@@ -6,10 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Estimation of the Extremal Index • exdex</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Estimation of the Extremal Index">
 <meta property="og:description" content="Performs frequentist inference for the extremal index of a 
     stationary time series.  Two types of methodology are used.  One type is
@@ -17,19 +18,26 @@
     marginal distribution of series and leads to the semiparametric maxima 
     estimators described in Northrop (2015) &lt;doi:10.1007/s10687-015-0221-5&gt; and 
     Berghaus and Bucher (2018) &lt;doi:10.1214/17-AOS1621&gt;.  Sliding block maxima
-    are used to increase precision of estimation. The other type of methodology
-    uses a model for the distribution of threshold inter-exceedance times
-    (Ferro and Segers (2003) &lt;doi:10.1111/1467-9868.00401&gt;). Two 
-    versions of this type of approach are provided, following Suveges (2007) 
-    &lt;doi:10.1007/s10687-007-0034-2&gt; and Suveges and Davison (2010)  
-    &lt;doi:10.1214/09-AOAS292&gt;.">
-<meta name="twitter:card" content="summary">
+    are used to increase precision of estimation. A graphical block size 
+    diagnostic is provided.  The other type of methodology uses a model for the 
+    distribution of threshold inter-exceedance times (Ferro and Segers (2003) 
+    &lt;doi:10.1111/1467-9868.00401&gt;). Two versions of this type of approach are 
+    provided: the iterated weight least squares approach of Suveges (2007) 
+    &lt;doi:10.1007/s10687-007-0034-2&gt; and the K-gaps model of 
+    Suveges and Davison (2010) &lt;doi:10.1214/09-AOAS292&gt;. For the K-gaps model 
+    the exdex package allows missing values in the data, can accommodate 
+    independent subsets of data, such as monthly or seasonal time series from 
+    different years, and can incorporate information from censored 
+    interexceedance times.  A graphical diagnostic for the threshold level and 
+    the runs parameter K is provided.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -48,12 +56,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -75,8 +77,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/paulnorthrop/exdex">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="http://github.com/paulnorthrop/exdex/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -92,27 +94,28 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="exdex" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#exdex" class="anchor"></a>exdex</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="exdex">exdex<a class="anchor" aria-label="anchor" href="#exdex"></a>
+</h1></div>
 
-<div id="estimation-of-the-extremal-index" class="section level2">
-<h2 class="hasAnchor">
-<a href="#estimation-of-the-extremal-index" class="anchor"></a>Estimation of the Extremal Index</h2>
-<div id="what-does-exdex-do" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-does-exdex-do" class="anchor"></a>What does exdex do?</h3>
+<div class="section level2">
+<h2 id="estimation-of-the-extremal-index">Estimation of the Extremal Index<a class="anchor" aria-label="anchor" href="#estimation-of-the-extremal-index"></a>
+</h2>
+<div class="section level3">
+<h3 id="what-does-exdex-do">What does exdex do?<a class="anchor" aria-label="anchor" href="#what-does-exdex-do"></a>
+</h3>
 <p>The extremal index <em>θ</em> is a measure of the degree of local dependence in the extremes of a stationary process. The <code>exdex</code> package performs frequentist inference about <em>θ</em> using two types of methodology.</p>
-<p>One type (<a href="https://doi.org/10.1007/s10687-015-0221-5">Northrop, 2015</a>) is based on a model that relates the distribution of block maxima to the marginal distribution of the data, leading to a semiparametric maxima estimator. Two versions of this type of estimator are provided, following <a href="https://doi.org/10.1007/s10687-015-0221-5">Northrop, 2015</a> and <a href="https://doi.org/10.1214/17-AOS1621">Berghaus and Bücher, 2018</a>. A slightly modified version of the latter is also provided. Estimates are produced using both disjoint and sliding block maxima, that latter providing greater precision of estimation.</p>
-<p>The other type of methodology uses a model for the distribution of threshold inter-exceedance times (<a href="https://doi.org/10.1111/1467-9868.00401">Ferro and Segers, 2003</a>). Two versions of this type of approach are provided, following <a href="https://doi.org/10.1007/s10687-007-0034-2">Süveges (2007)</a> and <a href="https://doi.org/10.1214/09-AOAS292">Süveges and Davison (2010)</a>.</p>
+<p>One type (<a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">Northrop, 2015</a>) is based on a model that relates the distribution of block maxima to the marginal distribution of the data, leading to a semiparametric maxima estimator. Two versions of this type of estimator are provided, following <a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">Northrop, 2015</a> and <a href="https://doi.org/10.1214/17-AOS1621" class="external-link">Berghaus and Bücher, 2018</a>. A slightly modified version of the latter is also provided. Estimates are produced using both disjoint and sliding block maxima, the latter providing greater precision of estimation. A graphical block size diagnostic is provided.</p>
+<p>The other type of methodology uses a model for the distribution of threshold inter-exceedance times (<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">Ferro and Segers, 2003</a>). Two versions of this type of approach are provided: the iterated weight least squares approach of <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">Süveges (2007)</a> and the <em>K</em>-gaps model of <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">Süveges and Davison (2010)</a>. For the <em>K</em>-gaps model the <code>exdex</code> package allows missing values in the data, can accommodate independent subsets of data, such as monthly or seasonal time series from different years, and can incorporate information from censored interexceedance times. A graphical diagnostic for the threshold level and the runs parameter <em>K</em> is provided.</p>
 </div>
-<div id="a-simple-example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#a-simple-example" class="anchor"></a>A simple example</h3>
-<p>The following code estimates the extremal index using the semiparametric maxima estimators, for an example dataset containing a time series of sea surges measured at Newlyn, Cornwall, UK over the period 1971-1976.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(exdex)
-theta &lt;-<span class="st"> </span><span class="kw"><a href="reference/spm.html">spm</a></span>(newlyn, <span class="dv">20</span>)
-theta
+<div class="section level3">
+<h3 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
+</h3>
+<p>The following code estimates the extremal index using the semiparametric maxima estimators, for an example dataset containing a time series of sea surges measured at Newlyn, Cornwall, UK over the period 1971-1976. The block size of 20 was chosen using a graphical diagnostic provided by <code><a href="reference/choose_b.html">choose_b()</a></code>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/paulnorthrop/exdex" class="external-link">exdex</a></span><span class="op">)</span>
+<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spm.html">spm</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span>
+<span class="va">theta</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; spm(data = newlyn, b = 20)</span>
@@ -121,7 +124,7 @@ theta
 <span class="co">#&gt;           N2015   BB2018  BB2018b</span>
 <span class="co">#&gt; sliding   0.2392  0.3078  0.2578 </span>
 <span class="co">#&gt; disjoint  0.2350  0.3042  0.2542</span>
-<span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(theta)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; spm(data = newlyn, b = 20)</span>
@@ -133,67 +136,95 @@ theta
 <span class="co">#&gt; N2015, disjoint     0.2350    0.02222  0.003726</span>
 <span class="co">#&gt; BB2018, disjoint    0.3042    0.02101  0.003571</span>
 <span class="co">#&gt; BB2018b, disjoint   0.2542    0.02101  0.053570</span></code></pre></div>
+<p>Now we estimate <em>θ</em> using the <em>K</em>-gaps model. The threshold <em>u</em> and runs parameter <em>K</em> were chosen using the graphical diagnostic provided by <code><a href="reference/choose_uk.html">choose_uk()</a></code>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span>
+<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="va">theta</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Estimate of the extremal index theta:</span>
+<span class="co">#&gt; [1]  0.1758</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       Estimate Std. Error</span>
+<span class="co">#&gt; theta   0.1758   0.009211</span></code></pre></div>
 </div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
 <p>To get the current released version from CRAN:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"exdex"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"exdex"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="vignette" class="section level3">
-<h3 class="hasAnchor">
-<a href="#vignette" class="anchor"></a>Vignette</h3>
+<div class="section level3">
+<h3 id="vignette">Vignette<a class="anchor" aria-label="anchor" href="#vignette"></a>
+</h3>
 <p>See <code><a href="articles/exdex-vignette.html">vignette("exdex-vignette", package = "exdex")</a></code> for an overview of the package.</p>
 </div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=exdex">https://​cloud.r-project.org/​package=exdex</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/paulnorthrop/exdex">https://​github.com/​paulnorthrop/​exdex</a>
-</li>
-<li>Report a bug at <br><a href="http://github.com/paulnorthrop/exdex/issues">http://​github.com/​paulnorthrop/​exdex/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=exdex" class="external-link">View on CRAN</a></li>
+<li><a href="http://github.com/paulnorthrop/exdex/" class="external-link">Browse source code</a></li>
+<li><a href="http://github.com/paulnorthrop/exdex/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing exdex</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Paul J. Northrop <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
 <li>Constantinos Christodoulides <br><small class="roles"> Author, copyright holder </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/paulnorthrop/exdex"><img src="https://travis-ci.org/paulnorthrop/exdex.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/paulnorthrop/exdex"><img src="https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/github/paulnorthrop/exdex?branch=master"><img src="https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master" alt="Coverage Status"></a></li>
-<li><a href="https://cran.r-project.org/package=exdex"><img src="https://www.r-pkg.org/badges/version/exdex" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://ci.appveyor.com/project/paulnorthrop/exdex" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://codecov.io/github/paulnorthrop/exdex?branch=master" class="external-link"><img src="https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://www.r-pkg.org/badges/version/exdex" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Paul J. Northrop, Constantinos Christodoulides.</p>
+  <p></p>
+<p>Developed by Paul J. Northrop, Constantinos Christodoulides.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -201,6 +232,8 @@ theta
 
   
 
+
+  
 
   </body>
 </html>

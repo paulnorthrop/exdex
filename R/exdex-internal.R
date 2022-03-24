@@ -639,49 +639,6 @@ kgaps_quad_solve <- function(N0, N1, sum_qs) {
   return(theta_mle)
 }
 
-# ================================ split_by_NAs ============================= #
-#' @keywords internal
-#' @rdname exdex-internal
-split_by_NAs <- function(x) {
-  #  If x is not a matrix then make it a matrix
-  if (!is.matrix(x)) {
-    x <- as.matrix(x)
-  }
-  # temp is a list of lists, one entry in main list for each column in x
-  # temp[[i]]$lengths: lengths of successive sequences of NAs and non-NAs
-  # temp[[i]]$values: a FALSE indicates a non-NA component in temp$lengths
-  temp <- apply(!is.na(x), 2, rle)
-  # A vector of the columns in which each sequence lives in x
-  column <- rep(1:ncol(x), sapply(temp, function(x) sum(x$values)))
-  if (length(temp) == 1) {
-    max_leng <- max(temp[[1]]$lengths)
-    n_seq <- sum(temp[[1]]$values)
-  } else {
-    # Find the length max_leng of the longest sequence of non-missing values
-    max_leng <- Reduce(f = function(...) Map(max, ...), temp)$lengths
-    # Find the total number of sequences of non-missing values
-    n_seq <- Reduce(f = function(...) Map(sum, ...), temp)$values
-  }
-  # Create vectors, from and to, containing the starting and ending rows for
-  # each sequence, so that sequence i is x[from[i]:to[i], column[i]]
-  from_fn <- function(x) {
-    return((cumsum(x$lengths) - x$lengths + 1)[x$values])
-  }
-  to_fn <- function(x) {
-    return(cumsum(x$lengths)[x$values])
-  }
-  from <- unlist(sapply(temp, from_fn), use.names = FALSE)
-  to <- unlist(sapply(temp, to_fn), use.names = FALSE)
-  # Create the new matrix of data, filling columns with NAs if necessary
-  newx_fn <- function(i, from, to, column) {
-    na_fill <- max_leng - (to[i] - from[i] + 1)
-    c(x[from[i]:to[i], column[i]], rep(NA, na_fill))
-  }
-  newx <- sapply(1:n_seq, newx_fn, from = from, to = to, column = column)
-  dimnames(newx) <- NULL
-  return(newx)
-}
-
 # =============================== kgaps_imt_old ============================= #
 # Retained to check the new version of kgaps_imt()
 #' @keywords internal
@@ -743,7 +700,6 @@ kgaps_imt_old <- function(data, u, k = 1) {
   } else {
     u_ps <- as.numeric(substr(names(u), 1, nchar(names(u), type = "c") - 1))
   }
-  print(c(In, Jn, Dn, Dnd, Vn, T_mat))
   rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
   res <- list(imt = T_mat, p = p_mat, theta = theta, u = u, k = k)
   class(res) <- c("kgaps_imt", "exdex")

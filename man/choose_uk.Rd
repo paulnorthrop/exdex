@@ -11,9 +11,12 @@ choose_uk(data, u, k = 1)
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
 \item{u, k}{Numeric vectors.  \code{u} is a vector of
-extreme value thresholds applied to data.  \code{k} is a vector of values
-of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
-See \code{\link{kgaps}} for more details.}
+  extreme value thresholds applied to data.  \code{k} is a vector of values
+  of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
+  See \code{\link{kgaps}} for more details.
+
+  Any values in \code{u} that are greater than all the observations in
+  \code{data} will be removed without a warning being given.}
 }
 \value{
 An object (a list) of class \code{c("choose_uk", "exdex")}

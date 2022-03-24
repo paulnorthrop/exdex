@@ -12,6 +12,9 @@
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
+#'
+#'   Any values in \code{u} that are greater than all the observations in
+#'   \code{data} will be removed without a warning being given.
 #' @details For each combination of threshold in \code{u} and \eqn{K}
 #'   in \code{k} the functions \code{\link{kgaps}} and \code{\link{kgaps_imt}}
 #'   are called in order to estimate \eqn{\theta} and to perform the
@@ -62,6 +65,9 @@
 #' plot(imt_theta, uprob = TRUE)
 #' @export
 choose_uk <- function(data, u, k = 1) {
+  # Remove any thresholds that are greater than all the observations
+  u_ok <- vapply(u, function(u) any(data > u), TRUE)
+  u <- u[u_ok]
   n_u <- length(u)
   n_k <- length(k)
   theta <- matrix(rep(list(), n_u * n_k), n_k, n_u)

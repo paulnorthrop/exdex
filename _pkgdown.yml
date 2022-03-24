@@ -34,8 +34,13 @@ reference:
   - title: Example data
     desc: ~
     contents:
+      - "cheeseboro"
       - "newlyn"
       - "sp500"
+  - title: Data manipulation
+    desc: ~
+    contents:
+      - "split_by_NAs"
   - title: Generics
     desc: ~
     contents:

@@ -33,13 +33,13 @@ threshold inter-exceedance times ([Ferro and Segers,
 2003](https://doi.org/10.1111/1467-9868.00401)). Two versions of this
 type of approach are provided: the iterated weight least squares
 approach of [Süveges (2007)](https://doi.org/10.1007/s10687-007-0034-2)
-and the K-gaps model of [Süveges and Davison
-(2010)](https://doi.org/10.1214/09-AOAS292). For the K-gaps model the
+and the *K*-gaps model of [Süveges and Davison
+(2010)](https://doi.org/10.1214/09-AOAS292). For the *K*-gaps model the
 `exdex` package allows missing values in the data, can accommodate
 independent subsets of data, such as monthly or seasonal time series
 from different years, and can incorporate information from censored
 interexceedance times. A graphical diagnostic for the threshold level
-and the runs parameter K is provided.
+and the runs parameter *K* is provided.
 
 ### A simple example
 

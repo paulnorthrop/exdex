@@ -103,11 +103,22 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = FALSE) {
     Vn <- sum((sc$dj - Dnd * sc$ldj / In) ^ 2) / nkgaps
     Tn <- nkgaps * Dn ^ 2 / Vn
     pvalue <- stats::pchisq(Tn, df = 1, lower.tail = FALSE)
-    return(c(Tn, pvalue))
-#    return(list(imt = Tn, p = pvalue))
+    return(c(imt = Tn, p = pvalue, theta = theta))
   }
   uk <- expand.grid(u = u, k = k)
-  res <- mapply(imt_by_uk, u = uk$u, k = uk$k, SIMPLIFY = FALSE)
+  res <- mapply(imt_by_uk, u = uk$u, k = uk$k)
+  imt <- matrix(res[1, ], nrow = length(u), ncol = length(k), byrow = FALSE)
+  p <- matrix(res[2, ], nrow = length(u), ncol = length(k), byrow = FALSE)
+  theta <- matrix(res[3, ], nrow = length(u), ncol = length(k), byrow = FALSE)
+  colnames(imt) <- colnames(p) <- colnames(theta) <- k
+  if (is.null(names(u))) {
+    u_ps <- round(100 * sapply(u, function(x) mean(data < x)))
+  } else {
+    u_ps <- as.numeric(substr(names(u), 1, nchar(names(u), type = "c") - 1))
+  }
+  rownames(imt) <- rownames(p) <- rownames(theta) <- u_ps
+  res <- list(imt = imt, p = p, theta = theta, u = u, k = k)
+  class(res) <- c("kgaps_imt", "exdex")
   return(res)
 }
 
@@ -218,12 +229,17 @@ imt_stat <- function(data, theta, u, k = 1, inc_cens = FALSE) {
     mDdj2 <- c(mDdj2, rep_len(0, 2))
   }
   # Calculate the statistics in the IMT
-  #
+  # An estimate theta = 1 occurs if all the K-gaps are positive (qS > 0):
+  # in this case we never attempt to divide by 0.
+  # An estimate theta = 0 occurs only if all the K-gaps are zero (qS = 0):
+  # in this case we divide by zero in calculating Ddj.
+  # If this happens then we convert the NaN to NA.
   ldj <- ifelse(qS == 0, -1 / (1 - theta), mldj / theta) - qS
   Ij  <- ifelse(qS == 0, 1 / (1 - theta) ^ 2, mIj / theta ^ 2)
   Jj <- ldj ^ 2
   dj <- Jj - Ij
   Ddj <- mDdj1 * qS / theta ^ 2 - ifelse(qS == 0, 0, mDdj2 / theta ^ 3)
+  Ddj[is.nan(Ddj)] <- NA
   return(list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
               n_kgaps = n_kgaps))
 }

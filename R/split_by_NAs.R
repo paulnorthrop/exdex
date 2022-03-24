@@ -17,6 +17,10 @@
 #'   values in \code{x} and will therefore be at most \code{nrow{x}}.  The
 #'   matrix is padded with \code{NA} values at the end of each column, where
 #'   necessary.
+#'
+#'   The returned object has an attribute called \code{split_by_NAs_done}
+#'   whose value is \code{TRUE}, so that in programming one can avoid calling
+#'   \code{split_by_NAs} more than once.
 #' @examples
 #' # Create a simple numeric matrix and insert some NAs
 #' x <- matrix(1:50, 10, 5)
@@ -77,5 +81,6 @@ split_by_NAs <- function(x) {
   newx <- sapply(X = 1:n_seq, FUN = newx_fn, from = from, to = to,
                  column = column)
   dimnames(newx) <- NULL
+  attr(newx, "split_by_NAs_done") <- TRUE
   return(newx)
 }

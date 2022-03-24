@@ -15,6 +15,10 @@ A matrix containing a column for each run of non-missing values in
   values in \code{x} and will therefore be at most \code{nrow{x}}.  The
   matrix is padded with \code{NA} values at the end of each column, where
   necessary.
+
+  The returned object has an attribute called \code{split_by_NAs_done}
+  whose value is \code{TRUE}, so that in programming one can avoid calling
+  \code{split_by_NAs} more than once.
 }
 \description{
 Splits the values in a numeric matrix column-wise into sequences of

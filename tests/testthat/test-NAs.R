@@ -1,5 +1,15 @@
 #context("Splitting by NAs")
 
+# Check that if there are no missing values then the matrix is not modified
+
+# Create a simple matrix
+x <- matrix(1:50, 10, 5)
+res <- split_by_NAs(x)
+
+test_that("A matrix with no missings is not modified", {
+  testthat::expect_equal(x, res)
+})
+
 # Check that splitting a matrix into non missing sequences by column gives
 # the correct results
 

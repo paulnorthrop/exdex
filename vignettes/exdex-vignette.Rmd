@@ -10,6 +10,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: exdex.bib
+csl: taylor-and-francis-chicago-author-date.csl
 ---
 
 ```{r, include = FALSE}
@@ -125,6 +126,31 @@ plot(imt_theta, uprob = TRUE, alpha = 0.05)
 ```
 
 Large values of the IMT statistic suggest a poor choice of $(u, K)$.  Diagnostic plots like this are never clear cut but the fact that for $K = 1$ the IMT statistics drops below the critical value at around the sample 60\% quantile suggests the combination of $u$ and $K$ that we used above.
+
+#### Multiple time series and missing values
+
+The `cheeseboro` dataset contains hourly maximum wind gusts recorded at the Cheeseboro weather station near Thousand Oaks, Southern California, USA during the month of January over the period 2000-2009. Therefore, these data contain 10 time series that we shall consider to be approximately independent of each other. These data also contain several missing values. 
+
+```{r}
+summary(cheeseboro)
+```
+
+Inside `kgaps()` these data are divided further into sequences of non-missing values with each sequence stored in a separate column of a matrix.  The $K$-gaps log-likelihood is constructed as a sum of contributions from columns.  
+
+```{r, fig.width=7, fig.height= 6}
+probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
+imt_theta <- choose_uk(cheeseboro, u, k = 1:10)
+plot(imt_theta, uprob = FALSE, lwd = 2)
+```
+
+For these data the diagnostic graphic for choosing $(u, K)$ is perhaps less clear than for the `sp500` data.  As an example, we use $u = 45$ mph and $K = 3$ below.
+
+```{r}
+theta <- kgaps(cheeseboro, 45, k = 3)
+theta
+summary(theta)
+```
 
 ### Iterated weighted least squares
 

@@ -23,6 +23,10 @@ choose_uk(data, u, k = 1, inc_cens = TRUE)
 
   Any values in \code{u} that are greater than all the observations in
   \code{data} will be removed without a warning being given.}
+
+\item{inc_cens}{A logical scalar indicating whether or not to include
+contributions from censored inter-exceedance times, relating to the
+first and last observations.  See Attalides (2015) for details.}
 }
 \value{
 An object (a list) of class \code{c("choose_uk", "exdex")}
@@ -85,6 +89,10 @@ Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, \emph{The Annals of
   Applied Statistics}, \strong{4}(1), 203-221.
   \url{https://doi.org/10.1214/09-AOAS292}
+
+Attalides, N. (2015) Threshold-based extreme value modelling,
+  PhD thesis, University College London.
+  \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 }
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the

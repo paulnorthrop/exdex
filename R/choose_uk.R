@@ -21,6 +21,9 @@
 #'
 #'   Any values in \code{u} that are greater than all the observations in
 #'   \code{data} will be removed without a warning being given.
+#' @param inc_cens A logical scalar indicating whether or not to include
+#'   contributions from censored inter-exceedance times, relating to the
+#'   first and last observations.  See Attalides (2015) for details.
 #' @details For each combination of threshold in \code{u} and \eqn{K}
 #'   in \code{k} the functions \code{\link{kgaps}} and \code{\link{kgaps_imt}}
 #'   are called in order to estimate \eqn{\theta} and to perform the
@@ -29,6 +32,9 @@
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \url{https://doi.org/10.1214/09-AOAS292}
+#' @references Attalides, N. (2015) Threshold-based extreme value modelling,
+#'   PhD thesis, University College London.
+#'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @return An object (a list) of class \code{c("choose_uk", "exdex")}
 #'   containing
 #'   \item{imt }{an object of class \code{c("kgaps_imt", "exdex")} returned

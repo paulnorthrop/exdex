@@ -15,13 +15,12 @@ reference:
   - title: Inference for the extremal index
     desc: ~
     contents:
-      - "spm"
-      - "confint.spm"
       - "kgaps"
       - "kgaps_stat"
-      - "confint.kgaps"
       - "kgaps_imt"
+      - "imt_stat"
       - "iwls"
+      - "spm"
   - title: Choosing tuning parameters
     desc: ~
     contents:
@@ -47,12 +46,16 @@ reference:
       - "coef.spm"
       - "coef.kgaps"
       - "coef.iwls"
+      - "confint.kgaps"
+      - "confint.spm"
       - "nobs.spm"
       - "nobs.kgaps"
       - "nobs.iwls"
       - "plot.choose_b"
       - "plot.choose_uk"
+      - "plot.confint_kgaps"
       - "plot.confint_spm"
+      - "print.confint_kgaps"
       - "print.confint_spm"
       - "print.spm"
       - "print.kgaps"

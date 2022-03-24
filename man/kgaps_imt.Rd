@@ -16,9 +16,12 @@ kgaps_imt(data, u, k = 1, inc_cens = FALSE)
   used to divide the data into sequences of non-missing values.}
 
 \item{u, k}{Numeric vectors.  \code{u} is a vector of extreme value
-thresholds applied to data.  \code{k} is a vector of values of the run
-parameter \eqn{K}, as defined in Suveges and Davison (2010).
-See \code{\link{kgaps}} for more details.}
+  thresholds applied to data.  \code{k} is a vector of values of the run
+  parameter \eqn{K}, as defined in Suveges and Davison (2010).
+  See \code{\link{kgaps}} for more details.
+
+  Any values in \code{u} that are greater than all the observations in
+  \code{data} will be removed without a warning being given.}
 
 \item{inc_cens}{A logical scalar indicating whether or not to include
 contributions from censored inter-exceedance times, relating to the

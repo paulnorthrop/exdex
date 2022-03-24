@@ -16,6 +16,9 @@
 #'   thresholds applied to data.  \code{k} is a vector of values of the run
 #'   parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
+#'
+#'   Any values in \code{u} that are greater than all the observations in
+#'   \code{data} will be removed without a warning being given.
 #' @param inc_cens A logical scalar indicating whether or not to include
 #'   contributions from censored inter-exceedance times, relating to the
 #'   first and last observations.  See Attalides (2015) for details.
@@ -62,16 +65,9 @@
 #' p <- imt(cheeseboro, 45, k = 2)
 #' @export
 kgaps_imt <- function(data, u, k = 1, inc_cens = FALSE) {
-  Call <- match.call(expand.dots = TRUE)
-#  if (!is.numeric(u) || length(u) != 1) {
-#    stop("u must be a numeric scalar")
-#  }
-#  if (u >= max(data, na.rm = TRUE)) {
-#    stop("u must be less than max(data)")
-#  }
-#  if (!is.numeric(k) || length(k) != 1) {
-#    stop("k must be a numeric scalar")
-#  }
+  # Remove any thresholds that are greater than all the observations
+  u_ok <- vapply(u, function(u) any(data > u), TRUE)
+  u <- u[u_ok]
   # If there are missing values then use split_by_NAs to extract sequences
   # of non-missing values
   if (anyNA(data)) {

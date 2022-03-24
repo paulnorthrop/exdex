@@ -84,6 +84,13 @@
 #' plot(imt_theta, uprob = FALSE, lwd = 2)
 #' @export
 choose_uk <- function(data, u, k = 1, inc_cens = TRUE) {
+  # If there are missing values then use split_by_NAs to extract sequences
+  # of non-missing values
+  if (anyNA(data) && is.null(attr(data, "split_by_NAs_done"))) {
+    data <- split_by_NAs(data)
+  } else if (!is.matrix(data)) {
+    data <- as.matrix(data)
+  }
   # Remove any thresholds that are greater than all the observations
   u_ok <- vapply(u, function(u) any(data > u), TRUE)
   u <- u[u_ok]

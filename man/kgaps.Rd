@@ -73,7 +73,7 @@ summary(theta)
 
 ### Cheeseboro wind gusts
 
-theta <- kgaps(cheeseboro, 45, k = 2)
+theta <- kgaps(cheeseboro, 45, k = 3)
 theta
 summary(theta)
 }

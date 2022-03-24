@@ -80,7 +80,7 @@
 #'
 #' ### Cheeseboro wind gusts
 #'
-#' theta <- kgaps(cheeseboro, 45, k = 2)
+#' theta <- kgaps(cheeseboro, 45, k = 3)
 #' theta
 #' summary(theta)
 #' @export
@@ -97,7 +97,7 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
   }
   # If there are missing values then use split_by_NAs to extract sequences
   # of non-missing values
-  if (anyNA(data)) {
+  if (anyNA(data) && is.null(attr(data, "split_by_NAs_done"))) {
     data <- split_by_NAs(data)
   }
   # Calculate sufficient statistics for each column in data and then sum

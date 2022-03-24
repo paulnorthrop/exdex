@@ -72,7 +72,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
   u <- u[u_ok]
   # If there are missing values then use split_by_NAs to extract sequences
   # of non-missing values
-  if (anyNA(data)) {
+  if (anyNA(data) && is.null(attr(data, "split_by_NAs_done"))) {
     data <- split_by_NAs(data)
   } else if (!is.matrix(data)) {
     data <- as.matrix(data)
@@ -84,7 +84,6 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
       return(c(Tn = NA, pvalue = NA))
     }
     # Estimate theta
-    # (Perhaps we could save some time by avoiding the recalculation of stuff)
     theta <- kgaps(data, u, k)$theta
     # Contributions to the test statistic from each observation, returning a list
     # with a list of (ldj, Ij, Jj, dj, Ddj, n_kgaps)for each column in data

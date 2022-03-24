@@ -7,7 +7,13 @@
 #' run parameter \eqn{K} for the \eqn{K}-gaps estimator (see
 #' \code{\link{kgaps}}).  \code{\link{plot.choose_uk}} creates the plot.
 #'
-#' @param data A numeric vector of raw data.  No missing values are allowed.
+#' @param data A numeric vector or numeric matrix of raw data.  If \code{data}
+#'   is a matrix then the log-likelihood is constructed as the sum of
+#'   (independent) contributions from different columns. A common situation is
+#'   where each column relates to a different year.
+#'
+#'   If \code{data} contains missing values then \code{\link{split_by_NAs}} is
+#'   used to divide the data into sequences of non-missing values.
 #' @param u,k Numeric vectors.  \code{u} is a vector of
 #'   extreme value thresholds applied to data.  \code{k} is a vector of values
 #'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).

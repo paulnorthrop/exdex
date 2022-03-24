@@ -8,7 +8,13 @@ estimator}
 choose_uk(data, u, k = 1, inc_cens = TRUE)
 }
 \arguments{
-\item{data}{A numeric vector of raw data.  No missing values are allowed.}
+\item{data}{A numeric vector or numeric matrix of raw data.  If \code{data}
+  is a matrix then the log-likelihood is constructed as the sum of
+  (independent) contributions from different columns. A common situation is
+  where each column relates to a different year.
+
+  If \code{data} contains missing values then \code{\link{split_by_NAs}} is
+  used to divide the data into sequences of non-missing values.}
 
 \item{u, k}{Numeric vectors.  \code{u} is a vector of
   extreme value thresholds applied to data.  \code{k} is a vector of values

@@ -60,9 +60,11 @@
 #' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 #' imt <- kgaps_imt(newlyn, u, k = 1:5)
 #'
-#' ### Cheeseboro wind gusts
+#' ### Cheeseboro wind gusts (a matrix containing some NAs)
 #'
-#' p <- kgaps_imt(cheeseboro, 45, k = 2)
+#' probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+#' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
+#' imt <- kgaps_imt(cheeseboro, u, k = 1:5)
 #' @export
 kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
   # Remove any thresholds that are greater than all the observations
@@ -176,7 +178,6 @@ imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   if (u >= max(data, na.rm = TRUE)) {
     return(list(ldj = 0, Ij = 0, Jj = 0, dj = 0, Ddj = 0, n_kgaps = 0))
   }
-
   # Sample size, positions, number and proportion of exceedances
   nx <- length(data)
   exc_u <- (1:nx)[data > u]

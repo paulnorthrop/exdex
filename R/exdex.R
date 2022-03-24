@@ -16,9 +16,19 @@
 #'   \item{\code{\link{iwls}}: iterated weighted least squares estimator,
 #'     using threshold interexceedance times: (Suveges, 2007)}
 #' }
+#' The functions \code{\link{choose_b}} and \code{\link{choose_uk}} provide
+#' graphical diagnostics for choosing the tuning parameter for the
+#' semiparametric estimator, the block size \eqn{b}, and the tuning parameters
+#' of the \eqn{K}-gaps estimator, the threshold \eqn{u} and the run parameter
+#' \eqn{K}.
 #'
-#'   See \code{vignette("exdex-vignette", package = "exdex")} for an
-#'   overview of the package.
+#' For the \eqn{K}-gaps model the `exdex` package allows missing values in the
+#' data, can accommodate independent subsets of data, such as monthly or
+#' seasonal time series from different years, and can incorporate information
+#' from censored interexceedance times.
+#'
+#' See \code{vignette("exdex-vignette", package = "exdex")} for an
+#' overview of the package.
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
@@ -35,7 +45,8 @@
 #' @seealso \code{\link{spm}}: semiparametric maxima estimator.
 #' @seealso \code{\link{kgaps}}: \eqn{K}-gaps estimator.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
-#' @seealso \code{\link{newlyn}} and \code{\link{sp500}} for example datasets.
+#' @seealso \code{\link{newlyn}}, \code{\link{sp500}} and
+#'   \code{\link{cheeseboro}} for example datasets.
 #' @docType package
 #' @name exdex
 #' @import methods

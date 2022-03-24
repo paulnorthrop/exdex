@@ -12,7 +12,9 @@
 #'   where each column relates to a different year.
 #'
 #'   If \code{data} contains missing values then \code{\link{split_by_NAs}} is
-#'   used to divide the data into sequences of non-missing values.
+#'   used to divide the data further into sequences of non-missing values,
+#'   stored in different columns in a matrix.  Again, the log-likelihood
+#'   is constructed as a sum of contributions from different columns.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
 #' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger

@@ -13,7 +13,9 @@ kgaps(data, u, k = 1, inc_cens = TRUE)
   where each column relates to a different year.
 
   If \code{data} contains missing values then \code{\link{split_by_NAs}} is
-  used to divide the data into sequences of non-missing values.}
+  used to divide the data further into sequences of non-missing values,
+  stored in different columns in a matrix.  Again, the log-likelihood
+  is constructed as a sum of contributions from different columns.}
 
 \item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 

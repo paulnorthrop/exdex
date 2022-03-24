@@ -4,21 +4,31 @@
 \alias{kgaps_imt}
 \title{Information matrix test under the \eqn{K}-gaps model}
 \usage{
-kgaps_imt(data, u, k = 1)
+kgaps_imt(data, u, k = 1, inc_cens = FALSE)
 }
 \arguments{
-\item{data}{A numeric vector of raw data.  No missing values are allowed.}
+\item{data}{A numeric vector or numeric matrix of raw data.  If \code{data}
+  is a matrix then the log-likelihood is constructed as the sum of
+  (independent) contributions from different columns. A common situation is
+  where each column relates to a different year.
 
-\item{u, k}{Numeric vectors.  \code{u} is a vector of
-extreme value thresholds applied to data.  \code{k} is a vector of values
-of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
+  If \code{data} contains missing values then \code{\link{split_by_NAs}} is
+  used to divide the data into sequences of non-missing values.}
+
+\item{u, k}{Numeric vectors.  \code{u} is a vector of extreme value
+thresholds applied to data.  \code{k} is a vector of values of the run
+parameter \eqn{K}, as defined in Suveges and Davison (2010).
 See \code{\link{kgaps}} for more details.}
+
+\item{inc_cens}{A logical scalar indicating whether or not to include
+contributions from censored inter-exceedance times, relating to the
+first and last observations.  See Attalides (2015) for details.}
 }
 \value{
 An object (a list) of class \code{c("kgaps_imt", "exdex")}
   containing
   \item{imt }{A \code{length(u)} by \code{length(k)} numeric matrix.
-    Column i contains, for K = \code{k[i]}, the values of the
+    Column i contains, for \eqn{K} = \code{k[i]}, the values of the
     information matrix test statistic for the set of thresholds in
     \code{u}.  The column names are the values in code{k}.
     The row names are the approximate empirical percentage quantile levels
@@ -31,7 +41,7 @@ An object (a list) of class \code{c("kgaps_imt", "exdex")}
 }
 \description{
 Performs the information matrix test (IMT) of Suveges and Davison (2010) to
-diagnose misspecification of the \eqn{K}-gaps model
+diagnose misspecification of the \eqn{K}-gaps model.
 }
 \details{
 The IMT is performed a over grid of all
@@ -50,12 +60,20 @@ The IMT is performed a over grid of all
 \examples{
 u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 imt <- kgaps_imt(newlyn, u, k = 1:5)
+
+### Cheeseboro wind gusts
+
+p <- imt(cheeseboro, 45, k = 2)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, \emph{The Annals of
   Applied Statistics}, \strong{4}(1), 203-221.
   \url{https://doi.org/10.1214/09-AOAS292}
+
+Attalides, N. (2015) Threshold-based extreme value modelling,
+  PhD thesis, University College London.
+  \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 }
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the

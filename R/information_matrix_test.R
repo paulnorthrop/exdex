@@ -1,15 +1,24 @@
-# ================================= kgaps_imt =================================
-#
+# ================================= kgaps_imt =============================== #
+
 #' Information matrix test under the \eqn{K}-gaps model
 #'
 #' Performs the information matrix test (IMT) of Suveges and Davison (2010) to
-#' diagnose misspecification of the \eqn{K}-gaps model
+#' diagnose misspecification of the \eqn{K}-gaps model.
 #'
-#' @param data A numeric vector of raw data.  No missing values are allowed.
-#' @param u,k Numeric vectors.  \code{u} is a vector of
-#'   extreme value thresholds applied to data.  \code{k} is a vector of values
-#'   of the run parameter \eqn{K}, as defined in Suveges and Davison (2010).
+#' @param data A numeric vector or numeric matrix of raw data.  If \code{data}
+#'   is a matrix then the log-likelihood is constructed as the sum of
+#'   (independent) contributions from different columns. A common situation is
+#'   where each column relates to a different year.
+#'
+#'   If \code{data} contains missing values then \code{\link{split_by_NAs}} is
+#'   used to divide the data into sequences of non-missing values.
+#' @param u,k Numeric vectors.  \code{u} is a vector of extreme value
+#'   thresholds applied to data.  \code{k} is a vector of values of the run
+#'   parameter \eqn{K}, as defined in Suveges and Davison (2010).
 #'   See \code{\link{kgaps}} for more details.
+#' @param inc_cens A logical scalar indicating whether or not to include
+#'   contributions from censored inter-exceedance times, relating to the
+#'   first and last observations.  See Attalides (2015) for details.
 #' @details The IMT is performed a over grid of all
 #'   combinations of threshold and \eqn{K} in the vectors \code{u}
 #'   and \code{k}.  If the estimate of \eqn{\theta} is 0 then the
@@ -22,16 +31,12 @@
 #'   the penultimate term in the first equation on page 19; the \code{{...}}
 #'   bracket should be squared in the 4th equation on page 19; the factor
 #'   \eqn{n} should be \eqn{N-1} in the final equation on page 19.
-#' @references Suveges, M. and Davison, A. C. (2010) Model
-#'   misspecification in peaks over threshold analysis, \emph{The Annals of
-#'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{https://doi.org/10.1214/09-AOAS292}
 #' @return An object (a list) of class \code{c("kgaps_imt", "exdex")}
 #'   containing
 #'   \item{imt }{A \code{length(u)} by \code{length(k)} numeric matrix.
-#'     Column i contains, for K = \code{k[i]}, the values of the
+#'     Column i contains, for \eqn{K} = \code{k[i]}, the values of the
 #'     information matrix test statistic for the set of thresholds in
-#'     \code{u}.  The column names are the values in code{k}.
+#'     \code{u}.  The column names are the values in \code{k}.
 #'     The row names are the approximate empirical percentage quantile levels
 #'     of the thresholds in \code{u}.}
 #'   \item{p }{A \code{length(u)} by \code{length(k)} numeric matrix
@@ -39,71 +44,186 @@
 #'   \item{theta }{A \code{length(u)} by \code{length(k)} numeric matrix
 #'     containing the corresponding estimates of \eqn{\theta}.}
 #'   \item{u,k }{The input \code{u} and \code{k}.}
+#' @references Suveges, M. and Davison, A. C. (2010) Model
+#'   misspecification in peaks over threshold analysis, \emph{The Annals of
+#'   Applied Statistics}, \strong{4}(1), 203-221.
+#'   \url{https://doi.org/10.1214/09-AOAS292}
+#' @references Attalides, N. (2015) Threshold-based extreme value modelling,
+#'   PhD thesis, University College London.
+#'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @examples
 #' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 #' imt <- kgaps_imt(newlyn, u, k = 1:5)
+#'
+#' ### Cheeseboro wind gusts
+#'
+#' p <- imt(cheeseboro, 45, k = 2)
 #' @export
-kgaps_imt <- function(data, u, k = 1) {
-  # Function to return only the MLE of theta
-  mle_only <- function(k, data, u) {
-    return(kgaps(data, u, k, inc_cens = FALSE)$theta)
+kgaps_imt <- function(data, u, k = 1, inc_cens = FALSE) {
+  Call <- match.call(expand.dots = TRUE)
+#  if (!is.numeric(u) || length(u) != 1) {
+#    stop("u must be a numeric scalar")
+#  }
+#  if (u >= max(data, na.rm = TRUE)) {
+#    stop("u must be less than max(data)")
+#  }
+#  if (!is.numeric(k) || length(k) != 1) {
+#    stop("k must be a numeric scalar")
+#  }
+  # If there are missing values then use split_by_NAs to extract sequences
+  # of non-missing values
+  if (anyNA(data)) {
+    data <- split_by_NAs(data)
+  } else if (!is.matrix(data)) {
+    data <- as.matrix(data)
   }
-  theta <- T_mat <- p_mat <- NULL
-  n_u <- length(u)
-  n_k <- length(k)
-  # Beginning of loop over all thresholds ----------
-  for (iu in 1:n_u) {
-    the_u <- u[iu]
-    # Calculate the MLE of theta for each value of k
-    thetahat <- vapply(k, mle_only, 0, data = data, u = the_u)
-    # sample size of x
-    nx <- length(data)
-    # positions of exceedances of u
-    exc_u <- (1:nx)[data > the_u]
-    # number of exceedances
-    n_u <- length(exc_u)
-    # proportion of values that exceed u
-    q_u <- n_u / nx
-    # inter-exceedance times
-    T_u <- diff(exc_u)
-    #
-    # Create a length(T) by length(k) matrix with column i containing
-    # the values of S_k for k=k[i] ...
-    #
-    # One column for each value of k
-    S_k <- sapply(k, function(k) pmax(T_u - k, 0))
-    c_mat <- q_u * S_k
-    theta_mat <- matrix(thetahat, ncol = n_k, nrow = nrow(S_k), byrow = TRUE)
-    ld <- ifelse(c_mat == 0, -1 / (1 - theta_mat), 2 / theta_mat) - c_mat
-    neg_ldd <- ifelse(c_mat == 0, 1 / (1 - theta_mat) ^ 2, 2 / theta_mat ^ 2)
-    In <- colMeans(neg_ldd)
-    Jn <- colMeans(ld ^ 2)
+  # Function to perform the IMT for individual values of u and k
+  imt_by_uk <- function(u, k) {
+    # If the threshold is not high enough then return NAs
+    if (u >= max(data, na.rm = TRUE)) {
+      return(c(Tn = NA, pvalue = NA))
+    }
+    # Estimate theta
+    # (Perhaps we could save some time by avoiding the recalculation of stuff)
+    theta <- kgaps(data, u, k)$theta
+    # Contributions to the test statistic from each observation, returning a list
+    # with a list of (ldj, Ij, Jj, dj, Ddj, n_kgaps)for each column in data
+    imt_stats_list <- apply(data, 2, imt_stat, theta = theta, u = u, k = k,
+                            inc_cens = inc_cens)
+    # Concatenate the results from different columns
+    sc <- Reduce(f = function(...) Map(c, ...), imt_stats_list)
+    # Calculate the components of the test statistic
+    nkgaps <- sum(sc$n_kgaps)
+    In <- sum(sc$Ij) / nkgaps
+    Jn <- sum(sc$Jj) / nkgaps
     Dn <- Jn - In
-    dc <- ld ^ 2 - neg_ldd
-    dcd <- 4 * c_mat / theta_mat ^ 2 + ifelse(c_mat == 0, 0, -4 / theta_mat ^ 3)
-    # Force NA, rather than NaN, in cases where thetahat = 0
-    dcd[is.nan(dcd)] <- NA
-    Dnd <- colMeans(dcd)
-    # Multiply the columns of ld by the corresponding elements of Dnd / In
-    temp <- ld * rep(Dnd / In, rep(nrow(ld), ncol(ld)))
-    Vn <- colMeans((dc - temp) ^ 2)
-    test_stats <- (n_u - 1) * Dn ^ 2 / Vn
-    pvals <- stats::pchisq(test_stats, df = 1, lower.tail = FALSE)
-    theta <- rbind(theta, thetahat)
-    T_mat <- rbind(T_mat, test_stats)
-    p_mat <- rbind(p_mat, pvals)
+    Dnd <- sum(sc$Ddj) / nkgaps
+    Vn <- sum((sc$dj - Dnd * sc$ldj / In) ^ 2) / nkgaps
+    Tn <- nkgaps * Dn ^ 2 / Vn
+    pvalue <- stats::pchisq(Tn, df = 1, lower.tail = FALSE)
+    return(c(Tn, pvalue))
+#    return(list(imt = Tn, p = pvalue))
   }
-  # End of loop over thresholds ----------
-  colnames(T_mat) <- colnames(p_mat) <- colnames(theta) <- k
-  if (is.null(names(u))) {
-    u_ps <- round(100 * sapply(u, function(x) mean(data < x)))
-  } else {
-    u_ps <- as.numeric(substr(names(u), 1, nchar(names(u), type = "c") - 1))
-  }
-  rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
-  res <- list(imt = T_mat, p = p_mat, theta = theta, u = u, k = k)
-  class(res) <- c("kgaps_imt", "exdex")
+  uk <- expand.grid(u = u, k = k)
+  res <- mapply(imt_by_uk, u = uk$u, k = uk$k, SIMPLIFY = FALSE)
   return(res)
+}
+
+# ================================ imt_stat ================================= #
+
+#' Statistics for the information matrix test
+#'
+#' Calculates the components required to calculate the value of the information
+#' matrix test under the \eqn{K}-gaps model, using vector data input.
+#'
+#' @param data A numeric vector of raw data.  Missing values are allowed, but
+#'   they should not appear between non-missing values, that is, they only be
+#'   located at the start and end of the vector.  Missing values are omitted
+#'   using \code{\link[stats]{na.omit}}.
+#' @param theta A numeric scalar. An estimate of the extremal index
+#'  \eqn{\theta}, produced by \code{\link{kgaps}}.
+#' @param u A numeric scalar.  Extreme value threshold applied to data.
+#' @param k A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
+#'   Davison (2010).  Threshold inter-exceedances times that are not larger
+#'   than \code{k} units are assigned to the same cluster, resulting in a
+#'   \eqn{K}-gap equal to zero.  Specifically, the \eqn{K}-gap \eqn{S}
+#'   corresponding to an inter-exceedance time of \eqn{T} is given by
+#'   \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.
+#' @param inc_cens A logical scalar indicating whether or not to include
+#'   contributions from censored inter-exceedance times relating to the
+#'   first and last observation.  See Attalides (2015) for details.
+#' @return A list relating the quantities given on pages 18-19 of
+#'   Suveges and Davison (2010).  All but the last component are vectors giving
+#'   the contribution to the quantity from each \eqn{K}-gap, evaluated at the
+#'   input value \code{theta} of \eqn{\theta}.
+#'   \item{\code{ldj} }{the derivative of the log-likelihood with respect to
+#'     \eqn{\theta} (the score)}
+#'   \item{\code{Ij} }{the observed information}
+#'   \item{\code{Jj} }{the square of the score}
+#'   \item{\code{dj} }{\code{Jj} - \code{Ij}}
+#'   \item{\code{Ddj} }{the derivative of \code{Jj} - \code{Ij} with respect
+#'     to \eqn{\theta}}
+#'   \item{\code{n_kgaps} }{the number of \eqn{K}-gaps.}
+#' @references Suveges, M. and Davison, A. C. (2010) Model
+#'   misspecification in peaks over threshold analysis, \emph{The Annals of
+#'   Applied Statistics}, \strong{4}(1), 203-221.
+#'   \url{https://doi.org/10.1214/09-AOAS292}
+#' @references Attalides, N. (2015) Threshold-based extreme value modelling,
+#'   PhD thesis, University College London.
+#'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
+#' @export
+imt_stat <- function(data, theta, u, k = 1, inc_cens = FALSE) {
+  data <- stats::na.omit(data)
+  if (!is.numeric(u) || length(u) != 1) {
+    stop("u must be a numeric scalar")
+  }
+  if (!is.numeric(k) || length(k) != 1) {
+    stop("k must be a numeric scalar")
+  }
+  #
+  # Calculate the statistics in log-likelihood, as in kgaps_stat()
+  #
+  # If all the data are smaller than the threshold then return null results
+  if (u >= max(data, na.rm = TRUE)) {
+    return(list(ldj = 0, Ij = 0, Jj = 0, dj = 0, Ddj = 0, n_kgaps = 0))
+  }
+
+  # Sample size, positions, number and proportion of exceedances
+  nx <- length(data)
+  exc_u <- (1:nx)[data > u]
+  N_u <- length(exc_u)
+  q_u <- N_u / nx
+  # Inter-exceedances times and K-gaps
+  T_u <- diff(exc_u)
+  S_k <- pmax(T_u - k, 0)
+  # N0, N1, sum of scaled K-gaps
+  N1 <- sum(S_k > 0)
+  N0 <- N_u - 1 - N1
+  sum_qs <- sum(q_u * S_k)
+  # Store the number of K-gaps, for use by nobs.kgaps()
+  n_kgaps <- N0 + N1
+  # Values of c^(K) = q_u * S^(K)
+  qS <- q_u * S_k
+  # Multipliers for terms in ld, ...
+  mldj <- rep_len(2, n_kgaps)
+  mIj <- rep_len(2, n_kgaps)
+  mDdj1 <- rep_len(4, n_kgaps)
+  mDdj2 <- rep_len(4, n_kgaps)
+  # Include censored inter-exceedance times?
+  if (inc_cens) {
+    n_kgaps <- n_kgaps + 2
+    # censored inter-exceedance times and K-gaps
+    T_u_cens <- c(exc_u[1] - 1, nx - exc_u[N_u])
+    S_k_cens <- pmax(T_u_cens - k, 0)
+    # N0, N1, sum of scaled K-gaps
+    N1_cens <- sum(S_k_cens > 0)
+    sum_s_cens <- sum(q_u * S_k_cens)
+    # Add contributions.
+    # Note: we divide N1_cens by two because a censored non-zero K-gap S_c
+    # contributes theta exp(-theta q_u S_c) to the K-gaps likelihood,
+    # whereas a non-censored non-zero K-gap contributes
+    # theta^2 exp(-theta q_u S_c).
+    # See equation (4.3) of Attalides (2015)
+    N1 <- N1 + N1_cens / 2
+    sum_qs <- sum_qs + sum_s_cens
+    qS_cens <- q_u * S_k_cens
+    # Supplement the c^(K) terms
+    qS <- c(qS, qS_cens)
+    # Supplement the multipliers
+    mldj <- c(mldj, rep_len(1, 2))
+    mIj <- c(mIj, rep_len(1, 2))
+    mDdj1 <- c(mDdj1, rep_len(2, 2))
+    mDdj2 <- c(mDdj2, rep_len(0, 2))
+  }
+  # Calculate the statistics in the IMT
+  #
+  ldj <- ifelse(qS == 0, -1 / (1 - theta), mldj / theta) - qS
+  Ij  <- ifelse(qS == 0, 1 / (1 - theta) ^ 2, mIj / theta ^ 2)
+  Jj <- ldj ^ 2
+  dj <- Jj - Ij
+  Ddj <- mDdj1 * qS / theta ^ 2 - ifelse(qS == 0, 0, mDdj2 / theta ^ 3)
+  return(list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
+              n_kgaps = n_kgaps))
 }

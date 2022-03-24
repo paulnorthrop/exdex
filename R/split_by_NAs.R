@@ -48,7 +48,8 @@ split_by_NAs <- function(x) {
   # temp[[i]]$values: a FALSE indicates a non-NA component in temp$lengths
   temp <- apply(!is.na(x), 2, rle)
   # A vector of the columns in which each sequence lives in x
-  column <- rep(1:ncol(x), sapply(temp, function(x) sum(x$values)))
+  column <- rep(1:ncol(x), vapply(X = temp, FUN = function(x) sum(x$values),
+                                  FUN.VALUE = 0.0))
   if (length(temp) == 1) {
     max_leng <- max(temp[[1]]$lengths)
     n_seq <- sum(temp[[1]]$values)
@@ -73,7 +74,8 @@ split_by_NAs <- function(x) {
     na_fill <- max_leng - (to[i] - from[i] + 1)
     c(x[from[i]:to[i], column[i]], rep(NA, na_fill))
   }
-  newx <- sapply(1:n_seq, newx_fn, from = from, to = to, column = column)
+  newx <- vapply(X = 1:n_seq, FUN = newx_fn, FUN.VALUE = rep(0.0, max_leng),
+                 from = from, to = to, column = column)
   dimnames(newx) <- NULL
   return(newx)
 }

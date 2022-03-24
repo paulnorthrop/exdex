@@ -66,7 +66,7 @@ imt <- kgaps_imt(newlyn, u, k = 1:5)
 
 ### Cheeseboro wind gusts
 
-p <- imt(cheeseboro, 45, k = 2)
+p <- kgaps_imt(cheeseboro, 45, k = 2)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

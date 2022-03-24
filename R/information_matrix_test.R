@@ -62,7 +62,7 @@
 #'
 #' ### Cheeseboro wind gusts
 #'
-#' p <- imt(cheeseboro, 45, k = 2)
+#' p <- kgaps_imt(cheeseboro, 45, k = 2)
 #' @export
 kgaps_imt <- function(data, u, k = 1, inc_cens = FALSE) {
   # Remove any thresholds that are greater than all the observations

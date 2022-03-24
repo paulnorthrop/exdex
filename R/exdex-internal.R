@@ -682,6 +682,74 @@ split_by_NAs <- function(x) {
   return(newx)
 }
 
+# =============================== kgaps_imt_old ============================= #
+# Retained to check the new version of kgaps_imt()
+#' @keywords internal
+#' @rdname exdex-internal
+kgaps_imt_old <- function(data, u, k = 1) {
+  # Function to return only the MLE of theta
+  mle_only <- function(k, data, u) {
+    return(kgaps(data, u, k, inc_cens = FALSE)$theta)
+  }
+  theta <- T_mat <- p_mat <- NULL
+  n_u <- length(u)
+  n_k <- length(k)
+  # Beginning of loop over all thresholds ----------
+  for (iu in 1:n_u) {
+    the_u <- u[iu]
+    # Calculate the MLE of theta for each value of k
+    thetahat <- vapply(k, mle_only, 0, data = data, u = the_u)
+    # sample size of x
+    nx <- length(data)
+    # positions of exceedances of u
+    exc_u <- (1:nx)[data > the_u]
+    # number of exceedances
+    n_u <- length(exc_u)
+    # proportion of values that exceed u
+    q_u <- n_u / nx
+    # inter-exceedance times
+    T_u <- diff(exc_u)
+    #
+    # Create a length(T) by length(k) matrix with column i containing
+    # the values of S_k for k=k[i] ...
+    #
+    # One column for each value of k
+    S_k <- sapply(k, function(k) pmax(T_u - k, 0))
+    c_mat <- q_u * S_k
+    theta_mat <- matrix(thetahat, ncol = n_k, nrow = nrow(S_k), byrow = TRUE)
+    ld <- ifelse(c_mat == 0, -1 / (1 - theta_mat), 2 / theta_mat) - c_mat
+    neg_ldd <- ifelse(c_mat == 0, 1 / (1 - theta_mat) ^ 2, 2 / theta_mat ^ 2)
+    In <- colMeans(neg_ldd)
+    Jn <- colMeans(ld ^ 2)
+    Dn <- Jn - In
+    dc <- ld ^ 2 - neg_ldd
+    dcd <- 4 * c_mat / theta_mat ^ 2 + ifelse(c_mat == 0, 0, -4 / theta_mat ^ 3)
+    # Force NA, rather than NaN, in cases where thetahat = 0
+    dcd[is.nan(dcd)] <- NA
+    Dnd <- colMeans(dcd)
+    # Multiply the columns of ld by the corresponding elements of Dnd / In
+    temp <- ld * rep(Dnd / In, rep(nrow(ld), ncol(ld)))
+    Vn <- colMeans((dc - temp) ^ 2)
+    test_stats <- (n_u - 1) * Dn ^ 2 / Vn
+    pvals <- stats::pchisq(test_stats, df = 1, lower.tail = FALSE)
+    theta <- rbind(theta, thetahat)
+    T_mat <- rbind(T_mat, test_stats)
+    p_mat <- rbind(p_mat, pvals)
+  }
+  # End of loop over thresholds ----------
+  colnames(T_mat) <- colnames(p_mat) <- colnames(theta) <- k
+  if (is.null(names(u))) {
+    u_ps <- round(100 * sapply(u, function(x) mean(data < x)))
+  } else {
+    u_ps <- as.numeric(substr(names(u), 1, nchar(names(u), type = "c") - 1))
+  }
+  print(c(In, Jn, Dn, Dnd, Vn, T_mat))
+  rownames(T_mat) <- rownames(p_mat) <- rownames(theta) <- u_ps
+  res <- list(imt = T_mat, p = p_mat, theta = theta, u = u, k = k)
+  class(res) <- c("kgaps_imt", "exdex")
+  return(res)
+}
+
 # ========================= Function used by iwls() ========================= #
 
 # ================================== iwls_fun =================================

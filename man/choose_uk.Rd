@@ -5,7 +5,7 @@
 \title{Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the \eqn{K}-gaps
 estimator}
 \usage{
-choose_uk(data, u, k = 1)
+choose_uk(data, u, k = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}

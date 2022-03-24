@@ -64,7 +64,7 @@
 #' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
 #' plot(imt_theta, uprob = TRUE)
 #' @export
-choose_uk <- function(data, u, k = 1) {
+choose_uk <- function(data, u, k = 1, inc_cens = TRUE) {
   # Remove any thresholds that are greater than all the observations
   u_ok <- vapply(u, function(u) any(data > u), TRUE)
   u <- u[u_ok]
@@ -78,10 +78,11 @@ choose_uk <- function(data, u, k = 1) {
   }
   for (i in 1:n_k) {
     for (j in 1:n_u) {
-      theta[[comp(i, j)]] <- kgaps(data, u[j], k[i])
+      theta[[comp(i, j)]] <- kgaps(data = data, u = u[j], k = k[i],
+                                   inc_cens = inc_cens)
     }
   }
-  imt <- kgaps_imt(data, u, k)
+  imt <- kgaps_imt(data = data, u = u, k = k, inc_cens = inc_cens)
   res <- list(imt = imt, theta = theta)
   class(res) <- c("choose_uk", "exdex")
   return(res)

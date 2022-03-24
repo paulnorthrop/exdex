@@ -2,7 +2,7 @@
 % Please edit documentation in R/choose_uk.R
 \name{plot.choose_uk}
 \alias{plot.choose_uk}
-\title{Plot Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
+\title{Plot threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
 \eqn{K}-gaps estimator}
 \usage{
 \method{plot}{choose_uk}(

@@ -26,9 +26,11 @@ for (i in 1:length(k_vals)) {
 
 # Check that plot.choose_uk works
 
+# For inc_cens = FALSE -----
+
 # S&P 500 index
 u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
-imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+imt_theta <- choose_uk(sp500, u = u, k = 1:5, inc_cens = FALSE)
 
 ukplot <- plot(imt_theta)
 test_that("plot.choose_uk works", {
@@ -42,7 +44,7 @@ test_that("plot.choose_b works, user plot args", {
 
 # One run parameter K, many thresholds u
 u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
-imt_theta <- choose_uk(sp500, u = u, k = 1)
+imt_theta <- choose_uk(sp500, u = u, k = 1, inc_cens = FALSE)
 ukplot <- plot(imt_theta)
 test_that("plot.choose_uk works", {
   testthat::expect_identical(ukplot, NULL)
@@ -55,7 +57,7 @@ test_that("plot.choose_b works, user plot args", {
 
 # One threshold u, many run parameters K
 u <- quantile(sp500, probs = 0.9)
-imt_theta <- choose_uk(sp500, u = u, k = 1:5)
+imt_theta <- choose_uk(sp500, u = u, k = 1:5, inc_cens = FALSE)
 test_that("plot.choose_uk works", {
   testthat::expect_identical(ukplot, NULL)
 })

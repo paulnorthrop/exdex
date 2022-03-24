@@ -69,14 +69,6 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="spm.html">spm()</a></code> </p>
-        </td>
-        <td><p>Semiparametric maxima estimator of the extremal index</p></td>
-      </tr><tr><td>
-          <p><code><a href="confint.spm.html">confint(<i>&lt;spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Confidence intervals for the extremal index \(\theta\)</p></td>
-      </tr><tr><td>
           <p><code><a href="kgaps.html">kgaps()</a></code> </p>
         </td>
         <td><p>Maximum likelihood estimation for the \(K\)-gaps model</p></td>
@@ -85,17 +77,21 @@
         </td>
         <td><p>Sufficient statistics for the \(K\)-gaps model</p></td>
       </tr><tr><td>
-          <p><code><a href="confint.kgaps.html">confint(<i>&lt;kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Confidence intervals for the extremal index \(\theta\)</p></td>
-      </tr><tr><td>
           <p><code><a href="kgaps_imt.html">kgaps_imt()</a></code> </p>
         </td>
         <td><p>Information matrix test under the \(K\)-gaps model</p></td>
       </tr><tr><td>
+          <p><code><a href="imt_stat.html">imt_stat()</a></code> </p>
+        </td>
+        <td><p>Statistics for the information matrix test</p></td>
+      </tr><tr><td>
           <p><code><a href="iwls.html">iwls()</a></code> </p>
         </td>
         <td><p>Iterated weighted least squares estimation of the extremal index</p></td>
+      </tr><tr><td>
+          <p><code><a href="spm.html">spm()</a></code> </p>
+        </td>
+        <td><p>Semiparametric maxima estimator of the extremal index</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="choosing-tuning-parameters">Choosing tuning parameters <a href="#choosing-tuning-parameters" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -122,6 +118,10 @@ estimator</p></td>
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="cheeseboro.html">cheeseboro</a></code> </p>
+        </td>
+        <td><p>Cheeseboro hourly maximum wind gusts</p></td>
+      </tr><tr><td>
           <p><code><a href="newlyn.html">newlyn</a></code> </p>
         </td>
         <td><p>Newlyn sea surges</p></td>
@@ -129,6 +129,14 @@ estimator</p></td>
           <p><code><a href="sp500.html">sp500</a></code> </p>
         </td>
         <td><p>Daily log returns of the Standard and Poor (S&amp;P) 500 index</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="data-manipulation">Data manipulation <a href="#data-manipulation" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="split_by_NAs.html">split_by_NAs()</a></code> </p>
+        </td>
+        <td><p>Divides data into parts that contain no missing values</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="generics">Generics <a href="#generics" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -145,6 +153,14 @@ estimator</p></td>
           <p><code><a href="coef.iwls.html">coef(<i>&lt;iwls&gt;</i>)</a></code> </p>
         </td>
         <td><p>Extract Model Coefficients from an <code>"iwls"</code> object</p></td>
+      </tr><tr><td>
+          <p><code><a href="confint.kgaps.html">confint(<i>&lt;kgaps&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence intervals for the extremal index \(\theta\)</p></td>
+      </tr><tr><td>
+          <p><code><a href="confint.spm.html">confint(<i>&lt;spm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence intervals for the extremal index \(\theta\)</p></td>
       </tr><tr><td>
           <p><code><a href="nobs.spm.html">nobs(<i>&lt;spm&gt;</i>)</a></code> </p>
         </td>
@@ -167,9 +183,17 @@ estimator</p></td>
         <td><p>Plot threshold \(u\) and runs parameter \(K\) diagnostic for the
 \(K\)-gaps estimator</p></td>
       </tr><tr><td>
+          <p><code><a href="plot.confint_kgaps.html">plot(<i>&lt;confint_kgaps&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot diagnostics for a confint_kgaps object</p></td>
+      </tr><tr><td>
           <p><code><a href="plot.confint_spm.html">plot(<i>&lt;confint_spm&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot diagnostics for a confint_spm object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.confint_kgaps.html">print(<i>&lt;confint_kgaps&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print method for a confint_kgaps object</p></td>
       </tr><tr><td>
           <p><code><a href="print.confint_spm.html">print(<i>&lt;confint_spm&gt;</i>)</a></code> </p>
         </td>

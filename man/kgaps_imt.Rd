@@ -30,7 +30,7 @@ An object (a list) of class \code{c("kgaps_imt", "exdex")}
   \item{imt }{A \code{length(u)} by \code{length(k)} numeric matrix.
     Column i contains, for \eqn{K} = \code{k[i]}, the values of the
     information matrix test statistic for the set of thresholds in
-    \code{u}.  The column names are the values in code{k}.
+    \code{u}.  The column names are the values in \code{k}.
     The row names are the approximate empirical percentage quantile levels
     of the thresholds in \code{u}.}
   \item{p }{A \code{length(u)} by \code{length(k)} numeric matrix

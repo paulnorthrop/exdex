@@ -211,6 +211,10 @@ kgaps_stat <- function(data, u, k = 1, inc_cens = FALSE) {
   if (!is.numeric(k) || length(k) != 1) {
     stop("k must be a numeric scalar")
   }
+  # If all the data are smaller than the threshold then return null results
+  if (u >= max(data, na.rm = TRUE)) {
+    return(list(N0 = 0, N1 = 0, sum_qs = 0, n_kgaps = 0))
+  }
   # Sample size, positions, number and proportion of exceedances
   nx <- length(data)
   exc_u <- (1:nx)[data > u]

@@ -74,8 +74,8 @@ split_by_NAs <- function(x) {
     na_fill <- max_leng - (to[i] - from[i] + 1)
     c(x[from[i]:to[i], column[i]], rep(NA, na_fill))
   }
-  newx <- vapply(X = 1:n_seq, FUN = newx_fn, FUN.VALUE = rep(0.0, max_leng),
-                 from = from, to = to, column = column)
+  newx <- sapply(X = 1:n_seq, FUN = newx_fn, from = from, to = to,
+                 column = column)
   dimnames(newx) <- NULL
   return(newx)
 }

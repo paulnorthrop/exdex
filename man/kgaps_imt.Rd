@@ -4,7 +4,7 @@
 \alias{kgaps_imt}
 \title{Information matrix test under the \eqn{K}-gaps model}
 \usage{
-kgaps_imt(data, u, k = 1, inc_cens = FALSE)
+kgaps_imt(data, u, k = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector or numeric matrix of raw data.  If \code{data}

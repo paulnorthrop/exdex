@@ -84,7 +84,7 @@
 #' theta
 #' summary(theta)
 #' @export
-kgaps <- function(data, u, k = 1, inc_cens = FALSE) {
+kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
   Call <- match.call(expand.dots = TRUE)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")

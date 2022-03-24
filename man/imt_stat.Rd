@@ -4,7 +4,7 @@
 \alias{imt_stat}
 \title{Statistics for the information matrix test}
 \usage{
-imt_stat(data, theta, u, k = 1, inc_cens = FALSE)
+imt_stat(data, theta, u, k = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  Missing values are allowed, but

@@ -64,7 +64,7 @@
 #'
 #' p <- kgaps_imt(cheeseboro, 45, k = 2)
 #' @export
-kgaps_imt <- function(data, u, k = 1, inc_cens = FALSE) {
+kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
   # Remove any thresholds that are greater than all the observations
   u_ok <- vapply(u, function(u) any(data > u), TRUE)
   u <- u[u_ok]
@@ -161,7 +161,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = FALSE) {
 #'   PhD thesis, University College London.
 #'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @export
-imt_stat <- function(data, theta, u, k = 1, inc_cens = FALSE) {
+imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")

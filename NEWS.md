@@ -3,7 +3,7 @@
 ## New features
 
 * The functions `kgaps()`, `kgaps_imt()` and `choose_uk()` can now accept a `data` argument that
-    - is a matrix of independent subsets of data, perhaps from different years
+    - is a matrix of independent subsets of data, such as monthly or seasonal time series from different years
     - contains missing values, that is, `NA`s 
 * A new dataset `cheeseboro` is included, which is a matrix containing some missing values.
 * In addition to `kgaps()`, the functions `kgaps_imt()` and `choose_uk()` now have an extra argument `inc_cens`, which allows contributions from censored K-gaps to be included in the log-likelihood for the extremal index.

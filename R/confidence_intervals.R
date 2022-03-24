@@ -652,8 +652,8 @@ plot.confint_kgaps <- function(x, y = NULL, ...) {
   my_plot(theta, prof_lik, ...)
   cutoff <- x$object$max_loglik - stats::qchisq(x$level, 1) / 2
   graphics::abline(h = cutoff)
-  axis(1, at = prof_ci,  labels = round(prof_ci, 3), tick = FALSE,
-       mgp = c(3, 0.15, 0))
+  graphics::axis(1, at = prof_ci,  labels = round(prof_ci, 3), tick = FALSE,
+                 mgp = c(3, 0.15, 0))
   return(invisible())
 }
 

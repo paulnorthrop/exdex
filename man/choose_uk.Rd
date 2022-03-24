@@ -72,6 +72,13 @@ plot(imt_theta, y = "theta")
 u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
 plot(imt_theta, uprob = TRUE)
+
+### Cheeseboro wind gusts (a matrix containing some NAs)
+
+probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
+imt_theta <- choose_uk(cheeseboro, u, k = 1:10)
+plot(imt_theta, uprob = FALSE, lwd = 2)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

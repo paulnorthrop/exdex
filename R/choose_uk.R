@@ -69,6 +69,13 @@
 #' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
 #' imt_theta <- choose_uk(newlyn, u = u, k = 1:5)
 #' plot(imt_theta, uprob = TRUE)
+#'
+#' ### Cheeseboro wind gusts (a matrix containing some NAs)
+#'
+#' probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+#' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
+#' imt_theta <- choose_uk(cheeseboro, u, k = 1:10)
+#' plot(imt_theta, uprob = FALSE, lwd = 2)
 #' @export
 choose_uk <- function(data, u, k = 1, inc_cens = TRUE) {
   # Remove any thresholds that are greater than all the observations
@@ -96,7 +103,7 @@ choose_uk <- function(data, u, k = 1, inc_cens = TRUE) {
 
 # ============================= plot.choose_uk ===============================
 
-#' Plot Threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
+#' Plot threshold \eqn{u} and runs parameter \eqn{K} diagnostic for the
 #' \eqn{K}-gaps estimator
 #'
 #' \code{plot} method for objects inheriting from class \code{"choose_uk"},

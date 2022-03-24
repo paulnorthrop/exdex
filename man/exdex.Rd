@@ -61,6 +61,9 @@ Suveges, M. and Davison, A. C. (2010) Model
 
 \code{\link{iwls}}: iterated weighted least squares estimator.
 
+\code{\link{choose_b}} and \code{\link{choose_uk}} for choosing
+  tuning parameters.
+
 \code{\link{newlyn}}, \code{\link{sp500}} and
   \code{\link{cheeseboro}} for example datasets.
 }

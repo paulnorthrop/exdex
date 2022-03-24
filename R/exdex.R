@@ -45,6 +45,8 @@
 #' @seealso \code{\link{spm}}: semiparametric maxima estimator.
 #' @seealso \code{\link{kgaps}}: \eqn{K}-gaps estimator.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
+#' @seealso \code{\link{choose_b}} and \code{\link{choose_uk}} for choosing
+#'   tuning parameters.
 #' @seealso \code{\link{newlyn}}, \code{\link{sp500}} and
 #'   \code{\link{cheeseboro}} for example datasets.
 #' @docType package

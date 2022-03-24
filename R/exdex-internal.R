@@ -670,8 +670,8 @@ split_by_NAs <- function(x) {
   to_fn <- function(x) {
     return(cumsum(x$lengths)[x$values])
   }
-  from <- unlist(sapply(temp, from_fn))
-  to <- unlist(sapply(temp, to_fn))
+  from <- unlist(sapply(temp, from_fn), use.names = FALSE)
+  to <- unlist(sapply(temp, to_fn), use.names = FALSE)
   # Create the new matrix of data, filling columns with NAs if necessary
   newx_fn <- function(i, from, to, column) {
     na_fill <- max_leng - (to[i] - from[i] + 1)

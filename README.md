@@ -75,7 +75,9 @@ summary(theta)
 #> BB2018b, disjoint   0.2542    0.02101  0.053570
 ```
 
-Now we estimate *θ* using the *K*-gaps model.
+Now we estimate *θ* using the *K*-gaps model. The threshold *u* and runs
+parameter *K* were chosen using the graphical diagnostic provided by
+`choose_uk()`.
 
 ``` r
 u <- quantile(newlyn, probs = 0.60)
@@ -86,18 +88,15 @@ theta
 #> kgaps(data = newlyn, u = u, k = 2)
 #> 
 #> Estimate of the extremal index theta:
-#> [1]  0.1756
+#> [1]  0.1758
 summary(theta)
 #> 
 #> Call:
 #> kgaps(data = newlyn, u = u, k = 2)
 #> 
 #>       Estimate Std. Error
-#> theta   0.1756   0.009216
+#> theta   0.1758   0.009211
 ```
-
-The threshold *u* and runs parameter *K* were chosen using the graphical
-diagnostic provided by `choose_uk()`.
 
 ### Installation
 

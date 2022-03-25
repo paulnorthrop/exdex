@@ -46,7 +46,7 @@ LazyData: true
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
-URL: http://github.com/paulnorthrop/exdex, https://paulnorthrop.github.io/exdex/
-BugReports: http://github.com/paulnorthrop/exdex/issues
+URL: https://github.com/paulnorthrop/exdex, https://paulnorthrop.github.io/exdex/
+BugReports: https://github.com/paulnorthrop/exdex/issues
 LinkingTo: 
     Rcpp, RcppArmadillo

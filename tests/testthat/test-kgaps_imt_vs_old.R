@@ -14,7 +14,7 @@ res <- kgaps_imt(newlyn, u = u, k = k, inc_cens = FALSE)
 # Old
 res2 <- kgaps_imt_old(newlyn, u = u, k = k)
 
-test_that("New and old kgaps_imt() agree", {
+test_that("newlyn: new and old kgaps_imt() agree", {
   testthat::expect_equal(res, res2)
 })
 
@@ -27,6 +27,6 @@ res <- kgaps_imt(sp500, u = u, k = k, inc_cens = FALSE)
 # Old
 res2 <- kgaps_imt_old(sp500, u = u, k = k)
 
-test_that("New and old kgaps_imt() agree", {
+test_that("S&P500: new and old kgaps_imt() agree", {
   testthat::expect_equal(res, res2)
 })

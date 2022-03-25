@@ -132,6 +132,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
 #'
 #' Calculates the components required to calculate the value of the information
 #' matrix test under the \eqn{K}-gaps model, using vector data input.
+#' Called by \code{\link{kgaps_imt}}.
 #'
 #' @param data A numeric vector of raw data.  Missing values are allowed, but
 #'   they should not appear between non-missing values, that is, they only be

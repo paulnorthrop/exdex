@@ -35,7 +35,7 @@ A list containing the sufficient statistics, with components
 }
 \description{
 Calculates sufficient statistics for the \eqn{K}-gaps model for the extremal
-index \eqn{\theta}.
+index \eqn{\theta}. Called by \code{\link{kgaps}}.
 }
 \details{
 The sample \eqn{K}-gaps are

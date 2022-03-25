@@ -45,6 +45,7 @@ A list relating the quantities given on pages 18-19 of
 \description{
 Calculates the components required to calculate the value of the information
 matrix test under the \eqn{K}-gaps model, using vector data input.
+Called by \code{\link{kgaps_imt}}.
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

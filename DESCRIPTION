@@ -21,10 +21,10 @@ Description: Performs frequentist inference for the extremal index of a
     provided: the iterated weight least squares approach of Suveges (2007) 
     <doi:10.1007/s10687-007-0034-2> and the K-gaps model of 
     Suveges and Davison (2010) <doi:10.1214/09-AOAS292>. For the K-gaps model 
-    the exdex package allows missing values in the data, can accommodate 
+    this package allows missing values in the data, can accommodate 
     independent subsets of data, such as monthly or seasonal time series from 
     different years, and can incorporate information from censored 
-    interexceedance times.  A graphical diagnostic for the threshold level and 
+    inter-exceedance times.  A graphical diagnostic for the threshold level and 
     the runs parameter K is provided.
 Imports: 
     chandwich,

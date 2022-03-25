@@ -205,7 +205,7 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
 #' u <- quantile(newlyn, probs = 0.90)
 #' kgaps_stat(newlyn, u)
 #' @export
-kgaps_stat <- function(data, u, k = 1, inc_cens = FALSE) {
+kgaps_stat <- function(data, u, k = 1, inc_cens = TRUE) {
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")

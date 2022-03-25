@@ -10,7 +10,7 @@ A vector of length 7250, created using \code{\link[zoo]{zoo}}
   log return.
 }
 \source{
-Yahoo finance \url{https://finance.yahoo.com/quote/^SPX/history/}
+Yahoo finance: https://finance.yahoo.com/quote/^SPX/history/
 }
 \usage{
 sp500

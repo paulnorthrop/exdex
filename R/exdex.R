@@ -83,7 +83,7 @@ NULL
 #' @format A vector of length 7250, created using \code{\link[zoo]{zoo}}
 #'   with an "index" attribute giving the date of the corresponding negated
 #'   log return.
-#' @source Yahoo finance \url{https://finance.yahoo.com/quote/^SPX/history/}
+#' @source Yahoo finance: https://finance.yahoo.com/quote/^SPX/history/
 "sp500"
 
 #' Cheeseboro hourly maximum wind gusts

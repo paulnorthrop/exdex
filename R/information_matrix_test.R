@@ -84,7 +84,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
       return(c(Tn = NA, pvalue = NA))
     }
     # Estimate theta
-    theta <- kgaps(data, u, k)$theta
+    theta <- kgaps(data, u, k, inc_cens = inc_cens)$theta
     # Contributions to the test statistic from each observation, returning a list
     # with a list of (ldj, Ij, Jj, dj, Ddj, n_kgaps)for each column in data
     imt_stats_list <- apply(data, 2, imt_stat, theta = theta, u = u, k = k,

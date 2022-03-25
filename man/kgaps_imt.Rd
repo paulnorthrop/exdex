@@ -61,14 +61,21 @@ The IMT is performed a over grid of all
   \eqn{n} should be \eqn{N-1} in the final equation on page 19.
 }
 \examples{
+### Newlyn sea surges
+
 u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-imt <- kgaps_imt(newlyn, u, k = 1:5)
+imt <- kgaps_imt(newlyn, u = u, k = 1:5)
+
+### S&P 500 index
+
+u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+imt <- choose_uk(sp500, u = u, k = 1:5)
 
 ### Cheeseboro wind gusts (a matrix containing some NAs)
 
 probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
 u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
-imt <- kgaps_imt(cheeseboro, u, k = 1:5)
+imt <- kgaps_imt(cheeseboro, u = u, k = 1:5)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model

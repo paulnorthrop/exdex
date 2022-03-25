@@ -50,7 +50,7 @@
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{https://doi.org/10.1214/09-AOAS292}
+#'   \doi{10.1214/09-AOAS292}
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
 #'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
@@ -157,7 +157,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{https://doi.org/10.1214/09-AOAS292}
+#'   \doi{10.1214/09-AOAS292}
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
 #'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}

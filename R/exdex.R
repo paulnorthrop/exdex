@@ -30,18 +30,18 @@
 #' See \code{vignette("exdex-vignette", package = "exdex")} for an
 #' overview of the package.
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
-#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
+#'   maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#'   \strong{46}(5), 2307-2335. \doi{10.1214/17-AOS1621}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
-#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{https://doi.org/10.1007/s10687-015-0221-5}
+#'   estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#'   \doi{10.1007/s10687-015-0221-5}
 #' @references Suveges, M. (2007) Likelihood estimation of the extremal
 #'   index. \emph{Extremes}, \strong{10}, 41-55.
-#'   \url{https://doi.org/10.1007/s10687-007-0034-2}
+#'   \doi{10.1007/s10687-007-0034-2}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
-#'   \url{https://doi.org/10.1214/09-AOAS292}
+#'   \doi{10.1214/09-AOAS292}
 #' @seealso \code{\link{spm}}: semiparametric maxima estimator.
 #' @seealso \code{\link{kgaps}}: \eqn{K}-gaps estimator.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
@@ -69,10 +69,10 @@ NULL
 #'   University of Sheffield, U.K.
 #' @references Fawcett, L. and Walshaw, D. (2012) Estimating return levels from
 #'   serially dependent extremes. \emph{Environmetrics}, \strong{23}(3),
-#'   272-283.  \url{https://doi.org/10.1002/env.2133}
+#'   272-283.  \doi{10.1002/env.2133}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #'   estimator of the extremal index. \emph{Extremes}, \strong{18},
-#'   585-603.  \url{https://doi.org/10.1007/s10687-015-0221-5}
+#'   585-603.  \doi{10.1007/s10687-015-0221-5}
 "newlyn"
 
 #' Daily log returns of the Standard and Poor (S&P) 500 index

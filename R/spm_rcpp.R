@@ -160,11 +160,11 @@
 #'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
-#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \url{https://doi.org/10.1007/s10687-015-0221-5}
+#'   estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
+#'   \doi{10.1007/s10687-015-0221-5}
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
-#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \url{https://doi.org/10.1214/17-AOS1621}
+#'   maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
+#'   \strong{46}(5), 2307-2335. \doi{10.1214/17-AOS1621}
 #' @examples
 #' ### Newlyn sea surges
 #' theta <- spm(newlyn, 20)

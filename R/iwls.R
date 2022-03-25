@@ -54,7 +54,7 @@
 #'     \item{\code{call }}{The call to \code{iwls}.}
 #' @references Suveges, M. (2007) Likelihood estimation of the extremal
 #'   index. \emph{Extremes}, \strong{10}, 41-55.
-#'   \url{https://doi.org/10.1007/s10687-007-0034-2}
+#'   \doi{10.1007/s10687-007-0034-2}
 #' @references Ferro, C.A.T. (2003) Statistical methods for clusters of
 #'   extreme values. Ph.D. thesis, Lancaster University.
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the

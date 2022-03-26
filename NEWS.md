@@ -1,5 +1,9 @@
 # exdex 1.1.1.9000
 
+## Bug fixes and minor improvements
+
+* The value returned by `nobs.kgaps()` was incorrect in cases where there are censored K-gaps that are equal to zero.  These K-gaps should not contribute to the number of observations. This has been corrected.
+
 # exdex 1.1.1
 
 ## New features

@@ -18,7 +18,7 @@ index \(\theta\). Called by kgaps."><!-- mathjax --><script src="https://cdnjs.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
       </span>
     </div>
 
@@ -99,8 +99,8 @@ first and last observation.  See Attalides (2015) for details.</p></dd>
       \(q (S_0 + \cdots + S_N)\), where \(q\)
       is estimated by the proportion of threshold exceedances.</p></dd>
 <dt><code>n_kgaps</code> </dt>
-<dd><p>the number of \(K\)-gaps, including 2
-      censored \(K\)-gaps if <code>inc_cens = TRUE</code>.</p></dd>
+<dd><p>the number of \(K\)-gaps that contribute to the
+      log-likelihood.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -113,9 +113,9 @@ first and last observation.  See Attalides (2015) for details.</p></dd>
   $$l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
     2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),$$
    where \(q\) is the threshold exceedance probability,
-   \(N_0\) is the number of sample \(K\)-gaps that are equal to zero and
-   (apart from an adjustment for the contributions of \(S_0\) and
-   \(S_N\)) \(N_1\) is the number of positive sample \(K\)-gaps.
+   \(N_0\) is the number of uncensored sample \(K\)-gaps that are equal
+   to zero and (apart from an adjustment for the contributions of \(S_0\)
+   and \(S_N\)) \(N_1\) is the number of positive sample \(K\)-gaps.
    Specifically, \(N_1\) is equal to the number of
    \(S_1, ..., S_{N-1}\)
    that are positive plus \((I_0 + I_N) / 2\), where \(I_0 = 1\) if

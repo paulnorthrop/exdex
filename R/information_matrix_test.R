@@ -93,7 +93,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
     # Estimate theta
     theta <- kgaps(data, u, k, inc_cens = inc_cens)$theta
     # Contributions to the test statistic from each observation, returning a list
-    # with a list of (ldj, Ij, Jj, dj, Ddj, n_kgaps)for each column in data
+    # with a list of (ldj, Ij, Jj, dj, Ddj, n_kgaps) for each column in data
     imt_stats_list <- apply(data, 2, imt_stat, theta = theta, u = u, k = k,
                             inc_cens = inc_cens)
     # Concatenate the results from different columns
@@ -197,7 +197,7 @@ imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   N1 <- sum(S_k > 0)
   N0 <- N_u - 1 - N1
   sum_qs <- sum(q_u * S_k)
-  # Store the number of K-gaps, for use by nobs.kgaps()
+  # Store the number of K-gaps
   n_kgaps <- N0 + N1
   # Values of c^(K) = q_u * S^(K)
   qS <- q_u * S_k

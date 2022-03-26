@@ -240,6 +240,9 @@ kgaps_stat <- function(data, u, k = 1, inc_cens = TRUE) {
     # S_k_cens = 0 adds no information, because P(S >= 0) = 1
     N1_cens <- sum(S_k_cens > 0)
     n_kgaps <- n_kgaps + N1_cens
+    # Remove the censored K-gaps that are equal to zero
+    # (This is is not necessary here, but we do it for clarity)
+    S_k_cens <- S_k_cens[S_k_cens > 0]
     sum_s_cens <- sum(q_u * S_k_cens)
     # Add contributions.
     # Note: we divide N1_cens by two because a censored non-zero K-gap S_c

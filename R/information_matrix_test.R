@@ -208,12 +208,15 @@ imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   mDdj2 <- rep_len(4, n_kgaps)
   # Include censored inter-exceedance times?
   if (inc_cens) {
-    n_kgaps <- n_kgaps + 2
     # censored inter-exceedance times and K-gaps
     T_u_cens <- c(exc_u[1] - 1, nx - exc_u[N_u])
     S_k_cens <- pmax(T_u_cens - k, 0)
     # N0, N1, sum of scaled K-gaps
+    # S_k_cens = 0 adds no information, because P(S >= 0) = 1
     N1_cens <- sum(S_k_cens > 0)
+    n_kgaps <- n_kgaps + N1_cens
+    # Remove the censored K-gaps that are equal to zero
+    S_k_cens <- S_k_cens[S_k_cens > 0]
     sum_s_cens <- sum(q_u * S_k_cens)
     # Add contributions.
     # Note: we divide N1_cens by two because a censored non-zero K-gap S_c
@@ -227,10 +230,10 @@ imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
     # Supplement the c^(K) terms
     qS <- c(qS, qS_cens)
     # Supplement the multipliers
-    mldj <- c(mldj, rep_len(1, 2))
-    mIj <- c(mIj, rep_len(1, 2))
-    mDdj1 <- c(mDdj1, rep_len(2, 2))
-    mDdj2 <- c(mDdj2, rep_len(0, 2))
+    mldj <- c(mldj, rep_len(1, N1_cens))
+    mIj <- c(mIj, rep_len(1, N1_cens))
+    mDdj1 <- c(mDdj1, rep_len(2, N1_cens))
+    mDdj2 <- c(mDdj2, rep_len(0, N1_cens))
   }
   # Calculate the statistics in the IMT
   # An estimate theta = 1 occurs if all the K-gaps are positive (qS > 0):

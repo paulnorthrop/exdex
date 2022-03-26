@@ -161,7 +161,8 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
 #'   \item{\code{dj} }{\code{Jj} - \code{Ij}}
 #'   \item{\code{Ddj} }{the derivative of \code{Jj} - \code{Ij} with respect
 #'     to \eqn{\theta}}
-#'   \item{\code{n_kgaps} }{the number of \eqn{K}-gaps.}
+#'   \item{\code{n_kgaps} }{the number of \eqn{K}-gaps that contribute to the
+#'     log-likelihood.}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{The Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.

@@ -30,8 +30,8 @@ A list containing the sufficient statistics, with components
     \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
       is estimated by the proportion of threshold exceedances.}
-    \item{\code{n_kgaps} }{the number of \eqn{K}-gaps, including 2
-      censored \eqn{K}-gaps if \code{inc_cens = TRUE}.}
+    \item{\code{n_kgaps} }{the number of \eqn{K}-gaps that contribute to the
+      log-likelihood.}
 }
 \description{
 Calculates sufficient statistics for the \eqn{K}-gaps model for the extremal

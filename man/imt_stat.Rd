@@ -40,7 +40,8 @@ A list relating the quantities given on pages 18-19 of
   \item{\code{dj} }{\code{Jj} - \code{Ij}}
   \item{\code{Ddj} }{the derivative of \code{Jj} - \code{Ij} with respect
     to \eqn{\theta}}
-  \item{\code{n_kgaps} }{the number of \eqn{K}-gaps.}
+  \item{\code{n_kgaps} }{the number of \eqn{K}-gaps that contribute to the
+    log-likelihood.}
 }
 \description{
 Calculates the components required to calculate the value of the information

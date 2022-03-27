@@ -88,17 +88,17 @@ NULL
 
 #' Cheeseboro hourly maximum wind gusts
 #'
-#' The matrix \code{cheeseboro} contains hourly maximum wind gusts recorded at
-#' the Cheeseboro weather station near Thousand Oaks, Southern California, USA
-#' during the month of January over the period 2000-2009. These data are
-#' analysed in Reich and Shaby (2016).
+#' The matrix \code{cheeseboro} contains hourly maximum wind gusts (in miles
+#' per hour) recorded at the Cheeseboro weather station near Thousand Oaks,
+#' Southern California, USA during the month of January over the period
+#' 2000-2009. These data are analysed in Reich and Shaby (2016).
 #' @format A 774 by 10 numeric matrix.  Column \code{i} contains the hourly
-#'   maximum wind gusts from Cheeseboro in the year 2000 + \code{i} - 1.
-#'   The columns are named 2000, 2001, ..., 2009 and the rows are named
-#'   day\code{j}hour\code{k}, where \code{j} is the day of the month and
-#'   \code{k} the hour of the day.
-#' @note There are a total of 42 missing values, located in 6 of the 10 years,
-#'   namely 2000-2003 and 2005-2006.
+#'   maximum wind gusts (in miles per hour) from Cheeseboro in the year
+#'   2000 + \code{i} - 1. The columns are named 2000, 2001, ..., 2009 and the
+#'   rows are named day\code{j}hour\code{k}, where \code{j} is the day of the
+#'   month and \code{k} the hour of the day.
+#' @note There are 42 missing values, located in 6 of the 10 years, namely
+#'   2000-2003 and 2005-2006.
 #' @source The Remote Automated Weather Stations USA Climate Archive at
 #'   \url{https://raws.dri.edu/}, more specifically the Daily Summaries of the
 #'   \href{https://raws.dri.edu/cgi-bin/rawMAIN.pl?caCCHB}{Cheeseboro page}.
@@ -106,3 +106,59 @@ NULL
 #' in Dey, D. K. and Yan, J. (eds.) Extreme Value Modeling and Risk Analysis.
 #' New York: Chapman and Hall/CRC, pp. 131-151.
 "cheeseboro"
+
+#' Uccle maximum daily temperatures
+#'
+#' The dataframe \code{uccle} contains daily maximum temperatures in degrees C
+#' recorded at the Uccle, Belgium from 1/1/1833 to 23/1/2011.  The Station
+#' identifier in the source file is 17 and the Source identifier is 117882.
+#' @format A data frame with 65036 observations on the following and 5
+#'   variables.
+#' \itemize{
+#' \item{\code{temp:}}{ daily maximum temperature in degrees C.}
+#' \item{\code{year:}}{ the year.}
+#' \item{\code{month:}}{ the month of the year.}
+#' \item{\code{day:}}{ day of the month.}
+#' \item{\code{date:}}{ date with the \code{\link[base:Dates]{Date}} class,
+#'   in the format YYYY-MM-DD.}
+#' }
+#' @note There are 5336 missing values.
+#' @source Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of
+#'  20th-century surface air temperature and precipitation series for the
+#'  European Climate Assessment. \emph{Int. J. of Climatol.}, \strong{22},
+#'  1441-1453 \doi{10.1002/joc.773}. Data and metadata available at
+#'  \href{https://www.ecad.eu}{https://www.ecad.eu}.  The data were downloaded
+#'  on 27/3/2022 using a
+#'  \href{https://www.ecad.eu/dailydata/customquery.php}{Custom query (ASCII)},
+#'  selecting "non-blend" for type of series.
+"uccle"
+
+#' 20th century Uccle maximum daily temperatures in July
+#'
+#' The dataframe \code{uccle} contains daily maximum temperatures in degrees C
+#' recorded at the Uccle, Belgium during July for the years 1901 to 1999.
+#' The Station identifier in the source file is 17 and the Source identifier is
+#' 117882.  These data are analysed in Holesovsky and Fusek (2020).
+#' @format A data frame with 3100 observations on the following and 5
+#'   variables.
+#' \itemize{
+#' \item{\code{temp:}}{ daily maximum temperature in degrees C.}
+#' \item{\code{year:}}{ the year.}
+#' \item{\code{month:}}{ the month of the year.}
+#' \item{\code{day:}}{ day of the month.}
+#' \item{\code{date:}}{ date with the \code{\link[base:Dates]{Date}} class,
+#'   in the format YYYY-MM-DD.}
+#' }
+#' @note There are 6 missing values.
+#' @source Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of
+#'  20th-century surface air temperature and precipitation series for the
+#'  European Climate Assessment. \emph{Int. J. of Climatol.}, \strong{22},
+#'  1441-1453 \doi{10.1002/joc.773}. Data and metadata available at
+#'  \href{https://www.ecad.eu}{https://www.ecad.eu}.  The data were downloaded
+#'  on 27/3/2022 using a
+#'  \href{https://www.ecad.eu/dailydata/customquery.php}{Custom query (ASCII)},
+#'  selecting "non-blend" for type of series.
+#' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
+#'   using censored distributions. \emph{Extremes}, \strong{23}, 197-213
+#'   (2020). \doi{10.1007/s10687-020-00374-3}
+"uccle720"

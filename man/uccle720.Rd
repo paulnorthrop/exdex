@@ -30,13 +30,18 @@ Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of
 uccle720
 }
 \description{
-The dataframe \code{uccle} contains daily maximum temperatures in degrees C
+The dataframe \code{uccle720} contains daily maximum temperatures in degrees C
 recorded at the Uccle, Belgium during July for the years 1901 to 1999.
 The Station identifier in the source file is 17 and the Source identifier is
 117882.  These data are analysed in Holesovsky and Fusek (2020).
 }
 \note{
 There are 6 missing values.
+}
+\examples{
+uccle720_ts <- ts(uccle720$temp, start = c(1901, 1), frequency = 31)
+plot(uccle720_ts, ylab = "daily maximum temperature in July / degrees C",
+     xlab = "year")
 }
 \references{
 Holesovsky, J. and Fusek, M. Estimation of the extremal index

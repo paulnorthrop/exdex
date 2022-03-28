@@ -135,7 +135,7 @@ NULL
 
 #' 20th century Uccle maximum daily temperatures in July
 #'
-#' The dataframe \code{uccle} contains daily maximum temperatures in degrees C
+#' The dataframe \code{uccle720} contains daily maximum temperatures in degrees C
 #' recorded at the Uccle, Belgium during July for the years 1901 to 1999.
 #' The Station identifier in the source file is 17 and the Source identifier is
 #' 117882.  These data are analysed in Holesovsky and Fusek (2020).
@@ -161,4 +161,8 @@ NULL
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
 #'   using censored distributions. \emph{Extremes}, \strong{23}, 197-213
 #'   (2020). \doi{10.1007/s10687-020-00374-3}
+#' @examples
+#' uccle720_ts <- ts(uccle720$temp, start = c(1901, 1), frequency = 31)
+#' plot(uccle720_ts, ylab = "daily maximum temperature in July / degrees C",
+#'      xlab = "year")
 "uccle720"

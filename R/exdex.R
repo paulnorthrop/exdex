@@ -133,7 +133,7 @@ NULL
 #'  selecting "non-blend" for type of series.
 "uccle"
 
-#' 20th century Uccle maximum daily temperatures in July
+#' 20th century Uccle maximum daily temperatures in July - data frame
 #'
 #' The dataframe \code{uccle720} contains daily maximum temperatures in degrees C
 #' recorded at the Uccle, Belgium during July for the years 1901 to 1999.
@@ -149,7 +149,8 @@ NULL
 #' \item{\code{date:}}{ date with the \code{\link[base:Dates]{Date}} class,
 #'   in the format YYYY-MM-DD.}
 #' }
-#' @note There are 6 missing values.
+#' @note There are 6 missing values, one located in each of the years
+#'   1925, 1926, 1956, 1963, 1969 and 1976.
 #' @source Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of
 #'  20th-century surface air temperature and precipitation series for the
 #'  European Climate Assessment. \emph{Int. J. of Climatol.}, \strong{22},
@@ -166,3 +167,32 @@ NULL
 #' plot(uccle720_ts, ylab = "daily maximum temperature in July / degrees C",
 #'      xlab = "year")
 "uccle720"
+
+#' 20th century Uccle maximum daily temperatures in July - matrix
+#'
+#' The matrix \code{uccle720m} contains daily maximum temperatures in degrees C
+#' recorded at the Uccle, Belgium during July for the years 1901 to 1999.
+#' The Station identifier in the source file is 17 and the Source identifier is
+#' 117882.  These data are analysed in Holesovsky and Fusek (2020).
+#' @format A 31 by 100 numeric matrix.  Column \code{i} contains the maximum
+#'   daily temperature in degrees C at Uccle in the year 1900 + \code{i} - 1.
+#'   The columns are named 1900, 1901, ..., 1999 and the rows are named
+#'   after the day of the month: 1, 2, .., 31.
+#' @note There are 6 missing values, one located in each of the years
+#'   1925, 1926, 1956, 1963, 1969 and 1976.
+#' @source Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of
+#'  20th-century surface air temperature and precipitation series for the
+#'  European Climate Assessment. \emph{Int. J. of Climatol.}, \strong{22},
+#'  1441-1453 \doi{10.1002/joc.773}. Data and metadata available at
+#'  \href{https://www.ecad.eu}{https://www.ecad.eu}.  The data were downloaded
+#'  on 27/3/2022 using a
+#'  \href{https://www.ecad.eu/dailydata/customquery.php}{Custom query (ASCII)},
+#'  selecting "non-blend" for type of series.
+#' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
+#'   using censored distributions. \emph{Extremes}, \strong{23}, 197-213
+#'   (2020). \doi{10.1007/s10687-020-00374-3}
+#' @examples
+#' uccle720_ts <- ts(uccle720$temp, start = c(1901, 1), frequency = 31)
+#' plot(uccle720_ts, ylab = "daily maximum temperature in July / degrees C",
+#'      xlab = "year")
+"uccle720m"

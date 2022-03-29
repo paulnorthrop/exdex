@@ -74,7 +74,7 @@ kgaps_stat(newlyn, u)
 }
 \references{
 Suveges, M. and Davison, A. C. (2010) Model
-  misspecification in peaks over threshold analysis, \emph{The Annals of
+  misspecification in peaks over threshold analysis, \emph{Annals of
   Applied Statistics}, \strong{4}(1), 203-221.
   \doi{10.1214/09-AOAS292}
 

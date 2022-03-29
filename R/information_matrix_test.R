@@ -48,7 +48,7 @@
 #'     containing the corresponding estimates of \eqn{\theta}.}
 #'   \item{u,k }{The input \code{u} and \code{k}.}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
-#'   misspecification in peaks over threshold analysis, \emph{The Annals of
+#'   misspecification in peaks over threshold analysis, \emph{Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \doi{10.1214/09-AOAS292}
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
@@ -164,7 +164,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
 #'   \item{\code{n_kgaps} }{the number of \eqn{K}-gaps that contribute to the
 #'     log-likelihood.}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
-#'   misspecification in peaks over threshold analysis, \emph{The Annals of
+#'   misspecification in peaks over threshold analysis, \emph{Annals of
 #'   Applied Statistics}, \strong{4}(1), 203-221.
 #'   \doi{10.1214/09-AOAS292}
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,

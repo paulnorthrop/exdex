@@ -27,8 +27,9 @@ where \eqn{d = q D} and \eqn{q} is the probability with which the
 threshold \eqn{u} is exceeded.}
 
 \item{inc_cens}{A logical scalar indicating whether or not to include
-contributions from censored inter-exceedance times, relating to the
-first and last observations.}
+contributions from right-censored inter-exceedance times, relating to the
+first and last observations. It is known that these times are greater
+than or equal to the time observed.}
 }
 \value{
 An object (a list) of class \code{c("dgaps", "exdex")} containing
@@ -52,7 +53,18 @@ because it uses a tuning parameter \eqn{D}, whereas the related \eqn{K}-gaps
 model of Suveges and Davison (2010) has a tuning parameter \eqn{K}.
 }
 \details{
-Add details.
+If \code{inc_cens = FALSE} then the maximum likelihood estimate of
+  the extremal index \eqn{\theta} under the \eqn{D}-gaps model of
+  Holesovsky and Fusek (2020) is calculated.
+  If \code{inc_cens = TRUE} then information from right-censored
+  inter-exceedance times is also included in the likelihood to be maximized.
+  For an explanation of the idea see Attalides (2015).  The form of the
+  log-likelihood is given in the \strong{Details} section of
+  \code{\link{dgaps_stat}}.
+
+  It is possible that the estimate of \eqn{\theta} is equal to 1, and also
+  possible that it is equal to 0. \code{\link{dgaps_stat}} explains the
+  respective properties of the data that cause these events to occur.
 }
 \examples{
 ### S&P 500 index

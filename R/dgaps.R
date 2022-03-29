@@ -18,10 +18,12 @@
 #'   stored in different columns in a matrix.  Again, the log-likelihood
 #'   is constructed as a sum of contributions from different columns.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
-#' @param d A numeric scalar.  Censoring parameter \eqn{D}. Threshold
-#'   inter-exceedances times that are not larger than \code{d} units are
+#' @param D A numeric scalar.  The censoring parameter \eqn{D}. Threshold
+#'   inter-exceedances times that are not larger than \code{D} units are
 #'   left-censored, occurring with probability
-#'   \eqn{\log(1 - \theta e^{-\theta d})}{log(1 - exp(-\theta d))}.
+#'   \eqn{\log(1 - \theta e^{-\theta d})}{log(1 - exp(-\theta d))},
+#'   where \eqn{d = q D} and \eqn{q} is the probability with which the
+#'   threshold \eqn{u} is exceeded.
 #' @param inc_cens A logical scalar indicating whether or not to include
 #'   contributions from censored inter-exceedance times, relating to the
 #'   first and last observations.
@@ -56,18 +58,18 @@
 #' ### S&P 500 index
 #'
 #' u <- quantile(sp500, probs = 0.60)
-#' theta <- dgaps(sp500, u = u, d = 1)
+#' theta <- dgaps(sp500, u = u, D = 1)
 #' theta
 #' summary(theta)
 #'
 #' ### Newlyn sea surges
 #'
 #' u <- quantile(newlyn, probs = 0.60)
-#' theta <- dgaps(newlyn, u = u, d = 2)
+#' theta <- dgaps(newlyn, u = u, D = 2)
 #' theta
 #' summary(theta)
 #' @export
-dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
+dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   Call <- match.call(expand.dots = TRUE)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
@@ -75,7 +77,7 @@ dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
   if (u >= max(data, na.rm = TRUE)) {
     stop("u must be less than max(data)")
   }
-  if (!is.numeric(d) || length(d) != 1) {
+  if (!is.numeric(D) || length(D) != 1) {
     stop("d must be a numeric scalar")
   }
   # If there are missing values then use split_by_NAs to extract sequences
@@ -84,7 +86,7 @@ dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
     data <- split_by_NAs(data)
   }
   # Calculate sufficient statistics for each column in data and then sum
-  stats_list <- apply(as.matrix(data), 2, dgaps_stat, u = u, d = d,
+  stats_list <- apply(as.matrix(data), 2, dgaps_stat, u = u, D = D,
                       inc_cens = inc_cens)
   ss <- Reduce(f = function(...) Map("+", ...), stats_list)
   # If N0 = 0 then all exceedances occur singly (all K-gaps are positive)
@@ -100,7 +102,7 @@ dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
     theta_mle <- 1L
   } else {
     # Use the K-gaps estimate as an initial estimate
-    theta_init <- kgaps(data = data, u = u, k = d, inc_cens = inc_cens)$theta
+    theta_init <- kgaps(data = data, u = u, k = D, inc_cens = inc_cens)$theta
     dgaps_negloglik <- function(theta) {
       return(-do.call(dgaps_loglik, c(list(theta = theta), ss)))
     }
@@ -112,14 +114,14 @@ dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
   # Estimate standard error
   obs_info <- 0
   if (N0 > 0) {
-    obs_info <- obs_info + N0 * gdd_theta(theta_mle, q_u = ss$q_u, d = ss$d)
+    obs_info <- obs_info + N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
   }
   if (N1 > 0) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
   theta_se <- sqrt(1 / obs_info)
   res <- list(theta = theta_mle, se = theta_se, se_check = theta_se_check,
-              ss = ss, d = d, u = u, inc_cens = inc_cens, call = Call)
+              ss = ss, D = D, u = u, inc_cens = inc_cens, call = Call)
   class(res) <- c("dgaps", "exdex")
   return(res)
 }
@@ -133,7 +135,7 @@ dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
-#' @param d A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
+#' @param D A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger
 #'   than \code{k} units are assigned to the same cluster, resulting in a
 #'   \eqn{K}-gap equal to zero.  Specifically, the \eqn{K}-gap \eqn{S}
@@ -192,19 +194,19 @@ dgaps <- function(data, u, d = 1, inc_cens = FALSE) {
 #'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @examples
 #' u <- quantile(newlyn, probs = 0.90)
-#' dgaps_stat(newlyn, u = u, d = 1)
+#' dgaps_stat(newlyn, u = u, D = 1)
 #' @export
-dgaps_stat <- function(data, u, d = 1, inc_cens = FALSE) {
+dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
   }
-  if (!is.numeric(d) || length(d) != 1) {
+  if (!is.numeric(D) || length(D) != 1) {
     stop("k must be a numeric scalar")
   }
   # If all the data are smaller than the threshold then return null results
   if (u >= max(data, na.rm = TRUE)) {
-    return(list(N0 = 0, N1 = 0, sum_qtd = 0, n_dgaps = 0, q_u = 0, d = d))
+    return(list(N0 = 0, N1 = 0, sum_qtd = 0, n_dgaps = 0, q_u = 0, D = D))
   }
   # Sample size, positions, number and proportion of exceedances
   nx <- length(data)
@@ -213,13 +215,13 @@ dgaps_stat <- function(data, u, d = 1, inc_cens = FALSE) {
   q_u <- N_u / nx
   # Inter-exceedances times and K-gaps
   T_u <- diff(exc_u)
-  left_censored <- T_u <= d
+  left_censored <- T_u <= D
   # N0, N1, sum of scaled inter-exceedance times that are greater than d,
   # that is, not left-censored
   N1 <- sum(!left_censored)
   N0 <- N_u - 1 - N1
-  T_gt_d <- T_u[!left_censored]
-  sum_qtd <- sum(q_u * T_gt_d)
+  T_gt_D <- T_u[!left_censored]
+  sum_qtd <- sum(q_u * T_gt_D)
   # Store the number of K-gaps, for use by nobs.kgaps()
   n_dgaps <- N0 + N1
   # Include censored inter-exceedance times?
@@ -228,13 +230,13 @@ dgaps_stat <- function(data, u, d = 1, inc_cens = FALSE) {
     T_u_cens <- c(exc_u[1] - 1, nx - exc_u[N_u])
     # T_u_cens <= d adds no information, because we have no idea to which part
     # of the log-likelihood they would contribute
-    left_censored_cens <- T_u_cens <= d
+    left_censored_cens <- T_u_cens <= D
     # N0, N1, sum of scaled inter-exceedance times that are greater than d,
     # that is, not left-censored
     N1_cens <- sum(T_u_cens[!left_censored_cens])
     n_gaps <- n_dgaps + N1_cens
-    T_gt_d_cens <- T_u_cens[!left_censored_cens]
-    sum_qtd_cens <- sum(q_u * T_gt_d_cens)
+    T_gt_D_cens <- T_u_cens[!left_censored_cens]
+    sum_qtd_cens <- sum(q_u * T_gt_D_cens)
     # Add contributions.
     # Note: we divide N1_cens by two because a right-censored inter-exceedance
     # times that is not left-censored at d (i.e. is greater than d) contributes
@@ -244,5 +246,5 @@ dgaps_stat <- function(data, u, d = 1, inc_cens = FALSE) {
     sum_qtd <- sum_qtd + sum_qtd_cens
   }
   return(list(N0 = N0, N1 = N1, sum_qtd = sum_qtd, n_dgaps = n_dgaps,
-              q_u = q_u, d = d))
+              q_u = q_u, D = D))
 }

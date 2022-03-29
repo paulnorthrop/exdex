@@ -713,7 +713,7 @@ kgaps_imt_old <- function(data, u, k = 1) {
 # included in the list returned by dgaps_stat()
 #' @keywords internal
 #' @rdname exdex-internal
-dgaps_loglik <- function(theta, N0, N1, sum_qtd, n_dgaps, q_u, d) {
+dgaps_loglik <- function(theta, N0, N1, sum_qtd, n_dgaps, q_u, D) {
   if (theta < 0 || theta > 1) {
     return(-Inf)
   }
@@ -722,29 +722,29 @@ dgaps_loglik <- function(theta, N0, N1, sum_qtd, n_dgaps, q_u, d) {
     loglik <- loglik + 2 * N1 * log(theta) - sum_qtd * theta
   }
   if (N0 > 0) {
-    loglik <- loglik + N0 * log(1 - theta * exp(-theta * q_u * d))
+    loglik <- loglik + N0 * log(1 - theta * exp(-theta * q_u * D))
   }
   return(loglik)
 }
 
 #' @keywords internal
 #' @rdname exdex-internal
-g_theta <- function(theta, q_u, d) {
-  d <- q_u * d
+g_theta <- function(theta, q_u, D) {
+  d <- q_u * D
   return(log(1 - theta * exp(-theta * d)))
 }
 
 #' @keywords internal
 #' @rdname exdex-internal
-gd_theta <- function(theta, q_u, d) {
-  d <- q_u * d
+gd_theta <- function(theta, q_u, D) {
+  d <- q_u * D
   return(exp(-theta * d) * (1 - theta * d) / (1 - theta * exp(-theta * d)))
 }
 
 #' @keywords internal
 #' @rdname exdex-internal
-gdd_theta <- function(theta, q_u, d) {
-  d <- q_u * d
+gdd_theta <- function(theta, q_u, D) {
+  d <- q_u * D
   etd <- exp(-theta * d)
   return(etd * (theta * d ^ 2 - 2 * d + etd) / (1 - theta * etd) ^ 2)
 }

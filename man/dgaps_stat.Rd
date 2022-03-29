@@ -4,14 +4,14 @@
 \alias{dgaps_stat}
 \title{Sufficient statistics for the left-censored inter-exceedances time model}
 \usage{
-dgaps_stat(data, u, d = 1, inc_cens = FALSE)
+dgaps_stat(data, u, D = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}
 
 \item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 
-\item{d}{A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
+\item{D}{A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 Davison (2010).  Threshold inter-exceedances times that are not larger
 than \code{k} units are assigned to the same cluster, resulting in a
 \eqn{K}-gap equal to zero.  Specifically, the \eqn{K}-gap \eqn{S}
@@ -72,7 +72,7 @@ The sample \eqn{K}-gaps are
 }
 \examples{
 u <- quantile(newlyn, probs = 0.90)
-dgaps_stat(newlyn, u = u, d = 1)
+dgaps_stat(newlyn, u = u, D = 1)
 }
 \references{
 Holesovsky, J. and Fusek, M. Estimation of the extremal index

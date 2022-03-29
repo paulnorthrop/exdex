@@ -4,7 +4,7 @@
 \alias{dgaps}
 \title{Maximum likelihood estimation using left-censored inter-exceedances times}
 \usage{
-dgaps(data, u, d = 1, inc_cens = FALSE)
+dgaps(data, u, D = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector or numeric matrix of raw data.  If \code{data}
@@ -19,10 +19,12 @@ dgaps(data, u, d = 1, inc_cens = FALSE)
 
 \item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 
-\item{d}{A numeric scalar.  Censoring parameter \eqn{D}. Threshold
-inter-exceedances times that are not larger than \code{d} units are
+\item{D}{A numeric scalar.  The censoring parameter \eqn{D}. Threshold
+inter-exceedances times that are not larger than \code{D} units are
 left-censored, occurring with probability
-\eqn{\log(1 - \theta e^{-\theta d})}{log(1 - exp(-\theta d))}.}
+\eqn{\log(1 - \theta e^{-\theta d})}{log(1 - exp(-\theta d))},
+where \eqn{d = q D} and \eqn{q} is the probability with which the
+threshold \eqn{u} is exceeded.}
 
 \item{inc_cens}{A logical scalar indicating whether or not to include
 contributions from censored inter-exceedance times, relating to the
@@ -56,14 +58,14 @@ Add details.
 ### S&P 500 index
 
 u <- quantile(sp500, probs = 0.60)
-theta <- dgaps(sp500, u = u, d = 1)
+theta <- dgaps(sp500, u = u, D = 1)
 theta
 summary(theta)
 
 ### Newlyn sea surges
 
 u <- quantile(newlyn, probs = 0.60)
-theta <- dgaps(newlyn, u = u, d = 2)
+theta <- dgaps(newlyn, u = u, D = 2)
 theta
 summary(theta)
 }

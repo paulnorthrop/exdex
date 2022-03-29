@@ -75,13 +75,13 @@ kgaps_quad_solve(N0, N1, sum_qs)
 
 kgaps_imt_old(data, u, k = 1)
 
-dgaps_loglik(theta, N0, N1, sum_qtd, n_dgaps, q_u, d)
+dgaps_loglik(theta, N0, N1, sum_qtd, n_dgaps, q_u, D)
 
-g_theta(theta, q_u, d)
+g_theta(theta, q_u, D)
 
-gd_theta(theta, q_u, d)
+gd_theta(theta, q_u, D)
 
-gdd_theta(theta, q_u, d)
+gdd_theta(theta, q_u, D)
 
 iwls_fun(n_wls, N, S_1_sort, exp_qs, ws, nx)
 }

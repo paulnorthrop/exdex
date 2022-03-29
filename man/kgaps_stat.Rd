@@ -19,8 +19,9 @@ corresponding to an inter-exceedance time of \eqn{T} is given by
 \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.}
 
 \item{inc_cens}{A logical scalar indicating whether or not to include
-contributions from censored inter-exceedance times relating to the
-first and last observation.  See Attalides (2015) for details.}
+contributions from right-censored inter-exceedance times relating to the
+first and last observation.  It is known that these times are greater
+than or equal to the time observed. See Attalides (2015) for details.}
 }
 \value{
 A list containing the sufficient statistics, with components
@@ -41,7 +42,7 @@ index \eqn{\theta}. Called by \code{\link{kgaps}}.
 The sample \eqn{K}-gaps are
   \eqn{S_0, S_1, ..., S_{N-1}, S_N}{S_0, S_1, ..., S_(N-1), S_N},
   where \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)} are uncensored and
-  \eqn{S_0} and \eqn{S_N} are censored.  Under the assumption that the
+  \eqn{S_0} and \eqn{S_N} are right-censored.  Under the assumption that the
   \eqn{K}-gaps are independent, the log-likelihood of the \eqn{K}-gaps
   model is given by
   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
@@ -57,8 +58,8 @@ The sample \eqn{K}-gaps are
    that are positive plus \eqn{(I_0 + I_N) / 2}, where \eqn{I_0 = 1} if
    \eqn{S_0} is greater than zero and \eqn{I_0 = 0} otherwise, and similarly
    for \eqn{I_N}.
-   The differing treatment of uncensored and censored \eqn{K}-gaps reflects
-   differing contributions to the likelihood.
+   The differing treatment of uncensored and right-censored \eqn{K}-gaps
+   reflects differing contributions to the likelihood.
    For full details see Suveges and Davison (2010) and Attalides (2015).
 
    If \eqn{N_1 = 0} then we are in the degenerate case where there is one

@@ -23,14 +23,15 @@
 #'   corresponding to an inter-exceedance time of \eqn{T} is given by
 #'   \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.
 #' @param inc_cens A logical scalar indicating whether or not to include
-#'   contributions from censored inter-exceedance times, relating to the
-#'   first and last observations.  See Attalides (2015) for details.
+#'   contributions from right-censored inter-exceedance times, relating to the
+#'   first and last observations.  It is known that these times are greater
+#'   than or equal to the time observed. See Attalides (2015) for details.
 #' @details The maximum likelihood estimate of the extremal index \eqn{\theta}
 #'   under the \eqn{K}-gaps model of Suveges and Davison (2010) is calculated.
-#'   If \code{inc_cens = TRUE} then information from censored inter-exceedance
-#'   times is included in the likelihood to be maximized, following
-#'   Attalides (2015).  The form of the log-likelihood is given in the
-#'   \strong{Details} section of \code{\link{kgaps_stat}}.
+#'   If \code{inc_cens = TRUE} then information from right-censored
+#'   inter-exceedance times is included in the likelihood to be maximized,
+#'   following Attalides (2015).  The form of the log-likelihood is given in
+#'   the \strong{Details} section of \code{\link{kgaps_stat}}.
 #'
 #'   It is possible that the estimate of \eqn{\theta} is equal to 1, and also
 #'   possible that it is equal to 0. \code{\link{kgaps_stat}} explains the
@@ -153,12 +154,13 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
 #'   corresponding to an inter-exceedance time of \eqn{T} is given by
 #'   \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.
 #' @param inc_cens A logical scalar indicating whether or not to include
-#'   contributions from censored inter-exceedance times relating to the
-#'   first and last observation.  See Attalides (2015) for details.
+#'   contributions from right-censored inter-exceedance times relating to the
+#'   first and last observation.  It is known that these times are greater
+#'   than or equal to the time observed. See Attalides (2015) for details.
 #' @details The sample \eqn{K}-gaps are
 #'   \eqn{S_0, S_1, ..., S_{N-1}, S_N}{S_0, S_1, ..., S_(N-1), S_N},
 #'   where \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)} are uncensored and
-#'   \eqn{S_0} and \eqn{S_N} are censored.  Under the assumption that the
+#'   \eqn{S_0} and \eqn{S_N} are right-censored.  Under the assumption that the
 #'   \eqn{K}-gaps are independent, the log-likelihood of the \eqn{K}-gaps
 #'   model is given by
 #'   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
@@ -174,8 +176,8 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
 #'    that are positive plus \eqn{(I_0 + I_N) / 2}, where \eqn{I_0 = 1} if
 #'    \eqn{S_0} is greater than zero and \eqn{I_0 = 0} otherwise, and similarly
 #'    for \eqn{I_N}.
-#'    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
-#'    differing contributions to the likelihood.
+#'    The differing treatment of uncensored and right-censored \eqn{K}-gaps
+#'    reflects differing contributions to the likelihood.
 #'    For full details see Suveges and Davison (2010) and Attalides (2015).
 #'
 #'    If \eqn{N_1 = 0} then we are in the degenerate case where there is one

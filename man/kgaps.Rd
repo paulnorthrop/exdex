@@ -29,7 +29,9 @@ corresponding to an inter-exceedance time of \eqn{T} is given by
 \item{inc_cens}{A logical scalar indicating whether or not to include
 contributions from right-censored inter-exceedance times, relating to the
 first and last observations.  It is known that these times are greater
-than or equal to the time observed. See Attalides (2015) for details.}
+than or equal to the time observed. See Attalides (2015) for details.
+If \code{data} has multiple columns then there will be right-censored
+first and last inter-exceedance times for each column.}
 }
 \value{
 An object (a list) of class \code{c("kgaps", "exdex")} containing
@@ -52,10 +54,12 @@ Suveges and Davison (2010).
 If \code{inc_cens = FALSE} then the maximum likelihood estimate of
   the extremal index \eqn{\theta} under the \eqn{K}-gaps model of
   Suveges and Davison (2010) is calculated.
+
   If \code{inc_cens = TRUE} then information from right-censored
-  inter-exceedance times is also included in the likelihood to be maximized,
-  following Attalides (2015).  The form of the log-likelihood is given in
-  the \strong{Details} section of \code{\link{kgaps_stat}}.
+  first and last inter-exceedance times is also included in the likelihood
+  to be maximized, following Attalides (2015).  The form of the
+  log-likelihood is given in the \strong{Details} section of
+  \code{\link{kgaps_stat}}.
 
   It is possible that the estimate of \eqn{\theta} is equal to 1, and also
   possible that it is equal to 0. \code{\link{kgaps_stat}} explains the

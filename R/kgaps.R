@@ -26,13 +26,17 @@
 #'   contributions from right-censored inter-exceedance times, relating to the
 #'   first and last observations.  It is known that these times are greater
 #'   than or equal to the time observed. See Attalides (2015) for details.
+#'   If \code{data} has multiple columns then there will be right-censored
+#'   first and last inter-exceedance times for each column.
 #' @details If \code{inc_cens = FALSE} then the maximum likelihood estimate of
 #'   the extremal index \eqn{\theta} under the \eqn{K}-gaps model of
 #'   Suveges and Davison (2010) is calculated.
+#'
 #'   If \code{inc_cens = TRUE} then information from right-censored
-#'   inter-exceedance times is also included in the likelihood to be maximized,
-#'   following Attalides (2015).  The form of the log-likelihood is given in
-#'   the \strong{Details} section of \code{\link{kgaps_stat}}.
+#'   first and last inter-exceedance times is also included in the likelihood
+#'   to be maximized, following Attalides (2015).  The form of the
+#'   log-likelihood is given in the \strong{Details} section of
+#'   \code{\link{kgaps_stat}}.
 #'
 #'   It is possible that the estimate of \eqn{\theta} is equal to 1, and also
 #'   possible that it is equal to 0. \code{\link{kgaps_stat}} explains the
@@ -192,7 +196,7 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
 #'     \item{\code{N0} }{the number of zero \eqn{K}-gaps.}
 #'     \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see
 #'       \strong{Details}).}
-#'     \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
+#'     \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, that is,
 #'       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
 #'       is estimated by the proportion of threshold exceedances.}
 #'     \item{\code{n_kgaps} }{the number of \eqn{K}-gaps that contribute to the

@@ -28,7 +28,7 @@ A list containing the sufficient statistics, with components
     \item{\code{N0} }{the number of zero \eqn{K}-gaps.}
     \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see
       \strong{Details}).}
-    \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
+    \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, that is,
       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
       is estimated by the proportion of threshold exceedances.}
     \item{\code{n_kgaps} }{the number of \eqn{K}-gaps that contribute to the

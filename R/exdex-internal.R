@@ -618,10 +618,14 @@ kgaps_conf_int <- function(theta_mle, ss, conf = 95) {
   }
   ci_low <- 0
   ci_up <- 1
-  if (ss$N1 > 0) {
+  # If ob_fn(0) <= 0 then the log-likelihood does not fall to the cutoff in
+  # (0, theta_mle) so we set the lower limit of the confidence interval to 0
+  if (ss$N1 > 0 && ob_fn(0) > 0) {
     ci_low <- stats::uniroot(ob_fn, c(0, theta_mle))$root
   }
-  if (ss$N0 > 0) {
+  # If ob_fn(1) <= 0 then the log-likelihood does not fall to the cutoff in
+  # (theta_mle, 1) so we set the upper limit of the confidence interval to 1
+  if (ss$N0 > 0 && ob_fn(1) > 0) {
     ci_up <- stats::uniroot(ob_fn, c(theta_mle, 1))$root
   }
   return(c(ci_low, ci_up))
@@ -714,9 +718,9 @@ kgaps_imt_old <- function(data, u, k = 1) {
 #' @keywords internal
 #' @rdname exdex-internal
 dgaps_loglik <- function(theta, N0, N1, sum_qtd, n_dgaps, q_u, D) {
-  if (theta < 0 || theta > 1) {
-    return(-Inf)
-  }
+#  if (theta < 0 || theta > 1) {
+#    return(-Inf)
+#  }
   loglik <- 0
   if (N1 > 0) {
     loglik <- loglik + 2 * N1 * log(theta) - sum_qtd * theta
@@ -747,6 +751,34 @@ gdd_theta <- function(theta, q_u, D) {
   d <- q_u * D
   etd <- exp(-theta * d)
   return(etd * (theta * d ^ 2 - 2 * d + etd) / (1 - theta * etd) ^ 2)
+}
+
+# ============================== dgaps_conf_int ===============================
+#' @keywords internal
+#' @rdname exdex-internal
+dgaps_conf_int <- function(theta_mle, ss, conf = 95) {
+  cutoff <- stats::qchisq(conf / 100, df = 1)
+  theta_list <- c(list(theta = theta_mle), ss)
+  max_loglik <- do.call(dgaps_loglik, theta_list)
+  ob_fn <- function(theta) {
+    theta_list$theta <- theta
+    loglik <- do.call(dgaps_loglik, theta_list)
+    return(2 * (max_loglik - loglik) - cutoff)
+  }
+  x <- seq(0.001, 0.999, len = 100)
+  ci_low <- 0
+  ci_up <- 1
+  # If ob_fn(0) <= 0 then the log-likelihood does not fall to the cutoff in
+  # (0, theta_mle) so we set the lower limit of the confidence interval to 0
+  if (ss$N1 > 0 && ob_fn(0) > 0) {
+    ci_low <- stats::uniroot(ob_fn, c(0, theta_mle))$root
+  }
+  # If ob_fn(1) <= 0 then the log-likelihood does not fall to the cutoff in
+  # (theta_mle, 1) so we set the upper limit of the confidence interval to 1
+  if (ss$N0 > 0 && ob_fn(1) > 0) {
+    ci_up <- stats::uniroot(ob_fn, c(theta_mle, 1))$root
+  }
+  return(c(ci_low, ci_up))
 }
 
 # ========================= Function used by iwls() ========================= #

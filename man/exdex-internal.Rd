@@ -23,6 +23,7 @@
 \alias{g_theta}
 \alias{gd_theta}
 \alias{gdd_theta}
+\alias{dgaps_conf_int}
 \alias{iwls_fun}
 \title{Internal exdex functions}
 \usage{
@@ -82,6 +83,8 @@ g_theta(theta, q_u, D)
 gd_theta(theta, q_u, D)
 
 gdd_theta(theta, q_u, D)
+
+dgaps_conf_int(theta_mle, ss, conf = 95)
 
 iwls_fun(n_wls, N, S_1_sort, exp_qs, ws, nx)
 }

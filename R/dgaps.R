@@ -28,11 +28,20 @@
 #'   contributions from right-censored inter-exceedance times, relating to the
 #'   first and last observations. It is known that these times are greater
 #'   than or equal to the time observed.
+#'   If \code{data} has multiple columns then there will be right-censored
+#'   first and last inter-exceedance times for each column.
 #' @details If \code{inc_cens = FALSE} then the maximum likelihood estimate of
 #'   the extremal index \eqn{\theta} under the \eqn{D}-gaps model of
-#'   Holesovsky and Fusek (2020) is calculated.
-#'   If \code{inc_cens = TRUE} then information from right-censored
-#'   inter-exceedance times is also included in the likelihood to be maximized.
+#'   Holesovsky and Fusek (2020) is calculated.  Under this model
+#'   inter-exceedance times that are less than or equal to \eqn{D} are
+#'   left-censored, as a strategy to mitigate model mis-specification resulting
+#'   from the fact that inter-exceedance times that are equal to 0 are expected
+#'   under the model but only positive inter-exceedance times can be observed
+#'   in practice.
+#'
+#'   If \code{inc_cens = TRUE} then information from the right-censored
+#'   first and last inter-exceedance times are also included in the likelihood
+#'   to be maximized.
 #'   For an explanation of the idea see Attalides (2015).  The form of the
 #'   log-likelihood is given in the \strong{Details} section of
 #'   \code{\link{dgaps_stat}}.
@@ -49,13 +58,11 @@
 #'       estimated using \code{\link[stats:optim]{optimHess}}.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
-#'     \item{\code{d, u, inc_cens} }{The input values of \code{d},
+#'     \item{\code{D, u, inc_cens} }{The input values of \code{D},
 #'       \code{u} and \code{inc_cens}.}
 #'     \item{\code{call }}{The call to \code{dgaps}.}
-#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-#' @seealso \code{\link{kgaps_stat}} for the calculation of sufficient
-#'   statistics for the \eqn{K}-gaps model.
+#' @seealso \code{\link{dgaps_stat}} for the calculation of sufficient
+#'   statistics for the \eqn{D}-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
@@ -154,48 +161,55 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #'   corresponding to an inter-exceedance time of \eqn{T} is given by
 #'   \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.
 #' @param inc_cens A logical scalar indicating whether or not to include
-#'   contributions from censored inter-exceedance times relating to the
-#'   first and last observation.  See Attalides (2015) for details.
-#' @details The sample \eqn{K}-gaps are
-#'   \eqn{S_0, S_1, ..., S_{N-1}, S_N}{S_0, S_1, ..., S_(N-1), S_N},
-#'   where \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)} are uncensored and
-#'   \eqn{S_0} and \eqn{S_N} are censored.  Under the assumption that the
-#'   \eqn{K}-gaps are independent, the log-likelihood of the \eqn{K}-gaps
-#'   model is given by
-#'   \deqn{l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
-#'     2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),}{%
-#'     l(\theta; S_0, ..., S_N) = N_0 log(1 - \theta) + 2 N_1 log \theta -
-#'     \theta q (S_0 + ... + S_N),}
-#'    where \eqn{q} is the threshold exceedance probability,
-#'    \eqn{N_0} is the number of sample \eqn{K}-gaps that are equal to zero and
-#'    (apart from an adjustment for the contributions of \eqn{S_0} and
-#'    \eqn{S_N}) \eqn{N_1} is the number of positive sample \eqn{K}-gaps.
-#'    Specifically, \eqn{N_1} is equal to the number of
-#'    \eqn{S_1, ..., S_{N-1}}{S_1, ..., S_(N-1)}
-#'    that are positive plus \eqn{(I_0 + I_N) / 2}, where \eqn{I_0 = 1} if
-#'    \eqn{S_0} is greater than zero and similarly for \eqn{I_N}.
+#'   contributions from right-censored inter-exceedance times relating to the
+#'   first and last observation.  It is known that these times are greater
+#'   than or equal to the time observed. See Attalides (2015) for details.
+#' @details The sample inter-exceedance times are
+#'   \eqn{T_0, T_1, ..., T_{N-1}, T_N}{T_0, T_1, ..., T_(N-1), T_N},
+#'   where \eqn{T_1, ..., T_{N-1}}{T_1, ..., T_(N-1)} are uncensored and
+#'   \eqn{T_0} and \eqn{T_N} are right-censored.  Under the assumption that the
+#'   inter-exceedance times are independent, the log-likelihood of the
+#'   \eqn{D}-gaps model is given by
+#'   \deqn{l(\theta; T_0, \ldots, T_N) = N_0 \log(1 - \theta e^{-\theta d}) +
+#'     2 N_1 \log \theta - \theta q (I_0 T_0 + \cdots + I_N T_N),}{%
+#'     l(\theta; S_0, ..., S_N) = N_0 log(1 - exp(-\theta d)) +
+#'     2 N_1 log \theta - \theta q (I_0 T_0 + ... + I_N T_N),}
+#'    where \eqn{I_j = 1} is \eqn{T_j > D} and \eqn{I_j = 0} otherwise,
+#'    \eqn{q} is the threshold exceedance probability,
+#'    \eqn{N_0} is the number of sample inter-exceedance times that are
+#'    left-censored, that is, less than or equal to \eqn{D} and (apart from an
+#'    adjustment for the contributions of \eqn{T_0} and \eqn{T_N}) \eqn{N_1} is
+#'    the number of inter-exceedance times that are uncensored, that is, are
+#'    greater than \eqn{D}.  Specifically, \eqn{N_1} is equal to the number of
+#'    \eqn{T_1, ..., T_{N-1}}{T_1, ..., T_(N-1)} that uncensored plus
+#'    \eqn{(I_0 + I_N) / 2}.
 #'    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
-#'    differing contributions to the likelihood.
-#'    For full details see Suveges and Davison (2010) and Attalides (2015).
+#'    differing contributions to the likelihood. Right-censored
+#'    inter-exceedance times whose observed values are less than or equal to
+#'    \eqn{D} add no information to the likelihood because we do not know to
+#'    which part of the likelihood they should contribute.
 #'
 #'    If \eqn{N_1 = 0} then we are in the degenerate case where there is one
-#'    cluster (all \eqn{K}-gaps are zero) and the likelihood is maximized at
-#'    \eqn{\theta = 0}.
+#'    cluster (all inter-exceedance times are left-censored) and the likelihood
+#'    is maximized at \eqn{\theta = 0}.
 #'
-#'    If \eqn{N_0 = 0} then all exceedances occur singly (all \eqn{K}-gaps are
-#'    positive) and the likelihood is maximized at \eqn{\theta = 1}.
+#'    If \eqn{N_0 = 0} then all exceedances occur singly (no inter-exceedance
+#'    times are left-censored) and the likelihood is maximized at
+#'    \eqn{\theta = 1}.
 #' @return A list containing the sufficient statistics, with components
-#'     \item{\code{N0} }{the number of zero \eqn{K}-gaps.}
-#'     \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see
-#'       \strong{Details}).}
-#'     \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
-#'       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
-#'       is estimated by the proportion of threshold exceedances.}
-#'     \item{\code{n_kgaps} }{the number of \eqn{K}-gaps, including 2
-#'       censored \eqn{K}-gaps if \code{inc_cens = TRUE}.}
+#'     \item{\code{N0} }{the number of left-censored inter-exceedance times.}
+#'     \item{\code{N1} }{contribution from inter-exceedance times that are not
+#'       left-censored (see \strong{Details}).}
+#'     \item{\code{sum_qtd} }{the sum of the (scaled) inter-exceedance times
+#'       that are not left-censored, that is,
+#'       \eqn{q (I_0 T_0 + \cdots + I_N T_N)}{q (I_0 T_0 + ... + I_N T_N)},
+#'       where \eqn{q} is estimated by the proportion of threshold
+#'       exceedances.}
+#'     \item{\code{n_dgaps} }{the number of inter-exceedances that contribute
+#'       to the log-likelihood.}
 #'     \item{\code{q_u} }{the sample proportion of values that exceed the
 #'       threshold.}
-#'     \item{\code{d} }{the input value of \code{d}.}
+#'     \item{\code{D} }{the input value of \code{D}.}
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
 #'   using censored distributions. Extremes 23, 197–213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}

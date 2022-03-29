@@ -29,7 +29,9 @@ threshold \eqn{u} is exceeded.}
 \item{inc_cens}{A logical scalar indicating whether or not to include
 contributions from right-censored inter-exceedance times, relating to the
 first and last observations. It is known that these times are greater
-than or equal to the time observed.}
+than or equal to the time observed.
+If \code{data} has multiple columns then there will be right-censored
+first and last inter-exceedance times for each column.}
 }
 \value{
 An object (a list) of class \code{c("dgaps", "exdex")} containing
@@ -41,7 +43,7 @@ An object (a list) of class \code{c("dgaps", "exdex")} containing
       estimated using \code{\link[stats:optim]{optimHess}}.}
     \item{\code{ss} }{The list of summary statistics returned from
       \code{\link{kgaps_stat}}.}
-    \item{\code{d, u, inc_cens} }{The input values of \code{d},
+    \item{\code{D, u, inc_cens} }{The input values of \code{D},
       \code{u} and \code{inc_cens}.}
     \item{\code{call }}{The call to \code{dgaps}.}
 }
@@ -55,9 +57,16 @@ model of Suveges and Davison (2010) has a tuning parameter \eqn{K}.
 \details{
 If \code{inc_cens = FALSE} then the maximum likelihood estimate of
   the extremal index \eqn{\theta} under the \eqn{D}-gaps model of
-  Holesovsky and Fusek (2020) is calculated.
-  If \code{inc_cens = TRUE} then information from right-censored
-  inter-exceedance times is also included in the likelihood to be maximized.
+  Holesovsky and Fusek (2020) is calculated.  Under this model
+  inter-exceedance times that are less than or equal to \eqn{D} are
+  left-censored, as a strategy to mitigate model mis-specification resulting
+  from the fact that inter-exceedance times that are equal to 0 are expected
+  under the model but only positive inter-exceedance times can be observed
+  in practice.
+
+  If \code{inc_cens = TRUE} then information from the right-censored
+  first and last inter-exceedance times are also included in the likelihood
+  to be maximized.
   For an explanation of the idea see Attalides (2015).  The form of the
   log-likelihood is given in the \strong{Details} section of
   \code{\link{dgaps_stat}}.
@@ -92,11 +101,8 @@ Suveges, M. and Davison, A. C. (2010) Model
   \doi{10.1214/09-AOAS292}
 }
 \seealso{
-\code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-
-\code{\link{kgaps_stat}} for the calculation of sufficient
-  statistics for the \eqn{K}-gaps model.
+\code{\link{dgaps_stat}} for the calculation of sufficient
+  statistics for the \eqn{D}-gaps model.
 
 \code{\link{spm}} for estimation of the extremal index
   \eqn{\theta} using a semiparametric maxima method.

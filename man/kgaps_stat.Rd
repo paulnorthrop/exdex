@@ -59,7 +59,8 @@ The sample \eqn{K}-gaps are
    \eqn{S_0} is greater than zero and \eqn{I_0 = 0} otherwise, and similarly
    for \eqn{I_N}.
    The differing treatment of uncensored and right-censored \eqn{K}-gaps
-   reflects differing contributions to the likelihood.
+   reflects differing contributions to the likelihood.  Right-censored
+   \eqn{K}-gaps that are equal to zero add no information to the likelihood.
    For full details see Suveges and Davison (2010) and Attalides (2015).
 
    If \eqn{N_1 = 0} then we are in the degenerate case where there is one

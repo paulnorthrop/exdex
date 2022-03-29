@@ -706,6 +706,49 @@ kgaps_imt_old <- function(data, u, k = 1) {
   return(res)
 }
 
+# ============== Functions used by dgaps() and confint.dgaps() ============== #
+
+# =============================== dgaps_loglik ================================
+# The argument n_dgaps is not used here but it is included because it is
+# included in the list returned by dgaps_stat()
+#' @keywords internal
+#' @rdname exdex-internal
+dgaps_loglik <- function(theta, N0, N1, sum_qtd, n_dgaps, q_u, d) {
+  if (theta < 0 || theta > 1) {
+    return(-Inf)
+  }
+  loglik <- 0
+  if (N1 > 0) {
+    loglik <- loglik + 2 * N1 * log(theta) - sum_qtd * theta
+  }
+  if (N0 > 0) {
+    loglik <- loglik + N0 * log(1 - theta * exp(-theta * q_u * d))
+  }
+  return(loglik)
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+g_theta <- function(theta, q_u, d) {
+  d <- q_u * d
+  return(log(1 - theta * exp(-theta * d)))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+gd_theta <- function(theta, q_u, d) {
+  d <- q_u * d
+  return(exp(-theta * d) * (1 - theta * d) / (1 - theta * exp(-theta * d)))
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+gdd_theta <- function(theta, q_u, d) {
+  d <- q_u * d
+  etd <- exp(-theta * d)
+  return(etd * (theta * d ^ 2 - 2 * d + etd) / (1 - theta * etd) ^ 2)
+}
+
 # ========================= Function used by iwls() ========================= #
 
 # ================================== iwls_fun =================================

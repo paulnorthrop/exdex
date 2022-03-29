@@ -54,8 +54,6 @@
 #'       \eqn{\theta}.}
 #'     \item{\code{se} }{The estimated standard error of the MLE, calculated
 #'       using an algebraic expression for the observed information.}
-#'     \item{\code{se_check} }{The estimated standard error of the MLE,
-#'       estimated using \code{\link[stats:optim]{optimHess}}.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
 #'     \item{\code{D, u, inc_cens} }{The input values of \code{D},
@@ -115,7 +113,6 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   # If N1 = 0 then we are in the degenerate case where there is one cluster
   # (all K-gaps are zero) and the likelihood is maximized at theta = 0.
   N1 <- ss$N1
-  theta_se_check <- NA
   if (N1 == 0) {
     theta_mle <- 0L
   } else if (N0 == 0) {
@@ -129,7 +126,6 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
     temp <- stats::optim(theta_init, dgaps_negloglik, method = "Brent",
                          lower = 0, upper = 1)
     theta_mle <- temp$par
-    theta_se_check <- 1 / sqrt(optimHess(theta_mle, dgaps_negloglik))
   }
   # Estimate standard error
   obs_info <- 0
@@ -141,9 +137,8 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   }
   theta_se <- sqrt(1 / obs_info)
   max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))
-  res <- list(theta = theta_mle, se = theta_se, se_check = theta_se_check,
-              ss = ss, D = D, u = u, inc_cens = inc_cens,
-              max_loglik = max_loglik, call = Call)
+  res <- list(theta = theta_mle, se = theta_se, ss = ss, D = D, u = u,
+              inc_cens = inc_cens, max_loglik = max_loglik, call = Call)
   class(res) <- c("dgaps", "exdex")
   return(res)
 }

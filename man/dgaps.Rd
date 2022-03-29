@@ -39,8 +39,6 @@ An object (a list) of class \code{c("dgaps", "exdex")} containing
       \eqn{\theta}.}
     \item{\code{se} }{The estimated standard error of the MLE, calculated
       using an algebraic expression for the observed information.}
-    \item{\code{se_check} }{The estimated standard error of the MLE,
-      estimated using \code{\link[stats:optim]{optimHess}}.}
     \item{\code{ss} }{The list of summary statistics returned from
       \code{\link{kgaps_stat}}.}
     \item{\code{D, u, inc_cens} }{The input values of \code{D},

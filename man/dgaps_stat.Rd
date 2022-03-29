@@ -54,7 +54,7 @@ The sample inter-exceedance times are
     2 N_1 \log \theta - \theta q (I_0 T_0 + \cdots + I_N T_N),}{%
     l(\theta; S_0, ..., S_N) = N_0 log(1 - exp(-\theta d)) +
     2 N_1 log \theta - \theta q (I_0 T_0 + ... + I_N T_N),}
-   where \eqn{I_j = 1} is \eqn{T_j > D} and \eqn{I_j = 0} otherwise,
+   where \eqn{I_j = 1} if \eqn{T_j > D} and \eqn{I_j = 0} otherwise,
    \eqn{q} is the threshold exceedance probability,
    \eqn{N_0} is the number of sample inter-exceedance times that are
    left-censored, that is, less than or equal to \eqn{D} and (apart from an

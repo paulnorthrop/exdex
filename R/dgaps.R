@@ -96,7 +96,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
     stop("u must be less than max(data)")
   }
   if (!is.numeric(D) || length(D) != 1) {
-    stop("d must be a numeric scalar")
+    stop("D must be a numeric scalar")
   }
   # If there are missing values then use split_by_NAs to extract sequences
   # of non-missing values

@@ -24,9 +24,9 @@ first and last observation.  See Attalides (2015) for details.}
 }
 \value{
 A list containing the sufficient statistics, with components
-    \item{\code{N0} }{the number of zero \eqn{K}-gaps}
+    \item{\code{N0} }{the number of zero \eqn{K}-gaps.}
     \item{\code{N1} }{contribution from non-zero \eqn{K}-gaps (see
-      \strong{Details})}
+      \strong{Details}).}
     \item{\code{sum_qs} }{the sum of the (scaled) \eqn{K}-gaps, i.e.
       \eqn{q (S_0 + \cdots + S_N)}{q (S_0 + ... + S_N)}, where \eqn{q}
       is estimated by the proportion of threshold exceedances.}

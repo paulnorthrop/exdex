@@ -60,6 +60,7 @@
 #'       \code{\link{kgaps_stat}}.}
 #'     \item{\code{D, u, inc_cens} }{The input values of \code{D},
 #'       \code{u} and \code{inc_cens}.}
+#'     \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
 #'     \item{\code{call }}{The call to \code{dgaps}.}
 #' @seealso \code{\link{dgaps_stat}} for the calculation of sufficient
 #'   statistics for the \eqn{D}-gaps model.
@@ -139,8 +140,10 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
   theta_se <- sqrt(1 / obs_info)
+  max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))
   res <- list(theta = theta_mle, se = theta_se, se_check = theta_se_check,
-              ss = ss, D = D, u = u, inc_cens = inc_cens, call = Call)
+              ss = ss, D = D, u = u, inc_cens = inc_cens,
+              max_loglik = max_loglik, call = Call)
   class(res) <- c("dgaps", "exdex")
   return(res)
 }

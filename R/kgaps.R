@@ -68,6 +68,7 @@
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @examples
 #' ### S&P 500 index
+#'
 #' u <- quantile(sp500, probs = 0.60)
 #' theta <- kgaps(sp500, u)
 #' theta

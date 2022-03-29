@@ -61,6 +61,7 @@ The maximum likelihood estimate of the extremal index \eqn{\theta}
 }
 \examples{
 ### S&P 500 index
+
 u <- quantile(sp500, probs = 0.60)
 theta <- kgaps(sp500, u)
 theta

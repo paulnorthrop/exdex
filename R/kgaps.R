@@ -26,10 +26,11 @@
 #'   contributions from right-censored inter-exceedance times, relating to the
 #'   first and last observations.  It is known that these times are greater
 #'   than or equal to the time observed. See Attalides (2015) for details.
-#' @details The maximum likelihood estimate of the extremal index \eqn{\theta}
-#'   under the \eqn{K}-gaps model of Suveges and Davison (2010) is calculated.
+#' @details If \code{inc_cens = FALSE} then the maximum likelihood estimate of
+#'   the extremal index \eqn{\theta} under the \eqn{K}-gaps model of
+#'   Suveges and Davison (2010) is calculated.
 #'   If \code{inc_cens = TRUE} then information from right-censored
-#'   inter-exceedance times is included in the likelihood to be maximized,
+#'   inter-exceedance times is also included in the likelihood to be maximized,
 #'   following Attalides (2015).  The form of the log-likelihood is given in
 #'   the \strong{Details} section of \code{\link{kgaps_stat}}.
 #'

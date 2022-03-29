@@ -49,10 +49,11 @@ based on the \eqn{K}-gaps model for threshold inter-exceedances times of
 Suveges and Davison (2010).
 }
 \details{
-The maximum likelihood estimate of the extremal index \eqn{\theta}
-  under the \eqn{K}-gaps model of Suveges and Davison (2010) is calculated.
+If \code{inc_cens = FALSE} then the maximum likelihood estimate of
+  the extremal index \eqn{\theta} under the \eqn{K}-gaps model of
+  Suveges and Davison (2010) is calculated.
   If \code{inc_cens = TRUE} then information from right-censored
-  inter-exceedance times is included in the likelihood to be maximized,
+  inter-exceedance times is also included in the likelihood to be maximized,
   following Attalides (2015).  The form of the log-likelihood is given in
   the \strong{Details} section of \code{\link{kgaps_stat}}.
 

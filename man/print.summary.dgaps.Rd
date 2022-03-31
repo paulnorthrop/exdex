@@ -7,7 +7,7 @@
 \method{print}{summary.dgaps}(x, ...)
 }
 \arguments{
-\item{x}{An object of class "summary.pm", a result of a call to
+\item{x}{An object of class \code{"summary.dgaps"}, a result of a call to
 \code{\link{summary.dgaps}}.}
 
 \item{...}{Additional arguments passed on to \code{\link{print.default}}.}

@@ -127,7 +127,7 @@ summary.kgaps <- function(object, digits = max(3, getOption("digits") - 3L),
 #'
 #' \code{print} method for an object \code{x} of class \code{"summary.kgaps"}.
 #'
-#' @param x An object of class "summary.pm", a result of a call to
+#' @param x An object of class \code{"summary.kgaps"}, a result of a call to
 #'   \code{\link{summary.kgaps}}.
 #' @param ... Additional arguments passed on to \code{\link{print.default}}.
 #' @return Prints the numeric matrix \code{x$matrix} returned from

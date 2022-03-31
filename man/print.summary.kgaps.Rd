@@ -7,7 +7,7 @@
 \method{print}{summary.kgaps}(x, ...)
 }
 \arguments{
-\item{x}{An object of class "summary.pm", a result of a call to
+\item{x}{An object of class \code{"summary.kgaps"}, a result of a call to
 \code{\link{summary.kgaps}}.}
 
 \item{...}{Additional arguments passed on to \code{\link{print.default}}.}

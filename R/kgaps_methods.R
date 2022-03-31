@@ -130,7 +130,7 @@ summary.kgaps <- function(object, digits = max(3, getOption("digits") - 3L),
 #' @param x An object of class "summary.pm", a result of a call to
 #'   \code{\link{summary.kgaps}}.
 #' @param ... Additional arguments passed on to \code{\link{print.default}}.
-#' @return Prints the numeric matrix \code{x$summary} returned from
+#' @return Prints the numeric matrix \code{x$matrix} returned from
 #' \code{\link{summary.kgaps}}.
 #' @seealso \code{\link{kgaps}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.

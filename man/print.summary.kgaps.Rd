@@ -13,7 +13,7 @@
 \item{...}{Additional arguments passed on to \code{\link{print.default}}.}
 }
 \value{
-Prints the numeric matrix \code{x$summary} returned from
+Prints the numeric matrix \code{x$matrix} returned from
 \code{\link{summary.kgaps}}.
 }
 \description{

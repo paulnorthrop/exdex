@@ -239,8 +239,8 @@ summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
 #' @param x An object of class \code{"summary.spm"}, a result of a call to
 #'   \code{\link{summary.spm}}.
 #' @param ... Additional arguments passed on to \code{\link{print.default}}.
-#' @details Prints the call and the numeric matrix \code{x$matrix} returned from
-#'   \code{\link{summary.spm}}.
+#' @details Prints the call and the numeric matrix \code{x$matrix} returned
+#'   from \code{\link{summary.spm}}.
 #' @return The argument \code{x}, invisibly, as for all
 #'   \code{\link[base]{print}} methods.
 #' @seealso \code{\link{spm}} for estimation of the extremal index

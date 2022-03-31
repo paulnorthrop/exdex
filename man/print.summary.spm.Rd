@@ -20,8 +20,8 @@ The argument \code{x}, invisibly, as for all
 \code{print} method for an object \code{x} of class \code{"summary.spm"}.
 }
 \details{
-Prints the call and the numeric matrix \code{x$matrix} returned from
-  \code{\link{summary.spm}}.
+Prints the call and the numeric matrix \code{x$matrix} returned
+  from \code{\link{summary.spm}}.
 }
 \section{Examples}{
 

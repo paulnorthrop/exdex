@@ -45,7 +45,7 @@ vcov.dgaps <- function(object, ...) {
 #'   \code{\link{dgaps}}.
 #' @param ... Further arguments.  None are used.
 #' @return A numeric scalar: the number of inter-exceedance times used in the
-#'   fit. If \code{x$inc_cens = TRUE} then this includes 2 censored
+#'   fit. If \code{x$inc_cens = TRUE} then this includes up to 2 censored
 #'   observations.
 #' @export
 nobs.dgaps <- function(object, ...) {
@@ -53,6 +53,33 @@ nobs.dgaps <- function(object, ...) {
     stop("use only with \"exdex\" objects")
   }
   return(object$ss$n_dgaps)
+}
+
+# ================================ logLik.dgaps ============================== #
+
+#' Extract log-likelihood for objects of class \code{"dgaps"}
+#'
+#' \code{nobs} method for class \code{c("dgaps", "exdex")}.
+#'
+#' @param object an object of class \code{"dgaps"}, a result of a call to
+#'   \code{\link{dgaps}}.
+#' @param ... Additional optional arguments. At present no optional
+#'   arguments are used.
+#' @return An object of class \code{"logLik"}: a numeric scalar with
+#' value equal to the maximised log-likelihood.  The returned object also has
+#' attributes \code{nobs}, the numbers of \eqn{K}-gaps that contribute to the
+#' log-likelihood and \code{"df"}, which is equal to the number of total number
+#' of parameters estimated (1).
+#' @export
+logLik.dgaps <- function(object, ...) {
+  if (!inherits(object, "dgaps")) {
+    stop("use only with \"dgaps\" objects")
+  }
+  val <- object$max_loglik
+  attr(val, "nobs") <- nobs(object)
+  attr(val, "df") <- 1
+  class(val) <- "logLik"
+  return(val)
 }
 
 # ============================ print.dgaps() ================================== #

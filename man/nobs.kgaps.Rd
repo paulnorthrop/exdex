@@ -14,7 +14,7 @@
 }
 \value{
 A numeric scalar: the number of inter-exceedance times used in the
-  fit. If \code{x$inc_cens = TRUE} then this includes 2 censored
+  fit. If \code{x$inc_cens = TRUE} then this includes up to 2 censored
   observations.
 }
 \description{

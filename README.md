@@ -8,6 +8,10 @@ Status](https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?br
 [![Coverage
 Status](https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master)](https://codecov.io/github/paulnorthrop/exdex?branch=master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/exdex)](https://cran.r-project.org/package=exdex)
+[![Downloads
+(monthly)](https://cranlogs.r-pkg.org/badges/exdex?color=brightgreen)](https://cran.r-project.org/package=exdex)
+[![Downloads
+(total)](https://cranlogs.r-pkg.org/badges/grand-total/exdex?color=brightgreen)](https://cran.r-project.org/package=exdex)
 
 ## Estimation of the Extremal Index
 

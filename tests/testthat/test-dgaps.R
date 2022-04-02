@@ -12,7 +12,7 @@ res1 <- signif(c(theta$theta, theta$se),
 res2 <- summary(theta)$matrix
 
 test_that("Fitted object and summary() agree", {
-  testthat::expect_equivalent(res1, res2)
+  testthat::expect_equal(res1, res2, ignore_attr = TRUE)
 })
 
 # Check that dgaps() gives the same output for vector and matrix data input
@@ -25,7 +25,7 @@ theta$call <- NULL
 theta2$call <- NULL
 
 test_that("dgaps: vector data vs matrix data", {
-  testthat::expect_equivalent(theta, theta2)
+  testthat::expect_equal(theta, theta2, ignore_attr = TRUE)
 })
 
 ### Check that summary.dgaps() returns the correct values
@@ -40,7 +40,7 @@ res1 <- signif(c(theta$theta, theta$se),
 res2 <- summary(theta)$matrix
 
 test_that("Fitted object and summary() agree", {
-  testthat::expect_equivalent(res1, res2)
+  testthat::expect_equal(res1, res2, ignore_attr = TRUE)
 })
 
 # Check that dgaps() gives the same output for vector and matrix data input
@@ -53,6 +53,6 @@ theta$call <- NULL
 theta2$call <- NULL
 
 test_that("dgaps: vector data vs matrix data", {
-  testthat::expect_equivalent(theta, theta2)
+  testthat::expect_equal(theta, theta2, ignore_attr = TRUE)
 })
 

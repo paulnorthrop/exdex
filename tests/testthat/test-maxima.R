@@ -12,17 +12,17 @@ temp <- all_disjoint_maxima(x, b = 3)
 y_mat <- matrix(x[index], 3, 1)
 x_mat <- cbind(1:9)
 test_that("x = 1:9, b = 3, all_disjoint_maxima", {
-  testthat::expect_equal(temp$y_mat, y_mat, tol = my_tol)
+  testthat::expect_equal(temp$y_mat, y_mat, tolerance = my_tol)
 })
 test_that("x = 1:9, b = 3, all_disjoint_maxima input values", {
-  testthat::expect_equal(temp$x_mat, x_mat, tol = my_tol)
+  testthat::expect_equal(temp$x_mat, x_mat, tolerance = my_tol)
 })
 temp2 <- disjoint_maxima(x, b = 3)
 test_that("x = 1:9, b = 3, disjoint_maxima", {
-  testthat::expect_equal(temp$y_mat, as.matrix(temp2$y), tol = my_tol)
+  testthat::expect_equal(temp$y_mat, as.matrix(temp2$y), tolerance = my_tol)
 })
 test_that("x = 1:9, b = 3, disjoint_maxima input values", {
-  testthat::expect_equal(temp$x_mat, as.matrix(temp2$x), tol = my_tol)
+  testthat::expect_equal(temp$x_mat, as.matrix(temp2$x), tolerance = my_tol)
 })
 
 x <- 1:11
@@ -31,17 +31,17 @@ index <- c(3, 6, 9, 4, 7, 10, 5, 8, 11)
 y_mat <- matrix(x[index], 3, 3)
 x_mat <- cbind(1:9, 2:10, 3:11)
 test_that("x = 1:11, b = 3, all_disjoint_maxima", {
-  testthat::expect_equal(temp$y_mat, y_mat, tol = my_tol)
+  testthat::expect_equal(temp$y_mat, y_mat, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_disjoint_maxima input values", {
-  testthat::expect_equal(temp$x_mat, x_mat, tol = my_tol)
+  testthat::expect_equal(temp$x_mat, x_mat, tolerance = my_tol)
 })
 temp2 <- disjoint_maxima(x, b = 3)
 test_that("x = 1:11, b = 3, all_disjoint_maxima", {
-  testthat::expect_equal(temp$y_mat[, 1], temp2$y, tol = my_tol)
+  testthat::expect_equal(temp$y_mat[, 1], temp2$y, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_disjoint_maxima input values", {
-  testthat::expect_equal(temp$x_mat[, 1], temp2$x, tol = my_tol)
+  testthat::expect_equal(temp$x_mat[, 1], temp2$x, tolerance = my_tol)
 })
 
 #context("sliding_maxima")
@@ -54,17 +54,17 @@ index <- 3:9
 y_vec <- x[index]
 x_vec <- 1:9
 test_that("x = 1:9, b = 3, all_maxima", {
-  testthat::expect_equal(temp$ys, y_vec, tol = my_tol)
+  testthat::expect_equal(temp$ys, y_vec, tolerance = my_tol)
 })
 test_that("x = 1:9, b = 3, all_maxima input values", {
-  testthat::expect_equal(temp$xs, x_vec, tol = my_tol)
+  testthat::expect_equal(temp$xs, x_vec, tolerance = my_tol)
 })
 temp2 <- sliding_maxima(x, b = 3)
 test_that("x = 1:9, b = 3, all_maxima", {
-  testthat::expect_equal(temp2$y, y_vec, tol = my_tol)
+  testthat::expect_equal(temp2$y, y_vec, tolerance = my_tol)
 })
 test_that("x = 1:9, b = 3, all_maxima input values", {
-  testthat::expect_equal(temp2$x, x_vec, tol = my_tol)
+  testthat::expect_equal(temp2$x, x_vec, tolerance = my_tol)
 })
 
 x <- 1:11
@@ -73,31 +73,31 @@ index <- c(3, 6, 9, 4, 7, 10, 5, 8, 11)
 y_mat <- matrix(x[index], 3, 3)
 x_mat <- cbind(1:9, 2:10, 3:11)
 test_that("x = 1:11, b = 3, all_maxima", {
-  testthat::expect_equal(temp$yd, y_mat, tol = my_tol)
+  testthat::expect_equal(temp$yd, y_mat, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_maxima input values", {
-  testthat::expect_equal(temp$xd, x_mat, tol = my_tol)
+  testthat::expect_equal(temp$xd, x_mat, tolerance = my_tol)
 })
 temp2 <- disjoint_maxima(x, b = 3)
 test_that("x = 1:11, b = 3, all_disjoint_maxima", {
-  testthat::expect_equal(temp$yd[, 1], temp2$y, tol = my_tol)
+  testthat::expect_equal(temp$yd[, 1], temp2$y, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_disjoint_maxima input values", {
-  testthat::expect_equal(temp$xd[, 1], temp2$x, tol = my_tol)
+  testthat::expect_equal(temp$xd[, 1], temp2$x, tolerance = my_tol)
 })
 temp3 <- all_maxima(x, b = 3, which_dj = "first")
 temp4 <- all_maxima(x, b = 3, which_dj = "last")
 test_that("x = 1:11, b = 3, all_maxima, which_dj = first", {
-  testthat::expect_equal(temp$yd[, 1, drop = FALSE], temp3$yd, tol = my_tol)
+  testthat::expect_equal(temp$yd[, 1, drop = FALSE], temp3$yd, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_maxima, which_dj = first, input values", {
-  testthat::expect_equal(temp$xd[, 1, drop = FALSE], temp3$xd, tol = my_tol)
+  testthat::expect_equal(temp$xd[, 1, drop = FALSE], temp3$xd, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_maxima, which_dj = first", {
-  testthat::expect_equal(temp$yd[, 3, drop = FALSE], temp4$yd, tol = my_tol)
+  testthat::expect_equal(temp$yd[, 3, drop = FALSE], temp4$yd, tolerance = my_tol)
 })
 test_that("x = 1:11, b = 3, all_maxima, which_dj = first, input values", {
-  testthat::expect_equal(temp$xd[, 3, drop = FALSE], temp4$xd, tol = my_tol)
+  testthat::expect_equal(temp$xd[, 3, drop = FALSE], temp4$xd, tolerance = my_tol)
 })
 
 

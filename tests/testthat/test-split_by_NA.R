@@ -7,7 +7,7 @@ x <- matrix(1:50, 10, 5)
 res <- split_by_NAs(x)
 
 test_that("A matrix with no missings is not modified", {
-  testthat::expect_equivalent(x, res)
+  testthat::expect_equal(x, res, ignore_attr = TRUE)
 })
 
 # Check that splitting a matrix into non missing sequences by column gives
@@ -39,7 +39,7 @@ newx[1:6, 8] <- 41:46
 res <- split_by_NAs(x)
 
 test_that("split_by_NAs is correct, example 1", {
-  testthat::expect_equivalent(newx, res)
+  testthat::expect_equal(newx, res, ignore_attr = TRUE)
 })
 
 ### Example 2
@@ -63,7 +63,7 @@ newx2[1:5, 4] <- 23:27
 res2 <- split_by_NAs(x2)
 
 test_that("split_by_NAs is correct, example 2", {
-  testthat::expect_equivalent(newx2, res2)
+  testthat::expect_equal(newx2, res2, ignore_attr = TRUE)
 })
 
 ### Basic checks for the cheeseboro data

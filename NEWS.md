@@ -7,8 +7,12 @@
 ## Bug fixes and minor improvements
 
 * The value returned by `nobs.kgaps()` was incorrect in cases where there are censored K-gaps that are equal to zero.  These K-gaps should not contribute to the number of observations. This has been corrected.
+
 * A `logLik` method for objects inheriting from class `"kgaps"` has been added. 
-* In the (unexport, internal) function `kgaps_conf_int()` the limits of the confidence intervals for the extremal index based on the K-gaps model are constrained manually to (0, 1) to avoid problems in calculating likelihood-based confidence intervals in cases where the the log-likelihood is greater than the interval cutoff when theta = 1.
+
+* In the (unexported, internal) function `kgaps_conf_int()` the limits of the confidence intervals for the extremal index based on the K-gaps model are constrained manually to (0, 1) to avoid problems in calculating likelihood-based confidence intervals in cases where the the log-likelihood is greater than the interval cutoff when theta = 1.
+
+* Activated 3rd edition of the `testthat` package
 
 # exdex 1.1.1
 

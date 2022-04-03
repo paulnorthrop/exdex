@@ -33,8 +33,8 @@ estimates that are greater than 1 may be obtained.}
 \item{...}{Further arguments.  None are used.}
 }
 \value{
-A numeric scalar (or a vector of length 2 if
-  \code{estimator = "both"}): the required estimate(s) of the extremal index
+A numeric scalar (or a vector of length 3 if
+  \code{estimator = "all"}): the required estimate(s) of the extremal index
   \eqn{\theta}.
 }
 \description{

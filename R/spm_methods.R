@@ -18,8 +18,8 @@
 #'   that is, they are constrained to lie in (0, 1].  Otherwise,
 #'   estimates that are greater than 1 may be obtained.
 #' @param ... Further arguments.  None are used.
-#' @return A numeric scalar (or a vector of length 2 if
-#'   \code{estimator = "both"}): the required estimate(s) of the extremal index
+#' @return A numeric scalar (or a vector of length 3 if
+#'   \code{estimator = "all"}): the required estimate(s) of the extremal index
 #'   \eqn{\theta}.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
@@ -66,12 +66,12 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #'   based on sliding maxima or on disjoint maxima.
 #' @param estimator A character vector specifying which of the three variants
 #'   of the semiparametric maxima estimator to use: \code{"N2015", "BB2018"}
-#'   or \code{"BB2018b"}.  See \code{\link{spm}} for details.
-#'   If \code{estimator = "all"} then the
+#'   or \code{"BB2018b"}. See \code{\link{spm}} for details. A subset of these
+#'   estimators may be selected. If \code{estimator = "all"} then the
 #'   estimated variances of all variants are returned.
 #' @param ... Further arguments.  None are used.
 #' @return A 1 by 1 numeric matrix if \code{estimator = "N2015"} or
-#'   \code{"BB2018"} and a vector of length 2 if \code{estimator = "both"},
+#'   \code{"BB2018"} and a vector of length 3 if \code{estimator = "all"},
 #'   containing the estimated variance(s) of the estimator(s).
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #'   estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
@@ -95,8 +95,12 @@ vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
   se <- switch(maxima,
                sliding = object$se_sl,
                disjoint = object$se_dj)
-  vcov <- se[estimator] ^ 2
-  return(vcov)
+  vc <- se[estimator] ^ 2
+  if (length(vc) == 1) {
+    dim(vc) <- c(1, 1)
+    dimnames(vc) <- list(estimator, estimator)
+  }
+  return(vc)
 }
 
 # ============================ nobs.spm() =================================== #

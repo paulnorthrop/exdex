@@ -13,7 +13,9 @@ coef.kgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
-  return(object$theta)
+  val <- object$theta
+  names(val) <- "theta"
+  return(val)
 }
 
 # =========================== vcov.kgaps() ================================== #
@@ -32,7 +34,10 @@ vcov.kgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
-  return(object$se ^ 2)
+  vc <- object$se ^ 2
+  dim(vc) <- c(1, 1)
+  dimnames(vc) <- list("theta", "theta")
+  return(vc)
 }
 
 # =========================== nobs.kgaps() ================================== #

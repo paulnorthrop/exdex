@@ -93,7 +93,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
     stop("u must be a numeric scalar")
   }
   if (u >= max(data, na.rm = TRUE)) {
-    stop("u must be less than max(data)")
+    stop("'u' must be less than 'max(data, na.rm = TRUE)'")
   }
   if (!is.numeric(D) || length(D) != 1) {
     stop("D must be a numeric scalar")

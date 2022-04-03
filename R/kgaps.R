@@ -101,7 +101,7 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
     stop("u must be a numeric scalar")
   }
   if (u >= max(data, na.rm = TRUE)) {
-    stop("u must be less than max(data)")
+    stop("'u' must be less than 'max(data, na.rm = TRUE)'")
   }
   if (!is.numeric(k) || k < 0 || length(k) != 1) {
     stop("k must be a non-negative scalar")

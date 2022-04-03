@@ -12,7 +12,7 @@
 
 * In the (unexported, internal) function `kgaps_conf_int()` the limits of the confidence intervals for the extremal index based on the K-gaps model are constrained manually to (0, 1) to avoid problems in calculating likelihood-based confidence intervals in cases where the the log-likelihood is greater than the interval cutoff when theta = 1.
 
-* In `kgaps()` the smallest allowable value of `k` is 1.
+* In the documentation of the argument `k` to `kgaps()` it is noted that in practice \code{k} should be no smaller than 1.
 
 * Activated 3rd edition of the `testthat` package
 

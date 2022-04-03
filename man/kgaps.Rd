@@ -19,12 +19,14 @@ kgaps(data, u, k = 1, inc_cens = TRUE)
 
 \item{u}{A numeric scalar.  Extreme value threshold applied to data.}
 
-\item{k}{A numeric scalar that must be no smaller than 1.  Run parameter
-\eqn{K}, as defined in Suveges and Davison (2010).  Threshold
-inter-exceedances times that are not larger than \code{k} units are
-assigned to the same cluster, resulting in a \eqn{K}-gap equal to zero.
-Specifically, the \eqn{K}-gap \eqn{S} corresponding to an inter-exceedance
-time of \eqn{T} is given by \eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.}
+\item{k}{A non-negative numeric scalar. Run parameter \eqn{K}, as defined in
+Suveges and Davison (2010).  Threshold inter-exceedances times that are
+not larger than \code{k} units are assigned to the same cluster, resulting
+in a \eqn{K}-gap equal to zero. Specifically, the \eqn{K}-gap \eqn{S}
+corresponding to an inter-exceedance time of \eqn{T} is given by
+\eqn{S = \max(T - K, 0)}{S = max(T - K, 0)}.  In practice, \eqn{k} should
+be no smaller than 1, because when \eqn{k} is less than 1 the estimate
+of \eqn{\theta} is always equal to 1.}
 
 \item{inc_cens}{A logical scalar indicating whether or not to include
 contributions from right-censored inter-exceedance times, relating to the

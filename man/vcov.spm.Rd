@@ -16,9 +16,9 @@ based on sliding maxima or on disjoint maxima.}
 
 \item{estimator}{A character vector specifying which of the three variants
 of the semiparametric maxima estimator to use: \code{"N2015", "BB2018"}
-or \code{"BB2018b"}. See \code{\link{spm}} for details. A subset of these
-estimators may be selected. If \code{estimator = "all"} then the
-estimated variances of all variants are returned.}
+or \code{"BB2018b"}. See \code{\link{spm}} for details. If
+\code{estimator = "all"} then the estimated variances of all variants are
+returned.}
 
 \item{...}{Further arguments.  None are used.}
 }

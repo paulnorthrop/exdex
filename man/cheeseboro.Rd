@@ -5,7 +5,7 @@
 \alias{cheeseboro}
 \title{Cheeseboro hourly maximum wind gusts}
 \format{
-A 774 by 10 numeric matrix.  Column \code{i} contains the hourly
+A 744 by 10 numeric matrix.  Column \code{i} contains the hourly
   maximum wind gusts (in miles per hour) from Cheeseboro in the year
   2000 + \code{i} - 1. The columns are named 2000, 2001, ..., 2009 and the
   rows are named day\code{j}hour\code{k}, where \code{j} is the day of the

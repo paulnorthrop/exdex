@@ -742,15 +742,38 @@ g_theta <- function(theta, q_u, D) {
 #' @rdname exdex-internal
 gd_theta <- function(theta, q_u, D) {
   d <- q_u * D
-  return(exp(-theta * d) * (1 - theta * d) / (1 - theta * exp(-theta * d)))
+  td <- theta * d
+  val <- (td - 1) / (exp(td) - theta)
+  return(val)
 }
 
 #' @keywords internal
 #' @rdname exdex-internal
 gdd_theta <- function(theta, q_u, D) {
   d <- q_u * D
-  etd <- exp(-theta * d)
-  return(etd * (theta * d ^ 2 - 2 * d + etd) / (1 - theta * etd) ^ 2)
+  etd <- exp(theta * d)
+  val <- -(theta * d ^ 2 * etd - 2 * d * etd + 1) / (etd - theta) ^ 2
+  return(val)
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+gddd_theta <- function(theta, q_u, D) {
+  d <- q_u * D
+  etd <- exp(theta * d)
+  num <- theta * d ^ 3 * etd * (etd + theta) -
+    3 * d ^ 2 * etd * (etd + theta) + 6 * d * etd - 2
+  den <- (etd - theta) ^ 3
+  val <- num / den
+  return(val)
+}
+
+#' @keywords internal
+#' @rdname exdex-internal
+for_Ddj <- function(theta, q_u, D) {
+  val <- 2 * gd_theta(theta, q_u, D) * gdd_theta(theta, q_u, D) -
+    gddd_theta(theta, q_u, D)
+  return(val)
 }
 
 # ============================== dgaps_conf_int ===============================

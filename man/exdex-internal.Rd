@@ -23,6 +23,8 @@
 \alias{g_theta}
 \alias{gd_theta}
 \alias{gdd_theta}
+\alias{gddd_theta}
+\alias{for_Ddj}
 \alias{dgaps_conf_int}
 \alias{iwls_fun}
 \title{Internal exdex functions}
@@ -83,6 +85,10 @@ g_theta(theta, q_u, D)
 gd_theta(theta, q_u, D)
 
 gdd_theta(theta, q_u, D)
+
+gddd_theta(theta, q_u, D)
+
+for_Ddj(theta, q_u, D)
 
 dgaps_conf_int(theta_mle, ss, conf = 95)
 

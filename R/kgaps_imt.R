@@ -243,7 +243,7 @@ kgaps_imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   #  in this case we divide by zero in calculating Ddj.
   # If this happens then we convert the NaN to NA.
   # Note: all the right-censored K-gaps have qS > 0, so the qS == 0 terms
-  #  have not contribution from the right-censored observations
+  #  have no contribution from the right-censored observations
   ldj <- ifelse(qS == 0, -1 / (1 - theta), mldj / theta) - qS
   Ij  <- ifelse(qS == 0, 1 / (1 - theta) ^ 2, mIj / theta ^ 2)
   Jj <- ldj ^ 2

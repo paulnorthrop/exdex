@@ -47,7 +47,7 @@ Performs the information matrix test (IMT) of Suveges and Davison (2010) to
 diagnose misspecification of the \eqn{K}-gaps model.
 }
 \details{
-The IMT is performed a over grid of all
+The \eqn{K}-gaps IMT is performed a over grid of all
   combinations of threshold and \eqn{K} in the vectors \code{u}
   and \code{k}.  If the estimate of \eqn{\theta} is 0 then the
   IMT statistic, and its associated \eqn{p}-value will be \code{NA}.

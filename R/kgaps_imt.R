@@ -22,7 +22,7 @@
 #' @param inc_cens A logical scalar indicating whether or not to include
 #'   contributions from censored inter-exceedance times, relating to the
 #'   first and last observations.  See Attalides (2015) for details.
-#' @details The IMT is performed a over grid of all
+#' @details The \eqn{K}-gaps IMT is performed a over grid of all
 #'   combinations of threshold and \eqn{K} in the vectors \code{u}
 #'   and \code{k}.  If the estimate of \eqn{\theta} is 0 then the
 #'   IMT statistic, and its associated \eqn{p}-value will be \code{NA}.

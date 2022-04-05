@@ -227,8 +227,8 @@ kgaps_stat <- function(data, u, k = 1, inc_cens = TRUE) {
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
   }
-  if (!is.numeric(k) || length(k) != 1) {
-    stop("k must be a numeric scalar")
+  if (!is.numeric(k) || k < 0 || length(k) != 1) {
+    stop("k must be a non-negative scalar")
   }
   # If all the data are smaller than the threshold then return null results
   if (u >= max(data, na.rm = TRUE)) {

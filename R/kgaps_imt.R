@@ -74,6 +74,9 @@
 #' imt <- kgaps_imt(cheeseboro, u = u, k = 1:5)
 #' @export
 kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
+  if (any(k < 0)) {
+    stop("k must be non-negative")
+  }
   # Remove any thresholds that are greater than all the observations
   u_ok <- vapply(u, function(u) any(data > u), TRUE)
   u <- u[u_ok]
@@ -176,8 +179,8 @@ kgaps_imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
   }
-  if (!is.numeric(k) || length(k) != 1) {
-    stop("k must be a numeric scalar")
+  if (!is.numeric(k) || k < 0 || length(k) != 1) {
+    stop("k must be a non-negative scalar")
   }
   #
   # Calculate the statistics in log-likelihood, as in kgaps_stat()
@@ -240,7 +243,7 @@ kgaps_imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   # An estimate theta = 1 occurs if all the K-gaps are positive (qS > 0):
   #  in this case we never attempt to divide by 0.
   # An estimate theta = 0 occurs only if all the K-gaps are zero (qS = 0):
-  #  in this case we divide by zero in calculating Ddj.
+  #  in this case we divide by zero in calculating Ddj (mDdj1 * qS / theta ^ 2)
   # If this happens then we convert the NaN to NA.
   # Note: all the right-censored K-gaps have qS > 0, so the qS == 0 terms
   #  have no contribution from the right-censored observations

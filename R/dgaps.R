@@ -95,8 +95,8 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   if (u >= max(data, na.rm = TRUE)) {
     stop("'u' must be less than 'max(data, na.rm = TRUE)'")
   }
-  if (!is.numeric(D) || length(D) != 1) {
-    stop("D must be a numeric scalar")
+  if (!is.numeric(D) || D < 0 || length(D) != 1) {
+    stop("D must be a non-negative scalar")
   }
   # If there are missing values then use split_by_NAs to extract sequences
   # of non-missing values
@@ -231,8 +231,8 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
   }
-  if (!is.numeric(D) || length(D) != 1) {
-    stop("k must be a numeric scalar")
+  if (!is.numeric(D) || D < 0 || length(D) != 1) {
+    stop("D must be a non-negative scalar")
   }
   # If all the data are smaller than the threshold then return null results
   if (u >= max(data, na.rm = TRUE)) {
@@ -243,7 +243,7 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
   exc_u <- (1:nx)[data > u]
   N_u <- length(exc_u)
   q_u <- N_u / nx
-  # Inter-exceedances times and K-gaps
+  # Inter-exceedances times and left-censoring indicator
   T_u <- diff(exc_u)
   left_censored <- T_u <= D
   # N0, N1, sum of scaled inter-exceedance times that are greater than d,
@@ -261,7 +261,7 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
     # T_u_cens <= d adds no information, because we have no idea to which part
     # of the log-likelihood they would contribute
     left_censored_cens <- T_u_cens <= D
-    # N0, N1, sum of scaled inter-exceedance times that are greater than d,
+    # N0, N1, sum of scaled inter-exceedance times that are greater than D,
     # that is, not left-censored
     N1_cens <- sum(T_u_cens[!left_censored_cens])
     n_gaps <- n_dgaps + N1_cens

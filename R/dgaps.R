@@ -130,7 +130,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   # Estimate standard error
   obs_info <- 0
   if (N0 > 0) {
-    obs_info <- obs_info + N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
+    obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
   }
   if (N1 > 0) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2

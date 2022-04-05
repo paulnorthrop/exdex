@@ -94,8 +94,8 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
     theta <- kgaps(data, u, k, inc_cens = inc_cens)$theta
     # Contributions to the test statistic from each observation, returning a list
     # with a list of (ldj, Ij, Jj, dj, Ddj, n_kgaps) for each column in data
-    imt_stats_list <- apply(data, 2, imt_stat, theta = theta, u = u, k = k,
-                            inc_cens = inc_cens)
+    imt_stats_list <- apply(data, 2, kgaps_imt_stat, theta = theta, u = u,
+                            k = k, inc_cens = inc_cens)
     # Concatenate the results from different columns
     sc <- Reduce(f = function(...) Map(c, ...), imt_stats_list)
     # Calculate the components of the test statistic
@@ -126,7 +126,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
   return(res)
 }
 
-# ================================ imt_stat ================================= #
+# ============================= kgaps_imt_stat ============================== #
 
 #' Statistics for the information matrix test
 #'
@@ -171,7 +171,7 @@ kgaps_imt <- function(data, u, k = 1, inc_cens = TRUE) {
 #'   PhD thesis, University College London.
 #'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @export
-imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
+kgaps_imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")

@@ -1,4 +1,4 @@
-#context("imt_stat")
+#context("kgaps_imt_stat_simple")
 
 # A small example dataset
 
@@ -56,11 +56,12 @@ test_that("simple: kgaps_stat() correct for k = 3, inc_cens = TRUE", {
 })
 
 # 2. Check that the lengths of the vector of statistics returned from
-#    imt_stat() equal n_kgaps
+#    kgaps_imt_stat() equal n_kgaps
 
 test_fn <- function(k, inc_cens) {
   theta <- kgaps(data = x, u = u, k = k, inc_cens = inc_cens)$theta
-  res <- imt_stat(data = x, theta = theta, u = u, k = k, inc_cens = inc_cens)
+  res <- kgaps_imt_stat(data = x, theta = theta, u = u, k = k,
+                        inc_cens = inc_cens)
   # Find all the lengths, except n_kgaps
   lengs <- sapply(res, length)[-6]
   return(res$n_kgaps - unique(lengs))

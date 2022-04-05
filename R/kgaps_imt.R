@@ -56,6 +56,8 @@
 #'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+#' @seealso \code{\link{choose_uk}} for graphical diagnostic to aid the choice
+#'   of the threshold \eqn{u} and the run parameter \eqn{K}.
 #' @examples
 #' ### Newlyn sea surges
 #'
@@ -65,7 +67,7 @@
 #' ### S&P 500 index
 #'
 #' u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
-#' imt <- choose_uk(sp500, u = u, k = 1:5)
+#' imt <- kgaps_imt(sp500, u = u, k = 1:5)
 #'
 #' ### Cheeseboro wind gusts (a matrix containing some NAs)
 #'

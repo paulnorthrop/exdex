@@ -253,6 +253,7 @@ kgaps_imt_stat <- function(data, theta, u, k = 1, inc_cens = TRUE) {
   dj <- Jj - Ij
   Ddj <- mDdj1 * qS / theta ^ 2 - ifelse(qS == 0, 0, mDdj2 / theta ^ 3)
   Ddj[is.nan(Ddj)] <- NA
-  return(list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
-              n_kgaps = n_kgaps))
+  res <- list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
+              n_kgaps = n_kgaps)
+  return(res)
 }

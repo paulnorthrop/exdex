@@ -244,7 +244,7 @@ dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {
   dj <- Jj - Ij
   Ddj <- ifelse(T_u > D, mDdj1 * q_u * T_u / theta ^ 2 - mDdj2 / theta ^ 3,
                 for_Ddj(theta, q_u, D))
-#  Ddj[is.nan(Ddj)] <- NA
-  return(list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
-              n_dgaps = n_dgaps))
+  res <- list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
+              n_dgaps = n_dgaps)
+  return(res)
 }

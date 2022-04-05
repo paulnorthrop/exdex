@@ -92,7 +92,7 @@ NULL
 #' per hour) recorded at the Cheeseboro weather station near Thousand Oaks,
 #' Southern California, USA during the month of January over the period
 #' 2000-2009. These data are analysed in Reich and Shaby (2016).
-#' @format A 774 by 10 numeric matrix.  Column \code{i} contains the hourly
+#' @format A 744 by 10 numeric matrix.  Column \code{i} contains the hourly
 #'   maximum wind gusts (in miles per hour) from Cheeseboro in the year
 #'   2000 + \code{i} - 1. The columns are named 2000, 2001, ..., 2009 and the
 #'   rows are named day\code{j}hour\code{k}, where \code{j} is the day of the

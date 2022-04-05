@@ -12,7 +12,7 @@
 
 * In the (unexported, internal) function `kgaps_conf_int()` the limits of the confidence intervals for the extremal index based on the K-gaps model are constrained manually to (0, 1) to avoid problems in calculating likelihood-based confidence intervals in cases where the the log-likelihood is greater than the interval cutoff when theta = 1.
 
-* In the documentation of the argument `k` to `kgaps()` it is noted that in practice \code{k} should be no smaller than 1.
+* In the documentation of the argument `k` to `kgaps()` it is noted that in practice `k` should be no smaller than 1.
 
 * Activated 3rd edition of the `testthat` package
 
@@ -21,8 +21,8 @@
 ## New features
 
 * The functions `kgaps()`, `kgaps_imt()` and `choose_uk()` can now accept a `data` argument that
-    - is a matrix of independent subsets of data, such as monthly or seasonal time series from different years
-    - contains missing values, that is, `NA`s 
+    - is a matrix of independent subsets of data, such as monthly or seasonal time series from different years,
+    - contains missing values, that is, `NA`s. 
 * A new dataset `cheeseboro` is included, which is a matrix containing some missing values.
 * In addition to `kgaps()`, the functions `kgaps_imt()` and `choose_uk()` now have an extra argument `inc_cens`, which allows contributions from censored K-gaps to be included in the log-likelihood for the extremal index.
 * The default value of `inc_cens` in `kgaps()` (and in `kgaps_imt()` and `choose_uk()`) and is now `inc_cens = TRUE`.

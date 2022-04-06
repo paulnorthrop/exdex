@@ -768,14 +768,6 @@ gddd_theta <- function(theta, q_u, D) {
   return(val)
 }
 
-#' @keywords internal
-#' @rdname exdex-internal
-for_Ddj <- function(theta, q_u, D) {
-  val <- 2 * gd_theta(theta, q_u, D) * gdd_theta(theta, q_u, D) -
-    gddd_theta(theta, q_u, D)
-  return(val)
-}
-
 # ============================== dgaps_conf_int ===============================
 #' @keywords internal
 #' @rdname exdex-internal

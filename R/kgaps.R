@@ -131,7 +131,6 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
   }
   # Estimate standard error
   obs_info <- 0
-  print(ss)
   if (N0 > 0) {
     obs_info <- obs_info + N0 / (1 - theta_mle) ^ 2
   }

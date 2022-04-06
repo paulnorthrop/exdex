@@ -47,19 +47,19 @@
 #' @examples
 #' ### Newlyn sea surges
 #'
-#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' imt <- dgaps_imt(newlyn, u = u, D = 1:5)
+#' #u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' #imt <- dgaps_imt(newlyn, u = u, D = 1:5)
 #'
 #' ### S&P 500 index
 #'
-#' u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
-#' imt <- choose_uk(sp500, u = u, D = 1:5)
+#' #u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+#' #imt <- dgaps_imt(sp500, u = u, D = 1:5)
 #'
 #' ### Cheeseboro wind gusts (a matrix containing some NAs)
 #'
-#' probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
-#' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
-#' imt <- dgaps_imt(cheeseboro, u = u, D = 1:5)
+#' #probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+#' #u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
+#' #imt <- dgaps_imt(cheeseboro, u = u, D = 1:5)
 #' @export
 dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
   if (any(D < 0)) {
@@ -92,6 +92,8 @@ dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
     # Calculate the components of the test statistic
     ndgaps <- sum(sc$n_dgaps)
     In <- sum(sc$Ij) / ndgaps
+    print("info")
+    print(In * ndgaps)
     Jn <- sum(sc$Jj) / ndgaps
     Dn <- Jn - In
     Dnd <- sum(sc$Ddj) / ndgaps
@@ -239,11 +241,13 @@ dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {
   gd <- gd_theta(theta, q_u, D)
   gdd <- gdd_theta(theta, q_u, D)
   ldj <- ifelse(T_u > D, mldj / theta - q_u * T_u, gd)
-  Ij <- ifelse(T_u > D, mIj / theta ^ 2, gdd)
+  Ij <- ifelse(T_u > D, mIj / theta ^ 2, -gdd)
   Jj <- ldj ^ 2
   dj <- Jj - Ij
+  DdjTgtD <- 2 * gd_theta(theta, q_u, D) * gdd_theta(theta, q_u, D) +
+    gddd_theta(theta, q_u, D)
   Ddj <- ifelse(T_u > D, mDdj1 * q_u * T_u / theta ^ 2 - mDdj2 / theta ^ 3,
-                for_Ddj(theta, q_u, D))
+                DdjTgtD)
   res <- list(ldj = ldj, Ij = Ij, Jj = Jj, dj = dj, Ddj = Ddj,
               n_dgaps = n_dgaps)
   return(res)

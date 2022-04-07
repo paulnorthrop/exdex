@@ -144,9 +144,6 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   if (N1 > 0) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
-  if (!is.na(obs_info) && obs_info < 0) {
-    print(c(u, D, N0, N1, theta_mle, obs_info))
-  }
   theta_se <- sqrt(1 / obs_info)
   max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))
   res <- list(theta = theta_mle, se = theta_se, ss = ss, D = D, u = u,

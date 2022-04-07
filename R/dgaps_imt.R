@@ -47,8 +47,8 @@
 #' @examples
 #' ### Newlyn sea surges
 #'
-#' #u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
-#' #imt <- dgaps_imt(newlyn, u = u, D = 1:5)
+#' u <- quantile(newlyn, probs = seq(0.1, 0.9, by = 0.1))
+#' imt <- dgaps_imt(newlyn, u = u, D = 1:5)
 #'
 #' ### S&P 500 index
 #'
@@ -57,9 +57,9 @@
 #'
 #' ### Cheeseboro wind gusts (a matrix containing some NAs)
 #'
-#' #probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
-#' #u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
-#' #imt <- dgaps_imt(cheeseboro, u = u, D = 1:5)
+#' probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+#' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
+#' imt <- dgaps_imt(cheeseboro, u = u, D = 1:5)
 #' @export
 dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
   if (any(D < 0)) {
@@ -240,6 +240,12 @@ dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {
   gdd <- gdd_theta(theta, q_u, D)
   ldj <- ifelse(T_u > D, mldj / theta - q_u * T_u, gd)
   Ij <- ifelse(T_u > D, mIj / theta ^ 2, -gdd)
+  # If N1 = 0 and D > 0 then the estimate of theta is 0 and the observed
+  # information is not well-behaved : not even constrained to be positive.
+  # Therefore, we set Ij to NA in this case so that the IMT will also be NA.
+  if (N1 == 0 && D > 0) {
+    Ij <- NA
+  }
   Jj <- ldj ^ 2
   dj <- Jj - Ij
   DdjTgtD <- 2 * gd_theta(theta, q_u, D) * gdd_theta(theta, q_u, D) +

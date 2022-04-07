@@ -67,7 +67,7 @@
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
-#'   using censored distributions. Extremes 23, 197–213 (2020).
+#'   using censored distributions. Extremes 23, 197-213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}
 #' @references Suveges, M. and Davison, A. C. (2010) Model
 #'   misspecification in peaks over threshold analysis, \emph{Annals of
@@ -232,7 +232,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #'       threshold.}
 #'     \item{\code{D} }{the input value of \code{D}.}
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
-#'   using censored distributions. Extremes 23, 197–213 (2020).
+#'   using censored distributions. Extremes 23, 197-213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.

@@ -92,7 +92,7 @@ summary(theta)
 }
 \references{
 Holesovsky, J. and Fusek, M. Estimation of the extremal index
-  using censored distributions. Extremes 23, 197–213 (2020).
+  using censored distributions. Extremes 23, 197-213 (2020).
   \doi{10.1007/s10687-020-00374-3}
 
 Suveges, M. and Davison, A. C. (2010) Model

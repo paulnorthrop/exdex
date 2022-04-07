@@ -40,7 +40,7 @@
 #'     containing the corresponding estimates of \eqn{\theta}.}
 #'   \item{u,D }{The input \code{u} and \code{D}.}
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
-#'   using censored distributions. Extremes 23, 197–213 (2020).
+#'   using censored distributions. Extremes 23, 197-213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}
 #' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the \eqn{D}-gaps model.
@@ -52,8 +52,8 @@
 #'
 #' ### S&P 500 index
 #'
-#' #u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
-#' #imt <- dgaps_imt(sp500, u = u, D = 1:5)
+#' u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+#' imt <- dgaps_imt(sp500, u = u, D = 1:5)
 #'
 #' ### Cheeseboro wind gusts (a matrix containing some NAs)
 #'
@@ -81,8 +81,13 @@ dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
     if (u >= max(data, na.rm = TRUE)) {
       return(c(Tn = NA, pvalue = NA))
     }
-    # Estimate theta
-    theta <- dgaps(data, u, D, inc_cens = inc_cens)$theta
+    # Estimate theta.  If the estimated SE is missing (the observed information
+    # was not positive) then return NAs for the test statistic and p-value
+    temp <- dgaps(data, u, D, inc_cens = inc_cens)
+    theta <- temp$theta
+    if (is.na(temp$se)) {
+      return(c(imt = NA, p = NA, theta = theta))
+    }
     # Contributions to the test statistic from each observation, returning a list
     # with a list of (ldj, Ij, Jj, dj, Ddj, n_dgaps) for each column in data
     imt_stats_list <- apply(data, 2, dgaps_imt_stat, theta = theta, u = u,
@@ -156,7 +161,7 @@ dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
 #'   \item{\code{n_dgaps} }{the number of \eqn{D}-gaps that contribute to the
 #'     log-likelihood.}
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
-#'   using censored distributions. Extremes 23, 197–213 (2020).
+#'   using censored distributions. Extremes 23, 197-213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}
 #' @export
 dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {

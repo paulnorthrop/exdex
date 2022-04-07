@@ -53,7 +53,8 @@
 #'     \item{\code{theta} }{The maximum likelihood estimate (MLE) of
 #'       \eqn{\theta}.}
 #'     \item{\code{se} }{The estimated standard error of the MLE, calculated
-#'       using an algebraic expression for the observed information.}
+#'       using an algebraic expression for the observed information.  If the
+#'       estimate of \eqn{\theta} is 0 then \code{se} will be \code{NA}.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
 #'     \item{\code{D, u, inc_cens} }{The input values of \code{D},
@@ -128,12 +129,23 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
     theta_mle <- temp$par
   }
   # Estimate standard error
+  # If N1 = 0 then the estimate of theta is 0. The contribution to obs_info
+  # from the N0 > 0 case is not constrained to be positive unless D = 0 (when
+  # the calculation is the same as K-gaps).  Therefore, we set the SE to NA
+  # if N1 = 0 unless D = 0. Note: at least one of N0 and N1 must be positive.
   obs_info <- 0
   if (N0 > 0) {
-    obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
+    if (N1 > 0 || D == 0) {
+      obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
+    } else {
+      obs_info <- NA
+    }
   }
   if (N1 > 0) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
+  }
+  if (!is.na(obs_info) && obs_info < 0) {
+    print(c(u, D, N0, N1, theta_mle, obs_info))
   }
   theta_se <- sqrt(1 / obs_info)
   max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))

@@ -129,17 +129,12 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   }
   # Estimate standard error
   obs_info <- 0
-  print("MLE")
-  print(theta_mle)
-  theta_mle <- 0.1
   if (N0 > 0) {
     obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
   }
   if (N1 > 0) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
-  print("info in dgaps()")
-  print(obs_info)
   theta_se <- sqrt(1 / obs_info)
   max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))
   res <- list(theta = theta_mle, se = theta_se, ss = ss, D = D, u = u,
@@ -268,7 +263,7 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
     left_censored_cens <- T_u_cens <= D
     # N0, N1, sum of scaled inter-exceedance times that are greater than D,
     # that is, not left-censored
-    N1_cens <- sum(T_u_cens[!left_censored_cens])
+    N1_cens <- sum(!left_censored_cens)
     n_gaps <- n_dgaps + N1_cens
     T_gt_D_cens <- T_u_cens[!left_censored_cens]
     sum_qtd_cens <- sum(q_u * T_gt_D_cens)

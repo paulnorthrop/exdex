@@ -92,8 +92,6 @@ dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
     # Calculate the components of the test statistic
     ndgaps <- sum(sc$n_dgaps)
     In <- sum(sc$Ij) / ndgaps
-    print("info")
-    print(In * ndgaps)
     Jn <- sum(sc$Jj) / ndgaps
     Dn <- Jn - In
     Dnd <- sum(sc$Ddj) / ndgaps

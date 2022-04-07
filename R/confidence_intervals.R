@@ -832,10 +832,10 @@ plot.confint_dgaps <- function(x, y = NULL, ...) {
   }
   prof_ci <- x$cis[rownames(x$cis) == "lik"]
   theta <- seq(0.99 * prof_ci[1], 1.01 * prof_ci[2], length = 100)
-  kloglik <- function(theta) {
+  dloglik <- function(theta) {
     do.call(dgaps_loglik, c(list(theta = theta), x$object$ss))
   }
-  prof_lik <- vapply(theta, kloglik, 0.0)
+  prof_lik <- vapply(theta, dloglik, 0.0)
   my_plot <- function(xx, y, ..., type = "l", xlab = expression(theta),
                       ylab = "log-likelihood",
                       main = paste0(100 * x$level, "% confidence interval")) {

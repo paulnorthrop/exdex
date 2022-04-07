@@ -735,7 +735,7 @@ print.confint_kgaps <- function(x, ...) {
 #'   \item{object}{The input object \code{object}.}
 #'   \item{level}{The input \code{level}.}
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
-#'   using censored distributions. Extremes 23, 197–213 (2020).
+#'   using censored distributions. Extremes 23, 197-213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}
 #' @examples
 #' u <- quantile(newlyn, probs = 0.90)

@@ -134,6 +134,8 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   # the calculation is the same as K-gaps).  Therefore, we set the SE to NA
   # if N1 = 0 unless D = 0. Note: at least one of N0 and N1 must be positive.
   obs_info <- 0
+#  exp_info <- dgaps_exp_info(theta_mle, q_u = ss$q_u, D = ss$D, N0 = N0,
+#                             N1 = N1, inc_cens = inc_cens)
   if (N0 > 0) {
     if (N1 > 0 || D == 0) {
       obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
@@ -144,7 +146,13 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   if (N1 > 0) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
-  theta_se <- sqrt(1 / obs_info)
+  # The observed information is not guaranteed to be positive
+  # If it is not positive then return NA for the estimated SE
+  if (!is.na(obs_info) && obs_info <= 0) {
+    theta_se <- NA
+  } else {
+    theta_se <- sqrt(1 / obs_info)
+  }
   max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))
   res <- list(theta = theta_mle, se = theta_se, ss = ss, D = D, u = u,
               inc_cens = inc_cens, max_loglik = max_loglik, call = Call)

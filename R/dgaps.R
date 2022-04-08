@@ -54,7 +54,12 @@
 #'       \eqn{\theta}.}
 #'     \item{\code{se} }{The estimated standard error of the MLE, calculated
 #'       using an algebraic expression for the observed information.  If the
-#'       estimate of \eqn{\theta} is 0 then \code{se} will be \code{NA}.}
+#'       estimate of \eqn{\theta} is 0 then \code{se} is \code{NA}.}
+#'     \item{\code{se_exp} }{The estimated standard error of the MLE,
+#'       calculated using an algebraic expression for the expected information.
+#'       If the estimate of \eqn{\theta} is 0 then \code{se_exp} is \code{NA}.
+#'       This is provided because cases may be encountered where the observed
+#'       information is not positive.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
 #'     \item{\code{D, u, inc_cens} }{The input values of \code{D},
@@ -128,14 +133,23 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
                          lower = 0, upper = 1)
     theta_mle <- temp$par
   }
-  # Estimate standard error
+  # Estimate standard error.  In some cases there will be problems with the
+  # observed information.  Therefore, also calculate estimated standard errors
+  # based on the expected information, using a modified (for inc_cens= TRUE)
+  # version of equation (11) on page 202 of Holesovsky and Fusek (2020).
+  # If N1 = 0 then the estimate of theta is 0 and we return NA for se_exp
+  if (N1 > 0) {
+    exp_info <- dgaps_exp_info(theta_mle, q_u = ss$q_u, D = ss$D, N0 = N0,
+                               N1 = N1, inc_cens = inc_cens)
+  } else {
+    exp_info <- NA
+  }
+  #
   # If N1 = 0 then the estimate of theta is 0. The contribution to obs_info
   # from the N0 > 0 case is not constrained to be positive unless D = 0 (when
   # the calculation is the same as K-gaps).  Therefore, we set the SE to NA
   # if N1 = 0 unless D = 0. Note: at least one of N0 and N1 must be positive.
   obs_info <- 0
-#  exp_info <- dgaps_exp_info(theta_mle, q_u = ss$q_u, D = ss$D, N0 = N0,
-#                             N1 = N1, inc_cens = inc_cens)
   if (N0 > 0) {
     if (N1 > 0 || D == 0) {
       obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
@@ -148,14 +162,18 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   }
   # The observed information is not guaranteed to be positive
   # If it is not positive then return NA for the estimated SE
+  # Similarly for the expected information
   if (!is.na(obs_info) && obs_info <= 0) {
     theta_se <- NA
+    se_exp <- NA
   } else {
     theta_se <- sqrt(1 / obs_info)
+    se_exp <- 1 / sqrt(exp_info)
   }
   max_loglik <- do.call(dgaps_loglik, c(list(theta = theta_mle), ss))
-  res <- list(theta = theta_mle, se = theta_se, ss = ss, D = D, u = u,
-              inc_cens = inc_cens, max_loglik = max_loglik, call = Call)
+  res <- list(theta = theta_mle, se = theta_se, se_exp = se_exp, ss = ss,
+              D = D, u = u, inc_cens = inc_cens, max_loglik = max_loglik,
+              call = Call)
   class(res) <- c("dgaps", "exdex")
   return(res)
 }

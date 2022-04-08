@@ -4,11 +4,19 @@
 \alias{summary.dgaps}
 \title{Summary method for a \code{"dgaps"} object}
 \usage{
-\method{summary}{dgaps}(object, digits = max(3, getOption("digits") - 3L), ...)
+\method{summary}{dgaps}(
+  object,
+  se_type = c("observed", "expected"),
+  digits = max(3, getOption("digits") - 3L),
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class "dgaps", a result of a call to
 \code{\link{dgaps}}.}
+
+\item{se_type}{A character scalar. Should the estimate of the standard error
+be based on the observed information or the expected information?}
 
 \item{digits}{An integer. Used for number formatting with
 \code{\link[base:Round]{signif}}.}

@@ -50,7 +50,7 @@ diagnose misspecification of the \eqn{K}-gaps model.
 The \eqn{K}-gaps IMT is performed a over grid of all
   combinations of threshold and \eqn{K} in the vectors \code{u}
   and \code{k}.  If the estimate of \eqn{\theta} is 0 then the
-  IMT statistic, and its associated \eqn{p}-value will be \code{NA}.
+  IMT statistic, and its associated \eqn{p}-value is \code{NA}.
 
   For details of the IMT see Suveges and Davison
   (2010).  There are some typing errors on pages 18-19 that have been

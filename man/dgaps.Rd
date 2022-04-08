@@ -39,7 +39,12 @@ An object (a list) of class \code{c("dgaps", "exdex")} containing
       \eqn{\theta}.}
     \item{\code{se} }{The estimated standard error of the MLE, calculated
       using an algebraic expression for the observed information.  If the
-      estimate of \eqn{\theta} is 0 then \code{se} will be \code{NA}.}
+      estimate of \eqn{\theta} is 0 then \code{se} is \code{NA}.}
+    \item{\code{se_exp} }{The estimated standard error of the MLE,
+      calculated using an algebraic expression for the expected information.
+      If the estimate of \eqn{\theta} is 0 then \code{se_exp} is \code{NA}.
+      This is provided because cases may be encountered where the observed
+      information is not positive.}
     \item{\code{ss} }{The list of summary statistics returned from
       \code{\link{kgaps_stat}}.}
     \item{\code{D, u, inc_cens} }{The input values of \code{D},

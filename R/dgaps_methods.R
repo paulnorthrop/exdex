@@ -26,15 +26,22 @@ coef.dgaps <- function(object, ...) {
 #'
 #' @param object and object of class \code{c("dgaps", "exdex")} returned from
 #'   \code{\link{dgaps}}.
+#' @param type A character scalar. Should the estimate of the variance be based
+#'   on the observed information or the expected information?
 #' @param ... Further arguments.  None are used.
 #' @return A 1 by 1 numeric matrix containing the estimated variance of the
 #'   estimator.
 #' @export
-vcov.dgaps <- function(object, ...) {
+vcov.dgaps <- function(object, type = c("observed", "expected"),...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
-  vc <- object$se ^ 2
+  type <- match.arg(type)
+  if (type == "observed") {
+    vc <- object$se ^ 2
+  } else {
+    vc <- object$se_exp ^ 2
+  }
   dim(vc) <- c(1, 1)
   dimnames(vc) <- list("theta", "theta")
   return(vc)
@@ -126,6 +133,8 @@ print.dgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 #'
 #' @param object an object of class "dgaps", a result of a call to
 #'   \code{\link{dgaps}}.
+#' @param se_type A character scalar. Should the estimate of the standard error
+#'   be based on the observed information or the expected information?
 #' @param digits An integer. Used for number formatting with
 #'   \code{\link[base:Round]{signif}}.
 #' @param ... Additional arguments.  None are used in this function.
@@ -139,14 +148,19 @@ print.dgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 #' @section Examples:
 #' See the examples in \code{\link{dgaps}}.
 #' @export
-summary.dgaps <- function(object, digits = max(3, getOption("digits") - 3L),
-                        ...) {
+summary.dgaps <- function(object, se_type = c("observed", "expected"),
+                          digits = max(3, getOption("digits") - 3L), ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
+  se_type <- match.arg(se_type)
   res <- object["call"]
   theta <- signif(object$theta, digits = digits)
-  se <- signif(object$se, digits = digits)
+  if (se_type == "observed") {
+    se <- signif(object$se, digits = digits)
+  } else {
+    se <- signif(object$se_exp, digits = digits)
+  }
   res$matrix <- cbind(`Estimate` = theta, `Std. Error` = se)
   rownames(res$matrix) <- c("theta")
   class(res) <- "summary.dgaps"

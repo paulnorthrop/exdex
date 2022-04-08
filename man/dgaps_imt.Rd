@@ -44,13 +44,14 @@ An object (a list) of class \code{c("dgaps_imt", "exdex")}
 }
 \description{
 Performs an information matrix test (IMT) to diagnose misspecification of
-the \eqn{D}-gaps model of of Holesovsky and Fusek (2020).
+the \eqn{D}-gaps model of Holesovsky and Fusek (2020).
 }
 \details{
-The \eqn{D}-gaps IMT is performed a over grid of all
+The general approach follows Suveges and Davison (2010).
+  The \eqn{D}-gaps IMT is performed a over grid of all
   combinations of threshold and \eqn{D} in the vectors \code{u}
   and \code{D}.  If the estimate of \eqn{\theta} is 0 then the
-  IMT statistic, and its associated \eqn{p}-value will be \code{NA}.
+  IMT statistic, and its associated \eqn{p}-value is \code{NA}.
 }
 \examples{
 ### Newlyn sea surges
@@ -73,6 +74,11 @@ imt <- dgaps_imt(cheeseboro, u = u, D = 1:5)
 Holesovsky, J. and Fusek, M. Estimation of the extremal index
   using censored distributions. Extremes 23, 197-213 (2020).
   \doi{10.1007/s10687-020-00374-3}
+
+Suveges, M. and Davison, A. C. (2010) Model
+  misspecification in peaks over threshold analysis, \emph{Annals of
+  Applied Statistics}, \strong{4}(1), 203-221.
+  \doi{10.1214/09-AOAS292}
 }
 \seealso{
 \code{\link{dgaps}} for maximum likelihood estimation of the

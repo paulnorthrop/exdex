@@ -18,7 +18,7 @@ for (i in 1:length(k_vals)) {
     temp <- cres$theta[[comp(i, j)]]
     # The calls will be different1
     temp$call <- res$call <- NULL
-    test_that("choose_k agrees with kgaps", {
+    test_that("choose_uk agrees with kgaps", {
       testthat::expect_equal(temp, res)
     })
   }

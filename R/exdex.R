@@ -4,34 +4,38 @@
 #' dependence in the extremes of a stationary process.  The \emph{exdex}
 #' package  performs frequentist inference about \eqn{\theta} using the
 #' methodologies proposed in Northrop (2015), Berghaus and Bucher (2018),
-#' Suveges (2007) and Suveges and Davison (2010).
+#' Suveges (2007), Suveges and Davison (2010) and Holesovsky and Fusek (2020).
 #'
-#' @details Functions to implement three estimators of the extremal index
+#' @details Functions to implement four estimators of the extremal index
 #'   are provided, namely
 #' \itemize{
 #'   \item{\code{\link{spm}}: semiparametric maxima estimator, using block
 #'     maxima: (Northrop, 2015; Berghaus and Bucher, 2018)}
 #'   \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
 #'     interexceedance times (Suveges and Davison, 2010)}
+#'   \item{\code{\link{dgaps}}: \eqn{D}-gaps estimator, using threshold
+#'     interexceedance times (Holesovsky and Fusek, 2020))}
 #'   \item{\code{\link{iwls}}: iterated weighted least squares estimator,
 #'     using threshold interexceedance times: (Suveges, 2007)}
 #' }
-#' The functions \code{\link{choose_b}} and \code{\link{choose_uk}} provide
-#' graphical diagnostics for choosing the tuning parameter for the
-#' semiparametric estimator, the block size \eqn{b}, and the tuning parameters
-#' of the \eqn{K}-gaps estimator, the threshold \eqn{u} and the run parameter
-#' \eqn{K}.
+#' The functions \code{\link{choose_b}}, \code{\link{choose_uk}} and
+#' \code{\link{choose_ud}} provide graphical diagnostics for choosing the
+#' respective tuning parameters of the semiparametric maxima, \eqn{K}-gaps and
+#' \eqn{D}-gaps estimators.
 #'
-#' For the \eqn{K}-gaps model the `exdex` package allows missing values in the
-#' data, can accommodate independent subsets of data, such as monthly or
-#' seasonal time series from different years, and can incorporate information
-#' from censored interexceedance times.
+#' For the \eqn{K}-gaps and \eqn{D}-gaps models the `exdex` package allows
+#' missing values in the data, can accommodate independent subsets of data,
+#' such as monthly or seasonal time series from different years, and can
+#' incorporate information from censored interexceedance times.
 #'
 #' See \code{vignette("exdex-vignette", package = "exdex")} for an
 #' overview of the package.
 #' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
 #'   maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
 #'   \strong{46}(5), 2307-2335. \doi{10.1214/17-AOS1621}
+#' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
+#'   using censored distributions. Extremes 23, 197-213 (2020).
+#'   \doi{10.1007/s10687-020-00374-3}
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #'   estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #'   \doi{10.1007/s10687-015-0221-5}
@@ -44,9 +48,10 @@
 #'   \doi{10.1214/09-AOAS292}
 #' @seealso \code{\link{spm}}: semiparametric maxima estimator.
 #' @seealso \code{\link{kgaps}}: \eqn{K}-gaps estimator.
+#' @seealso \code{\link{dgaps}}: \eqn{D}-gaps estimator.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
-#' @seealso \code{\link{choose_b}} and \code{\link{choose_uk}} for choosing
-#'   tuning parameters.
+#' @seealso \code{\link{choose_b}}, \code{\link{choose_ud}} and
+#'   \code{\link{choose_ud}} for choosing tuning parameters.
 #' @seealso \code{\link{newlyn}}, \code{\link{sp500}} and
 #'   \code{\link{cheeseboro}} for example datasets.
 #' @docType package

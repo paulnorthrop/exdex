@@ -307,7 +307,7 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
     # N0, N1, sum of scaled inter-exceedance times that are greater than D,
     # that is, not left-censored
     N1_cens <- sum(!left_censored_cens)
-    n_gaps <- n_dgaps + N1_cens
+    n_dgaps <- n_dgaps + N1_cens
     T_gt_D_cens <- T_u_cens[!left_censored_cens]
     sum_qtd_cens <- sum(q_u * T_gt_D_cens)
     # Add contributions.

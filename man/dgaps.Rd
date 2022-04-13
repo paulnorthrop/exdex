@@ -110,7 +110,7 @@ Suveges, M. and Davison, A. C. (2010) Model
   for \eqn{\theta}.
 
 \code{\link{dgaps_imt}} for the information matrix test, which
-  may be used to inform the choice of the pair (\code{u, k}).
+  may be used to inform the choice of the pair (\code{u, D}).
 
 \code{\link{choose_ud}} for a diagnostic plot based on
   \code{\link{dgaps_imt}}.

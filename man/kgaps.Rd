@@ -115,6 +115,9 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
   about \eqn{\theta} using the \eqn{K}-gaps model.
 
+\code{\link{dgaps}} for maximum likelihood estimation of the
+  extremal index \eqn{\theta} using the \eqn{D}-gaps model.
+
 \code{\link{spm}} for estimation of the extremal index
   \eqn{\theta} using a semiparametric maxima method.
 

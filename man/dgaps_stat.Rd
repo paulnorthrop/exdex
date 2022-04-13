@@ -97,20 +97,6 @@ Attalides, N. (2015) Threshold-based extreme value modelling,
   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 }
 \seealso{
-\code{\link{confint.dgaps}} to estimate confidence intervals
-  for \eqn{\theta}.
-
-\code{\link{dgaps_imt}} for the information matrix test, which
-  may be used to inform the choice of the pair (\code{u, k}).
-
-\code{\link{choose_ud}} for a diagnostic plot based on
-  \code{\link{kgaps_imt}}.
-
-\code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-
-\code{\link{spm}} for estimation of the extremal index
-  \eqn{\theta} using a semiparametric maxima method.
-
-\code{\link{iwls}}: iterated weighted least squares estimator.
+\code{\link{dgaps}} for maximum likelihood estimation of the
+  extremal index \eqn{\theta} using the \eqn{D}-gaps model.
 }

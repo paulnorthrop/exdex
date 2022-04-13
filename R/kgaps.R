@@ -71,6 +71,8 @@
 #' @seealso \code{\link[revdbayes]{kgaps_post}} in the
 #'   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
 #'   about \eqn{\theta} using the \eqn{K}-gaps model.
+#' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the \eqn{D}-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.

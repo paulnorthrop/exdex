@@ -14,6 +14,8 @@
 
 * In the documentation of the argument `k` to `kgaps()` it is noted that in practice `k` should be no smaller than 1.
 
+* The function `kgaps()` also return standard errors based on the expected information.
+
 * Activated 3rd edition of the `testthat` package
 
 # exdex 1.1.1

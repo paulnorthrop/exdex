@@ -522,6 +522,9 @@ print.confint_spm <- function(x, ...) {
 #'   limits that are greater than 1 may be obtained.
 #'   If \code{constrain = TRUE} then any lower confidence limits that are
 #'   less than 0 are set to 0.
+#' @param se_type A character scalar. Should the confidence intervals for the
+#'   \code{interval_type  = "norm"} use the estimated standard error based on
+#'   the observed information or based on the expected information?
 #' @param ... Further arguments. None are used currently.
 #' @details Two type of interval are calculated: (a) an interval based on the
 #'   approximate large sample normality of the estimator of \eqn{\theta}
@@ -554,24 +557,29 @@ print.confint_spm <- function(x, ...) {
 confint.kgaps <- function (object, parm = "theta", level = 0.95,
                            interval_type = c("both", "norm", "lik"),
                            conf_scale = c("theta", "log"), constrain = TRUE,
-                           ...) {
+                           se_type = c("observed", "expected"), ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
   Call <- match.call(expand.dots = TRUE)
   parm <- match.arg(parm)
+  se_type <- match.arg(se_type)
   if (level <= 0 || level >= 1) {
     stop("''level'' must be in (0, 1)")
   }
   interval_type <- match.arg(interval_type)
   conf_scale <- match.arg(conf_scale)
   theta <- coef(object)
-  se <- sqrt(vcov(object))
   if (interval_type == "norm" || interval_type == "both") {
     # Symmetric confidence intervals, based on large sample normal theory
     # The intervals are (initially) centred on the unconstrained estimate of
     # theta, which may be greater than 1
     z_val <- stats::qnorm(1 - (1 - level) / 2)
+    if (se_type == "observed") {
+      se <- object$se
+    } else {
+      se <- object$se_exp
+    }
     if (conf_scale == "theta") {
       lower <- theta - z_val * se
       upper <- theta + z_val * se
@@ -763,7 +771,6 @@ confint.dgaps <- function (object, parm = "theta", level = 0.95,
   interval_type <- match.arg(interval_type)
   conf_scale <- match.arg(conf_scale)
   theta <- coef(object)
-  se <- sqrt(vcov(object))
   if (interval_type == "norm" || interval_type == "both") {
     # Symmetric confidence intervals, based on large sample normal theory
     # The intervals are (initially) centred on the unconstrained estimate of

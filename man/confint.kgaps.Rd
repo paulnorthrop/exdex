@@ -11,6 +11,7 @@
   interval_type = c("both", "norm", "lik"),
   conf_scale = c("theta", "log"),
   constrain = TRUE,
+  se_type = c("observed", "expected"),
   ...
 )
 }
@@ -42,6 +43,10 @@ that is, they are constrained to lie in (0, 1].  Otherwise,
 limits that are greater than 1 may be obtained.
 If \code{constrain = TRUE} then any lower confidence limits that are
 less than 0 are set to 0.}
+
+\item{se_type}{A character scalar. Should the confidence intervals for the
+\code{interval_type  = "norm"} use the estimated standard error based on
+the observed information or based on the expected information?}
 
 \item{...}{Further arguments. None are used currently.}
 }

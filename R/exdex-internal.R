@@ -710,6 +710,9 @@ kgaps_imt_old <- function(data, u, k = 1) {
   return(res)
 }
 
+# ============================== kgaps_exp_info ============================= #
+
+
 # ============== Functions used by dgaps() and confint.dgaps() ============== #
 
 # =============================== dgaps_loglik ================================
@@ -731,6 +734,7 @@ dgaps_loglik <- function(theta, N0, N1, sum_qtd, n_dgaps, q_u, D) {
   return(loglik)
 }
 
+# ========================= g(theta) and its derivatives ==================== #
 #' @keywords internal
 #' @rdname exdex-internal
 g_theta <- function(theta, q_u, D) {
@@ -768,11 +772,19 @@ gddd_theta <- function(theta, q_u, D) {
   return(val)
 }
 
+# ============================== dgaps_exp_info ============================= #
 #' @keywords internal
 #' @rdname exdex-internal
-dgaps_exp_info <- function(theta, q_u, D, N0, N1, inc_cens) {
-  # Following eqn (11) on page 202 Holesovsky and Fusek (2020)
-  d <- q_u * D
+dgaps_exp_info <- function(theta, ss, inc_cens) {
+  # How many observations are not right-censored?
+  # Note: if inc_cens = TRUE then ss$N1 and ss$n_dgaps are inflated by
+  # right-censored observations.  ss$n_dgaps is inflated by 1 for each
+  # right-censored observation and ss$N1 by 1/2.
+  # Subtract the excess from N0 + N1 to get the total number of observations
+  # that are not right-censored
+  not_right_censored <- ss$N0 + ss$N1 - (ss$n_dgaps - ss$N0 - ss$N1)
+  # Following eqn (11) on page 202 of Holesovsky and Fusek (2020)
+  d <- ss$q_u * ss$D
   emtd <- exp(-theta * d)
   term1 <- (theta * d ^ 2 - 2 * d + emtd) / (1 - theta * emtd)
   term2 <- 2 / theta
@@ -783,7 +795,7 @@ dgaps_exp_info <- function(theta, q_u, D, N0, N1, inc_cens) {
   } else {
     term3 <- 0
   }
-  val <- (N0 + N1) * emtd * (term1 + term2) + term3
+  val <- not_right_censored * emtd * (term1 + term2) + term3
   return(val)
 }
 

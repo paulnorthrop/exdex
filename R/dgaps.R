@@ -69,7 +69,7 @@
 #' @seealso \code{\link{confint.dgaps}} to estimate confidence intervals
 #'   for \eqn{\theta}.
 #' @seealso \code{\link{dgaps_imt}} for the information matrix test, which
-#'   may be used to inform the choice of the pair (\code{u, k}).
+#'   may be used to inform the choice of the pair (\code{u, D}).
 #' @seealso \code{\link{choose_ud}} for a diagnostic plot based on
 #'   \code{\link{dgaps_imt}}.
 #' @seealso \code{\link{dgaps_stat}} for the calculation of sufficient
@@ -147,8 +147,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   # version of equation (11) on page 202 of Holesovsky and Fusek (2020).
   # If N1 = 0 then the estimate of theta is 0 and we return NA for se_exp
   if (N1 > 0) {
-    exp_info <- dgaps_exp_info(theta_mle, q_u = ss$q_u, D = ss$D, N0 = N0,
-                               N1 = N1, inc_cens = inc_cens)
+    exp_info <- dgaps_exp_info(theta = theta_mle, ss = ss, inc_cens = inc_cens)
   } else {
     exp_info <- NA
   }

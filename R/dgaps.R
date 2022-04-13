@@ -213,7 +213,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #'   \eqn{D}-gaps model is given by
 #'   \deqn{l(\theta; T_0, \ldots, T_N) = N_0 \log(1 - \theta e^{-\theta d}) +
 #'     2 N_1 \log \theta - \theta q (I_0 T_0 + \cdots + I_N T_N),}{%
-#'     l(\theta; S_0, ..., S_N) = N_0 log(1 - exp(-\theta d)) +
+#'     l(\theta; T_0, ..., T_N) = N_0 log(1 - exp(-\theta d)) +
 #'     2 N_1 log \theta - \theta q (I_0 T_0 + ... + I_N T_N),}
 #'    where
 #'     \itemize{

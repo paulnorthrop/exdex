@@ -61,13 +61,21 @@
 #'       This is provided because cases may be encountered where the observed
 #'       information is not positive.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
-#'       \code{\link{kgaps_stat}}.}
+#'       \code{\link{dgaps_stat}}.}
 #'     \item{\code{D, u, inc_cens} }{The input values of \code{D},
 #'       \code{u} and \code{inc_cens}.}
 #'     \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
 #'     \item{\code{call }}{The call to \code{dgaps}.}
+#' @seealso \code{\link{confint.dgaps}} to estimate confidence intervals
+#'   for \eqn{\theta}.
+#' @seealso \code{\link{dgaps_imt}} for the information matrix test, which
+#'   may be used to inform the choice of the pair (\code{u, k}).
+#' @seealso \code{\link{choose_ud}} for a diagnostic plot based on
+#'   \code{\link{dgaps_imt}}.
 #' @seealso \code{\link{dgaps_stat}} for the calculation of sufficient
 #'   statistics for the \eqn{D}-gaps model.
+#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
 #' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
@@ -255,8 +263,8 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
 #'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
-#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+#' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the \eqn{D}-gaps model.
 #' @examples
 #' u <- quantile(newlyn, probs = 0.90)
 #' dgaps_stat(newlyn, u = u, D = 1)

@@ -46,7 +46,7 @@ An object (a list) of class \code{c("dgaps", "exdex")} containing
       This is provided because cases may be encountered where the observed
       information is not positive.}
     \item{\code{ss} }{The list of summary statistics returned from
-      \code{\link{kgaps_stat}}.}
+      \code{\link{dgaps_stat}}.}
     \item{\code{D, u, inc_cens} }{The input values of \code{D},
       \code{u} and \code{inc_cens}.}
     \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
@@ -106,8 +106,20 @@ Suveges, M. and Davison, A. C. (2010) Model
   \doi{10.1214/09-AOAS292}
 }
 \seealso{
+\code{\link{confint.dgaps}} to estimate confidence intervals
+  for \eqn{\theta}.
+
+\code{\link{dgaps_imt}} for the information matrix test, which
+  may be used to inform the choice of the pair (\code{u, k}).
+
+\code{\link{choose_ud}} for a diagnostic plot based on
+  \code{\link{dgaps_imt}}.
+
 \code{\link{dgaps_stat}} for the calculation of sufficient
   statistics for the \eqn{D}-gaps model.
+
+\code{\link{kgaps}} for maximum likelihood estimation of the
+  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
 
 \code{\link{spm}} for estimation of the extremal index
   \eqn{\theta} using a semiparametric maxima method.

@@ -88,7 +88,7 @@ gdd_theta(theta, q_u, D)
 
 gddd_theta(theta, q_u, D)
 
-dgaps_exp_info(theta, q_u, D, N0, N1, inc_cens)
+dgaps_exp_info(theta, ss, inc_cens)
 
 dgaps_conf_int(theta_mle, ss, conf = 95)
 

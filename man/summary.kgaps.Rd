@@ -4,11 +4,19 @@
 \alias{summary.kgaps}
 \title{Summary method for a \code{"kgaps"} object}
 \usage{
-\method{summary}{kgaps}(object, digits = max(3, getOption("digits") - 3L), ...)
+\method{summary}{kgaps}(
+  object,
+  se_type = c("observed", "expected"),
+  digits = max(3, getOption("digits") - 3L),
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class "kgaps", a result of a call to
 \code{\link{kgaps}}.}
+
+\item{se_type}{A character scalar. Should the estimate of the standard error
+be based on the observed information or the expected information?}
 
 \item{digits}{An integer. Used for number formatting with
 \code{\link[base:Round]{signif}}.}

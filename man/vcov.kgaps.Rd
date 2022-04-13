@@ -4,11 +4,14 @@
 \alias{vcov.kgaps}
 \title{Calculate Variance-Covariance Matrix for a \code{"kgaps"} object}
 \usage{
-\method{vcov}{kgaps}(object, ...)
+\method{vcov}{kgaps}(object, type = c("observed", "expected"), ...)
 }
 \arguments{
 \item{object}{and object of class \code{c("kgaps", "exdex")} returned from
 \code{\link{kgaps}}.}
+
+\item{type}{A character scalar. Should the estimate of the variance be based
+on the observed information or the expected information?}
 
 \item{...}{Further arguments.  None are used.}
 }

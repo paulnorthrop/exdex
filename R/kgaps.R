@@ -53,7 +53,12 @@
 #' @return An object (a list) of class \code{c("kgaps", "exdex")} containing
 #'     \item{\code{theta} }{The maximum likelihood estimate (MLE) of
 #'       \eqn{\theta}.}
-#'     \item{\code{se} }{The estimated standard error of the MLE.}
+#'     \item{\code{se} }{The estimated standard error of the MLE, calculated
+#'       using an algebraic expression for the observed information.}
+#'     \item{\code{se_exp} }{The estimated standard error of the MLE,
+#'       calculated using an algebraic expression for the expected information.
+#'       If the estimate of \eqn{\theta} is 0 or 1 then \code{se_exp} is
+#'       \code{NA}.}
 #'     \item{\code{ss} }{The list of summary statistics returned from
 #'       \code{\link{kgaps_stat}}.}
 #'     \item{\code{k, u, inc_cens} }{The input values of \code{k},
@@ -132,6 +137,17 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
     theta_mle <- kgaps_quad_solve(N0, N1, sum_qs)
   }
   # Estimate standard error
+  # For completeness add an estimate based on the expected information
+  # If N1 = 0 then the estimate of theta is 0 and we return NA for se_exp
+  # If N0 = 0 then the estimate of theta is 1 and the expected information is
+  # not defined and we return NA for se_exp
+  if (N1 > 0 && N0 > 0) {
+    exp_info <- kgaps_exp_info(theta = theta_mle, ss = ss, inc_cens = inc_cens)
+  } else {
+    exp_info <- NA
+  }
+  se_exp <- 1 / sqrt(exp_info)
+  # Based on the observed information
   obs_info <- 0
   if (N0 > 0) {
     obs_info <- obs_info + N0 / (1 - theta_mle) ^ 2
@@ -141,8 +157,9 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
   }
   theta_se <- sqrt(1 / obs_info)
   max_loglik <- do.call(kgaps_loglik, c(list(theta = theta_mle), ss))
-  res <- list(theta = theta_mle, se = theta_se, ss = ss, k = k,
-              u = u, inc_cens = inc_cens, max_loglik = max_loglik, call = Call)
+  res <- list(theta = theta_mle, se = theta_se, se_exp = se_exp, ss = ss,
+              k = k, u = u, inc_cens = inc_cens, max_loglik = max_loglik,
+              call = Call)
   class(res) <- c("kgaps", "exdex")
   return(res)
 }

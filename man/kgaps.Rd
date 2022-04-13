@@ -39,7 +39,12 @@ first and last inter-exceedance times for each column.}
 An object (a list) of class \code{c("kgaps", "exdex")} containing
     \item{\code{theta} }{The maximum likelihood estimate (MLE) of
       \eqn{\theta}.}
-    \item{\code{se} }{The estimated standard error of the MLE.}
+    \item{\code{se} }{The estimated standard error of the MLE, calculated
+      using an algebraic expression for the observed information.}
+    \item{\code{se_exp} }{The estimated standard error of the MLE,
+      calculated using an algebraic expression for the expected information.
+      If the estimate of \eqn{\theta} is 0 or 1 then \code{se_exp} is
+      \code{NA}.}
     \item{\code{ss} }{The list of summary statistics returned from
       \code{\link{kgaps_stat}}.}
     \item{\code{k, u, inc_cens} }{The input values of \code{k},

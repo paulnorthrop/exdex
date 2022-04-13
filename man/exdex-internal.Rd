@@ -19,6 +19,7 @@
 \alias{kgaps_conf_int}
 \alias{kgaps_quad_solve}
 \alias{kgaps_imt_old}
+\alias{kgaps_exp_info}
 \alias{dgaps_loglik}
 \alias{g_theta}
 \alias{gd_theta}
@@ -77,6 +78,8 @@ kgaps_conf_int(theta_mle, ss, conf = 95)
 kgaps_quad_solve(N0, N1, sum_qs)
 
 kgaps_imt_old(data, u, k = 1)
+
+kgaps_exp_info(theta, ss, inc_cens)
 
 dgaps_loglik(theta, N0, N1, sum_qtd, n_dgaps, q_u, D)
 

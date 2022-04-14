@@ -2,6 +2,8 @@
 % Please edit documentation in R/confidence_intervals.R
 \name{confint.kgaps}
 \alias{confint.kgaps}
+\alias{plot.confint_kgaps}
+\alias{print.confint_kgaps}
 \title{Confidence intervals for the extremal index \eqn{\theta}}
 \usage{
 \method{confint}{kgaps}(
@@ -14,6 +16,10 @@
   se_type = c("observed", "expected"),
   ...
 )
+
+\method{plot}{confint_kgaps}(x, ...)
+
+\method{print}{confint_kgaps}(x, ...)
 }
 \arguments{
 \item{object}{An object of class \code{c("kgaps", "exdex")}, returned by
@@ -48,7 +54,14 @@ less than 0 are set to 0.}
 \code{interval_type  = "norm"} use the estimated standard error based on
 the observed information or based on the expected information?}
 
-\item{...}{Further arguments. None are used currently.}
+\item{...}{\code{plot.confint_kgaps}. Further arguments passed to
+  \code{\link[chandwich]{plot.confint}}.
+
+  \code{print.confint_kgaps} Further arguments passed to
+  \code{\link{print.default}}.}
+
+\item{x}{an object of class \code{c("confint_kgaps", "exdex")}, a result of
+a call to \code{\link{confint.kgaps}}.}
 }
 \value{
 A list of class c("confint_kgaps", "exdex") containing the
@@ -62,6 +75,10 @@ A list of class c("confint_kgaps", "exdex") containing the
   \item{call}{The call to \code{spm}.}
   \item{object}{The input object \code{object}.}
   \item{level}{The input \code{level}.}
+
+\code{plot.confint_kgaps}: nothing is returned.
+
+\code{print.kgaps}: the argument \code{x}, invisibly.
 }
 \description{
 \code{confint} method for objects of class \code{c("kgaps", "exdex")}.
@@ -69,7 +86,9 @@ Computes confidence intervals for \eqn{\theta} based on an object returned
 from \code{\link{kgaps}}.  Two types of interval may be returned:
 (a) intervals based on approximate large-sample normality of the estimator
 of \eqn{\theta}, which are symmetric about the point estimate,
-and (b) likelihood-based intervals.
+and (b) likelihood-based intervals. The \code{plot} metho plots the
+log-likelihood for \eqn{\theta}, with the required confidence interval
+indicated on the plot.
 }
 \details{
 Two type of interval are calculated: (a) an interval based on the
@@ -78,7 +97,15 @@ Two type of interval are calculated: (a) an interval based on the
   (if \code{conf_scale = "log"}) and (b) a likelihood-based interval,
   based on the approximate large sample chi-squared, with 1 degree of
   freedom, distribution of the log-likelihood ratio statistic.
+
+\code{print.confint_kgaps}: prints the matrix of confidence
+  intervals for \eqn{\theta}.
 }
+\section{Examples}{
+
+See the examples in \code{\link{confint.kgaps}}.
+}
+
 \examples{
 u <- quantile(newlyn, probs = 0.90)
 theta <- kgaps(newlyn, u)
@@ -91,4 +118,14 @@ Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, \emph{Annals of
   Applied Statistics}, \strong{4}(1), 203-221.
   \doi{10.1214/09-AOAS292}
+}
+\seealso{
+\code{\link{confint.kgaps}}: \code{confint} method for
+  class \code{c("kgaps", "exdex")}.
+
+\code{\link{kgaps}} for estimation of the extremal index
+  \eqn{\theta} using a semiparametric maxima method.
+
+\code{\link{confint.kgaps}}: \code{confint} method for
+  class \code{"kgaps"}.
 }

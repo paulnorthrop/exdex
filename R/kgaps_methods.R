@@ -1,13 +1,65 @@
+#' Methods for objects of class \code{"kgaps"}
+#'
+#' Methods for objects of class \code{c("kgaps", "exdex")} returned from
+#' \code{\link{kgaps}}.
+#' @param object and object of class \code{c("kaps", "exdex")} returned from
+#'   \code{\link{kgaps}}.
+#' @param type A character scalar. Should the estimate of the variance be based
+#'   on the observed information or the expected information?
+#' @param x
+#'   \code{print.kgaps}. An object of class \code{c("kgaps", "exdex")}, a
+#'   result of a call to \code{\link{kgaps}}.
+#'
+#'   \code{print.summary.kgaps}. An object of class \code{"summary.kgaps"}, a
+#'   result of a call to \code{\link{summary.kgaps}}.
+#' @param se_type A character scalar. Should the estimate of the standard error
+#'   be based on the observed information or the expected information?
+#' @param digits
+#'   \code{print.kgaps}. The argument \code{digits} to
+#'   \code{\link{print.default}}.
+#'
+#'   \code{summary.kgaps}. An integer. Used for number formatting with
+#'   \code{\link[base:Round]{signif}}.
+#' @param ... For \code{print.summary.kgaps}. Additional arguments passed to
+#'   \code{\link{print.default}}.
+#' @return
+#'   \code{coef.kaps}. A numeric scalar: the estimate of the extremal index
+#'   \eqn{\theta}.
+#'
+#'   \code{vcov.kgaps}. A \eqn{1 \times 1}{1 x 1} numeric matrix containing the
+#'   estimated variance of the estimator.
+#'
+#'   \code{nobs.kgaps}. A numeric scalar: the number of inter-exceedance times
+#'   used in the fit. If \code{x$inc_cens = TRUE} then this includes up to 2
+#'   censored observations.
+#'
+#'   \code{logLik.kgaps}. An object of class \code{"logLik"}: a numeric scalar
+#'   with value equal to the maximised log-likelihood.  The returned object
+#'   also has attributes \code{nobs}, the numbers of \eqn{K}-gaps that
+#'   contribute to the log-likelihood and \code{"df"}, which is equal to the
+#'   number of total number of parameters estimated (1).
+#'
+#'   \code{print.kgaps}. The argument \code{x}, invisibly.
+#'
+#'   \code{summary.kgaps}. Returns a list containing the list element
+#'   \code{object$call} and a numeric matrix \code{summary} giving the estimate
+#'   of the extremal index \eqn{\theta} and the estimated standard error
+#'   (Std. Error).
+#'
+#'   \code{print.summary.kgaps}. The argument \code{x}, invisibly.
+#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+#' @section Examples:
+#' See the examples in \code{\link{kgaps}}.
+#' @name kgaps_methods
+NULL
+## NULL
+
 # =========================== coef.kgaps() ================================== #
 
 #' Extract Model Coefficients from a \code{"kgaps"} object
 #'
-#' \code{coef} method for class \code{c("kgaps", "exdex")}.
-#'
-#' @param object and object of class \code{c("kaps", "exdex")} returned from
-#'   \code{\link{kgaps}}.
-#' @param ... Further arguments.  None are used.
-#' @return A numeric scalar: the estimate of the extremal index \eqn{\theta}.
+#' @rdname kgaps_methods
 #' @export
 coef.kgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -22,15 +74,7 @@ coef.kgaps <- function(object, ...) {
 
 #' Calculate Variance-Covariance Matrix for a \code{"kgaps"} object
 #'
-#' \code{vcov} method for class \code{c("kgaps", "exdex")}.
-#'
-#' @param object and object of class \code{c("kgaps", "exdex")} returned from
-#'   \code{\link{kgaps}}.
-#' @param type A character scalar. Should the estimate of the variance be based
-#'   on the observed information or the expected information?
-#' @param ... Further arguments.  None are used.
-#' @return A 1 by 1 numeric matrix containing the estimated variance of the
-#'   estimator.
+#' @rdname kgaps_methods
 #' @export
 vcov.kgaps <- function(object, type = c("observed", "expected"), ...) {
   if (!inherits(object, "exdex")) {
@@ -51,14 +95,7 @@ vcov.kgaps <- function(object, type = c("observed", "expected"), ...) {
 
 #' Extract the Number of Observations from a \code{"kgaps"} object
 #'
-#' \code{nobs} method for class \code{c("kgaps", "exdex")}.
-#'
-#' @param object and object of class \code{c("kgaps", "exdex")} returned from
-#'   \code{\link{kgaps}}.
-#' @param ... Further arguments.  None are used.
-#' @return A numeric scalar: the number of inter-exceedance times used in the
-#'   fit. If \code{x$inc_cens = TRUE} then this includes up to 2 censored
-#'   observations.
+#' @rdname kgaps_methods
 #' @export
 nobs.kgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -71,17 +108,7 @@ nobs.kgaps <- function(object, ...) {
 
 #' Extract log-likelihood for objects of class \code{"kgaps"}
 #'
-#' \code{nobs} method for class \code{c("kgaps", "exdex")}.
-#'
-#' @param object an object of class \code{"kgaps"}, a result of a call to
-#'   \code{\link{kgaps}}.
-#' @param ... Additional optional arguments. At present no optional
-#'   arguments are used.
-#' @return An object of class \code{"logLik"}: a numeric scalar with
-#' value equal to the maximised log-likelihood.  The returned object also has
-#' attributes \code{nobs}, the numbers of \eqn{K}-gaps that contribute to the
-#' log-likelihood and \code{"df"}, which is equal to the number of total number
-#' of parameters estimated (1).
+#' @rdname kgaps_methods
 #' @export
 logLik.kgaps <- function(object, ...) {
   if (!inherits(object, "kgaps")) {
@@ -98,20 +125,7 @@ logLik.kgaps <- function(object, ...) {
 
 #' Print method for a \code{"kgaps"} object
 #'
-#' \code{print} method for class \code{c("kgaps", "exdex")}.
-#'
-#' @param x an object of class \code{c("kgaps", "exdex")}, a result of
-#'   a call to \code{\link{kgaps}}.
-#' @param digits The argument \code{digits} to \code{\link{print.default}}.
-#' @param ... Additional arguments.  None are used in this function.
-#' @details Prints the original call to \code{\link{kgaps}}
-#'   and the estimate of the extremal index \eqn{\theta}.
-#' @return The argument \code{x}, invisibly, as for all
-#'   \code{\link[base]{print}} methods.
-#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-#' @seealso \code{\link{confint.kgaps}}: \code{confint} method for
-#'   class \code{"kgaps"}.
+#' @rdname kgaps_methods
 #' @export
 print.kgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   if (!inherits(x, "exdex")) {
@@ -129,24 +143,7 @@ print.kgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 #' Summary method for a \code{"kgaps"} object
 #'
-#' \code{summary} method for class \code{"kgaps"}
-#'
-#' @param object an object of class "kgaps", a result of a call to
-#'   \code{\link{kgaps}}.
-#' @param se_type A character scalar. Should the estimate of the standard error
-#'   be based on the observed information or the expected information?
-#' @param digits An integer. Used for number formatting with
-#'   \code{\link[base:Round]{signif}}.
-#' @param ... Additional arguments.  None are used in this function.
-#' @return Returns a list containing the list element \code{object$call}
-#'   and a numeric matrix \code{summary} giving the estimate of the extremal
-#'   index \eqn{\theta} and the estimated standard error (Std. Error).
-#' @seealso \code{\link{kgaps}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.kgaps}} for estimation of confidence intervals
-#'   for \eqn{\theta}.
-#' @section Examples:
-#' See the examples in \code{\link{kgaps}}.
+#' @rdname kgaps_methods
 #' @export
 summary.kgaps <- function(object, se_type = c("observed", "expected"),
                           digits = max(3, getOption("digits") - 3L), ...) {
@@ -171,19 +168,7 @@ summary.kgaps <- function(object, se_type = c("observed", "expected"),
 
 #' Print method for objects of class \code{"summary.kgaps"}
 #'
-#' \code{print} method for an object \code{x} of class \code{"summary.kgaps"}.
-#'
-#' @param x An object of class \code{"summary.kgaps"}, a result of a call to
-#'   \code{\link{summary.kgaps}}.
-#' @param ... Additional arguments passed on to \code{\link{print.default}}.
-#' @return Prints the numeric matrix \code{x$matrix} returned from
-#' \code{\link{summary.kgaps}}.
-#' @seealso \code{\link{kgaps}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.kgaps}} for estimation of confidence intervals
-#'   for \eqn{\theta}.
-#' @section Examples:
-#' See the examples in \code{\link{kgaps}}.
+#' @rdname kgaps_methods
 #' @export
 print.summary.kgaps <- function(x, ...) {
   if (!inherits(x, "summary.kgaps")) {

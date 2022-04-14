@@ -1,10 +1,16 @@
+#' Confidence intervals for the extremal index \eqn{\theta} for \code{"spm"}
+#' objects
+#' @name spm_confint
+NULL
+## NULL
+
 #' Confidence intervals for the extremal index \eqn{\theta} for \code{"kgaps"}
 #' objects
 #' @name kgaps_confint
 NULL
 ## NULL
 
-#' Confidence intervals for the extremal index \eqn{\theta} for \code{"kgaps"}
+#' Confidence intervals for the extremal index \eqn{\theta} for \code{"dgaps"}
 #' objects
 #' @name dgaps_confint
 NULL
@@ -23,7 +29,9 @@ NULL
 #' point estimates, and (b) likelihood-based intervals based on an adjustment
 #' of a naive (pseudo-) loglikelihood, using the
 #' \code{\link[chandwich]{adjust_loglik}} function in the
-#' \code{\link[chandwich]{chandwich}} package.
+#' \code{\link[chandwich]{chandwich}} package. The \code{plot} method plots the
+#' log-likelihood for \eqn{\theta}, with the required confidence interval(s)
+#' indicated on the plot.
 #'
 #' @param object An object of class \code{c("spm", "exdex")}, returned by
 #'   \code{\link{spm}}.
@@ -81,7 +89,12 @@ NULL
 #'   if (the default) \code{sliding = TRUE} was used in the call to
 #'   \code{\link{spm}} then the unadjusted likelihood-based confidence
 #'   intervals provide \emph{vast} underestimates of uncertainty.
-#' @param ... Further arguments. None are used currently.
+#' @param ...
+#'   \code{plot.confint_spm}: further arguments passed to
+#'   \code{\link[chandwich]{plot.confint}}.
+#'
+#'   \code{print.confint_spm}: further arguments passed to
+#'   \code{\link{print.default}}.
 #' @details The likelihood-based intervals are estimated using the
 #'   \code{\link[chandwich]{adjust_loglik}} function in the
 #'   \code{\link[chandwich]{chandwich}} package, followed by a call to
@@ -150,8 +163,7 @@ NULL
 #' cis <- confint(theta, interval_type = "lik")
 #' cis
 #' plot(cis)
-#' @seealso \code{\link{plot.confint_spm}}: \code{plot} method for
-#'   class \code{c("confint_spm", "exdex")}.
+#' @rdname spm_confint
 #' @export
 confint.spm <- function (object, parm = "theta", level = 0.95,
                          maxima = c("sliding", "disjoint"),
@@ -346,11 +358,8 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 
 #' Plot diagnostics for a confint_spm object
 #'
-#' \code{plot} method for an objects of class \code{c("confint_spm", "exdex")}.
-#'
 #' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
 #'   a call to \code{\link{confint.spm}}.
-#' @param y Not used.
 #' @param estimator A character vector specifying which of the three variants
 #'   of the semiparametric maxima estimator to include in the plot:
 #'   \code{"N2015", "BB2018"} or \code{"BB2018b"}.  See \code{\link{spm}} for
@@ -359,13 +368,10 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
 #'   contains the confidence limits rounded to \code{ndec} decimal places.
 #' @param ... Further arguments to be passed to
 #'   \code{\link[chandwich]{plot.confint}}.
-#' @return Nothing is returned.
-#' @seealso \code{\link{confint.spm}}: \code{confint} method for
-#'   class \code{c("spm", "exdex")}.
-#' @section Examples:
-#' See the examples in \code{\link{confint.spm}}.
+#' @return \code{plot.confint_spm}: nothing is returned.
+#' @rdname spm_confint
 #' @export
-plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
+plot.confint_spm <- function(x, estimator = "all", ndec = 2, ...) {
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
@@ -479,19 +485,16 @@ plot.confint_spm <- function(x, y = NULL, estimator = "all", ndec = 2, ...) {
 
 #' Print method for a confint_spm object
 #'
-#' \code{print} method for class \code{c("confint_spm", "exdex")}.
-#'
 #' @param x an object of class \code{c("confint_spm", "exdex")}, a result of
 #'   a call to \code{\link{confint.spm}}.
 #' @param ... Additional optional arguments to be passed to
 #'   \code{\link{print.default}}
-#' @details Prints the matrix of confidence intervals for \eqn{\theta}.
-#' @return The argument \code{x}, invisibly, as for all
-#'   \code{\link[base]{print}} methods.
+#' @details \code{print.confint_spm} prints the matrix of confidence
+#'   intervals for \eqn{\theta}.
+#' @return \code{print.confint_spm}: the argument \code{x}, invisibly.
 #' @seealso \code{\link{spm}} for estimation of the extremal index
 #'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.spm}}: \code{confint} method for
-#'   class \code{"spm"}.
+#' @rdname spm_confint
 #' @export
 print.confint_spm <- function(x, ...) {
   if (!inherits(x, "exdex")) {

@@ -5,7 +5,7 @@
 \alias{confint.dgaps}
 \alias{plot.confint_dgaps}
 \alias{print.confint_dgaps}
-\title{Confidence intervals for the extremal index \eqn{\theta} for \code{"kgaps"}
+\title{Confidence intervals for the extremal index \eqn{\theta} for \code{"dgaps"}
 objects}
 \usage{
 \method{confint}{dgaps}(

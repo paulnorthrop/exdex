@@ -2,7 +2,7 @@
 #'
 #' Methods for objects of class \code{c("kgaps", "exdex")} returned from
 #' \code{\link{kgaps}}.
-#' @param object and object of class \code{c("kaps", "exdex")} returned from
+#' @param object and object of class \code{c("kgaps", "exdex")} returned from
 #'   \code{\link{kgaps}}.
 #' @param type A character scalar. Should the estimate of the variance be based
 #'   on the observed information or the expected information?
@@ -20,7 +20,7 @@
 #'
 #'   \code{summary.kgaps}. An integer. Used for number formatting with
 #'   \code{\link[base:Round]{signif}}.
-#' @param ... For \code{print.summary.kgaps}. Additional arguments passed to
+#' @param ... For \code{print.summary.kgaps}, additional arguments passed to
 #'   \code{\link{print.default}}.
 #' @return
 #'   \code{coef.kaps}. A numeric scalar: the estimate of the extremal index
@@ -49,6 +49,8 @@
 #'   \code{print.summary.kgaps}. The argument \code{x}, invisibly.
 #' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+#' @seealso \code{\link{confint.kgaps}} for confidence intervals for
+#'   \eqn{\theta}.
 #' @section Examples:
 #' See the examples in \code{\link{kgaps}}.
 #' @name kgaps_methods

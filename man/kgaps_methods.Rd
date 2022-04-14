@@ -31,10 +31,10 @@
 \method{print}{summary.kgaps}(x, ...)
 }
 \arguments{
-\item{object}{and object of class \code{c("kaps", "exdex")} returned from
+\item{object}{and object of class \code{c("kgaps", "exdex")} returned from
 \code{\link{kgaps}}.}
 
-\item{...}{For \code{print.summary.kgaps}. Additional arguments passed to
+\item{...}{For \code{print.summary.kgaps}, additional arguments passed to
 \code{\link{print.default}}.}
 
 \item{type}{A character scalar. Should the estimate of the variance be based
@@ -93,4 +93,7 @@ See the examples in \code{\link{kgaps}}.
 \seealso{
 \code{\link{kgaps}} for maximum likelihood estimation of the
   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+
+\code{\link{confint.kgaps}} for confidence intervals for
+  \eqn{\theta}.
 }

@@ -1,13 +1,67 @@
+#' Methods for objects of class \code{"dgaps"}
+#'
+#' Methods for objects of class \code{c("dgaps", "exdex")} returned from
+#' \code{\link{dgaps}}.
+#' @param object and object of class \code{c("dgaps", "exdex")} returned from
+#'   \code{\link{dgaps}}.
+#' @param type A character scalar. Should the estimate of the variance be based
+#'   on the observed information or the expected information?
+#' @param x
+#'   \code{print.dgaps}. An object of class \code{c("dgaps", "exdex")}, a
+#'   result of a call to \code{\link{dgaps}}.
+#'
+#'   \code{print.summary.dgaps}. An object of class \code{"summary.dgaps"}, a
+#'   result of a call to \code{\link{summary.dgaps}}.
+#' @param se_type A character scalar. Should the estimate of the standard error
+#'   be based on the observed information or the expected information?
+#' @param digits
+#'   \code{print.dgaps}. The argument \code{digits} to
+#'   \code{\link{print.default}}.
+#'
+#'   \code{summary.dgaps}. An integer. Used for number formatting with
+#'   \code{\link[base:Round]{signif}}.
+#' @param ... For \code{print.summary.dgaps}, additional arguments passed to
+#'   \code{\link{print.default}}.
+#' @return
+#'   \code{coef.kaps}. A numeric scalar: the estimate of the extremal index
+#'   \eqn{\theta}.
+#'
+#'   \code{vcov.dgaps}. A \eqn{1 \times 1}{1 x 1} numeric matrix containing the
+#'   estimated variance of the estimator.
+#'
+#'   \code{nobs.dgaps}. A numeric scalar: the number of inter-exceedance times
+#'   used in the fit. If \code{x$inc_cens = TRUE} then this includes up to 2
+#'   censored observations.
+#'
+#'   \code{logLik.dgaps}. An object of class \code{"logLik"}: a numeric scalar
+#'   with value equal to the maximised log-likelihood.  The returned object
+#'   also has attributes \code{nobs}, the numbers of \eqn{K}-gaps that
+#'   contribute to the log-likelihood and \code{"df"}, which is equal to the
+#'   number of total number of parameters estimated (1).
+#'
+#'   \code{print.dgaps}. The argument \code{x}, invisibly.
+#'
+#'   \code{summary.dgaps}. Returns a list containing the list element
+#'   \code{object$call} and a numeric matrix \code{summary} giving the estimate
+#'   of the extremal index \eqn{\theta} and the estimated standard error
+#'   (Std. Error).
+#'
+#'   \code{print.summary.dgaps}. The argument \code{x}, invisibly.
+#' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
+#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
+#' @seealso \code{\link{confint.dgaps}} for confidence intervals for
+#'   \eqn{\theta}.
+#' @section Examples:
+#' See the examples in \code{\link{dgaps}}.
+#' @name dgaps_methods
+NULL
+## NULL
+
 # =========================== coef.dgaps() ================================== #
 
 #' Extract Model Coefficients from a \code{"dgaps"} object
 #'
-#' \code{coef} method for class \code{c("dgaps", "exdex")}.
-#'
-#' @param object and object of class \code{c("kaps", "exdex")} returned from
-#'   \code{\link{dgaps}}.
-#' @param ... Further arguments.  None are used.
-#' @return A numeric scalar: the estimate of the extremal index \eqn{\theta}.
+#' @name dgaps_methods
 #' @export
 coef.dgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -22,15 +76,7 @@ coef.dgaps <- function(object, ...) {
 
 #' Calculate Variance-Covariance Matrix for a \code{"dgaps"} object
 #'
-#' \code{vcov} method for class \code{c("dgaps", "exdex")}.
-#'
-#' @param object and object of class \code{c("dgaps", "exdex")} returned from
-#'   \code{\link{dgaps}}.
-#' @param type A character scalar. Should the estimate of the variance be based
-#'   on the observed information or the expected information?
-#' @param ... Further arguments.  None are used.
-#' @return A 1 by 1 numeric matrix containing the estimated variance of the
-#'   estimator.
+#' @name dgaps_methods
 #' @export
 vcov.dgaps <- function(object, type = c("observed", "expected"),...) {
   if (!inherits(object, "exdex")) {
@@ -51,14 +97,7 @@ vcov.dgaps <- function(object, type = c("observed", "expected"),...) {
 
 #' Extract the Number of Observations from a \code{"dgaps"} object
 #'
-#' \code{nobs} method for class \code{c("dgaps", "exdex")}.
-#'
-#' @param object and object of class \code{c("dgaps", "exdex")} returned from
-#'   \code{\link{dgaps}}.
-#' @param ... Further arguments.  None are used.
-#' @return A numeric scalar: the number of inter-exceedance times used in the
-#'   fit. If \code{x$inc_cens = TRUE} then this includes up to 2 censored
-#'   observations.
+#' @name dgaps_methods
 #' @export
 nobs.dgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -71,17 +110,7 @@ nobs.dgaps <- function(object, ...) {
 
 #' Extract log-likelihood for objects of class \code{"dgaps"}
 #'
-#' \code{nobs} method for class \code{c("dgaps", "exdex")}.
-#'
-#' @param object an object of class \code{"dgaps"}, a result of a call to
-#'   \code{\link{dgaps}}.
-#' @param ... Additional optional arguments. At present no optional
-#'   arguments are used.
-#' @return An object of class \code{"logLik"}: a numeric scalar with
-#' value equal to the maximised log-likelihood.  The returned object also has
-#' attributes \code{nobs}, the numbers of \eqn{K}-gaps that contribute to the
-#' log-likelihood and \code{"df"}, which is equal to the number of total number
-#' of parameters estimated (1).
+#' @name dgaps_methods
 #' @export
 logLik.dgaps <- function(object, ...) {
   if (!inherits(object, "dgaps")) {
@@ -98,20 +127,7 @@ logLik.dgaps <- function(object, ...) {
 
 #' Print method for a \code{"dgaps"} object
 #'
-#' \code{print} method for class \code{c("dgaps", "exdex")}.
-#'
-#' @param x an object of class \code{c("dgaps", "exdex")}, a result of
-#'   a call to \code{\link{dgaps}}.
-#' @param digits The argument \code{digits} to \code{\link{print.default}}.
-#' @param ... Additional arguments.  None are used in this function.
-#' @details Prints the original call to \code{\link{dgaps}}
-#'   and the estimate of the extremal index \eqn{\theta}.
-#' @return The argument \code{x}, invisibly, as for all
-#'   \code{\link[base]{print}} methods.
-#' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-#' @seealso \code{\link{confint.dgaps}}: \code{confint} method for
-#'   class \code{"dgaps"}.
+#' @name dgaps_methods
 #' @export
 print.dgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   if (!inherits(x, "exdex")) {
@@ -129,24 +145,7 @@ print.dgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 #' Summary method for a \code{"dgaps"} object
 #'
-#' \code{summary} method for class \code{"dgaps"}
-#'
-#' @param object an object of class "dgaps", a result of a call to
-#'   \code{\link{dgaps}}.
-#' @param se_type A character scalar. Should the estimate of the standard error
-#'   be based on the observed information or the expected information?
-#' @param digits An integer. Used for number formatting with
-#'   \code{\link[base:Round]{signif}}.
-#' @param ... Additional arguments.  None are used in this function.
-#' @return Returns a list containing the list element \code{object$call}
-#'   and a numeric matrix \code{summary} giving the estimate of the extremal
-#'   index \eqn{\theta} and the estimated standard error (Std. Error).
-#' @seealso \code{\link{dgaps}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.dgaps}} for estimation of confidence intervals
-#'   for \eqn{\theta}.
-#' @section Examples:
-#' See the examples in \code{\link{dgaps}}.
+#' @name dgaps_methods
 #' @export
 summary.dgaps <- function(object, se_type = c("observed", "expected"),
                           digits = max(3, getOption("digits") - 3L), ...) {
@@ -171,19 +170,7 @@ summary.dgaps <- function(object, se_type = c("observed", "expected"),
 
 #' Print method for objects of class \code{"summary.dgaps"}
 #'
-#' \code{print} method for an object \code{x} of class \code{"summary.dgaps"}.
-#'
-#' @param x An object of class \code{"summary.dgaps"}, a result of a call to
-#'   \code{\link{summary.dgaps}}.
-#' @param ... Additional arguments passed on to \code{\link{print.default}}.
-#' @return Prints the numeric matrix \code{x$summary} returned from
-#' \code{\link{summary.dgaps}}.
-#' @seealso \code{\link{dgaps}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.dgaps}} for estimation of confidence intervals
-#'   for \eqn{\theta}.
-#' @section Examples:
-#' See the examples in \code{\link{dgaps}}.
+#' @name dgaps_methods
 #' @export
 print.summary.dgaps <- function(x, ...) {
   if (!inherits(x, "summary.dgaps")) {

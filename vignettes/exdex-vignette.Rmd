@@ -152,6 +152,16 @@ theta
 summary(theta)
 ```
 
+### $D$-gaps
+
+From version 1.2.1 of *exdex* the estimator of $\theta$ developed by @HF2020 is available, which involves a censoring parameter $D$.  This estimator is similar to the $K$-gaps estimator, but the treatment of small inter-exceedance times is different.  Threshold inter-exceedances times that are not larger than \code{D} units are left-censored and contribute to a log-likelihood only the information that they are $\leq D$. The function `dgaps` calculates maximum likelihood estimates of $\theta$.
+
+```{r}
+theta <- dgaps(cheeseboro, 45, D = 3)
+theta
+summary(theta)
+```
+
 ### Iterated weighted least squares
 
 Under the limiting mixture model $\theta$ is the proportion of interexceedance times that are between clusters.  @Suveges2007 uses this to devise and iterated scheme for estimating $\theta$.  An initial estimate of $\theta$ is set. An exponential distribution is fitted to the largest $100\theta\%$ of the interexceedance times using weighted least squares estimation.  Then the new estimate of $\theta$ is used to set the putative exponential sample and the estimation proceeds until the estimate of $\theta$ converges.

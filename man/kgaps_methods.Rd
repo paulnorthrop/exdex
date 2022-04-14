@@ -56,7 +56,7 @@ on the observed information or the expected information?}
 be based on the observed information or the expected information?}
 }
 \value{
-\code{coef.kaps}. A numeric scalar: the estimate of the extremal index
+\code{coef.kgaps}. A numeric scalar: the estimate of the extremal index
   \eqn{\theta}.
 
   \code{vcov.kgaps}. A \eqn{1 \times 1}{1 x 1} numeric matrix containing the

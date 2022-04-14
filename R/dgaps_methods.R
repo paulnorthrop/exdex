@@ -23,7 +23,7 @@
 #' @param ... For \code{print.summary.dgaps}, additional arguments passed to
 #'   \code{\link{print.default}}.
 #' @return
-#'   \code{coef.kaps}. A numeric scalar: the estimate of the extremal index
+#'   \code{coef.dgaps}. A numeric scalar: the estimate of the extremal index
 #'   \eqn{\theta}.
 #'
 #'   \code{vcov.dgaps}. A \eqn{1 \times 1}{1 x 1} numeric matrix containing the
@@ -61,7 +61,7 @@ NULL
 
 #' Extract Model Coefficients from a \code{"dgaps"} object
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
 coef.dgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -76,9 +76,9 @@ coef.dgaps <- function(object, ...) {
 
 #' Calculate Variance-Covariance Matrix for a \code{"dgaps"} object
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
-vcov.dgaps <- function(object, type = c("observed", "expected"),...) {
+vcov.dgaps <- function(object, type = c("observed", "expected"), ...) {
   if (!inherits(object, "exdex")) {
     stop("use only with \"exdex\" objects")
   }
@@ -97,7 +97,7 @@ vcov.dgaps <- function(object, type = c("observed", "expected"),...) {
 
 #' Extract the Number of Observations from a \code{"dgaps"} object
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
 nobs.dgaps <- function(object, ...) {
   if (!inherits(object, "exdex")) {
@@ -110,7 +110,7 @@ nobs.dgaps <- function(object, ...) {
 
 #' Extract log-likelihood for objects of class \code{"dgaps"}
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
 logLik.dgaps <- function(object, ...) {
   if (!inherits(object, "dgaps")) {
@@ -127,7 +127,7 @@ logLik.dgaps <- function(object, ...) {
 
 #' Print method for a \code{"dgaps"} object
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
 print.dgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   if (!inherits(x, "exdex")) {
@@ -145,7 +145,7 @@ print.dgaps <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 #' Summary method for a \code{"dgaps"} object
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
 summary.dgaps <- function(object, se_type = c("observed", "expected"),
                           digits = max(3, getOption("digits") - 3L), ...) {
@@ -170,7 +170,7 @@ summary.dgaps <- function(object, se_type = c("observed", "expected"),
 
 #' Print method for objects of class \code{"summary.dgaps"}
 #'
-#' @name dgaps_methods
+#' @rdname dgaps_methods
 #' @export
 print.summary.dgaps <- function(x, ...) {
   if (!inherits(x, "summary.dgaps")) {

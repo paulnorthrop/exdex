@@ -23,7 +23,7 @@
 #' @param ... For \code{print.summary.kgaps}, additional arguments passed to
 #'   \code{\link{print.default}}.
 #' @return
-#'   \code{coef.kaps}. A numeric scalar: the estimate of the extremal index
+#'   \code{coef.kgaps}. A numeric scalar: the estimate of the extremal index
 #'   \eqn{\theta}.
 #'
 #'   \code{vcov.kgaps}. A \eqn{1 \times 1}{1 x 1} numeric matrix containing the

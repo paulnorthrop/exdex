@@ -1,8 +1,65 @@
+#' Methods for objects of class \code{"spm"}
+#'
+#' Methods for objects of class \code{c("spm", "exdex")} returned from
+#' \code{\link{spm}}.
+#' @param object and object of class \code{c("spm", "exdex")} returned from
+#'   \code{\link{spm}}.
+#' @param type A character scalar. Should the estimate of the variance be based
+#'   on the observed information or the expected information?
+#' @param x
+#'   \code{print.spm}. An object of class \code{c("spm", "exdex")}, a
+#'   result of a call to \code{\link{spm}}.
+#'
+#'   \code{print.summary.spm}. An object of class \code{"summary.spm"}, a
+#'   result of a call to \code{\link{summary.spm}}.
+#' @param se_type A character scalar. Should the estimate of the standard error
+#'   be based on the observed information or the expected information?
+#' @param digits
+#'   \code{print.spm}. The argument \code{digits} to
+#'   \code{\link{print.default}}.
+#'
+#'   \code{summary.spm}. An integer. Used for number formatting with
+#'   \code{\link[base:Round]{signif}}.
+#' @param ... For \code{print.summary.spm}, additional arguments passed to
+#'   \code{\link{print.default}}.
+#' @return
+#'   \code{coef.spm}. A numeric scalar (or a vector of length 3 if
+#'   \code{estimator = "all"}): the required estimate(s) of the extremal index
+#'   \eqn{\theta}.
+#'
+#'   \code{vcov.spm}. A \eqn{1 \times 1}{1 x 1} numeric matrix if
+#'   \code{estimator = "N2015"} or \code{"BB2018"} and a vector of length 3 if
+#'   \code{estimator = "all"}, containing the estimated variance(s) of the
+#'   estimator(s).
+#'
+#'   \code{nobs.spm}. A numeric scalar: the number of observations used in the
+#'   fit.
+#'
+#'   \code{print.spm}. The argument \code{x}, invisibly.
+#'
+#'   \code{summary.spm}. Returns an object (a list) of class
+#'   \code{"summary.spm"} containing the list element \code{object$call} and a
+#'   numeric matrix \code{matrix} giving, for all three variants of the
+#'   semiparametric estimator and both sliding and disjoint blocks,
+#'   the (bias-adjusted) Estimate of the extremal index \eqn{\theta},
+#'   the estimated standard error (Std. Error),
+#'   and the bias adjustment (Bias adj.) applied to obtain the estimate, i.e.
+#'   the value subtracted from the raw estimate.  If any of the
+#'   (bias-adjusted) estimates are greater than 1 then a column
+#'   containing the unconstrained estimates (Uncon. estimate) is added.
+#'
+#'   \code{print.summary.spm}. The argument \code{x}, invisibly.
+#' @seealso \code{\link{spm}} for semiparametric estimation of the
+#'   extremal index based on block maxima.
+#' @section Examples:
+#' See the examples in \code{\link{spm}}.
+#' @name spm_methods
+NULL
+## NULL
+
 # ============================ coef.spm() =================================== #
 
 #' Extract Model Coefficients from an \code{"spm"} object
-#'
-#' \code{coef} method for class \code{c("spm", "exdex")}.
 #'
 #' @param object and object of class \code{c("spm", "exdex")} returned from
 #'   \code{\link{spm}}.
@@ -17,16 +74,7 @@
 #'   any estimates that are greater than 1 are set to 1,
 #'   that is, they are constrained to lie in (0, 1].  Otherwise,
 #'   estimates that are greater than 1 may be obtained.
-#' @param ... Further arguments.  None are used.
-#' @return A numeric scalar (or a vector of length 3 if
-#'   \code{estimator = "all"}): the required estimate(s) of the extremal index
-#'   \eqn{\theta}.
-#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
-#' estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#' \doi{10.1007/s10687-015-0221-5}
-#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
-#' maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#' \strong{46}(5), 2307-2335. \doi{10.1214/17-AOS1621}
+#' @rdname spm_methods
 #' @export
 coef.spm <- function(object, maxima = c("sliding", "disjoint"),
                      estimator = "all", constrain = FALSE, ...) {
@@ -57,8 +105,6 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 
 #' Calculate Variance-Covariance Matrix for an \code{"spm"} object
 #'
-#' \code{vcov} method for class \code{c("spm", "exdex")}.
-#'
 #' @param object and object of class \code{c("spm", "exdex")} returned from
 #'   \code{\link{spm}}.
 #' @param maxima A character scalar specifying whether to return the
@@ -69,16 +115,7 @@ coef.spm <- function(object, maxima = c("sliding", "disjoint"),
 #'   or \code{"BB2018b"}. See \code{\link{spm}} for details. If
 #'   \code{estimator = "all"} then the estimated variances of all variants are
 #'   returned.
-#' @param ... Further arguments.  None are used.
-#' @return A 1 by 1 numeric matrix if \code{estimator = "N2015"} or
-#'   \code{"BB2018"} and a vector of length 3 if \code{estimator = "all"},
-#'   containing the estimated variance(s) of the estimator(s).
-#' @references Northrop, P. J. (2015) An efficient semiparametric maxima
-#'   estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
-#'   \doi{10.1007/s10687-015-0221-5}
-#' @references Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
-#'   maximum likelihood estimator for the extremal index. \emph{Ann. Statist.}
-#'   \strong{46}(5), 2307-2335. \doi{10.1214/17-AOS1621}
+#' @rdname spm_methods
 #' @export
 vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
                      estimator = "all", ...) {
@@ -107,14 +144,11 @@ vcov.spm <- function(object, maxima = c("sliding", "disjoint"),
 
 #' Extract the Number of Observations from an \code{"spm"} object
 #'
-#' \code{nobs} method for class \code{c("spm", "exdex")}.
-#'
 #' @param object and object of class \code{c("spm", "exdex")} returned from
 #'   \code{\link{spm}}.
 #' @param maxima A character scalar specifying whether to return the
 #'   number of observed sliding maxima or disjoint maxima.
-#' @param ... Further arguments.  None are used.
-#' @return A numeric scalar: the number of observations used in the fit.
+#' @rdname spm_methods
 #' @export
 nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
   if (!inherits(object, "exdex")) {
@@ -131,22 +165,12 @@ nobs.spm <- function(object, maxima = c("sliding", "disjoint"), ...) {
 
 #' Print method for an \code{"spm"} object
 #'
-#' \code{print} method for class \code{c("spm", "exdex")}.
-#'
-#' @param x an object of class \code{c("spm", "exdex")}, a result of
-#'   a call to \code{\link{spm}}.
 #' @param digits The argument \code{digits} to \code{\link{print.default}}.
-#' @param ... Additional arguments.  None are used in this function.
-#' @details Prints the original call to \code{\link{spm}}
+#' @details \code{print.spm} prints the original call to \code{\link{spm}}
 #'   and the estimates of the extremal index \eqn{\theta}, based on all three
 #'   variants of the semiparametric maxima estimator and both sliding
 #'   and disjoint blocks.
-#' @return The argument \code{x}, invisibly, as for all
-#'   \code{\link[base]{print}} methods.
-#' @seealso \code{\link{spm}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.spm}}: \code{confint} method for
-#'   class \code{"spm"}.
+#' @rdname spm_methods
 #' @export
 print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   if (!inherits(x, "exdex")) {
@@ -176,29 +200,11 @@ print.spm <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 #' Summary method for an \code{"spm"} object
 #'
-#' \code{summary} method for class \code{"spm"}
-#'
 #' @param object an object of class \code{"spm"}, a result of a call to
 #'   \code{\link{spm}}.
 #' @param digits An integer. Used for number formatting with
 #'   \code{\link[base:Round]{signif}}.
-#' @param ... Additional arguments.  None are used in this function.
-#' @return Returns an object (a list) of class \code{"summary.spm"}
-#'   containing the list element \code{object$call} and a numeric
-#'   matrix \code{matrix} giving, for all three variants of the
-#'   semiparametric estimator and both sliding and disjoint blocks,
-#'   the (bias-adjusted) Estimate of the extremal index \eqn{\theta},
-#'   the estimated standard error (Std. Error),
-#'   and the bias adjustment (Bias adj.) applied to obtain the estimate, i.e.
-#'   the value subtracted from the raw estimate.  If any of the
-#'   (bias-adjusted) estimates are greater than 1 then a column
-#'   containing the unconstrained estimates (Uncon. estimate) is added.
-#' @seealso \code{\link{spm}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.spm}} for estimation of confidence intervals
-#'   for \eqn{\theta}.
-#' @section Examples:
-#' See the examples in \code{\link{spm}}.
+#' @rdname spm_methods
 #' @export
 summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
                         ...) {
@@ -238,21 +244,7 @@ summary.spm <- function(object, digits = max(3, getOption("digits") - 3L),
 
 #' Print method for objects of class \code{"summary.spm"}
 #'
-#' \code{print} method for an object \code{x} of class \code{"summary.spm"}.
-#'
-#' @param x An object of class \code{"summary.spm"}, a result of a call to
-#'   \code{\link{summary.spm}}.
-#' @param ... Additional arguments passed on to \code{\link{print.default}}.
-#' @details Prints the call and the numeric matrix \code{x$matrix} returned
-#'   from \code{\link{summary.spm}}.
-#' @return The argument \code{x}, invisibly, as for all
-#'   \code{\link[base]{print}} methods.
-#' @seealso \code{\link{spm}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{confint.spm}} for estimation of confidence intervals
-#'   for \eqn{\theta}.
-#' @section Examples:
-#' See the examples in \code{\link{spm}}.
+#' @rdname spm_methods
 #' @export
 print.summary.spm <- function(x, ...) {
   if (!inherits(x, "summary.spm")) {

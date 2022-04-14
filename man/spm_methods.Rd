@@ -60,9 +60,6 @@ estimates that are greater than 1 may be obtained.}
 
 \item{type}{A character scalar. Should the estimate of the variance be based
 on the observed information or the expected information?}
-
-\item{se_type}{A character scalar. Should the estimate of the standard error
-be based on the observed information or the expected information?}
 }
 \value{
 \code{coef.spm}. A numeric scalar (or a vector of length 3 if

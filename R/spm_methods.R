@@ -12,8 +12,6 @@
 #'
 #'   \code{print.summary.spm}. An object of class \code{"summary.spm"}, a
 #'   result of a call to \code{\link{summary.spm}}.
-#' @param se_type A character scalar. Should the estimate of the standard error
-#'   be based on the observed information or the expected information?
 #' @param digits
 #'   \code{print.spm}. The argument \code{digits} to
 #'   \code{\link{print.default}}.

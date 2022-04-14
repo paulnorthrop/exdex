@@ -16,6 +16,8 @@
 
 * The function `kgaps()` also return standard errors based on the expected information.
 
+* In the package manual related functions have been arranged in sections for easier reading.
+
 * Activated 3rd edition of the `testthat` package
 
 # exdex 1.1.1

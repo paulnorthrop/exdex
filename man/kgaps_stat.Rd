@@ -4,7 +4,7 @@
 \alias{kgaps_stat}
 \title{Sufficient statistics for the \eqn{K}-gaps model}
 \usage{
-kgaps_stat(data, u, k = 1, inc_cens = TRUE)
+kgaps_stat(data, u, q_u, k = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.}

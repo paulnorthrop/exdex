@@ -115,8 +115,10 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
   if (anyNA(data) && is.null(attr(data, "split_by_NAs_done"))) {
     data <- split_by_NAs(data)
   }
+  # Estimate the marginal exceedance probability q_u
+  q_u <- mean(data > u, na.rm = TRUE)
   # Calculate sufficient statistics for each column in data and then sum
-  stats_list <- apply(as.matrix(data), 2, kgaps_stat, u = u, k = k,
+  stats_list <- apply(as.matrix(data), 2, kgaps_stat, u = u, q_u = q_u, k = k,
                       inc_cens = inc_cens)
   ss <- Reduce(f = function(...) Map("+", ...), stats_list)
   # If N0 = 0 then all exceedances occur singly (all K-gaps are positive)
@@ -238,7 +240,7 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
 #' u <- quantile(newlyn, probs = 0.90)
 #' kgaps_stat(newlyn, u)
 #' @export
-kgaps_stat <- function(data, u, k = 1, inc_cens = TRUE) {
+kgaps_stat <- function(data, u, q_u, k = 1, inc_cens = TRUE) {
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
@@ -254,7 +256,6 @@ kgaps_stat <- function(data, u, k = 1, inc_cens = TRUE) {
   nx <- length(data)
   exc_u <- (1:nx)[data > u]
   N_u <- length(exc_u)
-  q_u <- N_u / nx
   # Inter-exceedances times and K-gaps
   T_u <- diff(exc_u)
   S_k <- pmax(T_u - k, 0)

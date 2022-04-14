@@ -18,7 +18,7 @@ diagnose misspecification of the \(K\)-gaps model."><!-- mathjax --><script src=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -55,7 +55,7 @@ diagnose misspecification of the \(K\)-gaps model."><!-- mathjax --><script src=
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Information matrix test under the \(K\)-gaps model</h1>
-    <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/exdex/blob/HEAD/R/information_matrix_test.R" class="external-link"><code>R/information_matrix_test.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/exdex/blob/HEAD/R/kgaps_imt.R" class="external-link"><code>R/kgaps_imt.R</code></a></small>
     <div class="hidden name"><code>kgaps_imt.Rd</code></div>
     </div>
 
@@ -110,10 +110,10 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The IMT is performed a over grid of all
+    <p>The \(K\)-gaps IMT is performed a over grid of all
   combinations of threshold and \(K\) in the vectors <code>u</code>
   and <code>k</code>.  If the estimate of \(\theta\) is 0 then the
-  IMT statistic, and its associated \(p\)-value will be <code>NA</code>.</p>
+  IMT statistic, and its associated \(p\)-value is <code>NA</code>.</p>
 <p>For details of the IMT see Suveges and Davison
   (2010).  There are some typing errors on pages 18-19 that have been
   corrected in producing the code: the penultimate term inside <code>{...}</code>
@@ -125,7 +125,7 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
     <div id="references">
     <h2>References</h2>
     <p>Suveges, M. and Davison, A. C. (2010) Model
-  misspecification in peaks over threshold analysis, <em>The Annals of
+  misspecification in peaks over threshold analysis, <em>Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
   doi: <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a></p>
 <p>Attalides, N. (2015) Threshold-based extreme value modelling,
@@ -135,7 +135,9 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="kgaps.html">kgaps</a></code> for maximum likelihood estimation of the
-  extremal index \(\theta\) using the \(K\)-gaps model.</p></div>
+  extremal index \(\theta\) using the \(K\)-gaps model.</p>
+<p><code><a href="choose_uk.html">choose_uk</a></code> for graphical diagnostic to aid the choice
+  of the threshold \(u\) and the run parameter \(K\).</p></div>
     </div>
 
     <div id="ref-examples">
@@ -148,7 +150,7 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 <span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt</span> <span class="op">&lt;-</span> <span class="fu"><a href="choose_uk.html">choose_uk</a></span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">imt</span> <span class="op">&lt;-</span> <span class="fu">kgaps_imt</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### Cheeseboro wind gusts (a matrix containing some NAs)</span></span>
 <span class="r-in"></span>

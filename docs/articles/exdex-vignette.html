@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Introducing exdex: Estimation of the Extremal Index</h1>
                         <h4 data-toc-skip class="author">Paul Northrop</h4>
             
-            <h4 data-toc-skip class="date">2022-03-26</h4>
+            <h4 data-toc-skip class="date">2022-04-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/exdex/blob/HEAD/vignettes/exdex-vignette.Rmd" class="external-link"><code>vignettes/exdex-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>exdex-vignette.Rmd</code></div>
@@ -259,22 +259,46 @@
 <span class="co">#&gt; kgaps(data = cheeseboro, u = 45, k = 3)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Estimate of the extremal index theta:</span>
-<span class="co">#&gt; [1]  0.2304</span>
+<span class="co">#&gt;  theta  </span>
+<span class="co">#&gt; 0.2405</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; kgaps(data = cheeseboro, u = 45, k = 3)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;       Estimate Std. Error</span>
-<span class="co">#&gt; theta   0.2304    0.02257</span></code></pre></div>
+<span class="co">#&gt; theta   0.2405    0.02336</span></code></pre></div>
 </div>
+</div>
+<div class="section level3">
+<h3 id="d-gaps">
+<span class="math inline">\(D\)</span>-gaps<a class="anchor" aria-label="anchor" href="#d-gaps"></a>
+</h3>
+<p>From version 1.2.1 of <em>exdex</em> the estimator of <span class="math inline">\(\theta\)</span> developed by <span class="citation">Holesovsky and Fusek (2020)</span> is available, which involves a censoring parameter <span class="math inline">\(D\)</span>. This estimator is similar to the <span class="math inline">\(K\)</span>-gaps estimator, but the treatment of small inter-exceedance times is different. Threshold inter-exceedances times that are not larger than  units are left-censored and contribute to a log-likelihood only the information that they are <span class="math inline">\(\leq D\)</span>. The function <code>dgaps</code> calculates maximum likelihood estimates of <span class="math inline">\(\theta\)</span>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dgaps.html">dgaps</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="fl">45</span>, D <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">theta</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; dgaps(data = cheeseboro, u = 45, D = 3)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Estimate of the extremal index theta:</span>
+<span class="co">#&gt;  theta  </span>
+<span class="co">#&gt; 0.2431</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; dgaps(data = cheeseboro, u = 45, D = 3)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       Estimate Std. Error</span>
+<span class="co">#&gt; theta   0.2431    0.02396</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="iterated-weighted-least-squares">Iterated weighted least squares<a class="anchor" aria-label="anchor" href="#iterated-weighted-least-squares"></a>
 </h3>
 <p>Under the limiting mixture model <span class="math inline">\(\theta\)</span> is the proportion of interexceedance times that are between clusters. <span class="citation">Süveges (2007)</span> uses this to devise and iterated scheme for estimating <span class="math inline">\(\theta\)</span>. An initial estimate of <span class="math inline">\(\theta\)</span> is set. An exponential distribution is fitted to the largest <span class="math inline">\(100\theta\%\)</span> of the interexceedance times using weighted least squares estimation. Then the new estimate of <span class="math inline">\(\theta\)</span> is used to set the putative exponential sample and the estimation proceeds until the estimate of <span class="math inline">\(\theta\)</span> converges.</p>
 <p>The current implementation of this estimator in <em>exdex</em> is very limited: only an estimate is produced, with no estimates of uncertainty. The next release of <em>exdex</em> will rectify this.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span>
 <span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iwls.html">iwls</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span><span class="op">)</span>
 <span class="va">theta</span>
@@ -299,6 +323,9 @@ Berghaus, B., and A. Bücher. 2018. <span>“Weak Convergence of a Pseudo Maximu
 </div>
 <div id="ref-FS2003" class="csl-entry">
 Ferro, C. A. T., and J. Segers. 2003. <span>“Inference for Clusters of Extreme Values.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 65 (2). Blackwell Publishing: 545–556. doi:<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">10.1111/1467-9868.00401</a>.
+</div>
+<div id="ref-HF2020" class="csl-entry">
+Holesovsky, J. P., and M. Fusek. 2020. <span>“Estimation of the Extremal Index Using Censored Distributions.”</span> <em>Extremes</em> 23: 197–213.
 </div>
 <div id="ref-Northrop2015" class="csl-entry">
 Northrop, P. J. 2015. <span>“An Efficient Semiparametric Maxima Estimator of the Extremal Index.”</span> <em>Extremes</em> 18 (4): 585–603. doi:<a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">10.1007/s10687-015-0221-5</a>.

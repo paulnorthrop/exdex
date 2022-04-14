@@ -19,7 +19,7 @@ Suveges and Davison (2010)."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -84,16 +84,21 @@ Suveges and Davison (2010).</p>
 <dt>u</dt>
 <dd><p>A numeric scalar.  Extreme value threshold applied to data.</p></dd>
 <dt>k</dt>
-<dd><p>A numeric scalar.  Run parameter \(K\), as defined in Suveges and
-Davison (2010).  Threshold inter-exceedances times that are not larger
-than <code>k</code> units are assigned to the same cluster, resulting in a
-\(K\)-gap equal to zero.  Specifically, the \(K\)-gap \(S\)
+<dd><p>A non-negative numeric scalar. Run parameter \(K\), as defined in
+Suveges and Davison (2010).  Threshold inter-exceedances times that are
+not larger than <code>k</code> units are assigned to the same cluster, resulting
+in a \(K\)-gap equal to zero. Specifically, the \(K\)-gap \(S\)
 corresponding to an inter-exceedance time of \(T\) is given by
-\(S = \max(T - K, 0)\).</p></dd>
+\(S = \max(T - K, 0)\).  In practice, \(k\) should
+be no smaller than 1, because when \(k\) is less than 1 the estimate
+of \(\theta\) is always equal to 1.</p></dd>
 <dt>inc_cens</dt>
 <dd><p>A logical scalar indicating whether or not to include
-contributions from censored inter-exceedance times, relating to the
-first and last observations.  See Attalides (2015) for details.</p></dd>
+contributions from right-censored inter-exceedance times, relating to the
+first and last observations.  It is known that these times are greater
+than or equal to the time observed. See Attalides (2015) for details.
+If <code>data</code> has multiple columns then there will be right-censored
+first and last inter-exceedance times for each column.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -102,7 +107,13 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 <dd><p>The maximum likelihood estimate (MLE) of
       \(\theta\).</p></dd>
 <dt><code>se</code> </dt>
-<dd><p>The estimated standard error of the MLE.</p></dd>
+<dd><p>The estimated standard error of the MLE, calculated
+      using an algebraic expression for the observed information.</p></dd>
+<dt><code>se_exp</code> </dt>
+<dd><p>The estimated standard error of the MLE,
+      calculated using an algebraic expression for the expected information.
+      If the estimate of \(\theta\) is 0 or 1 then <code>se_exp</code> is
+      <code>NA</code>.</p></dd>
 <dt><code>ss</code> </dt>
 <dd><p>The list of summary statistics returned from
       <code><a href="kgaps_stat.html">kgaps_stat</a></code>.</p></dd>
@@ -116,12 +127,14 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The maximum likelihood estimate of the extremal index \(\theta\)
-  under the \(K\)-gaps model of Suveges and Davison (2010) is calculated.
-  If <code>inc_cens = TRUE</code> then information from censored inter-exceedance
-  times is included in the likelihood to be maximized, following
-  Attalides (2015).  The form of the log-likelihood is given in the
-  <strong>Details</strong> section of <code><a href="kgaps_stat.html">kgaps_stat</a></code>.</p>
+    <p>If <code>inc_cens = FALSE</code> then the maximum likelihood estimate of
+  the extremal index \(\theta\) under the \(K\)-gaps model of
+  Suveges and Davison (2010) is calculated.</p>
+<p>If <code>inc_cens = TRUE</code> then information from right-censored
+  first and last inter-exceedance times is also included in the likelihood
+  to be maximized, following Attalides (2015).  The form of the
+  log-likelihood is given in the <strong>Details</strong> section of
+  <code><a href="kgaps_stat.html">kgaps_stat</a></code>.</p>
 <p>It is possible that the estimate of \(\theta\) is equal to 1, and also
   possible that it is equal to 0. <code><a href="kgaps_stat.html">kgaps_stat</a></code> explains the
   respective properties of the data that cause these events to occur.</p>
@@ -129,7 +142,7 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
     <div id="references">
     <h2>References</h2>
     <p>Suveges, M. and Davison, A. C. (2010) Model
-  misspecification in peaks over threshold analysis, <em>The Annals of
+  misspecification in peaks over threshold analysis, <em>Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
   doi: <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a></p>
 <p>Attalides, N. (2015) Threshold-based extreme value modelling,
@@ -138,8 +151,10 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="confint.kgaps.html">confint.kgaps</a></code> to estimate confidence intervals
+    <div class="dont-index"><p><code><a href="kgaps_confint.html">kgaps_confint</a></code> to estimate confidence intervals
   for \(\theta\).</p>
+<p><code><a href="kgaps_methods.html">kgaps_methods</a></code> for S3 methods for <code>"kgaps"</code>
+  objects.</p>
 <p><code><a href="kgaps_imt.html">kgaps_imt</a></code> for the information matrix test, which
   may be used to inform the choice of the pair (<code>u, k</code>).</p>
 <p><code><a href="choose_uk.html">choose_uk</a></code> for a diagnostic plot based on
@@ -148,15 +163,13 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
   statistics for the \(K\)-gaps model.</p>
 <p><code><a href="https://paulnorthrop.github.io/revdbayes/reference/kgaps_post.html" class="external-link">kgaps_post</a></code> in the
   <code><a href="https://paulnorthrop.github.io/revdbayes/reference/revdbayes.html" class="external-link">revdbayes</a></code> package for Bayesian inference
-  about \(\theta\) using the \(K\)-gaps model.</p>
-<p><code><a href="spm.html">spm</a></code> for estimation of the extremal index
-  \(\theta\) using a semiparametric maxima method.</p>
-<p><code><a href="iwls.html">iwls</a></code>: iterated weighted least squares estimator.</p></div>
+  about \(\theta\) using the \(K\)-gaps model.</p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">kgaps</span><span class="op">(</span><span class="va">sp500</span>, <span class="va">u</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">theta</span></span>
@@ -165,7 +178,8 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kgaps(data = sp500, u = u)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.6953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  theta  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.6953  </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
@@ -173,6 +187,16 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Estimate Std. Error</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta   0.6953   0.007234</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     theta </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.6953391 </span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2901</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              theta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta 5.232578e-05</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' -3811.894 (df=1)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### Newlyn sea surges</span></span>
 <span class="r-in"></span>
@@ -184,7 +208,8 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kgaps(data = newlyn, u = u, k = 2)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.1758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  theta  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1758  </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
@@ -202,14 +227,15 @@ first and last observations.  See Attalides (2015) for details.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kgaps(data = cheeseboro, u = 45, k = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.2304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  theta  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.2405  </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kgaps(data = cheeseboro, u = 45, k = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Estimate Std. Error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> theta   0.2304    0.02257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta   0.2405    0.02336</span>
 </code></pre></div>
     </div>
   </div>

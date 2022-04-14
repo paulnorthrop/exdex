@@ -18,7 +18,7 @@ index \(\theta\). Called by kgaps."><!-- mathjax --><script src="https://cdnjs.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@ index \(\theta\). Called by <code><a href="kgaps.html">kgaps</a></code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">kgaps_stat</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span>, inc_cens <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">kgaps_stat</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, <span class="va">q_u</span>, k <span class="op">=</span> <span class="fl">1</span>, inc_cens <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,6 +74,10 @@ index \(\theta\). Called by <code><a href="kgaps.html">kgaps</a></code>.</p>
 <dd><p>A numeric vector of raw data.</p></dd>
 <dt>u</dt>
 <dd><p>A numeric scalar.  Extreme value threshold applied to data.</p></dd>
+<dt>q_u</dt>
+<dd><p>A numeric scalar.  An estimate of the probability with which
+the threshold <code>u</code> is exceeded.  If <code>q_u</code> is missing then it is
+calculated using <code>mean(data &gt; u, na.rm = TRUE)</code>.</p></dd>
 <dt>k</dt>
 <dd><p>A numeric scalar.  Run parameter \(K\), as defined in Suveges and
 Davison (2010).  Threshold inter-exceedances times that are not larger
@@ -83,19 +87,20 @@ corresponding to an inter-exceedance time of \(T\) is given by
 \(S = \max(T - K, 0)\).</p></dd>
 <dt>inc_cens</dt>
 <dd><p>A logical scalar indicating whether or not to include
-contributions from censored inter-exceedance times relating to the
-first and last observation.  See Attalides (2015) for details.</p></dd>
+contributions from right-censored inter-exceedance times relating to the
+first and last observation.  It is known that these times are greater
+than or equal to the time observed. See Attalides (2015) for details.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A list containing the sufficient statistics, with components</p>
 <dl><dt><code>N0</code> </dt>
-<dd><p>the number of zero \(K\)-gaps</p></dd>
+<dd><p>the number of zero \(K\)-gaps.</p></dd>
 <dt><code>N1</code> </dt>
 <dd><p>contribution from non-zero \(K\)-gaps (see
-      <strong>Details</strong>)</p></dd>
+      <strong>Details</strong>).</p></dd>
 <dt><code>sum_qs</code> </dt>
-<dd><p>the sum of the (scaled) \(K\)-gaps, i.e.
+<dd><p>the sum of the (scaled) \(K\)-gaps, that is,
       \(q (S_0 + \cdots + S_N)\), where \(q\)
       is estimated by the proportion of threshold exceedances.</p></dd>
 <dt><code>n_kgaps</code> </dt>
@@ -107,22 +112,26 @@ first and last observation.  See Attalides (2015) for details.</p></dd>
     <p>The sample \(K\)-gaps are
   \(S_0, S_1, ..., S_{N-1}, S_N\),
   where \(S_1, ..., S_{N-1}\) are uncensored and
-  \(S_0\) and \(S_N\) are censored.  Under the assumption that the
+  \(S_0\) and \(S_N\) are right-censored.  Under the assumption that the
   \(K\)-gaps are independent, the log-likelihood of the \(K\)-gaps
   model is given by
   $$l(\theta; S_0, \ldots, S_N) = N_0 \log(1 - \theta) +
     2 N_1 \log \theta - \theta q (S_0 + \cdots + S_N),$$
-   where \(q\) is the threshold exceedance probability,
-   \(N_0\) is the number of uncensored sample \(K\)-gaps that are equal
-   to zero and (apart from an adjustment for the contributions of \(S_0\)
-   and \(S_N\)) \(N_1\) is the number of positive sample \(K\)-gaps.
-   Specifically, \(N_1\) is equal to the number of
-   \(S_1, ..., S_{N-1}\)
-   that are positive plus \((I_0 + I_N) / 2\), where \(I_0 = 1\) if
-   \(S_0\) is greater than zero and \(I_0 = 0\) otherwise, and similarly
-   for \(I_N\).
-   The differing treatment of uncensored and censored \(K\)-gaps reflects
-   differing contributions to the likelihood.
+   where</p><ul><li><p>\(q\) is the threshold exceedance probability, estimated by
+        the proportion of threshold exceedances,</p></li>
+<li><p>\(N_0\) is the number of uncensored sample \(K\)-gaps that
+        are equal to zero,</p></li>
+<li><p>(apart from an adjustment for the contributions of \(S_0\)
+        and \(S_N\)) \(N_1\) is the number of positive sample
+        \(K\)-gaps,</p></li>
+<li><p>specifically, if <code>inc_cens = TRUE</code> then \(N_1\) is equal
+        to the number of \(S_1, ..., S_{N-1}\)
+        that are positive plus \((I_0 + I_N) / 2\), where \(I_0 = 1\) if
+        \(S_0\) is greater than zero and \(I_0 = 0\) otherwise, and
+        similarly for \(I_N\).</p></li>
+</ul><p>The differing treatment of uncensored and right-censored \(K\)-gaps
+   reflects differing contributions to the likelihood.  Right-censored
+   \(K\)-gaps that are equal to zero add no information to the likelihood.
    For full details see Suveges and Davison (2010) and Attalides (2015).</p>
 <p>If \(N_1 = 0\) then we are in the degenerate case where there is one
    cluster (all \(K\)-gaps are zero) and the likelihood is maximized at
@@ -133,7 +142,7 @@ first and last observation.  See Attalides (2015) for details.</p></dd>
     <div id="references">
     <h2>References</h2>
     <p>Suveges, M. and Davison, A. C. (2010) Model
-  misspecification in peaks over threshold analysis, <em>The Annals of
+  misspecification in peaks over threshold analysis, <em>Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
   doi: <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a></p>
 <p>Attalides, N. (2015) Threshold-based extreme value modelling,

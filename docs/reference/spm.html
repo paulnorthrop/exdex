@@ -25,7 +25,7 @@ calculated using the asymptotic theory developed by Berghaus and Bucher
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -259,11 +259,9 @@ observation in <code>x</code>.</p></dd>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="confint.spm.html">confint.spm</a></code> to estimate confidence intervals
-  for \(theta\).</p>
-<p><code><a href="kgaps.html">kgaps</a></code> for maximum likelihood estimation of the
-  extremal index \(\theta\) using the \(K\)-gaps model.</p>
-<p><code><a href="iwls.html">iwls</a></code>: iterated weighted least squares estimator.</p></div>
+    <div class="dont-index"><p><code><a href="spm_confint.html">spm_confint</a></code> to estimate confidence intervals
+  for \(\theta\).</p>
+<p><code><a href="spm_methods.html">spm_methods</a></code> for S3 methods for <code>"spm"</code> objects.</p></div>
     </div>
 
     <div id="ref-examples">
@@ -291,6 +289,14 @@ observation in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N2015, disjoint     0.2350    0.02222  0.003726</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BB2018, disjoint    0.3042    0.02101  0.003571</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BB2018b, disjoint   0.2542    0.02101  0.053570</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     N2015    BB2018   BB2018b </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.2392234 0.3078219 0.2578219 </span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2875</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        N2015       BB2018      BB2018b </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0003960306 0.0002694754 0.0002694754 </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
 <span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">spm</span><span class="op">(</span><span class="va">sp500</span>, <span class="fl">100</span><span class="op">)</span></span>

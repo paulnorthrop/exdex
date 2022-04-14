@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -58,10 +58,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.1.1.9000" id="exdex-1119000">exdex 1.1.1.9000<a class="anchor" aria-label="anchor" href="#exdex-1119000"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.1" id="exdex-121">exdex 1.2.1<a class="anchor" aria-label="anchor" href="#exdex-121"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-and-minor-improvements-1-1-1-9000">Bug fixes and minor improvements<a class="anchor" aria-label="anchor" href="#bug-fixes-and-minor-improvements-1-1-1-9000"></a></h3>
-<ul><li>The value returned by <code><a href="../reference/nobs.kgaps.html">nobs.kgaps()</a></code> was incorrect in cases where there are censored K-gaps that are equal to zero. These K-gaps should not contribute to the number of observations. This has been corrected.</li>
+<h3 id="new-features-1-2-1">New features<a class="anchor" aria-label="anchor" href="#new-features-1-2-1"></a></h3>
+<ul><li>A new estimator has been implemented, based on what we will call the D-gaps model of Holesovsky, J. and Fusek, M. Estimation of the extremal index using censored distributions. Extremes 23, 197–213 (2020). doi: 10.1007/s10687-020-00374-3</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-and-minor-improvements-1-2-1">Bug fixes and minor improvements<a class="anchor" aria-label="anchor" href="#bug-fixes-and-minor-improvements-1-2-1"></a></h3>
+<ul><li><p>The value returned by <code><a href="../reference/kgaps_methods.html">nobs.kgaps()</a></code> was incorrect in cases where there are censored K-gaps that are equal to zero. These K-gaps should not contribute to the number of observations. This has been corrected.</p></li>
+<li><p>In cases where the data used in <code>kgaps</code> are split into separate sequences, the threshold exceedance probability is estimated using all the data rather than locally within each sequence.</p></li>
+<li><p>A <code>logLik</code> method for objects inheriting from class <code>"kgaps"</code> has been added.</p></li>
+<li><p>In the (unexported, internal) function <code><a href="../reference/exdex-internal.html">kgaps_conf_int()</a></code> the limits of the confidence intervals for the extremal index based on the K-gaps model are constrained manually to (0, 1) to avoid problems in calculating likelihood-based confidence intervals in cases where the the log-likelihood is greater than the interval cutoff when theta = 1.</p></li>
+<li><p>In the documentation of the argument <code>k</code> to <code><a href="../reference/kgaps.html">kgaps()</a></code> it is noted that in practice <code>k</code> should be no smaller than 1.</p></li>
+<li><p>The function <code><a href="../reference/kgaps.html">kgaps()</a></code> also return standard errors based on the expected information.</p></li>
+<li><p>In the package manual related functions have been arranged in sections for easier reading.</p></li>
+<li><p>Activated 3rd edition of the <code>testthat</code> package</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -69,8 +80,8 @@
 <div class="section level3">
 <h3 id="new-features-1-1-1">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-1"></a></h3>
 <ul><li>The functions <code><a href="../reference/kgaps.html">kgaps()</a></code>, <code><a href="../reference/kgaps_imt.html">kgaps_imt()</a></code> and <code><a href="../reference/choose_uk.html">choose_uk()</a></code> can now accept a <code>data</code> argument that
-<ul><li>is a matrix of independent subsets of data, such as monthly or seasonal time series from different years</li>
-<li>contains missing values, that is, <code>NA</code>s</li>
+<ul><li>is a matrix of independent subsets of data, such as monthly or seasonal time series from different years,</li>
+<li>contains missing values, that is, <code>NA</code>s.</li>
 </ul></li>
 <li>A new dataset <code>cheeseboro</code> is included, which is a matrix containing some missing values.</li>
 <li>In addition to <code><a href="../reference/kgaps.html">kgaps()</a></code>, the functions <code><a href="../reference/kgaps_imt.html">kgaps_imt()</a></code> and <code><a href="../reference/choose_uk.html">choose_uk()</a></code> now have an extra argument <code>inc_cens</code>, which allows contributions from censored K-gaps to be included in the log-likelihood for the extremal index.</li>
@@ -78,8 +89,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-and-minor-improvements-1-1-1">Bug fixes and minor improvements<a class="anchor" aria-label="anchor" href="#bug-fixes-and-minor-improvements-1-1-1"></a></h3>
-<ul><li>Plot and print methods have been added for objects of class <code>"confint_gaps"</code> returned from <code><a href="../reference/confint.kgaps.html">confint.kgaps()</a></code>.</li>
-<li>In <code><a href="../reference/confint.spm.html">confint.spm()</a></code> and <code><a href="../reference/confint.kgaps.html">confint.kgaps()</a></code> the input confidence <code>level</code> is included in the output object.</li>
+<ul><li>Plot and print methods have been added for objects of class <code>"confint_gaps"</code> returned from <code><a href="../reference/kgaps_confint.html">confint.kgaps()</a></code>.</li>
+<li>In <code><a href="../reference/spm_confint.html">confint.spm()</a></code> and <code><a href="../reference/kgaps_confint.html">confint.kgaps()</a></code> the input confidence <code>level</code> is included in the output object.</li>
 </ul></div>
 </div>
     <div class="section level2">

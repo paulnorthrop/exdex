@@ -34,6 +34,9 @@
     <loc>/reference/choose_b.html</loc>
   </url>
   <url>
+    <loc>/reference/choose_ud.html</loc>
+  </url>
+  <url>
     <loc>/reference/choose_uk.html</loc>
   </url>
   <url>
@@ -52,6 +55,24 @@
     <loc>/reference/confint.spm.html</loc>
   </url>
   <url>
+    <loc>/reference/dgaps.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dgaps_confint.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dgaps_imt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dgaps_imt_stat.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dgaps_methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dgaps_stat.html</loc>
+  </url>
+  <url>
     <loc>/reference/exdex-internal.html</loc>
   </url>
   <url>
@@ -67,10 +88,22 @@
     <loc>/reference/iwls.html</loc>
   </url>
   <url>
+    <loc>/reference/iwls_methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/kgaps.html</loc>
   </url>
   <url>
+    <loc>/reference/kgaps_confint.html</loc>
+  </url>
+  <url>
     <loc>/reference/kgaps_imt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/kgaps_imt_stat.html</loc>
+  </url>
+  <url>
+    <loc>/reference/kgaps_methods.html</loc>
   </url>
   <url>
     <loc>/reference/kgaps_stat.html</loc>
@@ -89,6 +122,9 @@
   </url>
   <url>
     <loc>/reference/plot.choose_b.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot.choose_ud.html</loc>
   </url>
   <url>
     <loc>/reference/plot.choose_uk.html</loc>
@@ -130,10 +166,25 @@
     <loc>/reference/spm.html</loc>
   </url>
   <url>
+    <loc>/reference/spm_confint.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spm_methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/summary.kgaps.html</loc>
   </url>
   <url>
     <loc>/reference/summary.spm.html</loc>
+  </url>
+  <url>
+    <loc>/reference/uccle.html</loc>
+  </url>
+  <url>
+    <loc>/reference/uccle720.html</loc>
+  </url>
+  <url>
+    <loc>/reference/uccle720m.html</loc>
   </url>
   <url>
     <loc>/reference/vcov.kgaps.html</loc>

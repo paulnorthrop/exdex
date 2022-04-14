@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -81,10 +81,6 @@
         </td>
         <td><p>Information matrix test under the \(K\)-gaps model</p></td>
       </tr><tr><td>
-          <p><code><a href="imt_stat.html">imt_stat()</a></code> </p>
-        </td>
-        <td><p>Statistics for the information matrix test</p></td>
-      </tr><tr><td>
           <p><code><a href="iwls.html">iwls()</a></code> </p>
         </td>
         <td><p>Iterated weighted least squares estimation of the extremal index</p></td>
@@ -142,37 +138,27 @@ estimator</p></td>
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="coef.spm.html">coef(<i>&lt;spm&gt;</i>)</a></code> </p>
+          <p><code><a href="spm_methods.html">coef(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">vcov(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">nobs(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">print(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">summary(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">print(<i>&lt;summary.spm&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Extract Model Coefficients from an <code>"spm"</code> object</p></td>
+        <td><p>Methods for objects of class <code>"spm"</code></p></td>
       </tr><tr><td>
-          <p><code><a href="coef.kgaps.html">coef(<i>&lt;kgaps&gt;</i>)</a></code> </p>
+          <p><code><a href="kgaps_methods.html">coef(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">vcov(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">nobs(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">logLik(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">print(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">summary(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">print(<i>&lt;summary.kgaps&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Extract Model Coefficients from a <code>"kgaps"</code> object</p></td>
+        <td><p>Methods for objects of class <code>"kgaps"</code></p></td>
       </tr><tr><td>
-          <p><code><a href="coef.iwls.html">coef(<i>&lt;iwls&gt;</i>)</a></code> </p>
+          <p><code><a href="iwls_methods.html">coef(<i>&lt;iwls&gt;</i>)</a></code> <code><a href="iwls_methods.html">nobs(<i>&lt;iwls&gt;</i>)</a></code> <code><a href="iwls_methods.html">print(<i>&lt;iwls&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Extract Model Coefficients from an <code>"iwls"</code> object</p></td>
+        <td><p>Methods for objects of class <code>"iwls"</code></p></td>
       </tr><tr><td>
-          <p><code><a href="confint.kgaps.html">confint(<i>&lt;kgaps&gt;</i>)</a></code> </p>
+          <p><code><a href="kgaps_confint.html">confint(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_confint.html">plot(<i>&lt;confint_kgaps&gt;</i>)</a></code> <code><a href="kgaps_confint.html">print(<i>&lt;confint_kgaps&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Confidence intervals for the extremal index \(\theta\)</p></td>
+        <td><p>Confidence intervals for the extremal index \(\theta\) for <code>"kgaps"</code>
+objects</p></td>
       </tr><tr><td>
-          <p><code><a href="confint.spm.html">confint(<i>&lt;spm&gt;</i>)</a></code> </p>
+          <p><code><a href="spm_confint.html">confint(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_confint.html">plot(<i>&lt;confint_spm&gt;</i>)</a></code> <code><a href="spm_confint.html">print(<i>&lt;confint_spm&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Confidence intervals for the extremal index \(\theta\)</p></td>
-      </tr><tr><td>
-          <p><code><a href="nobs.spm.html">nobs(<i>&lt;spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract the Number of Observations from an <code>"spm"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="nobs.kgaps.html">nobs(<i>&lt;kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract the Number of Observations from a <code>"kgaps"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="nobs.iwls.html">nobs(<i>&lt;iwls&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract the Number of Observations from an <code>"iwls"</code> object</p></td>
+        <td><p>Confidence intervals for the extremal index \(\theta\) for <code>"spm"</code>
+objects</p></td>
       </tr><tr><td>
           <p><code><a href="plot.choose_b.html">plot(<i>&lt;choose_b&gt;</i>)</a></code> </p>
         </td>
@@ -182,58 +168,6 @@ estimator</p></td>
         </td>
         <td><p>Plot threshold \(u\) and runs parameter \(K\) diagnostic for the
 \(K\)-gaps estimator</p></td>
-      </tr><tr><td>
-          <p><code><a href="plot.confint_kgaps.html">plot(<i>&lt;confint_kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot diagnostics for a confint_kgaps object</p></td>
-      </tr><tr><td>
-          <p><code><a href="plot.confint_spm.html">plot(<i>&lt;confint_spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot diagnostics for a confint_spm object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.confint_kgaps.html">print(<i>&lt;confint_kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for a confint_kgaps object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.confint_spm.html">print(<i>&lt;confint_spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for a confint_spm object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.spm.html">print(<i>&lt;spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for an <code>"spm"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.kgaps.html">print(<i>&lt;kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for a <code>"kgaps"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.iwls.html">print(<i>&lt;iwls&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for an <code>"iwls"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.summary.spm.html">print(<i>&lt;summary.spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for objects of class <code>"summary.spm"</code></p></td>
-      </tr><tr><td>
-          <p><code><a href="print.summary.kgaps.html">print(<i>&lt;summary.kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for objects of class <code>"summary.kgaps"</code></p></td>
-      </tr><tr><td>
-          <p><code><a href="summary.spm.html">summary(<i>&lt;spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summary method for an <code>"spm"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="summary.kgaps.html">summary(<i>&lt;kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summary method for a <code>"kgaps"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="vcov.spm.html">vcov(<i>&lt;spm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Calculate Variance-Covariance Matrix for an <code>"spm"</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="vcov.kgaps.html">vcov(<i>&lt;kgaps&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Calculate Variance-Covariance Matrix for a <code>"kgaps"</code> object</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

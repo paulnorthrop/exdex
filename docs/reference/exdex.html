@@ -3,7 +3,7 @@
 dependence in the extremes of a stationary process.  The exdex
 package  performs frequentist inference about \(\theta\) using the
 methodologies proposed in Northrop (2015), Berghaus and Bucher (2018),
-Suveges (2007) and Suveges and Davison (2010)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+Suveges (2007), Suveges and Davison (2010) and Holesovsky and Fusek (2020)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -21,7 +21,7 @@ Suveges (2007) and Suveges and Davison (2010)."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
       </span>
     </div>
 
@@ -67,28 +67,29 @@ Suveges (2007) and Suveges and Davison (2010)."><!-- mathjax --><script src="htt
 dependence in the extremes of a stationary process.  The <em>exdex</em>
 package  performs frequentist inference about \(\theta\) using the
 methodologies proposed in Northrop (2015), Berghaus and Bucher (2018),
-Suveges (2007) and Suveges and Davison (2010).</p>
+Suveges (2007), Suveges and Davison (2010) and Holesovsky and Fusek (2020).</p>
     </div>
 
 
     <div id="details">
     <h2>Details</h2>
-    <p>Functions to implement three estimators of the extremal index
+    <p>Functions to implement four estimators of the extremal index
   are provided, namely</p><ul><li><p><code><a href="spm.html">spm</a></code>: semiparametric maxima estimator, using block
     maxima: (Northrop, 2015; Berghaus and Bucher, 2018)</p></li>
 <li><p><code><a href="kgaps.html">kgaps</a></code>: \(K\)-gaps estimator, using threshold
     interexceedance times (Suveges and Davison, 2010)</p></li>
+<li><p><code><a href="dgaps.html">dgaps</a></code>: \(D\)-gaps estimator, using threshold
+    interexceedance times (Holesovsky and Fusek, 2020))</p></li>
 <li><p><code><a href="iwls.html">iwls</a></code>: iterated weighted least squares estimator,
     using threshold interexceedance times: (Suveges, 2007)</p></li>
-</ul><p>The functions <code><a href="choose_b.html">choose_b</a></code> and <code><a href="choose_uk.html">choose_uk</a></code> provide
-graphical diagnostics for choosing the tuning parameter for the
-semiparametric estimator, the block size \(b\), and the tuning parameters
-of the \(K\)-gaps estimator, the threshold \(u\) and the run parameter
-\(K\).</p>
-<p>For the \(K\)-gaps model the `exdex` package allows missing values in the
-data, can accommodate independent subsets of data, such as monthly or
-seasonal time series from different years, and can incorporate information
-from censored interexceedance times.</p>
+</ul><p>The functions <code><a href="choose_b.html">choose_b</a></code>, <code><a href="choose_uk.html">choose_uk</a></code> and
+<code><a href="choose_ud.html">choose_ud</a></code> provide graphical diagnostics for choosing the
+respective tuning parameters of the semiparametric maxima, \(K\)-gaps and
+\(D\)-gaps estimators.</p>
+<p>For the \(K\)-gaps and \(D\)-gaps models the `exdex` package allows
+missing values in the data, can accommodate independent subsets of data,
+such as monthly or seasonal time series from different years, and can
+incorporate information from censored interexceedance times.</p>
 <p>See <code><a href="../articles/exdex-vignette.html">vignette("exdex-vignette", package = "exdex")</a></code> for an
 overview of the package.</p>
     </div>
@@ -97,6 +98,9 @@ overview of the package.</p>
     <p>Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
   maximum likelihood estimator for the extremal index. <em>Ann. Statist.</em>
   <strong>46</strong>(5), 2307-2335. doi: <a href="https://doi.org/10.1214/17-AOS1621" class="external-link">10.1214/17-AOS1621</a></p>
+<p>Holesovsky, J. and Fusek, M. Estimation of the extremal index
+  using censored distributions. Extremes 23, 197-213 (2020).
+  doi: <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">10.1007/s10687-020-00374-3</a></p>
 <p>Northrop, P. J. (2015) An efficient semiparametric maxima
   estimator of the extremal index. <em>Extremes</em> <strong>18</strong>(4), 585-603.
   doi: <a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">10.1007/s10687-015-0221-5</a></p>
@@ -104,7 +108,7 @@ overview of the package.</p>
   index. <em>Extremes</em>, <strong>10</strong>, 41-55.
   doi: <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">10.1007/s10687-007-0034-2</a></p>
 <p>Suveges, M. and Davison, A. C. (2010) Model
-  misspecification in peaks over threshold analysis, <em>The Annals of
+  misspecification in peaks over threshold analysis, <em>Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
   doi: <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a></p>
     </div>
@@ -112,9 +116,10 @@ overview of the package.</p>
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="spm.html">spm</a></code>: semiparametric maxima estimator.</p>
 <p><code><a href="kgaps.html">kgaps</a></code>: \(K\)-gaps estimator.</p>
+<p><code><a href="dgaps.html">dgaps</a></code>: \(D\)-gaps estimator.</p>
 <p><code><a href="iwls.html">iwls</a></code>: iterated weighted least squares estimator.</p>
-<p><code><a href="choose_b.html">choose_b</a></code> and <code><a href="choose_uk.html">choose_uk</a></code> for choosing
-  tuning parameters.</p>
+<p><code><a href="choose_b.html">choose_b</a></code>, <code><a href="choose_ud.html">choose_ud</a></code> and
+  <code><a href="choose_ud.html">choose_ud</a></code> for choosing tuning parameters.</p>
 <p><code><a href="newlyn.html">newlyn</a></code>, <code><a href="sp500.html">sp500</a></code> and
   <code><a href="cheeseboro.html">cheeseboro</a></code> for example datasets.</p></div>
     </div>

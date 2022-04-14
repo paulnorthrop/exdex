@@ -182,6 +182,9 @@ The extremal index \eqn{\theta} is estimated using the
 theta <- spm(newlyn, 20)
 theta
 summary(theta)
+coef(theta)
+nobs(theta)
+vcov(theta)
 
 ### S&P 500 index
 theta <- spm(sp500, 100)

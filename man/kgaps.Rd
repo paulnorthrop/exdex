@@ -79,6 +79,10 @@ u <- quantile(sp500, probs = 0.60)
 theta <- kgaps(sp500, u)
 theta
 summary(theta)
+coef(theta)
+nobs(theta)
+vcov(theta)
+logLik(theta)
 
 ### Newlyn sea surges
 

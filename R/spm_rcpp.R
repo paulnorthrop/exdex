@@ -168,6 +168,9 @@
 #' theta <- spm(newlyn, 20)
 #' theta
 #' summary(theta)
+#' coef(theta)
+#' nobs(theta)
+#' vcov(theta)
 #'
 #' ### S&P 500 index
 #' theta <- spm(sp500, 100)

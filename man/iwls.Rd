@@ -71,6 +71,8 @@ The iterated weighted least squares algorithm on page 46 of
 u <- quantile(sp500, probs = 0.60)
 theta <- iwls(sp500, u)
 theta
+coef(theta)
+nobs(theta)
 
 ### Newlyn sea surges
 

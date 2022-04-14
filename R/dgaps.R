@@ -90,6 +90,10 @@
 #' theta <- dgaps(sp500, u = u, D = 1)
 #' theta
 #' summary(theta)
+#' coef(theta)
+#' nobs(theta)
+#' vcov(theta)
+#' logLik(theta)
 #'
 #' ### Newlyn sea surges
 #'
@@ -100,8 +104,14 @@
 #'
 #' ### Uccle July temperatures
 #'
+#' # Using vector input
 #' u <- quantile(uccle720$temp, probs = 0.9, na.rm = TRUE)
 #' theta <- dgaps(uccle720$temp, u = u, D = 2)
+#' theta
+#'
+#' # Using matrix input to separate data from different years
+#' u <- quantile(uccle720m, probs = 0.9, na.rm = TRUE)
+#' theta <- dgaps(uccle720m, u = u, D = 2)
 #' theta
 #' @export
 dgaps <- function(data, u, D = 1, inc_cens = TRUE) {

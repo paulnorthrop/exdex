@@ -94,6 +94,12 @@ u <- quantile(newlyn, probs = 0.60)
 theta <- dgaps(newlyn, u = u, D = 2)
 theta
 summary(theta)
+
+### Uccle July temperatures
+
+u <- quantile(uccle720$temp, probs = 0.9, na.rm = TRUE)
+theta <- dgaps(uccle720$temp, u = u, D = 2)
+theta
 }
 \references{
 Holesovsky, J. and Fusek, M. Estimation of the extremal index
@@ -106,8 +112,11 @@ Suveges, M. and Davison, A. C. (2010) Model
   \doi{10.1214/09-AOAS292}
 }
 \seealso{
-\code{\link{confint.dgaps}} to estimate confidence intervals
+\code{\link{dgaps_confint}} to estimate confidence intervals
   for \eqn{\theta}.
+
+\code{\link{dgaps_methods}} for S3 methods for \code{"dgaps"}
+  objects.
 
 \code{\link{dgaps_imt}} for the information matrix test, which
   may be used to inform the choice of the pair (\code{u, D}).
@@ -117,12 +126,4 @@ Suveges, M. and Davison, A. C. (2010) Model
 
 \code{\link{dgaps_stat}} for the calculation of sufficient
   statistics for the \eqn{D}-gaps model.
-
-\code{\link{kgaps}} for maximum likelihood estimation of the
-  extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-
-\code{\link{spm}} for estimation of the extremal index
-  \eqn{\theta} using a semiparametric maxima method.
-
-\code{\link{iwls}}: iterated weighted least squares estimator.
 }

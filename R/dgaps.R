@@ -66,19 +66,16 @@
 #'       \code{u} and \code{inc_cens}.}
 #'     \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
 #'     \item{\code{call }}{The call to \code{dgaps}.}
-#' @seealso \code{\link{confint.dgaps}} to estimate confidence intervals
+#' @seealso \code{\link{dgaps_confint}} to estimate confidence intervals
 #'   for \eqn{\theta}.
+#' @seealso \code{\link{dgaps_methods}} for S3 methods for \code{"dgaps"}
+#'   objects.
 #' @seealso \code{\link{dgaps_imt}} for the information matrix test, which
 #'   may be used to inform the choice of the pair (\code{u, D}).
 #' @seealso \code{\link{choose_ud}} for a diagnostic plot based on
 #'   \code{\link{dgaps_imt}}.
 #' @seealso \code{\link{dgaps_stat}} for the calculation of sufficient
 #'   statistics for the \eqn{D}-gaps model.
-#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-#' @seealso \code{\link{spm}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @references Holesovsky, J. and Fusek, M. Estimation of the extremal index
 #'   using censored distributions. Extremes 23, 197-213 (2020).
 #'   \doi{10.1007/s10687-020-00374-3}
@@ -100,6 +97,12 @@
 #' theta <- dgaps(newlyn, u = u, D = 2)
 #' theta
 #' summary(theta)
+#'
+#' ### Uccle July temperatures
+#'
+#' u <- quantile(uccle720$temp, probs = 0.9, na.rm = TRUE)
+#' theta <- dgaps(uccle720$temp, u = u, D = 2)
+#' theta
 #' @export
 dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   Call <- match.call(expand.dots = TRUE)

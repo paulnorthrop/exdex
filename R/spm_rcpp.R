@@ -154,11 +154,9 @@
 #'   \item{b}{The input value of \code{b}.}
 #'   \item{bias_adjust}{The input value of \code{bias_adjust}.}
 #'   \item{call}{The call to \code{spm}.}
-#' @seealso \code{\link{confint.spm}} to estimate confidence intervals
-#'   for \eqn{theta}.
-#' @seealso \code{\link{kgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{K}-gaps model.
-#' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
+#' @seealso \code{\link{spm_confint}} to estimate confidence intervals
+#'   for \eqn{\theta}.
+#' @seealso \code{\link{spm_methods}} for S3 methods for \code{"spm"} objects.
 #' @references Northrop, P. J. (2015) An efficient semiparametric maxima
 #'   estimator of the extremal index. \emph{Extremes} \strong{18}(4), 585-603.
 #'   \doi{10.1007/s10687-015-0221-5}

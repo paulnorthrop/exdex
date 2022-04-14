@@ -65,8 +65,10 @@
 #'       \code{u} and \code{inc_cens}.}
 #'     \item{\code{max_loglik }}{The value of the log-likelihood at the MLE.}
 #'     \item{\code{call }}{The call to \code{kgaps}.}
-#' @seealso \code{\link{confint.kgaps}} to estimate confidence intervals
+#' @seealso \code{\link{kgaps_confint}} to estimate confidence intervals
 #'   for \eqn{\theta}.
+#' @seealso \code{\link{kgaps_methods}} for S3 methods for \code{"kgaps"}
+#'   objects.
 #' @seealso \code{\link{kgaps_imt}} for the information matrix test, which
 #'   may be used to inform the choice of the pair (\code{u, k}).
 #' @seealso \code{\link{choose_uk}} for a diagnostic plot based on
@@ -76,11 +78,6 @@
 #' @seealso \code{\link[revdbayes]{kgaps_post}} in the
 #'   \code{\link[revdbayes]{revdbayes}} package for Bayesian inference
 #'   about \eqn{\theta} using the \eqn{K}-gaps model.
-#' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
-#'   extremal index \eqn{\theta} using the \eqn{D}-gaps model.
-#' @seealso \code{\link{spm}} for estimation of the extremal index
-#'   \eqn{\theta} using a semiparametric maxima method.
-#' @seealso \code{\link{iwls}}: iterated weighted least squares estimator.
 #' @examples
 #' ### S&P 500 index
 #'

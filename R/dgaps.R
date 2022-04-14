@@ -203,6 +203,9 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #'
 #' @param data A numeric vector of raw data.  No missing values are allowed.
 #' @param u A numeric scalar.  Extreme value threshold applied to data.
+#' @param q_u A numeric scalar.  An estimate of the probability with which
+#'   the threshold \code{u} is exceeded.  If \code{q_u} is missing then it is
+#'   calculated using \code{mean(data > u, na.rm = TRUE)}.
 #' @param D A numeric scalar.  Run parameter \eqn{K}, as defined in Suveges and
 #'   Davison (2010).  Threshold inter-exceedances times that are not larger
 #'   than \code{k} units are assigned to the same cluster, resulting in a
@@ -278,6 +281,9 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #' dgaps_stat(newlyn, u = u, D = 1)
 #' @export
 dgaps_stat <- function(data, u, q_u, D = 1, inc_cens = TRUE) {
+  if (missing(q_u)) {
+    q_u <- mean(data > u, na.rm = TRUE)
+  }
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")

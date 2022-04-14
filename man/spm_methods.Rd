@@ -57,9 +57,6 @@ estimates that are greater than 1 may be obtained.}
 
 \item{digits}{An integer. Used for number formatting with
 \code{\link[base:Round]{signif}}.}
-
-\item{type}{A character scalar. Should the estimate of the variance be based
-on the observed information or the expected information?}
 }
 \value{
 \code{coef.spm}. A numeric scalar (or a vector of length 3 if

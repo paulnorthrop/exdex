@@ -4,8 +4,6 @@
 #' \code{\link{spm}}.
 #' @param object and object of class \code{c("spm", "exdex")} returned from
 #'   \code{\link{spm}}.
-#' @param type A character scalar. Should the estimate of the variance be based
-#'   on the observed information or the expected information?
 #' @param x
 #'   \code{print.spm}. An object of class \code{c("spm", "exdex")}, a
 #'   result of a call to \code{\link{spm}}.

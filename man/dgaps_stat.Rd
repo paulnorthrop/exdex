@@ -4,7 +4,7 @@
 \alias{dgaps_stat}
 \title{Sufficient statistics for the left-censored inter-exceedances time model}
 \usage{
-dgaps_stat(data, u, D = 1, inc_cens = TRUE)
+dgaps_stat(data, u, q_u, D = 1, inc_cens = TRUE)
 }
 \arguments{
 \item{data}{A numeric vector of raw data.  No missing values are allowed.}

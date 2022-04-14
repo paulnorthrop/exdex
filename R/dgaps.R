@@ -120,10 +120,16 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   if (anyNA(data) && is.null(attr(data, "split_by_NAs_done"))) {
     data <- split_by_NAs(data)
   }
+  # Estimate the marginal exceedance probability q_u
+  q_u <- mean(data > u, na.rm = TRUE)
   # Calculate sufficient statistics for each column in data and then sum
-  stats_list <- apply(as.matrix(data), 2, dgaps_stat, u = u, D = D,
+  stats_list <- apply(as.matrix(data), 2, dgaps_stat, u = u, q_u = q_u, D = D,
                       inc_cens = inc_cens)
   ss <- Reduce(f = function(...) Map("+", ...), stats_list)
+  # Add q_u and D to the list of arguments to be passed to functions that
+  # calculated quantities based on the log-likelihood
+  ss$q_u <- q_u
+  ss$D <- D
   # If N0 = 0 then all exceedances occur singly (all K-gaps are positive)
   # and the likelihood is maximized at theta = 1.
   N0 <- ss$N0
@@ -162,7 +168,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
   obs_info <- 0
   if (N0 > 0) {
     if (N1 > 0 || D == 0) {
-      obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = ss$q_u, D = ss$D)
+      obs_info <- obs_info - N0 * gdd_theta(theta_mle, q_u = q_u, D = D)
     } else {
       obs_info <- NA
     }
@@ -271,7 +277,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #' u <- quantile(newlyn, probs = 0.90)
 #' dgaps_stat(newlyn, u = u, D = 1)
 #' @export
-dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
+dgaps_stat <- function(data, u, q_u, D = 1, inc_cens = TRUE) {
   data <- stats::na.omit(data)
   if (!is.numeric(u) || length(u) != 1) {
     stop("u must be a numeric scalar")
@@ -281,13 +287,12 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
   }
   # If all the data are smaller than the threshold then return null results
   if (u >= max(data, na.rm = TRUE)) {
-    return(list(N0 = 0, N1 = 0, sum_qtd = 0, n_dgaps = 0, q_u = 0, D = D))
+    return(list(N0 = 0, N1 = 0, sum_qtd = 0, n_dgaps = 0))
   }
   # Sample size, positions, number and proportion of exceedances
   nx <- length(data)
   exc_u <- (1:nx)[data > u]
   N_u <- length(exc_u)
-  q_u <- N_u / nx
   # Inter-exceedances times and left-censoring indicator
   T_u <- diff(exc_u)
   left_censored <- T_u <= D
@@ -297,7 +302,7 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
   N0 <- N_u - 1 - N1
   T_gt_D <- T_u[!left_censored]
   sum_qtd <- sum(q_u * T_gt_D)
-  # Store the number of K-gaps, for use by nobs.kgaps()
+  # Store the number of D-gaps, for use by nobs.dgaps()
   n_dgaps <- N0 + N1
   # Include censored inter-exceedance times?
   if (inc_cens) {
@@ -320,6 +325,5 @@ dgaps_stat <- function(data, u, D = 1, inc_cens = TRUE) {
     N1 <- N1 + N1_cens / 2
     sum_qtd <- sum_qtd + sum_qtd_cens
   }
-  return(list(N0 = N0, N1 = N1, sum_qtd = sum_qtd, n_dgaps = n_dgaps,
-              q_u = q_u, D = D))
+  return(list(N0 = N0, N1 = N1, sum_qtd = sum_qtd, n_dgaps = n_dgaps))
 }

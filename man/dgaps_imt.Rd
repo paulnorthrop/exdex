@@ -69,6 +69,12 @@ imt <- dgaps_imt(sp500, u = u, D = 1:5)
 probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
 u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
 imt <- dgaps_imt(cheeseboro, u = u, D = 1:5)
+
+### Uccle July temperatures
+
+probs <- c(seq(0.7, 0.98, by = 0.025), 0.99)
+u <- quantile(uccle720m, probs = probs, na.rm = TRUE)
+imt <- dgaps_imt(uccle720m, u = u, D = 1:5)
 }
 \references{
 Holesovsky, J. and Fusek, M. Estimation of the extremal index

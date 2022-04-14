@@ -104,7 +104,7 @@
 #'
 #' ### Uccle July temperatures
 #'
-#' # Using vector input
+#' # Using vector input, which merges data from different years
 #' u <- quantile(uccle720$temp, probs = 0.9, na.rm = TRUE)
 #' theta <- dgaps(uccle720$temp, u = u, D = 2)
 #' theta

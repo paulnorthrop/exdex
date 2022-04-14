@@ -82,6 +82,13 @@
 #' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
 #' imt_theta <- choose_ud(cheeseboro, u, D = 1:10)
 #' plot(imt_theta, uprob = FALSE, lwd = 2)
+#'
+#' ### Uccle July temperatures
+#'
+#' probs <- c(seq(0.7, 0.98, by = 0.025), 0.99)
+#' u <- quantile(uccle720m, probs = probs, na.rm = TRUE)
+#' imt_theta <- choose_ud(uccle720m, u, D = 1:5)
+#' plot(imt_theta, uprob = TRUE, lwd = 2)
 #' @export
 choose_ud <- function(data, u, D = 1, inc_cens = TRUE) {
   # If there are missing values then use split_by_NAs to extract sequences

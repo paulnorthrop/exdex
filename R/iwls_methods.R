@@ -4,7 +4,7 @@
 #'
 #' \code{coef} method for class \code{c("iwls", "exdex")}.
 #'
-#' @param object and object of class \code{c("kaps", "exdex")} returned from
+#' @param object and object of class \code{c("iwls", "exdex")} returned from
 #'   \code{\link{iwls}}.
 #' @param ... Further arguments.  None are used.
 #' @return A numeric scalar: the estimate of the extremal index \eqn{\theta}.

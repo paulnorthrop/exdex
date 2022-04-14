@@ -7,7 +7,7 @@
 \method{coef}{iwls}(object, ...)
 }
 \arguments{
-\item{object}{and object of class \code{c("kaps", "exdex")} returned from
+\item{object}{and object of class \code{c("iwls", "exdex")} returned from
 \code{\link{iwls}}.}
 
 \item{...}{Further arguments.  None are used.}

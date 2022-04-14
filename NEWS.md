@@ -1,4 +1,4 @@
-# exdex 1.1.1.9000
+# exdex 1.2.1
 
 ## New features
 

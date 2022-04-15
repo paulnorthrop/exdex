@@ -6,8 +6,6 @@ win-builder suggests that 5 DOI URLs may be invalid.  I have checked them and th
 
 ## Test environments
 
-## Test environments
-
 - Debian Linux, GCC (R-patched and R-devel) on R-hub
 - Fedora Linux, GCC (R-devel) on R-hub
 - Oracle Solaris 10, x86, 32 bit, R-release

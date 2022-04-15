@@ -16,4 +16,5 @@ win-builder suggests that 4 https://doi.org URLs may be invalid.  I have checked
 
 ## Downstream dependencies
 
-None. 
+The one downstream dependency of exdex (lite) passed R CMD check.
+

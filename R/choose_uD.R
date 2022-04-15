@@ -78,14 +78,14 @@
 #'
 #' ### Cheeseboro wind gusts (a matrix containing some NAs)
 #'
-#' probs <- c(seq(0.5, 0.98, by = 0.025), 0.99)
+#' probs <- c(seq(0.5, 0.95, by = 0.05), 0.99)
 #' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
-#' imt_theta <- choose_ud(cheeseboro, u, D = 1:10)
+#' imt_theta <- choose_ud(cheeseboro, u, D = 1:8)
 #' plot(imt_theta, uprob = FALSE, lwd = 2)
 #'
 #' ### Uccle July temperatures
 #'
-#' probs <- c(seq(0.7, 0.98, by = 0.025), 0.99)
+#' probs <- c(seq(0.7, 0.95, by = 0.05), 0.99)
 #' u <- quantile(uccle720m, probs = probs, na.rm = TRUE)
 #' imt_theta <- choose_ud(uccle720m, u, D = 1:5)
 #' plot(imt_theta, uprob = TRUE, lwd = 2)

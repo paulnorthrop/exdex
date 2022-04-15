@@ -283,7 +283,7 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #'   \doi{10.1007/s10687-020-00374-3}
 #' @references Attalides, N. (2015) Threshold-based extreme value modelling,
 #'   PhD thesis, University College London.
-#'   \url{http://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
+#'   \url{https://discovery.ucl.ac.uk/1471121/1/Nicolas_Attalides_Thesis.pdf}
 #' @seealso \code{\link{dgaps}} for maximum likelihood estimation of the
 #'   extremal index \eqn{\theta} using the \eqn{D}-gaps model.
 #' @examples

@@ -80,7 +80,7 @@
 #'
 #' probs <- c(seq(0.5, 0.95, by = 0.05), 0.99)
 #' u <- quantile(cheeseboro, probs = probs, na.rm = TRUE)
-#' imt_theta <- choose_uk(cheeseboro, u, k = 1:8)
+#' imt_theta <- choose_uk(cheeseboro, u, k = 1:6)
 #' plot(imt_theta, uprob = FALSE, lwd = 2)
 #'
 #' ### Uccle July temperatures

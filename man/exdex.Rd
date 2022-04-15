@@ -18,11 +18,11 @@ Functions to implement four estimators of the extremal index
   \item{\code{\link{spm}}: semiparametric maxima estimator, using block
     maxima: (Northrop, 2015; Berghaus and Bucher, 2018)}
   \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
-    interexceedance times (Suveges and Davison, 2010)}
+    inter-exceedance times (Suveges and Davison, 2010)}
   \item{\code{\link{dgaps}}: \eqn{D}-gaps estimator, using threshold
-    interexceedance times (Holesovsky and Fusek, 2020))}
+    inter-exceedance times (Holesovsky and Fusek, 2020))}
   \item{\code{\link{iwls}}: iterated weighted least squares estimator,
-    using threshold interexceedance times: (Suveges, 2007)}
+    using threshold inter-exceedance times: (Suveges, 2007)}
 }
 The functions \code{\link{choose_b}}, \code{\link{choose_uk}} and
 \code{\link{choose_ud}} provide graphical diagnostics for choosing the
@@ -32,7 +32,7 @@ respective tuning parameters of the semiparametric maxima, \eqn{K}-gaps and
 For the \eqn{K}-gaps and \eqn{D}-gaps models the `exdex` package allows
 missing values in the data, can accommodate independent subsets of data,
 such as monthly or seasonal time series from different years, and can
-incorporate information from censored interexceedance times.
+incorporate information from censored inter-exceedance times.
 
 See \code{vignette("exdex-vignette", package = "exdex")} for an
 overview of the package.

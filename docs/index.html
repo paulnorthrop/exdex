@@ -21,15 +21,17 @@
     are used to increase precision of estimation. A graphical block size 
     diagnostic is provided.  The other type of methodology uses a model for the 
     distribution of threshold inter-exceedance times (Ferro and Segers (2003) 
-    &lt;doi:10.1111/1467-9868.00401&gt;). Two versions of this type of approach are 
+    &lt;doi:10.1111/1467-9868.00401&gt;). Three versions of this type of approach are 
     provided: the iterated weight least squares approach of Suveges (2007) 
-    &lt;doi:10.1007/s10687-007-0034-2&gt; and the K-gaps model of 
-    Suveges and Davison (2010) &lt;doi:10.1214/09-AOAS292&gt;. For the K-gaps model 
-    this package allows missing values in the data, can accommodate 
-    independent subsets of data, such as monthly or seasonal time series from 
-    different years, and can incorporate information from censored 
-    inter-exceedance times.  A graphical diagnostic for the threshold level and 
-    the runs parameter K is provided.">
+    &lt;doi:10.1007/s10687-007-0034-2&gt;, the K-gaps model of 
+    Suveges and Davison (2010) &lt;doi:10.1214/09-AOAS292&gt; and a similar approach
+    of Holesovsky, J. and Fusek, M. (2020) &lt;doi:10.1007/s10687-020-00374-3&gt; 
+    that we refer to as D-gaps. For the K-gaps and D-gaps models this package 
+    allows missing values in the data, can accommodate independent subsets of 
+    data, such as monthly or seasonal time series from different years, and can 
+    incorporate information from right-censored inter-exceedance times.  
+    Graphical diagnostics for the threshold level and the respective tuning
+    parameters K and D are provided.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>

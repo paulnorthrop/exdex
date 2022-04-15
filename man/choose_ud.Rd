@@ -57,14 +57,14 @@ For each combination of threshold in \code{u} and \eqn{D}
 ### S&P 500 index
 
 # Multiple thresholds and left-censoring parameters
-u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+u <- quantile(sp500, probs = seq(0.2, 0.9, by = 0.1))
 imt_theta <- choose_ud(sp500, u = u, D = 1:5)
 plot(imt_theta)
 plot(imt_theta, uprob = TRUE)
 plot(imt_theta, y = "theta")
 
 # One left-censoring parameter D, many thresholds u
-u <- quantile(sp500, probs = seq(0.1, 0.9, by = 0.1))
+u <- quantile(sp500, probs = seq(0.2, 0.9, by = 0.1))
 imt_theta <- choose_ud(sp500, u = u, D = 1)
 plot(imt_theta)
 plot(imt_theta, y = "theta")

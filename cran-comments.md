@@ -2,7 +2,7 @@
 
 0 errors | 0 warnings | 0 notes
 
-win-builder suggests that 4 https://doi.org URLs may be invalid.  I have checked them and they are correct.
+win-builder suggests that 5 DOI URLs may be invalid.  I have checked them and they are correct.
 
 ## Test environments
 

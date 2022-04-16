@@ -34,16 +34,19 @@ diagnostic is provided.
 
 The other type of methodology uses a model for the distribution of
 threshold inter-exceedance times ([Ferro and Segers,
-2003](https://doi.org/10.1111/1467-9868.00401)). Two versions of this
+2003](https://doi.org/10.1111/1467-9868.00401)). Three versions of this
 type of approach are provided: the iterated weight least squares
-approach of [Süveges (2007)](https://doi.org/10.1007/s10687-007-0034-2)
-and the *K*-gaps model of [Süveges and Davison
-(2010)](https://doi.org/10.1214/09-AOAS292). For the *K*-gaps model the
-`exdex` package allows missing values in the data, can accommodate
-independent subsets of data, such as monthly or seasonal time series
-from different years, and can incorporate information from censored
-interexceedance times. A graphical diagnostic for the threshold level
-and the runs parameter *K* is provided.
+approach of [Süveges (2007)](https://doi.org/10.1007/s10687-007-0034-2),
+the *K*-gaps model of [Süveges and Davison
+(2010)](https://doi.org/10.1214/09-AOAS292) and a similar approach of
+[Holesovsky and Fusek
+(2020)](https://doi.org/10.1007/s10687-020-00374-3) that we refer to as
+D-gaps. For the *K*-gaps and *D*-gaps models the `exdex` package allows
+missing values in the data, can accommodate independent subsets of data,
+such as monthly or seasonal time series from different years, and can
+incorporate information from censored inter-exceedance times. Graphical
+diagnostics for the threshold level and the respective tuning parameters
+*K* and *D* are provided.
 
 ### A simple example
 
@@ -92,7 +95,8 @@ theta
 #> kgaps(data = newlyn, u = u, k = 2)
 #> 
 #> Estimate of the extremal index theta:
-#> [1]  0.1758
+#>  theta  
+#> 0.1758
 summary(theta)
 #> 
 #> Call:

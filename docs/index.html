@@ -25,7 +25,7 @@
     provided: the iterated weight least squares approach of Suveges (2007) 
     &lt;doi:10.1007/s10687-007-0034-2&gt;, the K-gaps model of 
     Suveges and Davison (2010) &lt;doi:10.1214/09-AOAS292&gt; and a similar approach
-    of Holesovsky, J. and Fusek, M. (2020) &lt;doi:10.1007/s10687-020-00374-3&gt; 
+    of Holesovsky and Fusek (2020) &lt;doi:10.1007/s10687-020-00374-3&gt; 
     that we refer to as D-gaps. For the K-gaps and D-gaps models this package 
     allows missing values in the data, can accommodate independent subsets of 
     data, such as monthly or seasonal time series from different years, and can 
@@ -52,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
 </h3>
 <p>The extremal index <em>θ</em> is a measure of the degree of local dependence in the extremes of a stationary process. The <code>exdex</code> package performs frequentist inference about <em>θ</em> using two types of methodology.</p>
 <p>One type (<a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">Northrop, 2015</a>) is based on a model that relates the distribution of block maxima to the marginal distribution of the data, leading to a semiparametric maxima estimator. Two versions of this type of estimator are provided, following <a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">Northrop, 2015</a> and <a href="https://doi.org/10.1214/17-AOS1621" class="external-link">Berghaus and Bücher, 2018</a>. A slightly modified version of the latter is also provided. Estimates are produced using both disjoint and sliding block maxima, the latter providing greater precision of estimation. A graphical block size diagnostic is provided.</p>
-<p>The other type of methodology uses a model for the distribution of threshold inter-exceedance times (<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">Ferro and Segers, 2003</a>). Two versions of this type of approach are provided: the iterated weight least squares approach of <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">Süveges (2007)</a> and the <em>K</em>-gaps model of <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">Süveges and Davison (2010)</a>. For the <em>K</em>-gaps model the <code>exdex</code> package allows missing values in the data, can accommodate independent subsets of data, such as monthly or seasonal time series from different years, and can incorporate information from censored interexceedance times. A graphical diagnostic for the threshold level and the runs parameter <em>K</em> is provided.</p>
+<p>The other type of methodology uses a model for the distribution of threshold inter-exceedance times (<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">Ferro and Segers, 2003</a>). Three versions of this type of approach are provided: the iterated weight least squares approach of <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">Süveges (2007)</a>, the <em>K</em>-gaps model of <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">Süveges and Davison (2010)</a> and a similar approach of <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">Holesovsky and Fusek (2020)</a> that we refer to as D-gaps. For the <em>K</em>-gaps and <em>D</em>-gaps models the <code>exdex</code> package allows missing values in the data, can accommodate independent subsets of data, such as monthly or seasonal time series from different years, and can incorporate information from censored inter-exceedance times. Graphical diagnostics for the threshold level and the respective tuning parameters <em>K</em> and <em>D</em> are provided.</p>
 </div>
 <div class="section level3">
 <h3 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
@@ -148,7 +148,8 @@
 <span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Estimate of the extremal index theta:</span>
-<span class="co">#&gt; [1]  0.1758</span>
+<span class="co">#&gt;  theta  </span>
+<span class="co">#&gt; 0.1758</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>

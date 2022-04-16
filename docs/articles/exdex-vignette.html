@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Introducing exdex: Estimation of the Extremal Index</h1>
                         <h4 data-toc-skip class="author">Paul Northrop</h4>
             
-            <h4 data-toc-skip class="date">2022-04-15</h4>
+            <h4 data-toc-skip class="date">2022-04-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/exdex/blob/HEAD/vignettes/exdex-vignette.Rmd" class="external-link"><code>vignettes/exdex-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>exdex-vignette.Rmd</code></div>
@@ -189,13 +189,13 @@
 <div class="section level2">
 <h2 id="threshold-based-estimators">Threshold-based estimators<a class="anchor" aria-label="anchor" href="#threshold-based-estimators"></a>
 </h2>
-<p>These estimators are based on the distribution of the times at which observations exceed some high threshold <span class="math inline">\(u\)</span>. They are based on <span class="citation">Ferro and Segers (2003)</span>, which uses a limiting (<span class="math inline">\(u \rightarrow \infty\)</span>) mixture model to represent the distribution of within- and between-cluster interexceedance times. Under the model with probability <span class="math inline">\(\theta\)</span> an interexceedance time has an exponential distribution with mean <span class="math inline">\(1/\theta\)</span> (a between-cluster time) and otherwise the interexceedance time is, in theory, zero (a within-cluster time).</p>
-<p>In practice, zero interexceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small interexceedance times. The following estimators take different approaches to solving this problem.</p>
+<p>These estimators are based on the distribution of the times at which observations exceed some high threshold <span class="math inline">\(u\)</span>. They are based on <span class="citation">Ferro and Segers (2003)</span>, which uses a limiting (<span class="math inline">\(u \rightarrow \infty\)</span>) mixture model to represent the distribution of within- and between-cluster inter-exceedance times. Under the model with probability <span class="math inline">\(\theta\)</span> an interexceedance time has an exponential distribution with mean <span class="math inline">\(1/\theta\)</span> (a between-cluster time) and otherwise the interexceedance time is, in theory, zero (a within-cluster time).</p>
+<p>In practice, zero inter-exceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small interexceedance times. The following estimators take different approaches to solving this problem.</p>
 <div class="section level3">
 <h3 id="k-gaps">
 <span class="math inline">\(K\)</span>-gaps<a class="anchor" aria-label="anchor" href="#k-gaps"></a>
 </h3>
-<p><span class="citation">Süveges and Davison (2010)</span> to introduce an extra tuning parameter, <em>run</em> parameter <span class="math inline">\(K\)</span> that truncates interexceedance times, with the effect that any interexceedance time that is <span class="math inline">\(\leq K\)</span> is set to zero. Provided that a suitable value of <span class="math inline">\(K\)</span> is chosen <span class="math inline">\(\theta\)</span> may be estimated under the mixture model using maximum likelihood estimation. The following code does this using a particular threshold and <span class="math inline">\(K = 1\)</span>.</p>
+<p><span class="citation">Süveges and Davison (2010)</span> to introduce an extra tuning parameter, <em>run</em> parameter <span class="math inline">\(K\)</span> that truncates inter-exceedance times, with the effect that any interexceedance time that is <span class="math inline">\(\leq K\)</span> is set to zero. Provided that a suitable value of <span class="math inline">\(K\)</span> is chosen <span class="math inline">\(\theta\)</span> may be estimated under the mixture model using maximum likelihood estimation. The following code does this using a particular threshold and <span class="math inline">\(K = 1\)</span>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span>
 <span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
@@ -296,7 +296,7 @@
 <div class="section level3">
 <h3 id="iterated-weighted-least-squares">Iterated weighted least squares<a class="anchor" aria-label="anchor" href="#iterated-weighted-least-squares"></a>
 </h3>
-<p>Under the limiting mixture model <span class="math inline">\(\theta\)</span> is the proportion of interexceedance times that are between clusters. <span class="citation">Süveges (2007)</span> uses this to devise and iterated scheme for estimating <span class="math inline">\(\theta\)</span>. An initial estimate of <span class="math inline">\(\theta\)</span> is set. An exponential distribution is fitted to the largest <span class="math inline">\(100\theta\%\)</span> of the interexceedance times using weighted least squares estimation. Then the new estimate of <span class="math inline">\(\theta\)</span> is used to set the putative exponential sample and the estimation proceeds until the estimate of <span class="math inline">\(\theta\)</span> converges.</p>
+<p>Under the limiting mixture model <span class="math inline">\(\theta\)</span> is the proportion of inter-exceedance times that are between clusters. <span class="citation">Süveges (2007)</span> uses this to devise and iterated scheme for estimating <span class="math inline">\(\theta\)</span>. An initial estimate of <span class="math inline">\(\theta\)</span> is set. An exponential distribution is fitted to the largest <span class="math inline">\(100\theta\%\)</span> of the interexceedance times using weighted least squares estimation. Then the new estimate of <span class="math inline">\(\theta\)</span> is used to set the putative exponential sample and the estimation proceeds until the estimate of <span class="math inline">\(\theta\)</span> converges.</p>
 <p>The current implementation of this estimator in <em>exdex</em> is very limited: only an estimate is produced, with no estimates of uncertainty. The next release of <em>exdex</em> will rectify this.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span>

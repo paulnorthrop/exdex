@@ -103,13 +103,13 @@ The estimates of $\theta$ stabilise less quickly than for the `newlyn` data but 
 
 ## Threshold-based estimators
 
-These estimators are based on the distribution of the times at which observations exceed some high threshold $u$.  They are based on @FS2003, which uses a limiting ($u \rightarrow \infty$) mixture model to represent the distribution of within- and between-cluster interexceedance times.  Under the model with probability $\theta$ an interexceedance time has an exponential distribution with mean $1/\theta$ (a between-cluster time) and otherwise the  interexceedance time is, in theory, zero (a within-cluster time).  
+These estimators are based on the distribution of the times at which observations exceed some high threshold $u$.  They are based on @FS2003, which uses a limiting ($u \rightarrow \infty$) mixture model to represent the distribution of within- and between-cluster inter-exceedance times.  Under the model with probability $\theta$ an interexceedance time has an exponential distribution with mean $1/\theta$ (a between-cluster time) and otherwise the  interexceedance time is, in theory, zero (a within-cluster time).  
 
-In practice, zero interexceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small interexceedance times.  The following estimators take different approaches to solving this problem. 
+In practice, zero inter-exceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small interexceedance times.  The following estimators take different approaches to solving this problem. 
 
 ### $K$-gaps
 
-@SD2010 to introduce an extra tuning parameter, *run* parameter $K$ that truncates interexceedance times, with the effect that any interexceedance time that is $\leq K$ is set to zero.  Provided that a suitable value of $K$ is chosen $\theta$ may be estimated under the mixture model using maximum likelihood estimation.  The following code does this using a particular threshold and $K = 1$.
+@SD2010 to introduce an extra tuning parameter, *run* parameter $K$ that truncates inter-exceedance times, with the effect that any interexceedance time that is $\leq K$ is set to zero.  Provided that a suitable value of $K$ is chosen $\theta$ may be estimated under the mixture model using maximum likelihood estimation.  The following code does this using a particular threshold and $K = 1$.
 
 ```{r}
 u <- quantile(sp500, probs = 0.60)
@@ -164,7 +164,7 @@ summary(theta)
 
 ### Iterated weighted least squares
 
-Under the limiting mixture model $\theta$ is the proportion of interexceedance times that are between clusters.  @Suveges2007 uses this to devise and iterated scheme for estimating $\theta$.  An initial estimate of $\theta$ is set. An exponential distribution is fitted to the largest $100\theta\%$ of the interexceedance times using weighted least squares estimation.  Then the new estimate of $\theta$ is used to set the putative exponential sample and the estimation proceeds until the estimate of $\theta$ converges.
+Under the limiting mixture model $\theta$ is the proportion of inter-exceedance times that are between clusters.  @Suveges2007 uses this to devise and iterated scheme for estimating $\theta$.  An initial estimate of $\theta$ is set. An exponential distribution is fitted to the largest $100\theta\%$ of the interexceedance times using weighted least squares estimation.  Then the new estimate of $\theta$ is used to set the putative exponential sample and the estimation proceeds until the estimate of $\theta$ converges.
 
 The current implementation of this estimator in *exdex* is very limited: only an estimate is produced, with no estimates of uncertainty.  The next release of *exdex* will rectify this.
 

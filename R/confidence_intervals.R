@@ -561,7 +561,8 @@ print.confint_spm <- function(x, ...) {
 #'   The row names indicate the type of interval:
 #'   \code{norm} for intervals based on large sample normality and \code{lik}
 #'   for likelihood-based intervals.
-#'   If \code{object$k = 0} then all confidence limits are \code{NA}.}
+#'   If \code{object$k = 0} then both confidence limits are returned as being
+#'   equal to the point estimate of \eqn{\theta}.}
 #'   \item{call}{The call to \code{spm}.}
 #'   \item{object}{The input object \code{object}.}
 #'   \item{level}{The input \code{level}.}
@@ -615,9 +616,9 @@ confint.kgaps <- function (object, parm = "theta", level = 0.95,
   }
   if (interval_type == "lik" || interval_type == "both") {
     # Likelihood-based confidence intervals
-    # If K = 0 then return missing interval limits
+    # If K = 0 then return equal interval limits
     if (object$k == 0) {
-      temp <- c(NA, NA)
+      temp <- c(theta, theta)
     } else {
       temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss,
                              conf = 100 * level)
@@ -664,7 +665,7 @@ plot.confint_kgaps <- function(x, ...) {
   }
   # If K = 0 then do not produce a plot
   if (x$object$k == 0) {
-    stop("No plot is produced if K = 0 because confidence limits are NA")
+    stop("No plot is produced if K = 0 because confidence limits are equal")
   }
   if (!("lik" %in% rownames(x$cis))) {
     stop("Plot method not available when interval_type = ''norm''")

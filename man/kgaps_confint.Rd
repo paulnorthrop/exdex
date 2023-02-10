@@ -74,7 +74,8 @@ A list of class c("confint_kgaps", "exdex") containing the
   The row names indicate the type of interval:
   \code{norm} for intervals based on large sample normality and \code{lik}
   for likelihood-based intervals.
-  If \code{object$k = 0} then all confidence limits are \code{NA}.}
+  If \code{object$k = 0} then both confidence limits are returned as being
+  equal to the point estimate of \eqn{\theta}.}
   \item{call}{The call to \code{spm}.}
   \item{object}{The input object \code{object}.}
   \item{level}{The input \code{level}.}

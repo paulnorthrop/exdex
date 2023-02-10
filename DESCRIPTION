@@ -46,7 +46,7 @@ Suggests:
     zoo (>= 1.6.4)
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 URL: https://github.com/paulnorthrop/exdex, https://paulnorthrop.github.io/exdex/
 BugReports: https://github.com/paulnorthrop/exdex/issues

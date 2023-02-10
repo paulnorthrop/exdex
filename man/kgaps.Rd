@@ -41,7 +41,7 @@ An object (a list) of class \code{c("kgaps", "exdex")} containing
       \eqn{\theta}.}
     \item{\code{se} }{The estimated standard error of the MLE, calculated
       using an algebraic expression for the observed information.
-      If \code{k = 0} then \code{se} is \code{NA}.}
+      If \code{k = 0} then \code{se} is returned as \code{0}.}
     \item{\code{se_exp} }{The estimated standard error of the MLE,
       calculated using an algebraic expression for the expected information.
       If the estimate of \eqn{\theta} is 0 or 1 then \code{se_exp} is

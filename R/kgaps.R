@@ -55,7 +55,7 @@
 #'       \eqn{\theta}.}
 #'     \item{\code{se} }{The estimated standard error of the MLE, calculated
 #'       using an algebraic expression for the observed information.
-#'       If \code{k = 0} then \code{se} is \code{NA}.}
+#'       If \code{k = 0} then \code{se} is returned as \code{0}.}
 #'     \item{\code{se_exp} }{The estimated standard error of the MLE,
 #'       calculated using an algebraic expression for the expected information.
 #'       If the estimate of \eqn{\theta} is 0 or 1 then \code{se_exp} is
@@ -160,10 +160,11 @@ kgaps <- function(data, u, k = 1, inc_cens = TRUE) {
     obs_info <- obs_info + 2 * N1 / theta_mle ^ 2
   }
   theta_se <- sqrt(1 / obs_info)
-  # If K = 0 then the estimate of theta is 1 by default and returning a SE
-  # does not seem appropriate
+  # If K = 0 then the estimate of theta is 1 by default
+  # We return a SE equal to 0 so that the estimation of SEs for return level
+  # estimates in the lite package work in this case
   if (k == 0) {
-    theta_se <- NA
+    theta_se <- 0
   }
   max_loglik <- do.call(kgaps_loglik, c(list(theta = theta_mle), ss))
   res <- list(theta = theta_mle, se = theta_se, se_exp = se_exp, ss = ss,

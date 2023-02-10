@@ -654,12 +654,17 @@ confint.kgaps <- function (object, parm = "theta", level = 0.95,
 #'
 #' @param x an object of class \code{c("confint_kgaps", "exdex")}, a result of
 #'   a call to \code{\link{confint.kgaps}}.
-#' @return \code{plot.confint_kgaps}: nothing is returned.
+#' @return \code{plot.confint_kgaps}: nothing is returned.  If
+#'   \code{x$object$k = 0} then no plot is produced.
 #' @rdname kgaps_confint
 #' @export
 plot.confint_kgaps <- function(x, ...) {
   if (!inherits(x, "exdex")) {
     stop("use only with \"exdex\" objects")
+  }
+  # If K = 0 then do not produce a plot
+  if (x$object$k == 0) {
+    stop("No plot is produced if K = 0 because confidence limits are NA")
   }
   if (!("lik" %in% rownames(x$cis))) {
     stop("Plot method not available when interval_type = ''norm''")

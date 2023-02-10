@@ -79,7 +79,8 @@ A list of class c("confint_kgaps", "exdex") containing the
   \item{object}{The input object \code{object}.}
   \item{level}{The input \code{level}.}
 
-\code{plot.confint_kgaps}: nothing is returned.
+\code{plot.confint_kgaps}: nothing is returned.  If
+  \code{x$object$k = 0} then no plot is produced.
 
 \code{print.confint_kgaps}: the argument \code{x}, invisibly.
 }

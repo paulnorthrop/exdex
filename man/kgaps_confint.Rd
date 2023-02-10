@@ -73,7 +73,8 @@ A list of class c("confint_kgaps", "exdex") containing the
   \% (by default 2.5\% and 97.5\%).
   The row names indicate the type of interval:
   \code{norm} for intervals based on large sample normality and \code{lik}
-  for likelihood-based intervals.}
+  for likelihood-based intervals.
+  If \code{object$k = 0} then all confidence limits are \code{NA}.}
   \item{call}{The call to \code{spm}.}
   \item{object}{The input object \code{object}.}
   \item{level}{The input \code{level}.}

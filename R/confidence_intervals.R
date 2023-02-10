@@ -560,7 +560,8 @@ print.confint_spm <- function(x, ...) {
 #'   \% (by default 2.5\% and 97.5\%).
 #'   The row names indicate the type of interval:
 #'   \code{norm} for intervals based on large sample normality and \code{lik}
-#'   for likelihood-based intervals.}
+#'   for likelihood-based intervals.
+#'   If \code{object$k = 0} then all confidence limits are \code{NA}.}
 #'   \item{call}{The call to \code{spm}.}
 #'   \item{object}{The input object \code{object}.}
 #'   \item{level}{The input \code{level}.}
@@ -613,9 +614,14 @@ confint.kgaps <- function (object, parm = "theta", level = 0.95,
     lower <- upper <- NULL
   }
   if (interval_type == "lik" || interval_type == "both") {
-    # Likelihood-based confidence intervals.
-    temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss,
-                           conf = 100 * level)
+    # Likelihood-based confidence intervals
+    # If K = 0 then return missing interval limits
+    if (object$k == 0) {
+      temp <- c(NA, NA)
+    } else {
+      temp <- kgaps_conf_int(theta_mle = theta, ss = object$ss,
+                             conf = 100 * level)
+    }
     lower <- c(lower, temp[1])
     upper <- c(upper, temp[2])
   }

@@ -10,6 +10,8 @@
 
 * README.md: Used app.codecov.io as base for codecov link.
 
+* Create the help file for the package correctly, with alias exdex-package.
+
 # exdex 1.2.1
 
 ## New features

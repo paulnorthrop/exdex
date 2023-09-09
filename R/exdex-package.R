@@ -55,13 +55,12 @@
 #' @seealso \code{\link{newlyn}}, \code{\link{sp500}} and
 #'   \code{\link{cheeseboro}} for example datasets.
 #' @docType package
-#' @name exdex
 #' @import methods
 #' @importFrom graphics plot
 #' @importFrom stats coef confint nobs vcov
 #' @useDynLib exdex, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-NULL
+"_PACKAGE"
 
 #' Newlyn sea surges
 #'

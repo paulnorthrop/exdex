@@ -58,7 +58,7 @@ with \code{\link[base:Round]{signif}} before adding its value to a plot.}
 
 \item{uprob}{A logical scalar. Should we plot \code{x$u} on the
 horizontal axis (\code{uprob = FALSE}) or the approximate sample quantile
-to which \code{x$u} corresponds (\code{uprob = FALSE})?}
+to which \code{x$u} corresponds (\code{uprob = TRUE})?}
 
 \item{leg_pos}{A character scalar.  The position of any legend added to
 a plot.  Only relevant when both the arguments \code{u} and \code{k}

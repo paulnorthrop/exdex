@@ -157,7 +157,7 @@ choose_uk <- function(data, u, k = 1, inc_cens = TRUE) {
 #'   with \code{\link[base:Round]{signif}} before adding its value to a plot.
 #' @param uprob A logical scalar. Should we plot \code{x$u} on the
 #'   horizontal axis (\code{uprob = FALSE}) or the approximate sample quantile
-#'   to which \code{x$u} corresponds (\code{uprob = FALSE})?
+#'   to which \code{x$u} corresponds (\code{uprob = TRUE})?
 #' @param leg_pos A character scalar.  The position of any legend added to
 #'   a plot.  Only relevant when both the arguments \code{u} and \code{k}
 #'   in the call to \code{\link{choose_uk}} have length greater than one.

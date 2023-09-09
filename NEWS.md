@@ -1,4 +1,14 @@
-# exdex 1.2.1.9000
+# exdex 1.2.2
+
+## Bug fixes and minor improvements
+
+* If the argument `k = 0` is supplied to `kgaps()` then an estimate of 1 is returned for the extremal index for any input data.  For this very special case the estimated standard error associated with this estimate is set to zero and confidence intervals have a width of zero.  
+
+* Corrected a typing error in the description of `uprob` in the documentation for `plot.choose_uk()` and `plot.choose_ud()`.
+
+* The unnecessary C++11 specification has been dropped to avoid a CRAN Package Check NOTE. 
+
+* README.md: Used app.codecov.io as base for codecov link.
 
 # exdex 1.2.1
 

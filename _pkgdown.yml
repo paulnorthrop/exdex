@@ -15,16 +15,17 @@ reference:
   - title: Inference for the extremal index
     desc: ~
     contents:
+      - "dgaps"
+      - "dgaps_imt"
       - "kgaps"
-      - "kgaps_stat"
       - "kgaps_imt"
-      - "imt_stat"
       - "iwls"
       - "spm"
   - title: Choosing tuning parameters
     desc: ~
     contents:
       - "choose_b"
+      - "choose_ud"
       - "choose_uk"
   - title: Calculating block maxima
     desc: ~
@@ -36,6 +37,9 @@ reference:
       - "cheeseboro"
       - "newlyn"
       - "sp500"
+      - "uccle"
+      - "uccle720"
+      - "uccle720m"
   - title: Data manipulation
     desc: ~
     contents:
@@ -43,26 +47,13 @@ reference:
   - title: Generics
     desc: ~
     contents:
-      - "coef.spm"
-      - "coef.kgaps"
-      - "coef.iwls"
+      - "dgaps_methods"
+      - "iwls_methods"
+      - "kgaps_methods"
+      - "spm_methods"
+      - "confint.dgaps"
       - "confint.kgaps"
       - "confint.spm"
-      - "nobs.spm"
-      - "nobs.kgaps"
-      - "nobs.iwls"
       - "plot.choose_b"
+      - "plot.choose_ud"
       - "plot.choose_uk"
-      - "plot.confint_kgaps"
-      - "plot.confint_spm"
-      - "print.confint_kgaps"
-      - "print.confint_spm"
-      - "print.spm"
-      - "print.kgaps"
-      - "print.iwls"
-      - "print.summary.spm"
-      - "print.summary.kgaps"
-      - "summary.spm"
-      - "summary.kgaps"
-      - "vcov.spm"
-      - "vcov.kgaps"

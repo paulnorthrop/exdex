@@ -16,9 +16,13 @@ reference:
     desc: ~
     contents:
       - "dgaps"
+      - "dgaps_stat"
       - "dgaps_imt"
+      - "dgaps_imt_stat"
       - "kgaps"
+      - "kgaps_stat"
       - "kgaps_imt"
+      - "kgaps_imt_stat"
       - "iwls"
       - "spm"
   - title: Choosing tuning parameters

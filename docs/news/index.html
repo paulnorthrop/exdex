@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -58,7 +58,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.1.9000" id="exdex-1219000">exdex 1.2.1.9000<a class="anchor" aria-label="anchor" href="#exdex-1219000"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.2" id="exdex-122">exdex 1.2.2<a class="anchor" aria-label="anchor" href="#exdex-122"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-and-minor-improvements-1-2-2">Bug fixes and minor improvements<a class="anchor" aria-label="anchor" href="#bug-fixes-and-minor-improvements-1-2-2"></a></h3>
+<ul><li><p>If the argument <code>k = 0</code> is supplied to <code><a href="../reference/kgaps.html">kgaps()</a></code> then an estimate of 1 is returned for the extremal index for any input data. For this very special case the estimated standard error associated with this estimate is set to zero and confidence intervals have a width of zero.</p></li>
+<li><p>Corrected a typing error in the description of <code>uprob</code> in the documentation for <code><a href="../reference/plot.choose_uk.html">plot.choose_uk()</a></code> and <code><a href="../reference/plot.choose_ud.html">plot.choose_ud()</a></code>.</p></li>
+<li><p>The unnecessary C++11 specification has been dropped to avoid a CRAN Package Check NOTE.</p></li>
+<li><p>README.md: Used app.codecov.io as base for codecov link.</p></li>
+<li><p>Create the help file for the package correctly, with alias exdex-package.</p></li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2.1" id="exdex-121">exdex 1.2.1<small>2022-04-16</small><a class="anchor" aria-label="anchor" href="#exdex-121"></a></h2>
@@ -88,7 +96,7 @@
 </ul></li>
 <li>A new dataset <code>cheeseboro</code> is included, which is a matrix containing some missing values.</li>
 <li>In addition to <code><a href="../reference/kgaps.html">kgaps()</a></code>, the functions <code><a href="../reference/kgaps_imt.html">kgaps_imt()</a></code> and <code><a href="../reference/choose_uk.html">choose_uk()</a></code> now have an extra argument <code>inc_cens</code>, which allows contributions from censored K-gaps to be included in the log-likelihood for the extremal index.</li>
-<li>The default value of <code>inc_cens</code> in <code><a href="../reference/kgaps.html">kgaps()</a></code> (and in <code><a href="../reference/kgaps_imt.html">kgaps_imt()</a></code> and <code><a href="../reference/choose_uk.html">choose_uk()</a></code>) and is now <code>inc_cens = TRUE</code>.</li>
+<li>The default value of <code>inc_cens</code> in <code><a href="../reference/kgaps.html">kgaps()</a></code> (and in <code><a href="../reference/kgaps_imt.html">kgaps_imt()</a></code> and <code><a href="../reference/choose_uk.html">choose_uk()</a></code>) is now <code>inc_cens = TRUE</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-and-minor-improvements-1-1-1">Bug fixes and minor improvements<a class="anchor" aria-label="anchor" href="#bug-fixes-and-minor-improvements-1-1-1"></a></h3>
@@ -117,7 +125,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -52,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -62,7 +62,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -99,71 +99,71 @@
 <div class="section level1">
 <div class="page-header"><h1 id="exdex">exdex<a class="anchor" aria-label="anchor" href="#exdex"></a>
 </h1></div>
-
+<p><a href="https://ci.appveyor.com/project/paulnorthrop/exdex" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://app.codecov.io/github/paulnorthrop/exdex?branch=master" class="external-link"><img src="https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master" alt="Coverage Status"></a> <a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://www.r-pkg.org/badges/version/exdex" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/exdex?color=brightgreen" alt="Downloads (monthly)"></a> <a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/exdex?color=brightgreen" alt="Downloads (total)"></a></p>
 <div class="section level2">
 <h2 id="estimation-of-the-extremal-index">Estimation of the Extremal Index<a class="anchor" aria-label="anchor" href="#estimation-of-the-extremal-index"></a>
 </h2>
 <div class="section level3">
 <h3 id="what-does-exdex-do">What does exdex do?<a class="anchor" aria-label="anchor" href="#what-does-exdex-do"></a>
 </h3>
-<p>The extremal index <em>θ</em> is a measure of the degree of local dependence in the extremes of a stationary process. The <code>exdex</code> package performs frequentist inference about <em>θ</em> using two types of methodology.</p>
+<p>The extremal index <span class="math inline"><em>θ</em></span> is a measure of the degree of local dependence in the extremes of a stationary process. The <code>exdex</code> package performs frequentist inference about <span class="math inline"><em>θ</em></span> using two types of methodology.</p>
 <p>One type (<a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">Northrop, 2015</a>) is based on a model that relates the distribution of block maxima to the marginal distribution of the data, leading to a semiparametric maxima estimator. Two versions of this type of estimator are provided, following <a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">Northrop, 2015</a> and <a href="https://doi.org/10.1214/17-AOS1621" class="external-link">Berghaus and Bücher, 2018</a>. A slightly modified version of the latter is also provided. Estimates are produced using both disjoint and sliding block maxima, the latter providing greater precision of estimation. A graphical block size diagnostic is provided.</p>
-<p>The other type of methodology uses a model for the distribution of threshold inter-exceedance times (<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">Ferro and Segers, 2003</a>). Three versions of this type of approach are provided: the iterated weight least squares approach of <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">Süveges (2007)</a>, the <em>K</em>-gaps model of <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">Süveges and Davison (2010)</a> and a similar approach of <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">Holesovsky and Fusek (2020)</a> that we refer to as D-gaps. For the <em>K</em>-gaps and <em>D</em>-gaps models the <code>exdex</code> package allows missing values in the data, can accommodate independent subsets of data, such as monthly or seasonal time series from different years, and can incorporate information from censored inter-exceedance times. Graphical diagnostics for the threshold level and the respective tuning parameters <em>K</em> and <em>D</em> are provided.</p>
+<p>The other type of methodology uses a model for the distribution of threshold inter-exceedance times (<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">Ferro and Segers, 2003</a>). Three versions of this type of approach are provided: the iterated weight least squares approach of <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">Süveges (2007)</a>, the <span class="math inline"><em>K</em></span>-gaps model of <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">Süveges and Davison (2010)</a> and a similar approach of <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">Holesovsky and Fusek (2020)</a> that we refer to as D-gaps. For the <span class="math inline"><em>K</em></span>-gaps and <span class="math inline"><em>D</em></span>-gaps models the <code>exdex</code> package allows missing values in the data, can accommodate independent subsets of data, such as monthly or seasonal time series from different years, and can incorporate information from censored inter-exceedance times. Graphical diagnostics for the threshold level and the respective tuning parameters <span class="math inline"><em>K</em></span> and <span class="math inline"><em>D</em></span> are provided.</p>
 </div>
 <div class="section level3">
 <h3 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
 </h3>
 <p>The following code estimates the extremal index using the semiparametric maxima estimators, for an example dataset containing a time series of sea surges measured at Newlyn, Cornwall, UK over the period 1971-1976. The block size of 20 was chosen using a graphical diagnostic provided by <code><a href="reference/choose_b.html">choose_b()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paulnorthrop/exdex" class="external-link">exdex</a></span><span class="op">)</span>
-<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spm.html">spm</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span>
-<span class="va">theta</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; spm(data = newlyn, b = 20)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Estimates of the extremal index theta:</span>
-<span class="co">#&gt;           N2015   BB2018  BB2018b</span>
-<span class="co">#&gt; sliding   0.2392  0.3078  0.2578 </span>
-<span class="co">#&gt; disjoint  0.2350  0.3042  0.2542</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; spm(data = newlyn, b = 20)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                   Estimate Std. Error Bias adj.</span>
-<span class="co">#&gt; N2015, sliding      0.2392    0.01990  0.003317</span>
-<span class="co">#&gt; BB2018, sliding     0.3078    0.01642  0.003026</span>
-<span class="co">#&gt; BB2018b, sliding    0.2578    0.01642  0.053030</span>
-<span class="co">#&gt; N2015, disjoint     0.2350    0.02222  0.003726</span>
-<span class="co">#&gt; BB2018, disjoint    0.3042    0.02101  0.003571</span>
-<span class="co">#&gt; BB2018b, disjoint   0.2542    0.02101  0.053570</span></code></pre></div>
-<p>Now we estimate <em>θ</em> using the <em>K</em>-gaps model. The threshold <em>u</em> and runs parameter <em>K</em> were chosen using the graphical diagnostic provided by <code><a href="reference/choose_uk.html">choose_uk()</a></code>.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paulnorthrop/exdex" class="external-link">exdex</a></span><span class="op">)</span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spm.html">spm</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="va">theta</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spm(data = newlyn, b = 20)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimates of the extremal index theta:</span></span>
+<span><span class="co">#&gt;           N2015   BB2018  BB2018b</span></span>
+<span><span class="co">#&gt; sliding   0.2392  0.3078  0.2578 </span></span>
+<span><span class="co">#&gt; disjoint  0.2350  0.3042  0.2542</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spm(data = newlyn, b = 20)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                   Estimate Std. Error Bias adj.</span></span>
+<span><span class="co">#&gt; N2015, sliding      0.2392    0.01990  0.003317</span></span>
+<span><span class="co">#&gt; BB2018, sliding     0.3078    0.01642  0.003026</span></span>
+<span><span class="co">#&gt; BB2018b, sliding    0.2578    0.01642  0.053030</span></span>
+<span><span class="co">#&gt; N2015, disjoint     0.2350    0.02222  0.003726</span></span>
+<span><span class="co">#&gt; BB2018, disjoint    0.3042    0.02101  0.003571</span></span>
+<span><span class="co">#&gt; BB2018b, disjoint   0.2542    0.02101  0.053570</span></span></code></pre></div>
+<p>Now we estimate <span class="math inline"><em>θ</em></span> using the <span class="math inline"><em>K</em></span>-gaps model. The threshold <span class="math inline"><em>u</em></span> and runs parameter <span class="math inline"><em>K</em></span> were chosen using the graphical diagnostic provided by <code><a href="reference/choose_uk.html">choose_uk()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span>
-<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">theta</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Estimate of the extremal index theta:</span>
-<span class="co">#&gt;  theta  </span>
-<span class="co">#&gt; 0.1758</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       Estimate Std. Error</span>
-<span class="co">#&gt; theta   0.1758   0.009211</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">theta</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimate of the extremal index theta:</span></span>
+<span><span class="co">#&gt;  theta  </span></span>
+<span><span class="co">#&gt; 0.1758</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; kgaps(data = newlyn, u = u, k = 2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       Estimate Std. Error</span></span>
+<span><span class="co">#&gt; theta   0.1758   0.009211</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <p>To get the current released version from CRAN:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"exdex"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"exdex"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="vignette">Vignette<a class="anchor" aria-label="anchor" href="#vignette"></a>
@@ -207,16 +207,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://ci.appveyor.com/project/paulnorthrop/exdex" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/paulnorthrop/exdex?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/github/paulnorthrop/exdex?branch=master" class="external-link"><img src="https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master" alt="Coverage Status"></a></li>
-<li><a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://www.r-pkg.org/badges/version/exdex" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/exdex?color=brightgreen" alt="Downloads (monthly)"></a></li>
-<li><a href="https://cran.r-project.org/package=exdex" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/exdex?color=brightgreen" alt="Downloads (total)"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -229,7 +220,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

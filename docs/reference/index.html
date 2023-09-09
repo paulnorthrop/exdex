@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -61,7 +61,7 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="exdex.html">exdex</a></code> </p>
+          <p><code><a href="exdex-package.html">exdex</a></code> <code><a href="exdex-package.html">exdex-package</a></code> </p>
         </td>
         <td><p>exdex: Estimation of the Extremal Index</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
@@ -69,6 +69,22 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="dgaps.html">dgaps()</a></code> </p>
+        </td>
+        <td><p>Maximum likelihood estimation using left-censored inter-exceedances times</p></td>
+      </tr><tr><td>
+          <p><code><a href="dgaps_stat.html">dgaps_stat()</a></code> </p>
+        </td>
+        <td><p>Sufficient statistics for the left-censored inter-exceedances time model</p></td>
+      </tr><tr><td>
+          <p><code><a href="dgaps_imt.html">dgaps_imt()</a></code> </p>
+        </td>
+        <td><p>Information matrix test under the \(D\)-gaps model</p></td>
+      </tr><tr><td>
+          <p><code><a href="dgaps_imt_stat.html">dgaps_imt_stat()</a></code> </p>
+        </td>
+        <td><p>Statistics for the \(D\)-gaps information matrix test</p></td>
+      </tr><tr><td>
           <p><code><a href="kgaps.html">kgaps()</a></code> </p>
         </td>
         <td><p>Maximum likelihood estimation for the \(K\)-gaps model</p></td>
@@ -80,6 +96,10 @@
           <p><code><a href="kgaps_imt.html">kgaps_imt()</a></code> </p>
         </td>
         <td><p>Information matrix test under the \(K\)-gaps model</p></td>
+      </tr><tr><td>
+          <p><code><a href="kgaps_imt_stat.html">kgaps_imt_stat()</a></code> </p>
+        </td>
+        <td><p>Statistics for the information matrix test</p></td>
       </tr><tr><td>
           <p><code><a href="iwls.html">iwls()</a></code> </p>
         </td>
@@ -96,6 +116,11 @@
           <p><code><a href="choose_b.html">choose_b()</a></code> </p>
         </td>
         <td><p>Block length diagnostic for the semiparametric maxima estimator</p></td>
+      </tr><tr><td>
+          <p><code><a href="choose_ud.html">choose_ud()</a></code> </p>
+        </td>
+        <td><p>Threshold \(u\) and runs parameter \(D\) diagnostic for the \(D\)-gaps
+estimator</p></td>
       </tr><tr><td>
           <p><code><a href="choose_uk.html">choose_uk()</a></code> </p>
         </td>
@@ -125,6 +150,18 @@ estimator</p></td>
           <p><code><a href="sp500.html">sp500</a></code> </p>
         </td>
         <td><p>Daily log returns of the Standard and Poor (S&amp;P) 500 index</p></td>
+      </tr><tr><td>
+          <p><code><a href="uccle.html">uccle</a></code> </p>
+        </td>
+        <td><p>Uccle maximum daily temperatures</p></td>
+      </tr><tr><td>
+          <p><code><a href="uccle720.html">uccle720</a></code> </p>
+        </td>
+        <td><p>20th century Uccle maximum daily temperatures in July - data frame</p></td>
+      </tr><tr><td>
+          <p><code><a href="uccle720m.html">uccle720m</a></code> </p>
+        </td>
+        <td><p>20th century Uccle maximum daily temperatures in July - matrix</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="data-manipulation">Data manipulation <a href="#data-manipulation" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -138,17 +175,26 @@ estimator</p></td>
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="spm_methods.html">coef(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">vcov(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">nobs(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">print(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">summary(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">print(<i>&lt;summary.spm&gt;</i>)</a></code> </p>
+          <p><code><a href="dgaps_methods.html">coef(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_methods.html">vcov(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_methods.html">nobs(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_methods.html">logLik(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_methods.html">print(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_methods.html">summary(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_methods.html">print(<i>&lt;summary.dgaps&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Methods for objects of class <code>"spm"</code></p></td>
+        <td><p>Methods for objects of class <code>"dgaps"</code></p></td>
+      </tr><tr><td>
+          <p><code><a href="iwls_methods.html">coef(<i>&lt;iwls&gt;</i>)</a></code> <code><a href="iwls_methods.html">nobs(<i>&lt;iwls&gt;</i>)</a></code> <code><a href="iwls_methods.html">print(<i>&lt;iwls&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Methods for objects of class <code>"iwls"</code></p></td>
       </tr><tr><td>
           <p><code><a href="kgaps_methods.html">coef(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">vcov(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">nobs(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">logLik(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">print(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">summary(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_methods.html">print(<i>&lt;summary.kgaps&gt;</i>)</a></code> </p>
         </td>
         <td><p>Methods for objects of class <code>"kgaps"</code></p></td>
       </tr><tr><td>
-          <p><code><a href="iwls_methods.html">coef(<i>&lt;iwls&gt;</i>)</a></code> <code><a href="iwls_methods.html">nobs(<i>&lt;iwls&gt;</i>)</a></code> <code><a href="iwls_methods.html">print(<i>&lt;iwls&gt;</i>)</a></code> </p>
+          <p><code><a href="spm_methods.html">coef(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">vcov(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">nobs(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">print(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">summary(<i>&lt;spm&gt;</i>)</a></code> <code><a href="spm_methods.html">print(<i>&lt;summary.spm&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Methods for objects of class <code>"iwls"</code></p></td>
+        <td><p>Methods for objects of class <code>"spm"</code></p></td>
+      </tr><tr><td>
+          <p><code><a href="dgaps_confint.html">confint(<i>&lt;dgaps&gt;</i>)</a></code> <code><a href="dgaps_confint.html">plot(<i>&lt;confint_dgaps&gt;</i>)</a></code> <code><a href="dgaps_confint.html">print(<i>&lt;confint_dgaps&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence intervals for the extremal index \(\theta\) for <code>"dgaps"</code>
+objects</p></td>
       </tr><tr><td>
           <p><code><a href="kgaps_confint.html">confint(<i>&lt;kgaps&gt;</i>)</a></code> <code><a href="kgaps_confint.html">plot(<i>&lt;confint_kgaps&gt;</i>)</a></code> <code><a href="kgaps_confint.html">print(<i>&lt;confint_kgaps&gt;</i>)</a></code> </p>
         </td>
@@ -163,6 +209,11 @@ objects</p></td>
           <p><code><a href="plot.choose_b.html">plot(<i>&lt;choose_b&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot block length diagnostic for the semiparametric maxima estimator</p></td>
+      </tr><tr><td>
+          <p><code><a href="plot.choose_ud.html">plot(<i>&lt;choose_ud&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot threshold \(u\) and runs parameter \(D\) diagnostic for the
+\(D\)-gaps estimator</p></td>
       </tr><tr><td>
           <p><code><a href="plot.choose_uk.html">plot(<i>&lt;choose_uk&gt;</i>)</a></code> </p>
         </td>
@@ -181,7 +232,7 @@ objects</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

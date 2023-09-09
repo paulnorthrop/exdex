@@ -22,12 +22,6 @@
     <loc>/reference/all_max_rcpp.html</loc>
   </url>
   <url>
-    <loc>/reference/cgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cgaps_stat.html</loc>
-  </url>
-  <url>
     <loc>/reference/cheeseboro.html</loc>
   </url>
   <url>
@@ -38,21 +32,6 @@
   </url>
   <url>
     <loc>/reference/choose_uk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coef.iwls.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coef.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coef.spm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/confint.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/confint.spm.html</loc>
   </url>
   <url>
     <loc>/reference/dgaps.html</loc>
@@ -76,10 +55,7 @@
     <loc>/reference/exdex-internal.html</loc>
   </url>
   <url>
-    <loc>/reference/exdex.html</loc>
-  </url>
-  <url>
-    <loc>/reference/imt_stat.html</loc>
+    <loc>/reference/exdex-package.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
@@ -112,15 +88,6 @@
     <loc>/reference/newlyn.html</loc>
   </url>
   <url>
-    <loc>/reference/nobs.iwls.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nobs.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nobs.spm.html</loc>
-  </url>
-  <url>
     <loc>/reference/plot.choose_b.html</loc>
   </url>
   <url>
@@ -128,33 +95,6 @@
   </url>
   <url>
     <loc>/reference/plot.choose_uk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.confint_kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.confint_spm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.confint_kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.confint_spm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.iwls.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.spm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.summary.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.summary.spm.html</loc>
   </url>
   <url>
     <loc>/reference/sp500.html</loc>
@@ -172,12 +112,6 @@
     <loc>/reference/spm_methods.html</loc>
   </url>
   <url>
-    <loc>/reference/summary.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.spm.html</loc>
-  </url>
-  <url>
     <loc>/reference/uccle.html</loc>
   </url>
   <url>
@@ -185,11 +119,5 @@
   </url>
   <url>
     <loc>/reference/uccle720m.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vcov.kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vcov.spm.html</loc>
   </url>
 </urlset>

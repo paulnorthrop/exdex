@@ -21,7 +21,7 @@ dgaps).  plot.choose_ud creates the plot."><!-- mathjax --><script src="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@ dgaps).  plot.choose_ud creates the plot."><!-- mathjax --><script src="https://
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -70,7 +70,7 @@ run parameter \(D\) for the \(D\)-gaps estimator (see
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">choose_ud</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span>, inc_cens <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">choose_ud</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span>, inc_cens <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,6 +82,8 @@ run parameter \(D\) for the \(D\)-gaps estimator (see
   where each column relates to a different year.</p>
 <p>If <code>data</code> contains missing values then <code><a href="split_by_NAs.html">split_by_NAs</a></code> is
   used to divide the data into sequences of non-missing values.</p></dd>
+
+
 <dt>u, D</dt>
 <dd><p>Numeric vectors.  <code>u</code> is a vector of
   extreme value thresholds applied to data.  <code>D</code> is a vector of values
@@ -89,6 +91,8 @@ run parameter \(D\) for the \(D\)-gaps estimator (see
   See <code><a href="dgaps.html">dgaps</a></code> for more details.</p>
 <p>Any values in <code>u</code> that are greater than all the observations in
   <code>data</code> will be removed without a warning being given.</p></dd>
+
+
 <dt>inc_cens</dt>
 <dd><p>A logical scalar indicating whether or not to include
 contributions from right-censored inter-exceedance times, relating to the
@@ -97,18 +101,26 @@ than or equal to the time observed.
 If <code>data</code> has multiple columns then there will be right-censored
 first and last inter-exceedance times for each column.  See
 <strong>Details</strong> in <code><a href="dgaps.html">dgaps</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object (a list) of class <code>c("choose_ud", "exdex")</code>  containing</p>
+    
+
+<p>An object (a list) of class <code>c("choose_ud", "exdex")</code></p>
+
+
+<p>containing</p>
 <dl><dt>imt </dt>
 <dd><p>an object of class <code>c("dgaps_imt", "exdex")</code> returned
     from <code><a href="dgaps_imt.html">dgaps_imt</a></code>.</p></dd>
-<dt>theta </dt>
+
+  <dt>theta </dt>
 <dd><p>a <code>length(u)</code> by <code>length(D)</code> matrix.
     Element (i,j) of <code>theta</code> contains an object (a list) of class
     <code>c("dgaps", "exdex")</code>, a result of a call
     <code>dgaps(data, u[j], D[i])</code> to <code><a href="dgaps.html">dgaps</a></code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -121,7 +133,7 @@ first and last inter-exceedance times for each column.  See
     <h2>References</h2>
     <p>Holesovsky, J. and Fusek, M. Estimation of the extremal index
   using censored distributions. Extremes 23, 197-213 (2020).
-  doi: <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">10.1007/s10687-020-00374-3</a></p>
+  <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">doi:10.1007/s10687-020-00374-3</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -134,55 +146,55 @@ first and last inter-exceedance times for each column.  See
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Multiple thresholds and left-censoring parameters</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### S&amp;P 500 index</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Multiple thresholds and left-censoring parameters</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, y <span class="op">=</span> <span class="st">"theta"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, y <span class="op">=</span> <span class="st">"theta"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># One left-censoring parameter D, many thresholds u</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># One left-censoring parameter D, many thresholds u</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, y <span class="op">=</span> <span class="st">"theta"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, y <span class="op">=</span> <span class="st">"theta"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># One threshold u, many left-censoring parameters D</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># One threshold u, many left-censoring parameters D</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, y <span class="op">=</span> <span class="st">"theta"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, y <span class="op">=</span> <span class="st">"theta"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-7.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Newlyn sea surges</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">newlyn</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Newlyn sea surges</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">newlyn</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-8.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Cheeseboro wind gusts (a matrix containing some NAs)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.95</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, <span class="fl">0.99</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">cheeseboro</span>, probs <span class="op">=</span> <span class="va">probs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">FALSE</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Cheeseboro wind gusts (a matrix containing some NAs)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.95</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, <span class="fl">0.99</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">cheeseboro</span>, probs <span class="op">=</span> <span class="va">probs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">FALSE</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-9.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Uccle July temperatures</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.95</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, <span class="fl">0.99</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">uccle720m</span>, probs <span class="op">=</span> <span class="va">probs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">uccle720m</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Uccle July temperatures</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.95</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, <span class="fl">0.99</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">uccle720m</span>, probs <span class="op">=</span> <span class="va">probs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu">choose_ud</span><span class="op">(</span><span class="va">uccle720m</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="choose_ud-10.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -198,7 +210,7 @@ first and last inter-exceedance times for each column.  See
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -78,10 +78,12 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Introducing exdex: Estimation of the Extremal Index</h1>
-                        <h4 data-toc-skip class="author">Paul Northrop</h4>
+      <h1 data-toc-skip>Introducing exdex: Estimation of the Extremal
+Index</h1>
+                        <h4 data-toc-skip class="author">Paul
+Northrop</h4>
             
-            <h4 data-toc-skip class="date">2022-04-16</h4>
+            <h4 data-toc-skip class="date">2023-09-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paulnorthrop/exdex/blob/HEAD/vignettes/exdex-vignette.Rmd" class="external-link"><code>vignettes/exdex-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>exdex-vignette.Rmd</code></div>
@@ -90,226 +92,347 @@
 
     
     
-<p>The extremal value index <span class="math inline">\(\theta\)</span> is a measure of the extent of clustering in the extremes of a stationary process, representing the reciprocal of the mean cluster size.</p>
-<p>The main purpose of the <em>exdex</em> package is to implement the semiparametric maxima estimators developed in <span class="citation">Northrop (2015)</span> and <span class="citation">Berghaus and Bücher (2018)</span>. A feature of these works is the use of sliding block maxima, that is, the use of <em>all</em> blocks of consecutive values, rather than maxima over disjoint block of values. This improves efficiency of estimation, albeit at the cost of complicating theoretical work. Also provided are functions to estimate <span class="math inline">\(\theta\)</span> using two threshold-based methods: the <span class="math inline">\(K\)</span>-gaps estimator (<span class="citation">Süveges and Davison (2010)</span>) and the iterated weighted least squares estimator (<span class="citation">Süveges (2007)</span>).</p>
+<p>The extremal value index <span class="math inline">\(\theta\)</span>
+is a measure of the extent of clustering in the extremes of a stationary
+process, representing the reciprocal of the mean cluster size.</p>
+<p>The main purpose of the <em>exdex</em> package is to implement the
+semiparametric maxima estimators developed in <span class="citation">Northrop (2015)</span> and <span class="citation">Berghaus and Bücher (2018)</span>. A feature of these
+works is the use of sliding block maxima, that is, the use of
+<em>all</em> blocks of consecutive values, rather than maxima over
+disjoint block of values. This improves efficiency of estimation, albeit
+at the cost of complicating theoretical work. Also provided are
+functions to estimate <span class="math inline">\(\theta\)</span> using
+two threshold-based methods: the <span class="math inline">\(K\)</span>-gaps estimator (<span class="citation">Süveges and Davison (2010)</span>) and the iterated
+weighted least squares estimator (<span class="citation">Süveges
+(2007)</span>).</p>
 <div class="section level2">
 <h2 id="semiparametric-maxima-estimators">Semiparametric maxima estimators<a class="anchor" aria-label="anchor" href="#semiparametric-maxima-estimators"></a>
 </h2>
-<p>These estimators are based on the approximate relation <span class="math inline">\(G(u_b) = F(u_b)^{b\theta}\)</span> between the marginal distribution function <span class="math inline">\(F\)</span> of the process and the distribution function <span class="math inline">\(G\)</span> of the block maximum <span class="math inline">\(M\)</span> of <span class="math inline">\(b\)</span> consecutive variables, which applies provided that <span class="math inline">\(b\)</span> and <span class="math inline">\(u_b\)</span> are large. If <span class="math inline">\(G = F^{b\theta}\)</span> then <span class="math inline">\(Y = -b\log F(M)\)</span> has an exponential(<span class="math inline">\(\theta\)</span>) distribution and <span class="math inline">\(Z = b(1 - F(M))\)</span> is a multiple <span class="math inline">\(b\)</span> of a beta(<span class="math inline">\(1, b\theta\)</span>) distribution.</p>
-<p>Let <span class="math inline">\((M_1, \ldots, M_k)\)</span> be a sample of block maxima of <span class="math inline">\(b\)</span> consecutive values. The marginal distribution function <span class="math inline">\(F\)</span> is not known so we estimate it using the empirical distribution function <span class="math inline">\(\hat{F}\)</span> set <span class="math display">\[ \quad Y_i = -b \log \hat{F}(M_i), \quad Z_i = b(1 - \hat{F}(M_i)), \quad i = 1, \ldots, k \]</span> and define the estimators <span class="math display">\[ \hat{\theta}_N = \left( \frac{1}{k} \sum_{i=1}^k Y_i \right)^{-1} \quad 
-\hat{\theta}_{BB} = \left( \frac{1}{k} \sum_{i=1}^k Z_i \right)^{-1}. \]</span> These two estimators are equivalent asymptotically. The former is the estimator proposed in <span class="citation">Northrop (2015)</span>. <span class="citation">Berghaus and Bücher (2018)</span> derived asymptotic properties of the latter, because it is more amenable to mathematical analysis.</p>
-<p>The function <code>spm</code> provides three estimators, estimated using both sliding and disjoint block maxima and four types of bias-adjustment. The estimators are <span class="math inline">\(\hat{\theta}_N, \hat{\theta}_{BB}\)</span> and <span class="math inline">\(\hat{\theta}_{BB}-1/b\)</span>. The latter is motivated by the observation that E<span class="math inline">\((Z) = (\theta + 1/b)^{-1} &lt; \theta^{-1}\)</span> and therefore the subtraction of <span class="math inline">\(1 / b\)</span> provides further bias-adjustment. In fact empirical results indicate that <span class="math inline">\(\hat{\theta}_N\)</span> and <span class="math inline">\(\hat{\theta}_{BB} - 1/b\)</span> produce similar estimates.</p>
+<p>These estimators are based on the approximate relation <span class="math inline">\(G(u_b) = F(u_b)^{b\theta}\)</span> between the
+marginal distribution function <span class="math inline">\(F\)</span> of
+the process and the distribution function <span class="math inline">\(G\)</span> of the block maximum <span class="math inline">\(M\)</span> of <span class="math inline">\(b\)</span> consecutive variables, which applies
+provided that <span class="math inline">\(b\)</span> and <span class="math inline">\(u_b\)</span> are large. If <span class="math inline">\(G = F^{b\theta}\)</span> then <span class="math inline">\(Y = -b\log F(M)\)</span> has an exponential(<span class="math inline">\(\theta\)</span>) distribution and <span class="math inline">\(Z = b(1 - F(M))\)</span> is a multiple <span class="math inline">\(b\)</span> of a beta(<span class="math inline">\(1, b\theta\)</span>) distribution.</p>
+<p>Let <span class="math inline">\((M_1, \ldots, M_k)\)</span> be a
+sample of block maxima of <span class="math inline">\(b\)</span>
+consecutive values. The marginal distribution function <span class="math inline">\(F\)</span> is not known so we estimate it using
+the empirical distribution function <span class="math inline">\(\hat{F}\)</span> set <span class="math display">\[
+\quad Y_i = -b \log \hat{F}(M_i), \quad Z_i = b(1 - \hat{F}(M_i)), \quad
+i = 1, \ldots, k \]</span> and define the estimators <span class="math display">\[ \hat{\theta}_N = \left( \frac{1}{k} \sum_{i=1}^k
+Y_i \right)^{-1} \quad
+\hat{\theta}_{BB} = \left( \frac{1}{k} \sum_{i=1}^k Z_i \right)^{-1}.
+\]</span> These two estimators are equivalent asymptotically. The former
+is the estimator proposed in <span class="citation">Northrop
+(2015)</span>. <span class="citation">Berghaus and Bücher (2018)</span>
+derived asymptotic properties of the latter, because it is more amenable
+to mathematical analysis.</p>
+<p>The function <code>spm</code> provides three estimators, estimated
+using both sliding and disjoint block maxima and four types of
+bias-adjustment. The estimators are <span class="math inline">\(\hat{\theta}_N, \hat{\theta}_{BB}\)</span> and
+<span class="math inline">\(\hat{\theta}_{BB}-1/b\)</span>. The latter
+is motivated by the observation that E<span class="math inline">\((Z) =
+(\theta + 1/b)^{-1} &lt; \theta^{-1}\)</span> and therefore the
+subtraction of <span class="math inline">\(1 / b\)</span> provides
+further bias-adjustment. In fact empirical results indicate that <span class="math inline">\(\hat{\theta}_N\)</span> and <span class="math inline">\(\hat{\theta}_{BB} - 1/b\)</span> produce similar
+estimates.</p>
 <div class="section level3">
 <h3 id="newlyn-sea-surges">Newlyn sea surges<a class="anchor" aria-label="anchor" href="#newlyn-sea-surges"></a>
 </h3>
-<p>We provide an illustration of the <code>spm</code> function using the <code>newlyn</code> data, a time series of 2894 maximum seas surges measured at Newlyn, Cornwall, UK over the period 1971-1976. We use a block size <span class="math inline">\(b = 20\)</span>. We explain in <a href="#choosb">Block size selection</a> how this value was chosen.</p>
+<p>We provide an illustration of the <code>spm</code> function using the
+<code>newlyn</code> data, a time series of 2894 maximum seas surges
+measured at Newlyn, Cornwall, UK over the period 1971-1976. We use a
+block size <span class="math inline">\(b = 20\)</span>. We explain in <a href="#choosb">Block size selection</a> how this value was chosen.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paulnorthrop/exdex" class="external-link">exdex</a></span><span class="op">)</span>
-<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spm.html">spm</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span>
-<span class="co"># Estimates: BB2018b is BB2018 - 1/b</span>
-<span class="va">theta</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; spm(data = newlyn, b = 20)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Estimates of the extremal index theta:</span>
-<span class="co">#&gt;           N2015   BB2018  BB2018b</span>
-<span class="co">#&gt; sliding   0.2392  0.3078  0.2578 </span>
-<span class="co">#&gt; disjoint  0.2350  0.3042  0.2542</span>
-<span class="co"># Estimates, SEs and bias-adjustments</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; spm(data = newlyn, b = 20)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                   Estimate Std. Error Bias adj.</span>
-<span class="co">#&gt; N2015, sliding      0.2392    0.01990  0.003317</span>
-<span class="co">#&gt; BB2018, sliding     0.3078    0.01642  0.003026</span>
-<span class="co">#&gt; BB2018b, sliding    0.2578    0.01642  0.053030</span>
-<span class="co">#&gt; N2015, disjoint     0.2350    0.02222  0.003726</span>
-<span class="co">#&gt; BB2018, disjoint    0.3042    0.02101  0.003571</span>
-<span class="co">#&gt; BB2018b, disjoint   0.2542    0.02101  0.053570</span></code></pre></div>
-<p>There is a <code>confint</code> method for calculating confidence intervals using objects returned from <code>spm</code>. The likelihood-based intervals are based on an adjustment (performed by the <code>chandwich</code> package <span class="citation">Northrop and Chandler (2021)</span>) of the naive (pseudo-)loglikelihood so that the curvature of the adjusted loglikelihood agrees with the estimated standard errors.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paulnorthrop/exdex" class="external-link">exdex</a></span><span class="op">)</span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spm.html">spm</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co"># Estimates: BB2018b is BB2018 - 1/b</span></span>
+<span><span class="va">theta</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spm(data = newlyn, b = 20)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimates of the extremal index theta:</span></span>
+<span><span class="co">#&gt;           N2015   BB2018  BB2018b</span></span>
+<span><span class="co">#&gt; sliding   0.2392  0.3078  0.2578 </span></span>
+<span><span class="co">#&gt; disjoint  0.2350  0.3042  0.2542</span></span>
+<span><span class="co"># Estimates, SEs and bias-adjustments</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spm(data = newlyn, b = 20)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                   Estimate Std. Error Bias adj.</span></span>
+<span><span class="co">#&gt; N2015, sliding      0.2392    0.01990  0.003317</span></span>
+<span><span class="co">#&gt; BB2018, sliding     0.3078    0.01642  0.003026</span></span>
+<span><span class="co">#&gt; BB2018b, sliding    0.2578    0.01642  0.053030</span></span>
+<span><span class="co">#&gt; N2015, disjoint     0.2350    0.02222  0.003726</span></span>
+<span><span class="co">#&gt; BB2018, disjoint    0.3042    0.02101  0.003571</span></span>
+<span><span class="co">#&gt; BB2018b, disjoint   0.2542    0.02101  0.053570</span></span></code></pre></div>
+<p>There is a <code>confint</code> method for calculating confidence
+intervals using objects returned from <code>spm</code>. The
+likelihood-based intervals are based on an adjustment (performed by the
+<code>chandwich</code> package <span class="citation">Northrop and
+Chandler (2021)</span>) of the naive (pseudo-)loglikelihood so that the
+curvature of the adjusted loglikelihood agrees with the estimated
+standard errors.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Sliding maxima, symmetric intervals</span>
-<span class="va">conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co"># Sliding maxima, likelihood-based intervals</span>
-<span class="va">conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">theta</span>, interval_type <span class="op">=</span> <span class="st">"lik"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">conf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Sliding maxima, symmetric intervals</span></span>
+<span><span class="va">conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co"># Sliding maxima, likelihood-based intervals</span></span>
+<span><span class="va">conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">theta</span>, interval_type <span class="op">=</span> <span class="st">"lik"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">conf</span><span class="op">)</span></span></code></pre></div>
 <p><img src="exdex-vignette_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-<p>For this small block size of <span class="math inline">\(b = 20\)</span> there is an appreciable difference between the inferences from the N2015 and BB2018 estimates.</p>
+<p>For this small block size of <span class="math inline">\(b =
+20\)</span> there is an appreciable difference between the inferences
+from the N2015 and BB2018 estimates.</p>
 </div>
 <div class="section level3">
 <h3 id="sp-500-index">S&amp;P 500 index<a class="anchor" aria-label="anchor" href="#sp-500-index"></a>
 </h3>
-<p>We also consider a dataset (<code>sp500</code>) that is similar to one analysed in <span class="citation">Berghaus and Bücher (2018)</span>: daily log returns of the S&amp;P 500 index, from 3rd January 1990 to 9th October 2018. We use a block size <span class="math inline">\(b = 225\)</span>, which is similar to that chosen by <span class="citation">Berghaus and Bücher (2018)</span>.</p>
+<p>We also consider a dataset (<code>sp500</code>) that is similar to
+one analysed in <span class="citation">Berghaus and Bücher
+(2018)</span>: daily log returns of the S&amp;P 500 index, from 3rd
+January 1990 to 9th October 2018. We use a block size <span class="math inline">\(b = 225\)</span>, which is similar to that chosen
+by <span class="citation">Berghaus and Bücher (2018)</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spm.html">spm</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="fl">225</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; spm(data = sp500, b = 225)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                   Estimate Std. Error Bias adj.</span>
-<span class="co">#&gt; N2015, sliding      0.2454    0.04075   0.01451</span>
-<span class="co">#&gt; BB2018, sliding     0.2497    0.04069   0.01452</span>
-<span class="co">#&gt; BB2018b, sliding    0.2453    0.04069   0.01897</span>
-<span class="co">#&gt; N2015, disjoint     0.2402    0.04150   0.01472</span>
-<span class="co">#&gt; BB2018, disjoint    0.2446    0.04152   0.01475</span>
-<span class="co">#&gt; BB2018b, disjoint   0.2401    0.04152   0.01920</span>
-<span class="va">conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">theta</span>, interval_type <span class="op">=</span> <span class="st">"lik"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">conf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spm.html">spm</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="fl">225</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spm(data = sp500, b = 225)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                   Estimate Std. Error Bias adj.</span></span>
+<span><span class="co">#&gt; N2015, sliding      0.2454    0.04075   0.01451</span></span>
+<span><span class="co">#&gt; BB2018, sliding     0.2497    0.04069   0.01452</span></span>
+<span><span class="co">#&gt; BB2018b, sliding    0.2453    0.04069   0.01897</span></span>
+<span><span class="co">#&gt; N2015, disjoint     0.2402    0.04150   0.01472</span></span>
+<span><span class="co">#&gt; BB2018, disjoint    0.2446    0.04152   0.01475</span></span>
+<span><span class="co">#&gt; BB2018b, disjoint   0.2401    0.04152   0.01920</span></span>
+<span><span class="va">conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">theta</span>, interval_type <span class="op">=</span> <span class="st">"lik"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">conf</span><span class="op">)</span></span></code></pre></div>
 <p><img src="exdex-vignette_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
-<p>For this large block size there is very little difference between the inferences produce by the three estimators.</p>
+<p>For this large block size there is very little difference between the
+inferences produce by the three estimators.</p>
 </div>
 <div class="section level3">
 <h3 id="chooseb">Block size selection<a class="anchor" aria-label="anchor" href="#chooseb"></a>
 </h3>
-<p>An informal way to choose the value of <span class="math inline">\(b\)</span> is plots estimates of <span class="math inline">\(\theta\)</span> over a range of values of <span class="math inline">\(b\)</span> and to select the smallest <span class="math inline">\(b\)</span> above which these estimates appear to be constant with respect to <span class="math inline">\(b\)</span>, taking into account sampling variability. The function <code>choose_b</code>, and its associated plot method, does this, quantifying sampling variability using pointwise confidence intervals. The plot method allows us to select one of 3 estimators and choose whether to use sliding or disjoint block maxima. The default is to plot the estimates using the <span class="citation">Northrop (2015)</span> estimator applied to sliding maxima.</p>
+<p>An informal way to choose the value of <span class="math inline">\(b\)</span> is plots estimates of <span class="math inline">\(\theta\)</span> over a range of values of <span class="math inline">\(b\)</span> and to select the smallest <span class="math inline">\(b\)</span> above which these estimates appear to
+be constant with respect to <span class="math inline">\(b\)</span>,
+taking into account sampling variability. The function
+<code>choose_b</code>, and its associated plot method, does this,
+quantifying sampling variability using pointwise confidence intervals.
+The plot method allows us to select one of 3 estimators and choose
+whether to use sliding or disjoint block maxima. The default is to plot
+the estimates using the <span class="citation">Northrop (2015)</span>
+estimator applied to sliding maxima.</p>
 <p>For the <code>newlyn</code> data we obtain the following plot.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Plot like the top left of Northrop (2015)</span>
-<span class="co"># We remove the 14 values because 2880 has lots of factors</span>
-<span class="va">b_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">8</span>,<span class="fl">9</span>,<span class="fl">10</span>,<span class="fl">12</span>,<span class="fl">15</span>,<span class="fl">16</span>,<span class="fl">18</span>,<span class="fl">20</span>,<span class="fl">24</span>,<span class="fl">30</span>,<span class="fl">32</span>,<span class="fl">36</span>,<span class="fl">40</span>,<span class="fl">45</span>,<span class="fl">48</span>,<span class="fl">54</span>,<span class="fl">60</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_b.html">choose_b</a></span><span class="op">(</span><span class="va">newlyn</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2880</span><span class="op">]</span>, <span class="va">b_vals</span><span class="op">)</span>
-<span class="co"># Some b are too small for the sampling variance of the sliding blocks</span>
-<span class="co"># estimator to be estimated</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Plot like the top left of Northrop (2015)</span></span>
+<span><span class="co"># We remove the 14 values because 2880 has lots of factors</span></span>
+<span><span class="va">b_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">8</span>,<span class="fl">9</span>,<span class="fl">10</span>,<span class="fl">12</span>,<span class="fl">15</span>,<span class="fl">16</span>,<span class="fl">18</span>,<span class="fl">20</span>,<span class="fl">24</span>,<span class="fl">30</span>,<span class="fl">32</span>,<span class="fl">36</span>,<span class="fl">40</span>,<span class="fl">45</span>,<span class="fl">48</span>,<span class="fl">54</span>,<span class="fl">60</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_b.html">choose_b</a></span><span class="op">(</span><span class="va">newlyn</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2880</span><span class="op">]</span>, <span class="va">b_vals</span><span class="op">)</span></span>
+<span><span class="co"># Some b are too small for the sampling variance of the sliding blocks</span></span>
+<span><span class="co"># estimator to be estimated</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="exdex-vignette_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
-<p>This plots suggests that <span class="math inline">\(b = 20\)</span> is a reasonable block size to choose. Indeed the point estimates varies smoothly with <span class="math inline">\(b\)</span> and varies little for <span class="math inline">\(b \geq 20\)</span>. The confidence intervals tend to widen as <span class="math inline">\(b\)</span> increases, although the method for estimating these intervals is somewhat sensitive to block size owing to its use of disjoint block maxima. See the help file for <code>spm</code> and <span class="citation">Berghaus and Bücher (2018)</span> for further information. Note that for very small values of <span class="math inline">\(b\)</span> it may not be possible to estimate the confidence intervals, hence the missing intervals in this plot.</p>
+<p>This plots suggests that <span class="math inline">\(b = 20\)</span>
+is a reasonable block size to choose. Indeed the point estimates varies
+smoothly with <span class="math inline">\(b\)</span> and varies little
+for <span class="math inline">\(b \geq 20\)</span>. The confidence
+intervals tend to widen as <span class="math inline">\(b\)</span>
+increases, although the method for estimating these intervals is
+somewhat sensitive to block size owing to its use of disjoint block
+maxima. See the help file for <code>spm</code> and <span class="citation">Berghaus and Bücher (2018)</span> for further
+information. Note that for very small values of <span class="math inline">\(b\)</span> it may not be possible to estimate the
+confidence intervals, hence the missing intervals in this plot.</p>
 <p>For the <code>sp500</code> data we obtain the following plot.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">25</span>, to <span class="op">=</span> <span class="fl">350</span>, by <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>, <span class="fl">357</span><span class="op">)</span>
-<span class="va">res500</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_b.html">choose_b</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="va">b_vals</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res500</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">b_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">25</span>, to <span class="op">=</span> <span class="fl">350</span>, by <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>, <span class="fl">357</span><span class="op">)</span></span>
+<span><span class="va">res500</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_b.html">choose_b</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="va">b_vals</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res500</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="exdex-vignette_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
-<p>The estimates of <span class="math inline">\(\theta\)</span> stabilise less quickly than for the <code>newlyn</code> data but <span class="math inline">\(b = 225\)</span> seems to be reasonable choice.</p>
+<p>The estimates of <span class="math inline">\(\theta\)</span>
+stabilise less quickly than for the <code>newlyn</code> data but <span class="math inline">\(b = 225\)</span> seems to be reasonable
+choice.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="threshold-based-estimators">Threshold-based estimators<a class="anchor" aria-label="anchor" href="#threshold-based-estimators"></a>
 </h2>
-<p>These estimators are based on the distribution of the times at which observations exceed some high threshold <span class="math inline">\(u\)</span>. They are based on <span class="citation">Ferro and Segers (2003)</span>, which uses a limiting (<span class="math inline">\(u \rightarrow \infty\)</span>) mixture model to represent the distribution of within- and between-cluster inter-exceedance times. Under the model with probability <span class="math inline">\(\theta\)</span> an inter-exceedance time has an exponential distribution with mean <span class="math inline">\(1/\theta\)</span> (a between-cluster time) and otherwise the inter-exceedance time is, in theory, zero (a within-cluster time).</p>
-<p>In practice, zero inter-exceedance times are impossible and some adjustment is advisable in order to mitigate the effects of the model not fitting well for small inter-exceedance times. The following estimators take different approaches to solving this problem.</p>
+<p>These estimators are based on the distribution of the times at which
+observations exceed some high threshold <span class="math inline">\(u\)</span>. They are based on <span class="citation">Ferro and Segers (2003)</span>, which uses a limiting
+(<span class="math inline">\(u \rightarrow \infty\)</span>) mixture
+model to represent the distribution of within- and between-cluster
+inter-exceedance times. Under the model with probability <span class="math inline">\(\theta\)</span> an inter-exceedance time has an
+exponential distribution with mean <span class="math inline">\(1/\theta\)</span> (a between-cluster time) and
+otherwise the inter-exceedance time is, in theory, zero (a
+within-cluster time).</p>
+<p>In practice, zero inter-exceedance times are impossible and some
+adjustment is advisable in order to mitigate the effects of the model
+not fitting well for small inter-exceedance times. The following
+estimators take different approaches to solving this problem.</p>
 <div class="section level3">
 <h3 id="k-gaps">
 <span class="math inline">\(K\)</span>-gaps<a class="anchor" aria-label="anchor" href="#k-gaps"></a>
 </h3>
-<p><span class="citation">Süveges and Davison (2010)</span> to introduce an extra tuning parameter, <em>run</em> parameter <span class="math inline">\(K\)</span> that truncates inter-exceedance times, with the effect that any inter-exceedance time that is <span class="math inline">\(\leq K\)</span> is set to zero. Provided that a suitable value of <span class="math inline">\(K\)</span> is chosen <span class="math inline">\(\theta\)</span> may be estimated under the mixture model using maximum likelihood estimation. The following code does this using a particular threshold and <span class="math inline">\(K = 1\)</span>.</p>
+<p><span class="citation">Süveges and Davison (2010)</span> to introduce
+an extra tuning parameter, <em>run</em> parameter <span class="math inline">\(K\)</span> that truncates inter-exceedance times,
+with the effect that any inter-exceedance time that is <span class="math inline">\(\leq K\)</span> is set to zero. Provided that a
+suitable value of <span class="math inline">\(K\)</span> is chosen <span class="math inline">\(\theta\)</span> may be estimated under the mixture
+model using maximum likelihood estimation. The following code does this
+using a particular threshold and <span class="math inline">\(K =
+1\)</span>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span>
-<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; kgaps(data = sp500, u = u, k = 1)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       Estimate Std. Error</span>
-<span class="co">#&gt; theta   0.6953   0.007234</span></code></pre></div>
-<p><span class="citation">Süveges and Davison (2010)</span> propose a diagnostic test, an information matrix text (IMT), to inform the choice of <span class="math inline">\((u, K)\)</span>. The test is based on a statistics that compares the Fisher information for <span class="math inline">\(\theta\)</span> to the variance of the score statistic, both evaluated at the estimate <span class="math inline">\(\hat{\theta}\)</span>, because these two quantities are equal for a well-specified regular model. The following code performs this test, using a test of size <span class="math inline">\(\alpha = 0.05\)</span>, for a range of values of <span class="math inline">\(u\)</span> and <span class="math inline">\(K\)</span> and produces graphical summary containing a horizontal line to indicator the critical value of the test.</p>
+<code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">sp500</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; kgaps(data = sp500, u = u, k = 1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       Estimate Std. Error</span></span>
+<span><span class="co">#&gt; theta   0.6953   0.007234</span></span></code></pre></div>
+<p><span class="citation">Süveges and Davison (2010)</span> propose a
+diagnostic test, an information matrix text (IMT), to inform the choice
+of <span class="math inline">\((u, K)\)</span>. The test is based on a
+statistics that compares the Fisher information for <span class="math inline">\(\theta\)</span> to the variance of the score
+statistic, both evaluated at the estimate <span class="math inline">\(\hat{\theta}\)</span>, because these two
+quantities are equal for a well-specified regular model. The following
+code performs this test, using a test of size <span class="math inline">\(\alpha = 0.05\)</span>, for a range of values of
+<span class="math inline">\(u\)</span> and <span class="math inline">\(K\)</span> and produces graphical summary
+containing a horizontal line to indicator the critical value of the
+test.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>
-<span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_uk.html">choose_uk</a></span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span>, alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_uk.html">choose_uk</a></span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">TRUE</span>, alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
 <p><img src="exdex-vignette_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
-<p>Large values of the IMT statistic suggest a poor choice of <span class="math inline">\((u, K)\)</span>. Diagnostic plots like this are never clear cut but the fact that for <span class="math inline">\(K = 1\)</span> the IMT statistics drops below the critical value at around the sample 60% quantile suggests the combination of <span class="math inline">\(u\)</span> and <span class="math inline">\(K\)</span> that we used above.</p>
+<p>Large values of the IMT statistic suggest a poor choice of <span class="math inline">\((u, K)\)</span>. Diagnostic plots like this are
+never clear cut but the fact that for <span class="math inline">\(K =
+1\)</span> the IMT statistics drops below the critical value at around
+the sample 60% quantile suggests the combination of <span class="math inline">\(u\)</span> and <span class="math inline">\(K\)</span> that we used above.</p>
 <div class="section level4">
 <h4 id="multiple-time-series-and-missing-values">Multiple time series and missing values<a class="anchor" aria-label="anchor" href="#multiple-time-series-and-missing-values"></a>
 </h4>
-<p>The <code>cheeseboro</code> dataset contains hourly maximum wind gusts recorded at the Cheeseboro weather station near Thousand Oaks, Southern California, USA during the month of January over the period 2000-2009. Therefore, these data contain 10 time series that we shall consider to be approximately independent of each other. These data also contain several missing values.</p>
+<p>The <code>cheeseboro</code> dataset contains hourly maximum wind
+gusts recorded at the Cheeseboro weather station near Thousand Oaks,
+Southern California, USA during the month of January over the period
+2000-2009. Therefore, these data contain 10 time series that we shall
+consider to be approximately independent of each other. These data also
+contain several missing values.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cheeseboro</span><span class="op">)</span>
-<span class="co">#&gt;       2000            2001            2002            2003      </span>
-<span class="co">#&gt;  Min.   : 0.00   Min.   : 3.00   Min.   : 2.00   Min.   : 1.00  </span>
-<span class="co">#&gt;  1st Qu.: 8.00   1st Qu.:10.00   1st Qu.: 8.00   1st Qu.: 7.00  </span>
-<span class="co">#&gt;  Median :11.00   Median :15.00   Median :12.00   Median :12.00  </span>
-<span class="co">#&gt;  Mean   :13.59   Mean   :18.88   Mean   :14.68   Mean   :16.47  </span>
-<span class="co">#&gt;  3rd Qu.:16.00   3rd Qu.:25.00   3rd Qu.:19.00   3rd Qu.:20.00  </span>
-<span class="co">#&gt;  Max.   :63.00   Max.   :69.00   Max.   :62.00   Max.   :92.00  </span>
-<span class="co">#&gt;  NA's   :12      NA's   :9       NA's   :14      NA's   :4      </span>
-<span class="co">#&gt;       2004            2005            2006            2007           2008      </span>
-<span class="co">#&gt;  Min.   : 2.00   Min.   : 0.00   Min.   : 2.00   Min.   : 1.0   Min.   : 2.00  </span>
-<span class="co">#&gt;  1st Qu.: 9.00   1st Qu.: 8.00   1st Qu.: 9.00   1st Qu.: 9.0   1st Qu.:10.00  </span>
-<span class="co">#&gt;  Median :13.00   Median :13.00   Median :14.00   Median :15.0   Median :15.00  </span>
-<span class="co">#&gt;  Mean   :15.61   Mean   :16.23   Mean   :18.83   Mean   :18.7   Mean   :17.47  </span>
-<span class="co">#&gt;  3rd Qu.:20.00   3rd Qu.:22.00   3rd Qu.:25.00   3rd Qu.:27.0   3rd Qu.:23.00  </span>
-<span class="co">#&gt;  Max.   :53.00   Max.   :51.00   Max.   :71.00   Max.   :60.0   Max.   :53.00  </span>
-<span class="co">#&gt;                  NA's   :1       NA's   :2                                     </span>
-<span class="co">#&gt;       2009      </span>
-<span class="co">#&gt;  Min.   : 0.00  </span>
-<span class="co">#&gt;  1st Qu.: 9.00  </span>
-<span class="co">#&gt;  Median :15.00  </span>
-<span class="co">#&gt;  Mean   :18.86  </span>
-<span class="co">#&gt;  3rd Qu.:27.00  </span>
-<span class="co">#&gt;  Max.   :62.00  </span>
-<span class="co">#&gt; </span></code></pre></div>
-<p>Inside <code><a href="../reference/kgaps.html">kgaps()</a></code> these data are divided further into sequences of non-missing values with each sequence stored in a separate column of a matrix. The <span class="math inline">\(K\)</span>-gaps log-likelihood is constructed as a sum of contributions from columns.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cheeseboro</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       2000            2001            2002            2003      </span></span>
+<span><span class="co">#&gt;  Min.   : 0.00   Min.   : 3.00   Min.   : 2.00   Min.   : 1.00  </span></span>
+<span><span class="co">#&gt;  1st Qu.: 8.00   1st Qu.:10.00   1st Qu.: 8.00   1st Qu.: 7.00  </span></span>
+<span><span class="co">#&gt;  Median :11.00   Median :15.00   Median :12.00   Median :12.00  </span></span>
+<span><span class="co">#&gt;  Mean   :13.59   Mean   :18.88   Mean   :14.68   Mean   :16.47  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:16.00   3rd Qu.:25.00   3rd Qu.:19.00   3rd Qu.:20.00  </span></span>
+<span><span class="co">#&gt;  Max.   :63.00   Max.   :69.00   Max.   :62.00   Max.   :92.00  </span></span>
+<span><span class="co">#&gt;  NA's   :12      NA's   :9       NA's   :14      NA's   :4      </span></span>
+<span><span class="co">#&gt;       2004            2005            2006            2007           2008      </span></span>
+<span><span class="co">#&gt;  Min.   : 2.00   Min.   : 0.00   Min.   : 2.00   Min.   : 1.0   Min.   : 2.00  </span></span>
+<span><span class="co">#&gt;  1st Qu.: 9.00   1st Qu.: 8.00   1st Qu.: 9.00   1st Qu.: 9.0   1st Qu.:10.00  </span></span>
+<span><span class="co">#&gt;  Median :13.00   Median :13.00   Median :14.00   Median :15.0   Median :15.00  </span></span>
+<span><span class="co">#&gt;  Mean   :15.61   Mean   :16.23   Mean   :18.83   Mean   :18.7   Mean   :17.47  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:20.00   3rd Qu.:22.00   3rd Qu.:25.00   3rd Qu.:27.0   3rd Qu.:23.00  </span></span>
+<span><span class="co">#&gt;  Max.   :53.00   Max.   :51.00   Max.   :71.00   Max.   :60.0   Max.   :53.00  </span></span>
+<span><span class="co">#&gt;                  NA's   :1       NA's   :2                                     </span></span>
+<span><span class="co">#&gt;       2009      </span></span>
+<span><span class="co">#&gt;  Min.   : 0.00  </span></span>
+<span><span class="co">#&gt;  1st Qu.: 9.00  </span></span>
+<span><span class="co">#&gt;  Median :15.00  </span></span>
+<span><span class="co">#&gt;  Mean   :18.86  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:27.00  </span></span>
+<span><span class="co">#&gt;  Max.   :62.00  </span></span>
+<span><span class="co">#&gt; </span></span></code></pre></div>
+<p>Inside <code><a href="../reference/kgaps.html">kgaps()</a></code> these data are divided further into
+sequences of non-missing values with each sequence stored in a separate
+column of a matrix. The <span class="math inline">\(K\)</span>-gaps
+log-likelihood is constructed as a sum of contributions from
+columns.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.98</span>, by <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span>, <span class="fl">0.99</span><span class="op">)</span>
-<span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">cheeseboro</span>, probs <span class="op">=</span> <span class="va">probs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_uk.html">choose_uk</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">FALSE</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.98</span>, by <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span>, <span class="fl">0.99</span><span class="op">)</span></span>
+<span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">cheeseboro</span>, probs <span class="op">=</span> <span class="va">probs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">imt_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/choose_uk.html">choose_uk</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imt_theta</span>, uprob <span class="op">=</span> <span class="cn">FALSE</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="exdex-vignette_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
-<p>For these data the diagnostic graphic for choosing <span class="math inline">\((u, K)\)</span> is perhaps less clear than for the <code>sp500</code> data. As an example, we use <span class="math inline">\(u = 45\)</span> mph and <span class="math inline">\(K = 3\)</span> below.</p>
+<p>For these data the diagnostic graphic for choosing <span class="math inline">\((u, K)\)</span> is perhaps less clear than for the
+<code>sp500</code> data. As an example, we use <span class="math inline">\(u = 45\)</span> mph and <span class="math inline">\(K = 3\)</span> below.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="fl">45</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">theta</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; kgaps(data = cheeseboro, u = 45, k = 3)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Estimate of the extremal index theta:</span>
-<span class="co">#&gt;  theta  </span>
-<span class="co">#&gt; 0.2405</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; kgaps(data = cheeseboro, u = 45, k = 3)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       Estimate Std. Error</span>
-<span class="co">#&gt; theta   0.2405    0.02336</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kgaps.html">kgaps</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="fl">45</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">theta</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; kgaps(data = cheeseboro, u = 45, k = 3)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimate of the extremal index theta:</span></span>
+<span><span class="co">#&gt;  theta  </span></span>
+<span><span class="co">#&gt; 0.2405</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; kgaps(data = cheeseboro, u = 45, k = 3)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       Estimate Std. Error</span></span>
+<span><span class="co">#&gt; theta   0.2405    0.02336</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="d-gaps">
 <span class="math inline">\(D\)</span>-gaps<a class="anchor" aria-label="anchor" href="#d-gaps"></a>
 </h3>
-<p>From version 1.2.1 of <em>exdex</em> the estimator of <span class="math inline">\(\theta\)</span> developed by <span class="citation">Holesovsky and Fusek (2020)</span> is available, which involves a censoring parameter <span class="math inline">\(D\)</span>. This estimator is similar to the <span class="math inline">\(K\)</span>-gaps estimator, but the treatment of small inter-exceedance times is different. Threshold inter-exceedances times that are not larger than  units are left-censored and contribute to a log-likelihood only the information that they are <span class="math inline">\(\leq D\)</span>. The function <code>dgaps</code> calculates maximum likelihood estimates of <span class="math inline">\(\theta\)</span>.</p>
+<p>From version 1.2.1 of <em>exdex</em> the estimator of <span class="math inline">\(\theta\)</span> developed by <span class="citation">Holesovsky and Fusek (2020)</span> is available, which
+involves a censoring parameter <span class="math inline">\(D\)</span>.
+This estimator is similar to the <span class="math inline">\(K\)</span>-gaps estimator, but the treatment of
+small inter-exceedance times is different. Threshold inter-exceedances
+times that are not larger than units are left-censored and contribute to
+a log-likelihood only the information that they are <span class="math inline">\(\leq D\)</span>. The function <code>dgaps</code>
+calculates maximum likelihood estimates of <span class="math inline">\(\theta\)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dgaps.html">dgaps</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="fl">45</span>, D <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">theta</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; dgaps(data = cheeseboro, u = 45, D = 3)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Estimate of the extremal index theta:</span>
-<span class="co">#&gt;  theta  </span>
-<span class="co">#&gt; 0.2431</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; dgaps(data = cheeseboro, u = 45, D = 3)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       Estimate Std. Error</span>
-<span class="co">#&gt; theta   0.2431    0.02396</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dgaps.html">dgaps</a></span><span class="op">(</span><span class="va">cheeseboro</span>, <span class="fl">45</span>, D <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">theta</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; dgaps(data = cheeseboro, u = 45, D = 3)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimate of the extremal index theta:</span></span>
+<span><span class="co">#&gt;  theta  </span></span>
+<span><span class="co">#&gt; 0.2431</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; dgaps(data = cheeseboro, u = 45, D = 3)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       Estimate Std. Error</span></span>
+<span><span class="co">#&gt; theta   0.2431    0.02396</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="iterated-weighted-least-squares">Iterated weighted least squares<a class="anchor" aria-label="anchor" href="#iterated-weighted-least-squares"></a>
 </h3>
-<p>Under the limiting mixture model <span class="math inline">\(\theta\)</span> is the proportion of inter-exceedance times that are between clusters. <span class="citation">Süveges (2007)</span> uses this to devise and iterated scheme for estimating <span class="math inline">\(\theta\)</span>. An initial estimate of <span class="math inline">\(\theta\)</span> is set. An exponential distribution is fitted to the largest <span class="math inline">\(100\theta\%\)</span> of the inter-exceedance times using weighted least squares estimation. Then the new estimate of <span class="math inline">\(\theta\)</span> is used to set the putative exponential sample and the estimation proceeds until the estimate of <span class="math inline">\(\theta\)</span> converges.</p>
-<p>The current implementation of this estimator in <em>exdex</em> is very limited: only an estimate is produced, with no estimates of uncertainty. The next release of <em>exdex</em> will rectify this.</p>
+<p>Under the limiting mixture model <span class="math inline">\(\theta\)</span> is the proportion of
+inter-exceedance times that are between clusters. <span class="citation">Süveges (2007)</span> uses this to devise and iterated
+scheme for estimating <span class="math inline">\(\theta\)</span>. An
+initial estimate of <span class="math inline">\(\theta\)</span> is set.
+An exponential distribution is fitted to the largest <span class="math inline">\(100\theta\%\)</span> of the inter-exceedance times
+using weighted least squares estimation. Then the new estimate of <span class="math inline">\(\theta\)</span> is used to set the putative
+exponential sample and the estimation proceeds until the estimate of
+<span class="math inline">\(\theta\)</span> converges.</p>
+<p>The current implementation of this estimator in <em>exdex</em> is
+very limited: only an estimate is produced, with no estimates of
+uncertainty. The next release of <em>exdex</em> will rectify this.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span>
-<span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iwls.html">iwls</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span><span class="op">)</span>
-<span class="va">theta</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; iwls(data = newlyn, u = u)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Convergence (0 means success): 0 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Estimate of the extremal index theta:</span>
-<span class="co">#&gt; [1]  0.2514</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iwls.html">iwls</a></span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span><span class="op">)</span></span>
+<span><span class="va">theta</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; iwls(data = newlyn, u = u)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Convergence (0 means success): 0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimate of the extremal index theta:</span></span>
+<span><span class="co">#&gt; [1]  0.2514</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -319,25 +442,39 @@
    MathJax.Hub.Config({  "HTML-CSS": { minScaleAdjust: 125, availableFonts: [] }  });
 </script><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-BB2018" class="csl-entry">
-Berghaus, B., and A. Bücher. 2018. <span>“Weak Convergence of a Pseudo Maximum Likelihood Estimator for the Extremal Index.”</span> <em>Ann. Statist.</em> 46 (5). The Institute of Mathematical Statistics: 2307–2335. doi:<a href="https://doi.org/10.1214/17-AOS1621" class="external-link">10.1214/17-AOS1621</a>.
+Berghaus, B., and A. Bücher. 2018. <span>“Weak Convergence of a Pseudo
+Maximum Likelihood Estimator for the Extremal Index.”</span> <em>Ann.
+Statist.</em> 46 (5). The Institute of Mathematical Statistics:
+2307–2335. doi:<a href="https://doi.org/10.1214/17-AOS1621" class="external-link">10.1214/17-AOS1621</a>.
 </div>
 <div id="ref-FS2003" class="csl-entry">
-Ferro, C. A. T., and J. Segers. 2003. <span>“Inference for Clusters of Extreme Values.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 65 (2). Blackwell Publishing: 545–556. doi:<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">10.1111/1467-9868.00401</a>.
+Ferro, C. A. T., and J. Segers. 2003. <span>“Inference for Clusters of
+Extreme Values.”</span> <em>Journal of the Royal Statistical Society:
+Series B (Statistical Methodology)</em> 65 (2). Blackwell Publishing:
+545–556. doi:<a href="https://doi.org/10.1111/1467-9868.00401" class="external-link">10.1111/1467-9868.00401</a>.
 </div>
 <div id="ref-HF2020" class="csl-entry">
-Holesovsky, J. P., and M. Fusek. 2020. <span>“Estimation of the Extremal Index Using Censored Distributions.”</span> <em>Extremes</em> 23: 197–213.
+Holesovsky, J. P., and M. Fusek. 2020. <span>“Estimation of the Extremal
+Index Using Censored Distributions.”</span> <em>Extremes</em> 23:
+197–213.
 </div>
 <div id="ref-Northrop2015" class="csl-entry">
-Northrop, P. J. 2015. <span>“An Efficient Semiparametric Maxima Estimator of the Extremal Index.”</span> <em>Extremes</em> 18 (4): 585–603. doi:<a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">10.1007/s10687-015-0221-5</a>.
+Northrop, P. J. 2015. <span>“An Efficient Semiparametric Maxima
+Estimator of the Extremal Index.”</span> <em>Extremes</em> 18 (4):
+585–603. doi:<a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">10.1007/s10687-015-0221-5</a>.
 </div>
 <div id="ref-chandwich" class="csl-entry">
-Northrop, P. J., and R. E. Chandler. 2021. <em>Chandwich: Chandler-Bate Sandwich Loglikelihood Adjustment</em>. <a href="https://CRAN.R-project.org/package=chandwich" class="external-link">https://CRAN.R-project.org/package=chandwich</a>.
+Northrop, P. J., and R. E. Chandler. 2021. <em>Chandwich: Chandler-Bate
+Sandwich Loglikelihood Adjustment</em>. <a href="https://CRAN.R-project.org/package=chandwich" class="external-link">https://CRAN.R-project.org/package=chandwich</a>.
 </div>
 <div id="ref-Suveges2007" class="csl-entry">
-Süveges, M. 2007. <span>“Likelihood Estimation of the Extremal Index.”</span> <em>Extremes</em> 10 (1-2): 41–55. doi:<a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">10.1007/s10687-007-0034-2</a>.
+Süveges, M. 2007. <span>“Likelihood Estimation of the Extremal
+Index.”</span> <em>Extremes</em> 10 (1-2): 41–55. doi:<a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">10.1007/s10687-007-0034-2</a>.
 </div>
 <div id="ref-SD2010" class="csl-entry">
-Süveges, M., and A. C. Davison. 2010. <span>“Model Misspecification in Peaks over Threshold Analysis.”</span> <em>The Annals of Applied Statistics</em> 4 (1): 203–221. doi:<a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a>.
+Süveges, M., and A. C. Davison. 2010. <span>“Model Misspecification in
+Peaks over Threshold Analysis.”</span> <em>The Annals of Applied
+Statistics</em> 4 (1): 203–221. doi:<a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a>.
 </div>
 </div>
 </div>
@@ -360,7 +497,7 @@ Süveges, M., and A. C. Davison. 2010. <span>“Model Misspecification in Peaks 
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

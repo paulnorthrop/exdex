@@ -20,7 +20,7 @@ spm."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@ spm."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathja
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -69,46 +69,59 @@ in the vector <code>x</code>.  This provides the first step of computations in
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A numeric vector of raw observations.</p></dd>
+
+
 <dt>b</dt>
 <dd><p>A numeric scalar.  The block size.</p></dd>
+
+
 <dt>which_dj</dt>
 <dd><p>A character scalar.  Determines Which sets of disjoint
 maxima are calculated: <code>"all"</code>, all sets; <code>"first"</code>, only the
 set whose first block starts on the first observation in <code>x</code>;
 <code>"last"</code>, only the set whose last block end on the last observation
 in <code>x</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments to be passed to
 <code><a href="https://rdrr.io/pkg/RcppRoll/man/RcppRoll-exports.html" class="external-link">roll_max</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing</p>
+    
+
+<p>A list containing</p>
 <dl><dt><code>ys</code> </dt>
 <dd><p>a numeric vector containing one set of sliding
       block maxima.</p></dd>
-<dt><code>xs</code></dt>
+
+    <dt><code>xs</code></dt>
 <dd><p>a numeric vector containing the values that
       contribute to <code>ys</code>, that is, the whole input vector <code>x</code>.</p></dd>
-<dt><code>yd</code> </dt>
+
+    <dt><code>yd</code> </dt>
 <dd><p>if <code>which_dj = "all"</code> a <code>floor(n / b)</code>
       by <code>n - floor(n / b) * b + 1</code> numeric matrix.  Each column
       contains a set of disjoint maxima.  Otherwise, a <code>floor(n / b)</code>
       by 1 numeric matrix containing one set of block maxima.</p></dd>
-<dt><code>xd</code> </dt>
+
+    <dt><code>xd</code> </dt>
 <dd><p>if <code>which_dj = "all"</code> a
       <code>floor(n / b) * b</code> by <code>n - floor(n / b) * b + 1</code> numeric
       matrix.  Each column contains the values in <code>x</code> that contribute
       to the corresponding column in <code>yd</code>.  Otherwise, a
       <code>floor(n / b)</code> by 1 numeric matrix containing one the one set of
       the values in <code>x</code> that contribute to <code>yd</code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -137,8 +150,8 @@ in <code>x</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span></span>
-<span class="r-in"><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span></span></span>
+<span class="r-in"><span><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  4  5  6  7  8  9 10 11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -163,7 +176,7 @@ in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    8    9   10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    9   10   11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, which_dj <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, which_dj <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  4  5  6  7  8  9 10 11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -188,7 +201,7 @@ in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, which_dj <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">all_max_rcpp</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, which_dj <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  4  5  6  7  8  9 10 11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -227,7 +240,7 @@ in <code>x</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

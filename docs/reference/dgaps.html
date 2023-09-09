@@ -21,7 +21,7 @@ model of Suveges and Davison (2010) has a tuning parameter \(K\)."><!-- mathjax 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@ model of Suveges and Davison (2010) has a tuning parameter \(K\)."><!-- mathjax 
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -71,7 +71,7 @@ model of Suveges and Davison (2010) has a tuning parameter \(K\).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">dgaps</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span>, inc_cens <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dgaps</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span>, inc_cens <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,8 +85,12 @@ model of Suveges and Davison (2010) has a tuning parameter \(K\).</p>
   used to divide the data further into sequences of non-missing values,
   stored in different columns in a matrix.  Again, the log-likelihood
   is constructed as a sum of contributions from different columns.</p></dd>
+
+
 <dt>u</dt>
 <dd><p>A numeric scalar.  Extreme value threshold applied to data.</p></dd>
+
+
 <dt>D</dt>
 <dd><p>A numeric scalar.  The censoring parameter \(D\). Threshold
 inter-exceedances times that are not larger than <code>D</code> units are
@@ -94,6 +98,8 @@ left-censored, occurring with probability
 \(\log(1 - \theta e^{-\theta d})\),
 where \(d = q D\) and \(q\) is the probability with which the
 threshold \(u\) is exceeded.</p></dd>
+
+
 <dt>inc_cens</dt>
 <dd><p>A logical scalar indicating whether or not to include
 contributions from right-censored inter-exceedance times, relating to the
@@ -101,33 +107,43 @@ first and last observations. It is known that these times are greater
 than or equal to the time observed.
 If <code>data</code> has multiple columns then there will be right-censored
 first and last inter-exceedance times for each column.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object (a list) of class <code>c("dgaps", "exdex")</code> containing</p>
+    
+
+<p>An object (a list) of class <code>c("dgaps", "exdex")</code> containing</p>
 <dl><dt><code>theta</code> </dt>
 <dd><p>The maximum likelihood estimate (MLE) of
       \(\theta\).</p></dd>
-<dt><code>se</code> </dt>
+
+    <dt><code>se</code> </dt>
 <dd><p>The estimated standard error of the MLE, calculated
       using an algebraic expression for the observed information.  If the
       estimate of \(\theta\) is 0 then <code>se</code> is <code>NA</code>.</p></dd>
-<dt><code>se_exp</code> </dt>
+
+    <dt><code>se_exp</code> </dt>
 <dd><p>The estimated standard error of the MLE,
       calculated using an algebraic expression for the expected information.
       If the estimate of \(\theta\) is 0 then <code>se_exp</code> is <code>NA</code>.
       This is provided because cases may be encountered where the observed
       information is not positive.</p></dd>
-<dt><code>ss</code> </dt>
+
+    <dt><code>ss</code> </dt>
 <dd><p>The list of summary statistics returned from
       <code><a href="dgaps_stat.html">dgaps_stat</a></code>.</p></dd>
-<dt><code>D, u, inc_cens</code> </dt>
+
+    <dt><code>D, u, inc_cens</code> </dt>
 <dd><p>The input values of <code>D</code>,
       <code>u</code> and <code>inc_cens</code>.</p></dd>
-<dt><code>max_loglik </code></dt>
+
+    <dt><code>max_loglik </code></dt>
 <dd><p>The value of the log-likelihood at the MLE.</p></dd>
-<dt><code>call </code></dt>
+
+    <dt><code>call </code></dt>
 <dd><p>The call to <code>dgaps</code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -153,11 +169,11 @@ first and last inter-exceedance times for each column.</p></dd>
     <h2>References</h2>
     <p>Holesovsky, J. and Fusek, M. Estimation of the extremal index
   using censored distributions. Extremes 23, 197-213 (2020).
-  doi: <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">10.1007/s10687-020-00374-3</a></p>
+  <a href="https://doi.org/10.1007/s10687-020-00374-3" class="external-link">doi:10.1007/s10687-020-00374-3</a></p>
 <p>Suveges, M. and Davison, A. C. (2010) Model
   misspecification in peaks over threshold analysis, <em>Annals of
   Applied Statistics</em>, <strong>4</strong>(1), 203-221.
-  doi: <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">10.1214/09-AOAS292</a></p>
+  <a href="https://doi.org/10.1214/09-AOAS292" class="external-link">doi:10.1214/09-AOAS292</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -175,11 +191,11 @@ first and last inter-exceedance times for each column.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### S&amp;P 500 index</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">sp500</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dgaps(data = sp500, u = u, D = 1)</span>
@@ -187,29 +203,29 @@ first and last inter-exceedance times for each column.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  theta  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.9692  </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dgaps(data = sp500, u = u, D = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Estimate Std. Error</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta   0.9692    0.01561</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     theta </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.9691789 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2901</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              theta</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta 0.0002438123</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' -3658.418 (df=1)</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Newlyn sea surges</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">newlyn</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Newlyn sea surges</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">newlyn</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dgaps(data = newlyn, u = u, D = 2)</span>
@@ -217,20 +233,20 @@ first and last inter-exceedance times for each column.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  theta  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.1999  </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dgaps(data = newlyn, u = u, D = 2)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Estimate Std. Error</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta   0.1999    0.01176</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Uccle July temperatures</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using vector input, which merges data from different years</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">uccle720</span><span class="op">$</span><span class="va">temp</span>, probs <span class="op">=</span> <span class="fl">0.9</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">uccle720</span><span class="op">$</span><span class="va">temp</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Uccle July temperatures</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using vector input, which merges data from different years</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">uccle720</span><span class="op">$</span><span class="va">temp</span>, probs <span class="op">=</span> <span class="fl">0.9</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">uccle720</span><span class="op">$</span><span class="va">temp</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dgaps(data = uccle720$temp, u = u, D = 2)</span>
@@ -238,11 +254,11 @@ first and last inter-exceedance times for each column.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  theta  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.5152  </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using matrix input to separate data from different years</span></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">uccle720m</span>, probs <span class="op">=</span> <span class="fl">0.9</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">uccle720m</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using matrix input to separate data from different years</span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">uccle720m</span>, probs <span class="op">=</span> <span class="fl">0.9</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">dgaps</span><span class="op">(</span><span class="va">uccle720m</span>, u <span class="op">=</span> <span class="va">u</span>, D <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dgaps(data = uccle720m, u = u, D = 2)</span>
@@ -264,7 +280,7 @@ first and last inter-exceedance times for each column.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

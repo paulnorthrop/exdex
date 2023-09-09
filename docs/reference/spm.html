@@ -25,7 +25,7 @@ calculated using the asymptotic theory developed by Berghaus and Bucher
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@ calculated using the asymptotic theory developed by Berghaus and Bucher
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,22 +79,26 @@ calculated using the asymptotic theory developed by Berghaus and Bucher
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spm</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">b</span>,
-  bias_adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BB3"</span>, <span class="st">"BB1"</span>, <span class="st">"N"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  constrain <span class="op">=</span> <span class="cn">TRUE</span>,
-  varN <span class="op">=</span> <span class="cn">TRUE</span>,
-  which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spm</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">b</span>,</span>
+<span>  bias_adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BB3"</span>, <span class="st">"BB1"</span>, <span class="st">"N"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  constrain <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  varN <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A numeric vector of raw data.  No missing values are allowed.</p></dd>
+
+
 <dt>b</dt>
 <dd><p>A numeric scalar.  The block size.</p></dd>
+
+
 <dt>bias_adjust</dt>
 <dd><p>A character scalar.  Is bias-adjustment of the
 raw estimate of \(\theta\) performed using the bias-reduced
@@ -108,28 +112,37 @@ maxima are used <code>bias_adjust = "BB1"</code> and <code>bias_adjust = "N"</co
 give identical estimates of the Berghaus and Bucher (2018) variant,
 as explained at the end of Section 5 of Berghaus and Bucher (2018).
 If <code>bias_adjust = "none"</code> then no bias-adjustment is performed.</p></dd>
+
+
 <dt>constrain</dt>
 <dd><p>A logical scalar.  If <code>constrain = TRUE</code> then
 any estimates that are greater than 1 are set to 1,
 that is, they are constrained to lie in (0, 1].  This is carried out
 <em>after</em> any bias-adjustment.  Otherwise,
 estimates that are greater than 1 may be obtained.</p></dd>
+
+
 <dt>varN</dt>
 <dd><p>A logical scalar.  If <code>varN = TRUE</code> then the estimation
 of the sampling variance of the Northrop (2015) estimator is tailored
 to that estimator.  Otherwise, the sampling variance derived in
 Berghaus and Bucher (2018) is used.
 See <strong>Details</strong> for further information.</p></dd>
+
+
 <dt>which_dj</dt>
 <dd><p>A character scalar.  Determines which set of disjoint
 maxima are used to calculate an estimate of \(\theta\): <code>"first"</code>,
 only the set whose first block starts on the first observation in
 <code>x</code>; <code>"last"</code>, only the set whose last block ends on the last
 observation in <code>x</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of class <code>c("spm", "exdex")</code> containing the
+    
+
+<p>A list of class <code>c("spm", "exdex")</code> containing the
   components listed below.  The components that are vectors are
   labelled to indicate the estimator to which the constituent values
   relate: <code>"N2015"</code> for Northrop (2015), <code>"BB2018"</code> for
@@ -138,11 +151,13 @@ observation in <code>x</code>.</p></dd>
 <dd><p>Vectors containing the estimates of
     \(\theta\) resulting from sliding maxima and disjoint maxima
     respectively.</p></dd>
-<dt>se_sl, se_dj</dt>
+
+  <dt>se_sl, se_dj</dt>
 <dd><p>The estimated standard errors associated
     with the estimates in <code>theta_sl</code> and <code>theta_dj</code>.
     The values for <code>"BB2018"</code> and <code>"BB2018b"</code> are identical.</p></dd>
-<dt>bias_sl, bias_dj</dt>
+
+  <dt>bias_sl, bias_dj</dt>
 <dd><p>The respective values of the
       bias-adjustment applied to the raw estimates, that is, the values
       subtracted from the raw estimates.  For estimator
@@ -150,38 +165,47 @@ observation in <code>x</code>.</p></dd>
       of <code>1 / b</code>.
       If <code>bias_adjust = "N"</code> or <code>"none"</code> then
       <code>bias_sl</code> and <code>bias_dj</code> are <code>c(0, 0, 1 / b)</code>.</p></dd>
-<dt>raw_theta_sl, raw_theta_dj</dt>
+
+  <dt>raw_theta_sl, raw_theta_dj</dt>
 <dd><p>Vectors containing the raw estimates
     of \(\theta\), prior to any bias_adjustment.</p></dd>
-<dt>uncon_theta_sl, uncon_theta_dj</dt>
+
+  <dt>uncon_theta_sl, uncon_theta_dj</dt>
 <dd><p>The (bias_adjusted) estimates of
     \(\theta\) before the constraint that they lie in (0, 1] has been
     applied.</p></dd>
-<dt>data_sl, data_dj</dt>
+
+  <dt>data_sl, data_dj</dt>
 <dd><p>Matrices containing the \(Y\)-data and
     \(Z\)-data for the sliding an disjoint maxima respectively.
     The first columns are the \(Y\)-data, the second columns the
     \(Z\)-data.</p></dd>
-<dt>sigma2dj, sigma2dj_for_sl</dt>
+
+  <dt>sigma2dj, sigma2dj_for_sl</dt>
 <dd><p>Estimates of the variance
    \(\sigma_{{\rm dj}}^2\)
    defined on pages 2314-2315 of Berghaus and Bucher (2018).
    The form of the estimates is given on page 2319.
    <code>sigma2dj</code> is used in estimating the standard error <code>se_dj</code>,
    <code>sigma2dj_for_sl</code> in estimating the standard error <code>se_sl</code>.</p></dd>
-<dt>sigma2sl</dt>
+
+  <dt>sigma2sl</dt>
 <dd><p>Estimates of the variance
     \(\sigma_{{\rm sl}}^2\).
     defined on pages 2314-2315 of Berghaus and Bucher (2018).
     The form of the estimates is given on page 2319.
     <code>sigma2dj_for_sl</code> is used to estimate
     \(\sigma_{{\rm dj}}^2\) for this purpose.</p></dd>
-<dt>b</dt>
+
+  <dt>b</dt>
 <dd><p>The input value of <code>b</code>.</p></dd>
-<dt>bias_adjust</dt>
+
+  <dt>bias_adjust</dt>
 <dd><p>The input value of <code>bias_adjust</code>.</p></dd>
-<dt>call</dt>
+
+  <dt>call</dt>
 <dd><p>The call to <code>spm</code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -252,10 +276,10 @@ observation in <code>x</code>.</p></dd>
     <h2>References</h2>
     <p>Northrop, P. J. (2015) An efficient semiparametric maxima
   estimator of the extremal index. <em>Extremes</em> <strong>18</strong>(4), 585-603.
-  doi: <a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">10.1007/s10687-015-0221-5</a></p>
+  <a href="https://doi.org/10.1007/s10687-015-0221-5" class="external-link">doi:10.1007/s10687-015-0221-5</a></p>
 <p>Berghaus, B., Bucher, A. (2018) Weak convergence of a pseudo
   maximum likelihood estimator for the extremal index. <em>Ann. Statist.</em>
-  <strong>46</strong>(5), 2307-2335. doi: <a href="https://doi.org/10.1214/17-AOS1621" class="external-link">10.1214/17-AOS1621</a></p>
+  <strong>46</strong>(5), 2307-2335. <a href="https://doi.org/10.1214/17-AOS1621" class="external-link">doi:10.1214/17-AOS1621</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -266,9 +290,9 @@ observation in <code>x</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### Newlyn sea surges</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">spm</span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### Newlyn sea surges</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">spm</span><span class="op">(</span><span class="va">newlyn</span>, <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spm(data = newlyn, b = 20)</span>
@@ -277,7 +301,7 @@ observation in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           N2015   BB2018  BB2018b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sliding   0.2392  0.3078  0.2578 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> disjoint  0.2350  0.3042  0.2542 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spm(data = newlyn, b = 20)</span>
@@ -289,18 +313,18 @@ observation in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N2015, disjoint     0.2350    0.02222  0.003726</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BB2018, disjoint    0.3042    0.02101  0.003571</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BB2018b, disjoint   0.2542    0.02101  0.053570</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     N2015    BB2018   BB2018b </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.2392234 0.3078219 0.2578219 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2875</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        N2015       BB2018      BB2018b </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0003960306 0.0002694754 0.0002694754 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">spm</span><span class="op">(</span><span class="va">sp500</span>, <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### S&amp;P 500 index</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">spm</span><span class="op">(</span><span class="va">sp500</span>, <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spm(data = sp500, b = 100)</span>
@@ -309,7 +333,7 @@ observation in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           N2015   BB2018  BB2018b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sliding   0.3264  0.3359  0.3259 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> disjoint  0.3248  0.3343  0.3243 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> spm(data = sp500, b = 100)</span>
@@ -335,7 +359,7 @@ observation in <code>x</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

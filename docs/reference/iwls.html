@@ -19,7 +19,7 @@ uncertainty are provided."><!-- mathjax --><script src="https://cdnjs.cloudflare
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -28,7 +28,7 @@ uncertainty are provided."><!-- mathjax --><script src="https://cdnjs.cloudflare
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -67,33 +67,45 @@ uncertainty are provided.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iwls</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, maxit <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">iwls</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, maxit <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A numeric vector of raw data.  No missing values are allowed.</p></dd>
+
+
 <dt>u</dt>
 <dd><p>A numeric scalar.  Extreme value threshold applied to data.</p></dd>
+
+
 <dt>maxit</dt>
 <dd><p>A numeric scalar.  The maximum number of iterations.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object (a list) of class <code>"iwls", "exdex"</code> containing</p>
+    
+
+<p>An object (a list) of class <code>"iwls", "exdex"</code> containing</p>
 <dl><dt><code>theta</code> </dt>
 <dd><p>The estimate of \(\theta\).</p></dd>
-<dt><code>conv</code> </dt>
+
+    <dt><code>conv</code> </dt>
 <dd><p>A convergence indicator: 0 indicates successful
       convergence; 1 indicates that <code>maxit</code> has been reached.</p></dd>
-<dt><code>niter</code> </dt>
+
+    <dt><code>niter</code> </dt>
 <dd><p>The number of iterations performed.</p></dd>
-<dt><code>n_gaps </code></dt>
+
+    <dt><code>n_gaps </code></dt>
 <dd><p>The number of time gaps between successive
       exceedances.</p></dd>
-<dt><code>call </code></dt>
+
+    <dt><code>call </code></dt>
 <dd><p>The call to <code>iwls</code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -135,7 +147,7 @@ uncertainty are provided.</p>
     <h2>References</h2>
     <p>Suveges, M. (2007) Likelihood estimation of the extremal
   index. <em>Extremes</em>, <strong>10</strong>, 41-55.
-  doi: <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">10.1007/s10687-007-0034-2</a></p>
+  <a href="https://doi.org/10.1007/s10687-007-0034-2" class="external-link">doi:10.1007/s10687-007-0034-2</a></p>
 <p>Ferro, C.A.T. (2003) Statistical methods for clusters of
   extreme values. Ph.D. thesis, Lancaster University.</p>
     </div>
@@ -147,11 +159,11 @@ uncertainty are provided.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### S&amp;P 500 index</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">iwls</span><span class="op">(</span><span class="va">sp500</span>, <span class="va">u</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### S&amp;P 500 index</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sp500</span>, probs <span class="op">=</span> <span class="fl">0.60</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">iwls</span><span class="op">(</span><span class="va">sp500</span>, <span class="va">u</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iwls(data = sp500, u = u)</span>
@@ -160,16 +172,16 @@ uncertainty are provided.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate of the extremal index theta:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.7707</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.770706</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2899</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Newlyn sea surges</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">iwls</span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Newlyn sea surges</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">newlyn</span>, probs <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">iwls</span><span class="op">(</span><span class="va">newlyn</span>, <span class="va">u</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iwls(data = newlyn, u = u)</span>
@@ -192,7 +204,7 @@ uncertainty are provided.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

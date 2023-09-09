@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,72 +63,72 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spm_check</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">b</span>,
-  sliding <span class="op">=</span> <span class="cn">TRUE</span>,
-  bias_adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BB3"</span>, <span class="st">"BB1"</span>, <span class="st">"N"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  constrain <span class="op">=</span> <span class="cn">TRUE</span>,
-  varN <span class="op">=</span> <span class="cn">TRUE</span>,
-  which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">spm_sigmahat_dj</span><span class="op">(</span><span class="va">data</span>, <span class="va">b</span>, check <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">spm_R_quick</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">b</span>,
-  bias_adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BB3"</span>, <span class="st">"BB1"</span>, <span class="st">"N"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  constrain <span class="op">=</span> <span class="cn">TRUE</span>,
-  varN <span class="op">=</span> <span class="cn">TRUE</span>,
-  which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">ests_sigmahat_dj</span><span class="op">(</span><span class="va">all_max</span>, <span class="va">b</span>, <span class="va">which_dj</span>, <span class="va">bias_adjust</span><span class="op">)</span>
-
-<span class="fu">log0const_slow</span><span class="op">(</span><span class="va">x</span>, <span class="va">const</span><span class="op">)</span>
-
-<span class="fu">log0const</span><span class="op">(</span><span class="va">x</span>, <span class="va">const</span><span class="op">)</span>
-
-<span class="fu">ecdf3</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="fu">ecdf2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="fu">ecdf1</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">lenx</span><span class="op">)</span>
-
-<span class="fu">sliding_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-
-<span class="fu">disjoint_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">all_disjoint_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">all_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">kgaps_loglik</span><span class="op">(</span><span class="va">theta</span>, <span class="va">N0</span>, <span class="va">N1</span>, <span class="va">sum_qs</span>, <span class="va">n_kgaps</span><span class="op">)</span>
-
-<span class="fu">kgaps_conf_int</span><span class="op">(</span><span class="va">theta_mle</span>, <span class="va">ss</span>, conf <span class="op">=</span> <span class="fl">95</span><span class="op">)</span>
-
-<span class="fu">kgaps_quad_solve</span><span class="op">(</span><span class="va">N0</span>, <span class="va">N1</span>, <span class="va">sum_qs</span><span class="op">)</span>
-
-<span class="fu">kgaps_imt_old</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-
-<span class="fu">kgaps_exp_info</span><span class="op">(</span><span class="va">theta</span>, <span class="va">ss</span>, <span class="va">inc_cens</span><span class="op">)</span>
-
-<span class="fu">dgaps_loglik</span><span class="op">(</span><span class="va">theta</span>, <span class="va">N0</span>, <span class="va">N1</span>, <span class="va">sum_qtd</span>, <span class="va">n_dgaps</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span>
-
-<span class="fu">g_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span>
-
-<span class="fu">gd_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span>
-
-<span class="fu">gdd_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span>
-
-<span class="fu">gddd_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span>
-
-<span class="fu">dgaps_exp_info</span><span class="op">(</span><span class="va">theta</span>, <span class="va">ss</span>, <span class="va">inc_cens</span><span class="op">)</span>
-
-<span class="fu">dgaps_conf_int</span><span class="op">(</span><span class="va">theta_mle</span>, <span class="va">ss</span>, conf <span class="op">=</span> <span class="fl">95</span><span class="op">)</span>
-
-<span class="fu">iwls_fun</span><span class="op">(</span><span class="va">n_wls</span>, <span class="va">N</span>, <span class="va">S_1_sort</span>, <span class="va">exp_qs</span>, <span class="va">ws</span>, <span class="va">nx</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spm_check</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">b</span>,</span>
+<span>  sliding <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bias_adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BB3"</span>, <span class="st">"BB1"</span>, <span class="st">"N"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  constrain <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  varN <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">spm_sigmahat_dj</span><span class="op">(</span><span class="va">data</span>, <span class="va">b</span>, check <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">spm_R_quick</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">b</span>,</span>
+<span>  bias_adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BB3"</span>, <span class="st">"BB1"</span>, <span class="st">"N"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  constrain <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  varN <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ests_sigmahat_dj</span><span class="op">(</span><span class="va">all_max</span>, <span class="va">b</span>, <span class="va">which_dj</span>, <span class="va">bias_adjust</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">log0const_slow</span><span class="op">(</span><span class="va">x</span>, <span class="va">const</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">log0const</span><span class="op">(</span><span class="va">x</span>, <span class="va">const</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ecdf3</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ecdf2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ecdf1</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">lenx</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sliding_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">disjoint_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">all_disjoint_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">all_maxima</span><span class="op">(</span><span class="va">x</span>, b <span class="op">=</span> <span class="fl">1</span>, which_dj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">kgaps_loglik</span><span class="op">(</span><span class="va">theta</span>, <span class="va">N0</span>, <span class="va">N1</span>, <span class="va">sum_qs</span>, <span class="va">n_kgaps</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">kgaps_conf_int</span><span class="op">(</span><span class="va">theta_mle</span>, <span class="va">ss</span>, conf <span class="op">=</span> <span class="fl">95</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">kgaps_quad_solve</span><span class="op">(</span><span class="va">N0</span>, <span class="va">N1</span>, <span class="va">sum_qs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">kgaps_imt_old</span><span class="op">(</span><span class="va">data</span>, <span class="va">u</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">kgaps_exp_info</span><span class="op">(</span><span class="va">theta</span>, <span class="va">ss</span>, <span class="va">inc_cens</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dgaps_loglik</span><span class="op">(</span><span class="va">theta</span>, <span class="va">N0</span>, <span class="va">N1</span>, <span class="va">sum_qtd</span>, <span class="va">n_dgaps</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">g_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">gd_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">gdd_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">gddd_theta</span><span class="op">(</span><span class="va">theta</span>, <span class="va">q_u</span>, <span class="va">D</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dgaps_exp_info</span><span class="op">(</span><span class="va">theta</span>, <span class="va">ss</span>, <span class="va">inc_cens</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dgaps_conf_int</span><span class="op">(</span><span class="va">theta_mle</span>, <span class="va">ss</span>, conf <span class="op">=</span> <span class="fl">95</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">iwls_fun</span><span class="op">(</span><span class="va">n_wls</span>, <span class="va">N</span>, <span class="va">S_1_sort</span>, <span class="va">exp_qs</span>, <span class="va">ws</span>, <span class="va">nx</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="details">
@@ -148,7 +148,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

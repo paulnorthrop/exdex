@@ -18,7 +18,7 @@ spm.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ spm.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathja
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -65,29 +65,29 @@ spm.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathja
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for spm</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  maxima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sliding"</span>, <span class="st">"disjoint"</span><span class="op">)</span>,
-  estimator <span class="op">=</span> <span class="st">"all"</span>,
-  constrain <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for spm</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, maxima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sliding"</span>, <span class="st">"disjoint"</span><span class="op">)</span>, estimator <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for spm</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">object</span>, maxima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sliding"</span>, <span class="st">"disjoint"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for spm</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">3L</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3L</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for spm</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3L</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for summary.spm</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for spm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  maxima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sliding"</span>, <span class="st">"disjoint"</span><span class="op">)</span>,</span>
+<span>  estimator <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  constrain <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for spm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, maxima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sliding"</span>, <span class="st">"disjoint"</span><span class="op">)</span>, estimator <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for spm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">object</span>, maxima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sliding"</span>, <span class="st">"disjoint"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for spm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">3L</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3L</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for spm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3L</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for summary.spm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,46 +95,70 @@ spm.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathja
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"spm"</code>, a result of a call to
 <code><a href="spm.html">spm</a></code>.</p></dd>
+
+
 <dt>maxima</dt>
 <dd><p>A character scalar specifying whether to return the
 number of observed sliding maxima or disjoint maxima.</p></dd>
+
+
 <dt>estimator</dt>
 <dd><p>A character vector specifying which of the three variants
 of the semiparametric maxima estimator to use: <code>"N2015", "BB2018"</code>
 or <code>"BB2018b"</code>. See <code><a href="spm.html">spm</a></code> for details. If
 <code>estimator = "all"</code> then the estimated variances of all variants are
 returned.</p></dd>
+
+
 <dt>constrain</dt>
 <dd><p>A logical scalar.  If <code>constrain = TRUE</code> then
 any estimates that are greater than 1 are set to 1,
 that is, they are constrained to lie in (0, 1].  Otherwise,
 estimates that are greater than 1 may be obtained.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>For <code>print.summary.spm</code>, additional arguments passed to
 <code><a href="https://rdrr.io/r/base/print.default.html" class="external-link">print.default</a></code>.</p></dd>
+
+
 <dt>x</dt>
 <dd><p><code>print.spm</code>. An object of class <code>c("spm", "exdex")</code>, a
   result of a call to <code><a href="spm.html">spm</a></code>.</p>
 <p><code>print.summary.spm</code>. An object of class <code>"summary.spm"</code>, a
   result of a call to <code>summary.spm</code>.</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>An integer. Used for number formatting with
 <code>signif</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>coef.spm</code>. A numeric scalar (or a vector of length 3 if
-<code>estimator = "all"</code>): the required estimate(s) of the extremal index
-\(\theta\).
-<code>vcov.spm</code>. A \(1 \times 1\) numeric matrix if
-<code>estimator = "N2015"</code> or <code>"BB2018"</code> and a vector of length 3 if
-<code>estimator = "all"</code>, containing the estimated variance(s) of the
-  estimator(s).
-<code>nobs.spm</code>. A numeric scalar: the number of observations used in the
-  fit.
-<code>print.spm</code>. The argument <code>x</code>, invisibly.
-<code>summary.spm</code>. Returns an object (a list) of class
-<code>"summary.spm"</code> containing the list element <code>object$call</code> and a
+    
+
+<p><code>coef.spm</code>. A numeric scalar (or a vector of length 3 if</p>
+<p></p>
+<p><code>estimator = "all"</code>): the required estimate(s) of the extremal index</p>
+<p></p>
+<p>\(\theta\).</p>
+<p></p>
+<p><code>vcov.spm</code>. A \(1 \times 1\) numeric matrix if</p>
+<p></p>
+<p><code>estimator = "N2015"</code> or <code>"BB2018"</code> and a vector of length 3 if</p>
+<p></p>
+<p><code>estimator = "all"</code>, containing the estimated variance(s) of the
+  estimator(s).</p>
+<p></p>
+<p><code>nobs.spm</code>. A numeric scalar: the number of observations used in the
+  fit.</p>
+<p></p>
+<p><code>print.spm</code>. The argument <code>x</code>, invisibly.</p>
+<p></p>
+<p><code>summary.spm</code>. Returns an object (a list) of class</p>
+<p></p>
+<p><code>"summary.spm"</code> containing the list element <code>object$call</code> and a
   numeric matrix <code>matrix</code> giving, for all three variants of the
   semiparametric estimator and both sliding and disjoint blocks,
   the (bias-adjusted) Estimate of the extremal index \(\theta\),
@@ -142,8 +166,9 @@ estimates that are greater than 1 may be obtained.</p></dd>
   and the bias adjustment (Bias adj.) applied to obtain the estimate, i.e.
   the value subtracted from the raw estimate.  If any of the
   (bias-adjusted) estimates are greater than 1 then a column
-  containing the unconstrained estimates (Uncon. estimate) is added.
-<code>print.summary.spm</code>. The argument <code>x</code>, invisibly.</p>
+  containing the unconstrained estimates (Uncon. estimate) is added.</p>
+<p></p>
+<p><code>print.summary.spm</code>. The argument <code>x</code>, invisibly.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -176,7 +201,7 @@ estimates that are greater than 1 may be obtained.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -14,3 +14,4 @@
 ^pkgdown$
 ^checks$
 ^CRAN-SUBMISSION$
+^install$

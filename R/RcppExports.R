@@ -19,5 +19,5 @@ cpp_sigma2hat_dj <- function(all_max, b, kn, m, bias_adjust, which_dj) {
 
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
-    .Call('_exdex_RcppExport_registerCCallable', PACKAGE = 'exdex')
+    .Call(`_exdex_RcppExport_registerCCallable`)
 })

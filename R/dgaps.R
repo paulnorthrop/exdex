@@ -238,18 +238,18 @@ dgaps <- function(data, u, D = 1, inc_cens = TRUE) {
 #'     2 N_1 log \theta - \theta q (I_0 T_0 + ... + I_N T_N),}
 #'    where
 #'     \itemize{
-#'       \item{\eqn{q} is the threshold exceedance probability, estimated by
-#'         the proportion of threshold exceedances,}
-#'       \item{\eqn{d = q D},}
-#'       \item{\eqn{I_j = 1} if \eqn{T_j > D} and \eqn{I_j = 0} otherwise,}
-#'       \item{\eqn{N_0} is the number of sample inter-exceedance times that
-#'         are left-censored, that is, are less than or equal to \eqn{D},}
-#'       \item{(apart from an adjustment for the contributions of \eqn{T_0} and
+#'       \item \eqn{q} is the threshold exceedance probability, estimated by
+#'         the proportion of threshold exceedances,
+#'       \item \eqn{d = q D},
+#'       \item \eqn{I_j = 1} if \eqn{T_j > D} and \eqn{I_j = 0} otherwise,
+#'       \item \eqn{N_0} is the number of sample inter-exceedance times that
+#'         are left-censored, that is, are less than or equal to \eqn{D},
+#'       \item (apart from an adjustment for the contributions of \eqn{T_0} and
 #'         \eqn{T_N}) \eqn{N_1} is the number of inter-exceedance times that
-#'         are uncensored, that is, are greater than \eqn{D},}
-#'       \item{specifically, if \code{inc_cens = TRUE} then \eqn{N_1} is equal
+#'         are uncensored, that is, are greater than \eqn{D},
+#'       \item specifically, if \code{inc_cens = TRUE} then \eqn{N_1} is equal
 #'         to the number of \eqn{T_1, ..., T_{N-1}}{T_1, ..., T_(N-1)} that are
-#'         uncensored plus \eqn{(I_0 + I_N) / 2}.}
+#'         uncensored plus \eqn{(I_0 + I_N) / 2}.
 #'     }
 #'    The differing treatment of uncensored and censored \eqn{K}-gaps reflects
 #'    differing contributions to the likelihood. Right-censored

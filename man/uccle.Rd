@@ -5,15 +5,14 @@
 \alias{uccle}
 \title{Uccle maximum daily temperatures}
 \format{
-A data frame with 65036 observations on the following and 5
-  variables.
+A data frame with 65036 observations on the following and 5 variables.
 \itemize{
-\item{\code{temp:}}{ daily maximum temperature in degrees C.}
-\item{\code{year:}}{ the year.}
-\item{\code{month:}}{ the month of the year.}
-\item{\code{day:}}{ day of the month.}
-\item{\code{date:}}{ date with the \code{\link[base:Dates]{Date}} class,
-  in the format YYYY-MM-DD.}
+\item \code{temp:} daily maximum temperature in degrees C.
+\item \code{year:} the year.
+\item \code{month:} the month of the year.
+\item \code{day:} day of the month.
+\item \code{date:} date with the \code{\link[base:Dates]{Date}} class,
+  in the format YYYY-MM-DD.
 }
 }
 \source{

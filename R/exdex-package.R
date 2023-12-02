@@ -9,14 +9,14 @@
 #' @details Functions to implement four estimators of the extremal index
 #'   are provided, namely
 #' \itemize{
-#'   \item{\code{\link{spm}}: semiparametric maxima estimator, using block
-#'     maxima: (Northrop, 2015; Berghaus and Bucher, 2018)}
-#'   \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
-#'     inter-exceedance times (Suveges and Davison, 2010)}
-#'   \item{\code{\link{dgaps}}: \eqn{D}-gaps estimator, using threshold
-#'     inter-exceedance times (Holesovsky and Fusek, 2020))}
-#'   \item{\code{\link{iwls}}: iterated weighted least squares estimator,
-#'     using threshold inter-exceedance times: (Suveges, 2007)}
+#'   \item \code{\link{spm}}: semiparametric maxima estimator, using block
+#'     maxima: (Northrop, 2015; Berghaus and Bucher, 2018)
+#'   \item \code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
+#'     inter-exceedance times (Suveges and Davison, 2010)
+#'   \item \code{\link{dgaps}}: \eqn{D}-gaps estimator, using threshold
+#'     inter-exceedance times (Holesovsky and Fusek, 2020))
+#'   \item \code{\link{iwls}}: iterated weighted least squares estimator,
+#'     using threshold inter-exceedance times: (Suveges, 2007)
 #' }
 #' The functions \code{\link{choose_b}}, \code{\link{choose_uk}} and
 #' \code{\link{choose_ud}} provide graphical diagnostics for choosing the
@@ -116,15 +116,14 @@
 #' The dataframe \code{uccle} contains daily maximum temperatures in degrees C
 #' recorded at the Uccle, Belgium from 1/1/1833 to 23/1/2011.  The Station
 #' identifier in the source file is 17 and the Source identifier is 117882.
-#' @format A data frame with 65036 observations on the following and 5
-#'   variables.
+#' @format A data frame with 65036 observations on the following and 5 variables.
 #' \itemize{
-#' \item{\code{temp:}}{ daily maximum temperature in degrees C.}
-#' \item{\code{year:}}{ the year.}
-#' \item{\code{month:}}{ the month of the year.}
-#' \item{\code{day:}}{ day of the month.}
-#' \item{\code{date:}}{ date with the \code{\link[base:Dates]{Date}} class,
-#'   in the format YYYY-MM-DD.}
+#' \item \code{temp:} daily maximum temperature in degrees C.
+#' \item \code{year:} the year.
+#' \item \code{month:} the month of the year.
+#' \item \code{day:} day of the month.
+#' \item \code{date:} date with the \code{\link[base:Dates]{Date}} class,
+#'   in the format YYYY-MM-DD.
 #' }
 #' @note There are 5336 missing values.
 #' @source Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of
@@ -143,15 +142,14 @@
 #' recorded at the Uccle, Belgium during July for the years 1901 to 1999.
 #' The Station identifier in the source file is 17 and the Source identifier is
 #' 117882.  These data are analysed in Holesovsky and Fusek (2020).
-#' @format A data frame with 3100 observations on the following and 5
-#'   variables.
+#' @format A data frame with 3100 observations on the following and 5 variables.
 #' \itemize{
-#' \item{\code{temp:}}{ daily maximum temperature in degrees C.}
-#' \item{\code{year:}}{ the year.}
-#' \item{\code{month:}}{ the month of the year.}
-#' \item{\code{day:}}{ day of the month.}
-#' \item{\code{date:}}{ date with the \code{\link[base:Dates]{Date}} class,
-#'   in the format YYYY-MM-DD.}
+#' \item \code{temp:} daily maximum temperature in degrees C.
+#' \item \code{year:} the year.
+#' \item \code{month:} the month of the year.
+#' \item \code{day:} day of the month.
+#' \item \code{date:} date with the \code{\link[base:Dates]{Date}} class,
+#'   in the format YYYY-MM-DD.
 #' }
 #' @note There are 6 missing values, one located in each of the years
 #'   1925, 1926, 1956, 1963, 1969 and 1976.

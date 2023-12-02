@@ -100,12 +100,12 @@
 #'   \strong{no warning will be given until the returned object is printed} and,
 #'   for the affected estimator (\code{"N2015"} or \code{"BB2018/BB2018b"}),
 #'     \itemize{
-#'       \item{the corresponding estimated standard errors using sliding
-#'             blocks will be missing in \code{se_sl} in the returned object,}
-#'       \item{if \code{bias_adjust == "BB3"} then bias-adjustment
+#'       \item the corresponding estimated standard errors using sliding
+#'             blocks will be missing in \code{se_sl} in the returned object,
+#'       \item if \code{bias_adjust == "BB3"} then bias-adjustment
 #'             based on \code{bias_adjust == "BB1"} will instead be performed
 #'             when using sliding blocks, because the former relies on the
-#'             estimated variances of the estimators.}
+#'             estimated variances of the estimators.
 #'     }
 #'  Similarly, bias adjustment under \code{adjust = "BB3"} and/or subtraction
 #'  of \eqn{1 / b} in the \code{"BB2018b"} case may, rare cases, produce a

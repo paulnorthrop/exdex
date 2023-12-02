@@ -16,14 +16,14 @@ Suveges (2007), Suveges and Davison (2010) and Holesovsky and Fusek (2020).
 Functions to implement four estimators of the extremal index
   are provided, namely
 \itemize{
-  \item{\code{\link{spm}}: semiparametric maxima estimator, using block
-    maxima: (Northrop, 2015; Berghaus and Bucher, 2018)}
-  \item{\code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
-    inter-exceedance times (Suveges and Davison, 2010)}
-  \item{\code{\link{dgaps}}: \eqn{D}-gaps estimator, using threshold
-    inter-exceedance times (Holesovsky and Fusek, 2020))}
-  \item{\code{\link{iwls}}: iterated weighted least squares estimator,
-    using threshold inter-exceedance times: (Suveges, 2007)}
+  \item \code{\link{spm}}: semiparametric maxima estimator, using block
+    maxima: (Northrop, 2015; Berghaus and Bucher, 2018)
+  \item \code{\link{kgaps}}: \eqn{K}-gaps estimator, using threshold
+    inter-exceedance times (Suveges and Davison, 2010)
+  \item \code{\link{dgaps}}: \eqn{D}-gaps estimator, using threshold
+    inter-exceedance times (Holesovsky and Fusek, 2020))
+  \item \code{\link{iwls}}: iterated weighted least squares estimator,
+    using threshold inter-exceedance times: (Suveges, 2007)
 }
 The functions \code{\link{choose_b}}, \code{\link{choose_uk}} and
 \code{\link{choose_ud}} provide graphical diagnostics for choosing the

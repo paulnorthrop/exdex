@@ -29,7 +29,7 @@ indicated on the plot.'><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">exdex</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ estimators of \(\theta\) (or of \(\log\theta\) if
 point estimates, and (b) likelihood-based intervals based on an adjustment
 of a naive (pseudo-) loglikelihood, using the
 <code><a href="https://paulnorthrop.github.io/chandwich/reference/adjust_loglik.html" class="external-link">adjust_loglik</a></code> function in the
-<code><a href="https://paulnorthrop.github.io/chandwich/reference/chandwich-package.html" class="external-link">chandwich</a></code> package. The <code>plot</code> method plots the
+<code><a href="https://paulnorthrop.github.io/chandwich/reference/chandwich.html" class="external-link">chandwich</a></code> package. The <code>plot</code> method plots the
 log-likelihood for \(\theta\), with the required confidence interval(s)
 indicated on the plot.</p>
     </div>
@@ -181,7 +181,7 @@ less than 0 are set to 0.</p></dd>
 <dt>type</dt>
 <dd><p>A character scalar.  The argument <code>type</code> to be passed to
 <code><a href="https://paulnorthrop.github.io/chandwich/reference/conf_intervals.html" class="external-link">conf_intervals</a></code> in the
-<code><a href="https://paulnorthrop.github.io/chandwich/reference/chandwich-package.html" class="external-link">chandwich</a></code> package in order to estimate the
+<code><a href="https://paulnorthrop.github.io/chandwich/reference/chandwich.html" class="external-link">chandwich</a></code> package in order to estimate the
 likelihood-based intervals.
 Using <code>type = "none"</code> is <em>not</em> advised because then the
 intervals are based on naive estimated standard errors.  In particular,
@@ -276,7 +276,7 @@ contains the confidence limits rounded to <code>ndec</code> decimal places.</p><
     <h2>Details</h2>
     <p>The likelihood-based intervals are estimated using the
   <code><a href="https://paulnorthrop.github.io/chandwich/reference/adjust_loglik.html" class="external-link">adjust_loglik</a></code> function in the
-  <code><a href="https://paulnorthrop.github.io/chandwich/reference/chandwich-package.html" class="external-link">chandwich</a></code> package, followed by a call to
+  <code><a href="https://paulnorthrop.github.io/chandwich/reference/chandwich.html" class="external-link">chandwich</a></code> package, followed by a call to
   <code><a href="https://paulnorthrop.github.io/chandwich/reference/conf_intervals.html" class="external-link">conf_intervals</a></code>.
   This adjusts the naive (pseudo-)loglikelihood so that the curvature of
   the adjust loglikelihood agrees with the estimated standard errors of

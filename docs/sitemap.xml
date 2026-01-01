@@ -1,123 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/exdex-vignette.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/all_max_rcpp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cheeseboro.html</loc>
-  </url>
-  <url>
-    <loc>/reference/choose_b.html</loc>
-  </url>
-  <url>
-    <loc>/reference/choose_ud.html</loc>
-  </url>
-  <url>
-    <loc>/reference/choose_uk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dgaps_confint.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dgaps_imt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dgaps_imt_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dgaps_methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dgaps_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/exdex-internal.html</loc>
-  </url>
-  <url>
-    <loc>/reference/exdex-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/iwls.html</loc>
-  </url>
-  <url>
-    <loc>/reference/iwls_methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kgaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kgaps_confint.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kgaps_imt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kgaps_imt_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kgaps_methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kgaps_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/newlyn.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.choose_b.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.choose_ud.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.choose_uk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sp500.html</loc>
-  </url>
-  <url>
-    <loc>/reference/split_by_NAs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spm_confint.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spm_methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/uccle.html</loc>
-  </url>
-  <url>
-    <loc>/reference/uccle720.html</loc>
-  </url>
-  <url>
-    <loc>/reference/uccle720m.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://github.com/paulnorthrop/exdex/404.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/articles/exdex-vignette.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/articles/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/authors.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/LICENSE.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/news/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/all_max_rcpp.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/cheeseboro.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/choose_b.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/choose_ud.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/choose_uk.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/dgaps.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/dgaps_confint.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/dgaps_imt.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/dgaps_imt_stat.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/dgaps_methods.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/dgaps_stat.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/exdex-internal.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/exdex-package.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/index.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/iwls.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/iwls_methods.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/kgaps.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/kgaps_confint.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/kgaps_imt.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/kgaps_imt_stat.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/kgaps_methods.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/kgaps_stat.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/newlyn.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/plot.choose_b.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/plot.choose_ud.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/plot.choose_uk.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/sp500.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/split_by_NAs.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/spm.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/spm_confint.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/spm_methods.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/uccle.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/uccle720.html</loc></url>
+<url><loc>https://github.com/paulnorthrop/exdex/reference/uccle720m.html</loc></url>
 </urlset>
+

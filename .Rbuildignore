@@ -16,3 +16,4 @@
 ^CRAN-SUBMISSION$
 ^install$
 ^\.github$
+^LICENSE\.md$

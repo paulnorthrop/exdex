@@ -3,8 +3,6 @@
 ^create_datasets$
 ^README\.Rmd$
 ^cran-comments\.md$
-^\.travis\.yml$
-^appveyor\.yml$
 ^before-install\.sh$
 ^doc$
 ^Meta$

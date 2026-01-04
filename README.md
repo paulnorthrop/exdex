@@ -12,6 +12,11 @@ Status](https://codecov.io/github/paulnorthrop/exdex/coverage.svg?branch=master)
 [![Downloads
 (total)](https://cranlogs.r-pkg.org/badges/grand-total/exdex?color=brightgreen)](https://cran.r-project.org/package=exdex)
 
+See also the translations of the main estimation functions of `exdex`
+into [Python: Py-exdex](https://github.com/LJ-Jenkins/Py-exdex) and
+[Matlab/Octave: M-exdex](https://github.com/LJ-Jenkins/M-exdex),
+courtesy of Luke Jenkins.
+
 ## Estimation of the Extremal Index
 
 ### What does exdex do?

@@ -20,6 +20,8 @@ knitr::opts_chunk$set(
 [![Downloads (monthly)](https://cranlogs.r-pkg.org/badges/exdex?color=brightgreen)](https://cran.r-project.org/package=exdex)
 [![Downloads (total)](https://cranlogs.r-pkg.org/badges/grand-total/exdex?color=brightgreen)](https://cran.r-project.org/package=exdex)
 
+See also the translations of the main estimation functions of `exdex` into [Python: Py-exdex](https://github.com/LJ-Jenkins/Py-exdex) and [Matlab/Octave: M-exdex](https://github.com/LJ-Jenkins/M-exdex), courtesy of Luke Jenkins.
+
 ## Estimation of the Extremal Index
 
 ### What does exdex do?
@@ -61,4 +63,3 @@ install.packages("exdex")
 ### Vignette
 
 See `vignette("exdex-vignette", package = "exdex")` for an overview of the package.
-

@@ -1,3 +1,9 @@
+# exdex 1.2.4
+
+## Bug fixes and minor improvements
+
+* Implements the patch described in [Rcpp Issue #1406](https://github.com/RcppCore/Rcpp/issues/1406) to avoid masking of `Rf_error()`.
+
 # exdex 1.2.3
 
 ## Bug fixes and minor improvements

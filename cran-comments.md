@@ -10,4 +10,4 @@
 
 ## Downstream dependencies
 
-Apart from warnings and notes unrelated to exdex, the downstream dependencies of exdex (lax, lite, revdbayes) passed R CMD check. (I will fix these problems for lax and lite shortly.)
+The downstream dependencies of exdex (lax, lite, revdbayes) passed R CMD check

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# exdex
+# exdex <a href="https://paulnorthrop.github.io/exdex/"><img src="man/figures/exdex_logo.png" align="right" style="float:right; height:150px;" alt="exdex logo"/></a>
 
 [![R-CMD-check](https://github.com/paulnorthrop/exdex/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulnorthrop/exdex/actions/workflows/R-CMD-check.yaml)
 [![Coverage

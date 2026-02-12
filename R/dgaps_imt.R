@@ -86,7 +86,7 @@ dgaps_imt <- function(data, u, D = 1, inc_cens = TRUE) {
   } else if (!is.matrix(data)) {
     data <- as.matrix(data)
   }
-  # Function to perform the IMT for individual values of u and k
+  # Function to perform the IMT for individual values of u and D
   imt_by_uD <- function(u, D) {
     # If the threshold is not high enough then return NAs
     if (u >= max(data, na.rm = TRUE)) {
@@ -204,7 +204,7 @@ dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {
   N0 <- N_u - 1 - N1
   T_gt_D <- T_u[!left_censored]
   sum_qtd <- sum(q_u * T_gt_D)
-  # Store the number of K-gaps, for use by nobs.kgaps()
+  # Store the number of D-gaps, for use by nobs.dgaps()
   n_dgaps <- N0 + N1
   # Multipliers for terms in ld, ...
   mldj <- rep_len(2, n_dgaps)
@@ -213,7 +213,7 @@ dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {
   mDdj2 <- rep_len(4, n_dgaps)
   # Include censored inter-exceedance times?
   if (inc_cens) {
-    # censored inter-exceedance times and K-gaps
+    # censored inter-exceedance times and D-gaps
     T_u_cens <- c(exc_u[1] - 1, nx - exc_u[N_u])
     # T_u_cens <= d adds no information, because we have no idea to which part
     # of the log-likelihood they would contribute
@@ -250,7 +250,7 @@ dgaps_imt_stat <- function(data, theta, u, D = 1, inc_cens = TRUE) {
   # If this happens then we convert the NaN to NA.
   #
   # Note: all the right-censored inter-exceedance times that are included in
-  # T_u satisfy T_u > D, so the T_u == 0 terms have not contribution from the
+  # T_u satisfy T_u > D, so the T_u == 0 terms have no contribution from the
   # right-censored observations
   gd <- gd_theta(theta, q_u, D)
   gdd <- gdd_theta(theta, q_u, D)

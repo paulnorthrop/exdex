@@ -284,9 +284,10 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
                                        p = 1, par_names = "theta",
                                        mle = mleN / scaleN, H = H, V = V)
       # Avoid chandwich::conf_intervals()'s profiling messages
-      tempN <- suppressMessages(chandwich::conf_intervals(adjN, conf = 100 *
-                                                           level, type = type,
-                                                          lower = 0))
+      tempN <- suppressMessages(
+        chandwich::conf_intervals(adjN, conf = 100 * level, type = type,
+                                  lower = 0)
+        )
       # Add the likelihood-based interval to the symmetric ones
       lower <- c(lower, N2015lik = tempN$prof_CI[1])
       upper <- c(upper, N2015lik = tempN$prof_CI[2])
@@ -305,9 +306,10 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
                                         data = yz_data[, "BB2018"] * scaleBB,
                                         p = 1, par_names = "theta",
                                         mle = mleBB / scaleBB, H = H, V = V)
-      tempBB <- suppressMessages(chandwich::conf_intervals(adjBB, conf = 100 *
-                                                            level, type = type,
-                                                           lower = 0))
+      tempBB <- suppressMessages(
+        chandwich::conf_intervals(adjBB, conf = 100 * level, type = type,
+                                  lower = 0)
+        )
       lower <- c(lower, BB2018lik = tempBB$prof_CI[1])
       upper <- c(upper, BB2018lik = tempBB$prof_CI[2])
     }
@@ -325,10 +327,10 @@ confint.spm <- function (object, parm = "theta", level = 0.95,
                                          data = yz_data[, "BB2018"] * scaleBBb,
                                          p = 1, par_names = "theta",
                                          mle = mleBBb / scaleBBb, H = H, V = V)
-      tempBBb <- suppressMessages(chandwich::conf_intervals(adjBBb,
-                                                            conf = 100 *
-                                                            level, type = type,
-                                                            lower = 0))
+      tempBBb <- suppressMessages(
+        chandwich::conf_intervals(adjBBb, conf = 100 * level, type = type,
+                                  lower = 0)
+        )
       lower <- c(lower, BB2018blik = tempBBb$prof_CI[1])
       upper <- c(upper, BB2018blik = tempBBb$prof_CI[2])
     }

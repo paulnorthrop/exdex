@@ -715,8 +715,8 @@ kgaps_imt_old <- function(data, u, k = 1) {
 #' @rdname exdex-internal
 kgaps_exp_info <- function(theta, ss, inc_cens) {
   # How many observations are not right-censored?
-  # Note: if inc_cens = TRUE then ss$N1 and ss$n_dgaps are inflated by
-  # right-censored observations.  ss$n_dgaps is inflated by 1 for each
+  # Note: if inc_cens = TRUE then ss$N1 and ss$n_kgaps are inflated by
+  # right-censored observations.  ss$n_kgaps is inflated by 1 for each
   # right-censored observation and ss$N1 by 1/2.
   # Subtract the excess from N0 + N1 to get the total number of observations
   # that are not right-censored
